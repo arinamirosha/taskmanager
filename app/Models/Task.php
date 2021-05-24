@@ -18,6 +18,11 @@ class Task extends Model
     const STATUS_PROGRESS = 5;
     const STATUS_FINISHED = 6;
 
+    const ARCHIVE = 'archive';
+    const TODAY = 'today';
+    const NOT_SCHEDULED = 'notScheduled';
+    const UPCOMING = 'upcoming';
+
     protected $fillable = [
         'name',
         'details',

@@ -2773,6 +2773,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../route */ "./resources/js/route.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
 //
 //
 //
@@ -2787,10 +2788,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      tasks: {}
+      tasks: {},
+      type: _constants__WEBPACK_IMPORTED_MODULE_1__.ARCHIVE
     };
   },
   methods: {
@@ -2799,7 +2802,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.index'), {
         params: {
-          'trashed': true
+          'type': this.type
         }
       }).then(function (response) {
         _this.tasks = response.data;
@@ -2883,12 +2886,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['tasks'],
+  props: ['tasks', 'type'],
   computed: {
     c: function c() {
       return _constants__WEBPACK_IMPORTED_MODULE_1__;
@@ -2896,6 +2900,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     formatDate: function formatDate(date) {
+      if (!date) {
+        return '';
+      }
+
       return moment__WEBPACK_IMPORTED_MODULE_2___default()(date).format('MMMM d, YYYY');
     }
   }
@@ -2984,6 +2992,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../route */ "./resources/js/route.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
 //
 //
 //
@@ -2994,8 +3004,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {// console.log('Component mounted.');
+  data: function data() {
+    return {
+      tasks: {},
+      type: _constants__WEBPACK_IMPORTED_MODULE_1__.NOT_SCHEDULED
+    };
+  },
+  methods: {
+    getNotScheduled: function getNotScheduled() {
+      var _this = this;
+
+      axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.index'), {
+        params: {
+          'type': this.type
+        }
+      }).then(function (response) {
+        _this.tasks = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getNotScheduled();
   }
 });
 
@@ -3012,6 +3049,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../route */ "./resources/js/route.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
 //
 //
 //
@@ -3022,8 +3061,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {// console.log('Component mounted.');
+  data: function data() {
+    return {
+      tasks: {},
+      type: _constants__WEBPACK_IMPORTED_MODULE_1__.TODAY
+    };
+  },
+  methods: {
+    getToday: function getToday() {
+      var _this = this;
+
+      axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.index'), {
+        params: {
+          'type': this.type
+        }
+      }).then(function (response) {
+        _this.tasks = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getToday();
   }
 });
 
@@ -3040,6 +3106,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../route */ "./resources/js/route.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
 //
 //
 //
@@ -3050,8 +3118,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {// console.log('Component mounted.');
+  data: function data() {
+    return {
+      tasks: {},
+      type: _constants__WEBPACK_IMPORTED_MODULE_1__.UPCOMING
+    };
+  },
+  methods: {
+    getUpcoming: function getUpcoming() {
+      var _this = this;
+
+      axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.index'), {
+        params: {
+          'type': this.type
+        }
+      }).then(function (response) {
+        _this.tasks = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getUpcoming();
   }
 });
 
@@ -3157,7 +3252,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "STATUS_STRONG": () => (/* binding */ STATUS_STRONG),
 /* harmony export */   "STATUS_NEW": () => (/* binding */ STATUS_NEW),
 /* harmony export */   "STATUS_PROGRESS": () => (/* binding */ STATUS_PROGRESS),
-/* harmony export */   "STATUS_FINISHED": () => (/* binding */ STATUS_FINISHED)
+/* harmony export */   "STATUS_FINISHED": () => (/* binding */ STATUS_FINISHED),
+/* harmony export */   "ARCHIVE": () => (/* binding */ ARCHIVE),
+/* harmony export */   "TODAY": () => (/* binding */ TODAY),
+/* harmony export */   "NOT_SCHEDULED": () => (/* binding */ NOT_SCHEDULED),
+/* harmony export */   "UPCOMING": () => (/* binding */ UPCOMING)
 /* harmony export */ });
 var STATUS_NORMAL = 1;
 var STATUS_MEDIUM = 2;
@@ -3165,6 +3264,10 @@ var STATUS_STRONG = 3;
 var STATUS_NEW = 4;
 var STATUS_PROGRESS = 5;
 var STATUS_FINISHED = 6;
+var ARCHIVE = 'archive';
+var TODAY = 'today';
+var NOT_SCHEDULED = 'notScheduled';
+var UPCOMING = 'upcoming';
 
 /***/ }),
 
@@ -66994,7 +67097,7 @@ var render = function() {
       _c(
         "div",
         { staticClass: "col-md-12 p-0 m-0" },
-        [_c("index-task", { attrs: { tasks: _vm.tasks } })],
+        [_c("index-task", { attrs: { tasks: _vm.tasks, type: _vm.type } })],
         1
       )
     ])
@@ -67061,65 +67164,76 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _vm._l(_vm.tasks, function(task) {
-        return _c(
+  return _c("div", [
+    _vm.tasks.length !== 0
+      ? _c(
           "div",
-          { key: task.id, staticClass: "row cursor-pointer p-1" },
           [
-            _c("div", { staticClass: "col-md-3" }, [
-              _vm._v(_vm._s(task.project.name))
+            _c("div", { staticClass: "row h5 font-weight-bold" }, [
+              _c("div", { staticClass: "col-md-3" }, [_vm._v("Project")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [_vm._v("Task")]),
+              _vm._v(" "),
+              _vm.type !== "notScheduled"
+                ? _c("div", { staticClass: "col-md-3" }, [_vm._v("Schedule")])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.type === "archive"
+                ? _c("div", { staticClass: "col-md-3" }, [_vm._v("Archived")])
+                : _vm._e()
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _c(
-                "span",
-                {
-                  class: {
-                    "text-secondary": task.importance === _vm.c.STATUS_NORMAL,
-                    "text-primary": task.importance === _vm.c.STATUS_MEDIUM,
-                    "text-danger": task.importance === _vm.c.STATUS_STRONG
-                  }
-                },
-                [_vm._v("•")]
-              ),
-              _vm._v("\n            " + _vm._s(task.name) + "\n        ")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _vm._v(_vm._s(task.schedule))
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _vm._v(_vm._s(_vm.formatDate(task.deleted_at)))
-            ])
-          ]
+            _vm._l(_vm.tasks, function(task) {
+              return _c(
+                "div",
+                { key: task.id, staticClass: "row cursor-pointer p-1" },
+                [
+                  _c("div", { staticClass: "col-md-3" }, [
+                    _vm._v(_vm._s(task.project.name))
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-3" }, [
+                    _c(
+                      "span",
+                      {
+                        class: {
+                          "text-secondary":
+                            task.importance === _vm.c.STATUS_NORMAL,
+                          "text-primary":
+                            task.importance === _vm.c.STATUS_MEDIUM,
+                          "text-danger": task.importance === _vm.c.STATUS_STRONG
+                        }
+                      },
+                      [_vm._v("•")]
+                    ),
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(task.name) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm.type !== "notScheduled"
+                    ? _c("div", { staticClass: "col-md-3" }, [
+                        _vm._v(_vm._s(_vm.formatDate(task.schedule)))
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.type === "archive"
+                    ? _c("div", { staticClass: "col-md-3" }, [
+                        _vm._v(_vm._s(_vm.formatDate(task.deleted_at)))
+                      ])
+                    : _vm._e()
+                ]
+              )
+            })
+          ],
+          2
         )
-      })
-    ],
-    2
-  )
+      : _vm._e()
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row h5 font-weight-bold" }, [
-      _c("div", { staticClass: "col-md-3" }, [_vm._v("Project")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [_vm._v("Task")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [_vm._v("Schedule")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [_vm._v("Archived")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -67247,22 +67361,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _vm._v("\n            Not scheduled tasks\n        ")
-        ])
-      ])
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row font-weight-bold h3" }, [
+      _vm._v("\n        Not scheduled tasks\n    ")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-12 p-0 m-0" },
+        [_c("index-task", { attrs: { tasks: _vm.tasks, type: _vm.type } })],
+        1
+      )
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -67285,22 +67399,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _vm._v("\n            Today tasks\n        ")
-        ])
-      ])
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row font-weight-bold h3" }, [
+      _vm._v("\n        Today tasks\n    ")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-12 p-0 m-0" },
+        [_c("index-task", { attrs: { tasks: _vm.tasks, type: _vm.type } })],
+        1
+      )
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -67323,22 +67437,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _vm._v("\n            Upcoming tasks\n        ")
-        ])
-      ])
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row font-weight-bold h3" }, [
+      _vm._v("\n        Upcoming tasks\n    ")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-12 p-0 m-0" },
+        [_c("index-task", { attrs: { tasks: _vm.tasks, type: _vm.type } })],
+        1
+      )
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 

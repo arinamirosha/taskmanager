@@ -5,7 +5,7 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-12 p-0 m-0">
-                <index-task :tasks="tasks"></index-task>
+                <index-task :tasks="tasks" :type="type"></index-task>
             </div>
         </div>
     </div>
@@ -13,11 +13,13 @@
 
 <script>
 import route from "../../route";
+import * as c from "../../constants";
 
 export default {
     data() {
         return {
             tasks: {},
+            type: c.ARCHIVE,
         }
     },
     methods: {
@@ -25,7 +27,7 @@ export default {
             axios
                 .get(route('tasks.index'), {
                     params: {
-                        'trashed': true,
+                        'type': this.type,
                     }
                 })
                 .then(response => {
