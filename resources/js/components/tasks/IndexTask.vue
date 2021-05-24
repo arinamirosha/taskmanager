@@ -6,23 +6,27 @@
                     <div class="col-md-1">#</div>
                     <div class="col-md-3">Task</div>
                     <div class="col-md-3">Project</div>
-                    <div class="col-md-2" v-if="type !== 'notScheduled'">Schedule</div>
-                    <div class="col-md-2" v-if="type === 'archive'">Archived</div>
+                    <div class="col-md-2" v-if="type !== c.NOT_SCHEDULED">Schedule</div>
+                    <div class="col-md-2" v-if="type === c.ARCHIVE">Archived</div>
                 </div>
 
-                <div v-for="(task, index) in tasks" :key="task.id" class="row cursor-pointer p-1" @click="showTask(task)"  :class="{'text-danger': isOverdue(task.schedule)}">
-                    <div class="col-md-1">{{++index}}</div>
+                <div v-for="(task, index) in tasks"
+                     :key="task.id"
+                     class="row cursor-pointer p-1"
+                     @click="showTask(task)"
+                     :class="{'task-finished': isNeedStyleFinished(task)}"
+                >
+                    <div class="col-md-1">{{++index}} <i v-if="type !== c.ARCHIVE" :class="statusIconClass(task.status)"></i></div>
                     <div class="col-md-3">
-                        <span :class="{
-                            'text-secondary': task.importance === c.STATUS_NORMAL,
-                            'text-primary': task.importance === c.STATUS_MEDIUM,
-                            'text-danger': task.importance === c.STATUS_STRONG
-                        }">&bull;</span>
+                        <span :class="isNeedStyleFinished(task) ? 'task-finished' : importanceCss(task.importance)">&bull;</span>
                         {{task.name}}
                     </div>
                     <div class="col-md-3">{{task.project.name}}</div>
-                    <div class="col-md-2" v-if="type !== 'notScheduled'">{{formatDate(task.schedule)}}</div>
-                    <div class="col-md-2" v-if="type === 'archive'">{{formatDate(task.deleted_at)}}</div>
+                    <div class="col-md-2" v-if="type !== c.NOT_SCHEDULED" :class="{'text-danger': isNeedStyleOverdue(task)}">
+                        {{formatDate(task.schedule)}}
+                        <i v-if="isNeedStyleOverdue(task)" class="fas fa-exclamation"></i>
+                    </div>
+                    <div class="col-md-2" v-if="type === c.ARCHIVE">{{formatDate(task.deleted_at)}}</div>
                 </div>
             </div>
             <div v-else>No Tasks</div>
@@ -32,7 +36,7 @@
         <!-- Modals-->
         <button v-show="false" data-toggle="modal" data-target="#showTaskModal" ref="showTaskModalButton"></button>
         <div class="modal fade show mt-5 pb-5" id="showTaskModal" tabindex="-1" ref="showTaskModal">
-            <show-task-modal :task="currentTask" :deletable="type !== 'archive'" @deleteTaskModal="$refs.deleteTaskModalButton.click()"></show-task-modal>
+            <show-task-modal :task="currentTask" :deletable="type !== c.ARCHIVE" @archived="$emit('archived')" @deleteTaskModal="$refs.deleteTaskModalButton.click()"></show-task-modal>
         </div>
 
         <button v-show="false" data-toggle="modal" data-target="#deleteTaskModal" ref="deleteTaskModalButton"></button>
@@ -73,8 +77,31 @@ export default {
         },
         isOverdue(schedule) {
             return moment(schedule).isBefore(new Date, 'day');
-
-}
+        },
+        isNeedStyleOverdue(task) {
+            return this.type !== constants.ARCHIVE
+                && task.status !== constants.STATUS_FINISHED
+                && this.isOverdue(task.schedule);
+        },
+        isNeedStyleFinished(task) {
+            return this.type !== constants.ARCHIVE && task.status === constants.STATUS_FINISHED;
+        },
+        statusIconClass(status) {
+            switch (status) {
+                case constants.STATUS_NEW: return 'fas fa-external-link-alt';
+                case constants.STATUS_PROGRESS: return 'fas fa-spinner';
+                case constants.STATUS_FINISHED: return 'fas fa-check';
+            }
+            return '';
+        },
+        importanceCss(importance) {
+            switch (importance) {
+                case constants.STATUS_NORMAL: return 'text-secondary';
+                case constants.STATUS_MEDIUM: return 'text-primary';
+                case constants.STATUS_STRONG: return 'text-danger';
+            }
+            return '';
+        },
     },
 }
 </script>
@@ -86,5 +113,8 @@ export default {
 .cursor-pointer:hover{
     background-color: #e0eeee;
     border-radius: 5px;
+}
+.task-finished {
+    color: #dedede;
 }
 </style>

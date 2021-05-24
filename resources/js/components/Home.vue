@@ -55,7 +55,13 @@
         </div>
 
         <div class="col-md-10 pt-4">
-            <component v-bind:is="currentComponent" :id="this.selectedProjectId" @updated="getProjects" @deleted="getProjects"></component>
+            <component
+                v-bind:is="currentComponent"
+                :id="this.selectedProjectId"
+                @updated="getProjects"
+                @deleted="getProjects"
+                @taskArchived="getProjects"
+            ></component>
         </div>
 
         <!-- Modal-->

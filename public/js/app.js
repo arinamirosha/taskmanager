@@ -1944,6 +1944,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2500,6 +2506,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../constants */ "./resources/js/constants.js");
+/* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../route */ "./resources/js/route.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2533,6 +2549,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     task: {
@@ -2542,6 +2559,11 @@ __webpack_require__.r(__webpack_exports__);
     deletable: {
       type: Boolean,
       "default": true
+    }
+  },
+  computed: {
+    c: function c() {
+      return _constants__WEBPACK_IMPORTED_MODULE_0__;
     }
   },
   methods: {
@@ -2571,12 +2593,44 @@ __webpack_require__.r(__webpack_exports__);
 
       return '';
     },
+    statusText: function statusText(status) {
+      switch (status) {
+        case _constants__WEBPACK_IMPORTED_MODULE_0__.STATUS_NEW:
+          return 'New';
+
+        case _constants__WEBPACK_IMPORTED_MODULE_0__.STATUS_PROGRESS:
+          return 'Progress';
+
+        case _constants__WEBPACK_IMPORTED_MODULE_0__.STATUS_FINISHED:
+          return 'Finished';
+      }
+
+      return '';
+    },
     deleteTaskModal: function deleteTaskModal() {
       this.$refs.closeShowTask.click();
       this.$emit('deleteTaskModal');
     },
-    mounted: function mounted() {
-      console.log('hi');
+    changeStatus: function changeStatus(newStatus) {
+      var _this = this;
+
+      this.task.status = newStatus;
+      axios.post((0,_route__WEBPACK_IMPORTED_MODULE_1__.default)('tasks.update', this.task.id), {
+        'status': newStatus
+      }).then(function (response) {
+        _this.$emit('statusUpdated', _this.task.id);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    archive: function archive() {
+      var _this2 = this;
+
+      axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_1__.default)('tasks.destroy', this.task.id)).then(function (response) {
+        _this2.$emit('archived', _this2.task.id);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });
@@ -2598,6 +2652,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2773,6 +2832,7 @@ __webpack_require__.r(__webpack_exports__);
       this.tasksFinished = this.tasksFinished.filter(function (task) {
         return task.id !== id;
       });
+      this.$emit('taskArchived');
     },
     taskDeleted: function taskDeleted() {
       this.getProject();
@@ -2790,6 +2850,9 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    taskStatusUpdated: function taskStatusUpdated(id) {
+      this.getProject();
     }
   },
   mounted: function mounted() {
@@ -2948,6 +3011,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -2977,6 +3044,40 @@ __webpack_require__.r(__webpack_exports__);
     },
     isOverdue: function isOverdue(schedule) {
       return moment__WEBPACK_IMPORTED_MODULE_2___default()(schedule).isBefore(new Date(), 'day');
+    },
+    isNeedStyleOverdue: function isNeedStyleOverdue(task) {
+      return this.type !== _constants__WEBPACK_IMPORTED_MODULE_1__.ARCHIVE && task.status !== _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_FINISHED && this.isOverdue(task.schedule);
+    },
+    isNeedStyleFinished: function isNeedStyleFinished(task) {
+      return this.type !== _constants__WEBPACK_IMPORTED_MODULE_1__.ARCHIVE && task.status === _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_FINISHED;
+    },
+    statusIconClass: function statusIconClass(status) {
+      switch (status) {
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_NEW:
+          return 'fas fa-external-link-alt';
+
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_PROGRESS:
+          return 'fas fa-spinner';
+
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_FINISHED:
+          return 'fas fa-check';
+      }
+
+      return '';
+    },
+    importanceCss: function importanceCss(importance) {
+      switch (importance) {
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_NORMAL:
+          return 'text-secondary';
+
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_MEDIUM:
+          return 'text-primary';
+
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_STRONG:
+          return 'text-danger';
+      }
+
+      return '';
     }
   }
 });
@@ -3076,6 +3177,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3100,6 +3208,10 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    archived: function archived(id) {
+      this.getNotScheduled();
+      this.$emit('taskArchived');
     }
   },
   mounted: function mounted() {
@@ -3122,6 +3234,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../route */ "./resources/js/route.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3159,6 +3278,10 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    archived: function archived(id) {
+      this.getToday();
+      this.$emit('taskArchived');
     }
   },
   mounted: function mounted() {
@@ -3181,6 +3304,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../route */ "./resources/js/route.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3218,6 +3348,10 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    archived: function archived(id) {
+      this.getUpcoming();
+      this.$emit('taskArchived');
     }
   },
   mounted: function mounted() {
@@ -7905,7 +8039,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.cursor-pointer[data-v-9b6facca]{\n    cursor: pointer;\n}\n.cursor-pointer[data-v-9b6facca]:hover{\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.cursor-pointer[data-v-9b6facca]{\n    cursor: pointer;\n}\n.cursor-pointer[data-v-9b6facca]:hover{\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished[data-v-9b6facca] {\n    color: #dedede;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -65960,7 +66094,11 @@ var render = function() {
         _c(_vm.currentComponent, {
           tag: "component",
           attrs: { id: this.selectedProjectId },
-          on: { updated: _vm.getProjects, deleted: _vm.getProjects }
+          on: {
+            updated: _vm.getProjects,
+            deleted: _vm.getProjects,
+            taskArchived: _vm.getProjects
+          }
         })
       ],
       1
@@ -66811,6 +66949,14 @@ var render = function() {
                 ]),
                 _vm._v(" " + _vm._s(_vm.importanceText(_vm.task.importance)))
               ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mb-2" }, [
+              _c("div", { staticClass: "font-weight-bold" }, [
+                _vm._v("Status")
+              ]),
+              _vm._v(" "),
+              _c("div", [_vm._v(_vm._s(_vm.statusText(_vm.task.status)))])
             ])
           ]),
           _vm._v(" "),
@@ -66826,6 +66972,47 @@ var render = function() {
                   [_vm._v("Delete")]
                 )
               : _c("div"),
+            _vm._v(" "),
+            !_vm.task.deleted_at
+              ? _c(
+                  "button",
+                  { staticClass: "btn btn-primary", attrs: { type: "button" } },
+                  [
+                    _vm.task.status === _vm.c.STATUS_NEW
+                      ? _c(
+                          "span",
+                          {
+                            on: {
+                              click: function($event) {
+                                return _vm.changeStatus(_vm.c.STATUS_PROGRESS)
+                              }
+                            }
+                          },
+                          [_vm._v("Start")]
+                        )
+                      : _vm.task.status === _vm.c.STATUS_PROGRESS
+                      ? _c(
+                          "span",
+                          {
+                            on: {
+                              click: function($event) {
+                                return _vm.changeStatus(_vm.c.STATUS_FINISHED)
+                              }
+                            }
+                          },
+                          [_vm._v("Finish")]
+                        )
+                      : _c(
+                          "span",
+                          {
+                            attrs: { "data-dismiss": "modal" },
+                            on: { click: _vm.archive }
+                          },
+                          [_vm._v("Archive")]
+                        )
+                  ]
+                )
+              : _vm._e(),
             _vm._v(" "),
             _c(
               "button",
@@ -67106,7 +67293,9 @@ var render = function() {
               on: {
                 deleteTaskModal: function($event) {
                   return _vm.$refs.deleteTaskModalButton.click()
-                }
+                },
+                archived: _vm.taskArchived,
+                statusUpdated: _vm.taskStatusUpdated
               }
             })
           ],
@@ -67297,13 +67486,13 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-3" }, [_vm._v("Project")]),
                     _vm._v(" "),
-                    _vm.type !== "notScheduled"
+                    _vm.type !== _vm.c.NOT_SCHEDULED
                       ? _c("div", { staticClass: "col-md-2" }, [
                           _vm._v("Schedule")
                         ])
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.type === "archive"
+                    _vm.type === _vm.c.ARCHIVE
                       ? _c("div", { staticClass: "col-md-2" }, [
                           _vm._v("Archived")
                         ])
@@ -67316,7 +67505,9 @@ var render = function() {
                       {
                         key: task.id,
                         staticClass: "row cursor-pointer p-1",
-                        class: { "text-danger": _vm.isOverdue(task.schedule) },
+                        class: {
+                          "task-finished": _vm.isNeedStyleFinished(task)
+                        },
                         on: {
                           click: function($event) {
                             return _vm.showTask(task)
@@ -67325,21 +67516,21 @@ var render = function() {
                       },
                       [
                         _c("div", { staticClass: "col-md-1" }, [
-                          _vm._v(_vm._s(++index))
+                          _vm._v(_vm._s(++index) + " "),
+                          _vm.type !== _vm.c.ARCHIVE
+                            ? _c("i", {
+                                class: _vm.statusIconClass(task.status)
+                              })
+                            : _vm._e()
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-md-3" }, [
                           _c(
                             "span",
                             {
-                              class: {
-                                "text-secondary":
-                                  task.importance === _vm.c.STATUS_NORMAL,
-                                "text-primary":
-                                  task.importance === _vm.c.STATUS_MEDIUM,
-                                "text-danger":
-                                  task.importance === _vm.c.STATUS_STRONG
-                              }
+                              class: _vm.isNeedStyleFinished(task)
+                                ? "task-finished"
+                                : _vm.importanceCss(task.importance)
                             },
                             [_vm._v("•")]
                           ),
@@ -67354,13 +67545,31 @@ var render = function() {
                           _vm._v(_vm._s(task.project.name))
                         ]),
                         _vm._v(" "),
-                        _vm.type !== "notScheduled"
-                          ? _c("div", { staticClass: "col-md-2" }, [
-                              _vm._v(_vm._s(_vm.formatDate(task.schedule)))
-                            ])
+                        _vm.type !== _vm.c.NOT_SCHEDULED
+                          ? _c(
+                              "div",
+                              {
+                                staticClass: "col-md-2",
+                                class: {
+                                  "text-danger": _vm.isNeedStyleOverdue(task)
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                    " +
+                                    _vm._s(_vm.formatDate(task.schedule)) +
+                                    "\n                    "
+                                ),
+                                _vm.isNeedStyleOverdue(task)
+                                  ? _c("i", {
+                                      staticClass: "fas fa-exclamation"
+                                    })
+                                  : _vm._e()
+                              ]
+                            )
                           : _vm._e(),
                         _vm._v(" "),
-                        _vm.type === "archive"
+                        _vm.type === _vm.c.ARCHIVE
                           ? _c("div", { staticClass: "col-md-2" }, [
                               _vm._v(_vm._s(_vm.formatDate(task.deleted_at)))
                             ])
@@ -67392,8 +67601,14 @@ var render = function() {
       },
       [
         _c("show-task-modal", {
-          attrs: { task: _vm.currentTask, deletable: _vm.type !== "archive" },
+          attrs: {
+            task: _vm.currentTask,
+            deletable: _vm.type !== _vm.c.ARCHIVE
+          },
           on: {
+            archived: function($event) {
+              return _vm.$emit("archived")
+            },
             deleteTaskModal: function($event) {
               return _vm.$refs.deleteTaskModalButton.click()
             }
@@ -67550,9 +67765,9 @@ var render = function() {
               isDataLoaded: _vm.isDataLoaded
             },
             on: {
-              taskDeleted: function($event) {
-                return _vm.getNotScheduled()
-              }
+              statusUpdated: _vm.getNotScheduled,
+              archived: _vm.archived,
+              taskDeleted: _vm.getNotScheduled
             }
           })
         ],
@@ -67601,9 +67816,9 @@ var render = function() {
               isDataLoaded: _vm.isDataLoaded
             },
             on: {
-              taskDeleted: function($event) {
-                return _vm.getToday()
-              }
+              statusUpdated: _vm.getToday,
+              archived: _vm.archived,
+              taskDeleted: _vm.getToday
             }
           })
         ],
@@ -67652,9 +67867,9 @@ var render = function() {
               isDataLoaded: _vm.isDataLoaded
             },
             on: {
-              taskDeleted: function($event) {
-                return _vm.getUpcoming()
-              }
+              statusUpdated: _vm.getUpcoming,
+              archived: _vm.archived,
+              taskDeleted: _vm.getUpcoming
             }
           })
         ],

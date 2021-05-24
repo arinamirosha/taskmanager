@@ -18,11 +18,20 @@
                         <div class="font-weight-bold">Importance</div>
                         <div><span :class="importanceCss(task.importance)">&bull;</span> {{importanceText(task.importance)}}</div>
                     </div>
+                    <div class="mb-2">
+                        <div class="font-weight-bold">Status</div>
+                        <div>{{statusText(task.status)}}</div>
+                    </div>
                 </div>
 
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-outline-danger" v-if="deletable" @click="deleteTaskModal">Delete</button>
                     <div v-else></div>
+                    <button type="button" class="btn btn-primary" v-if="!task.deleted_at">
+                        <span v-if="task.status === c.STATUS_NEW" @click="changeStatus(c.STATUS_PROGRESS)">Start</span>
+                        <span v-else-if="task.status === c.STATUS_PROGRESS" @click="changeStatus(c.STATUS_FINISHED)">Finish</span>
+                        <span v-else @click="archive" data-dismiss="modal">Archive</span>
+                    </button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="closeShowTask">Close</button>
                 </div>
             </form>
@@ -31,7 +40,8 @@
 </template>
 
 <script>
-import * as c from '../../../constants';
+import * as constants from '../../../constants';
+import route from "../../../route";
 
 export default {
     props: {
@@ -44,19 +54,32 @@ export default {
             default: true,
         },
     },
+    computed: {
+        c: function () {
+            return constants;
+        },
+    },
     methods: {
         importanceText(importance) {
             switch (importance) {
-                case c.STATUS_NORMAL: return 'Normal';
-                case c.STATUS_MEDIUM: return 'Medium';
-                case c.STATUS_STRONG: return 'Strong';
+                case constants.STATUS_NORMAL: return 'Normal';
+                case constants.STATUS_MEDIUM: return 'Medium';
+                case constants.STATUS_STRONG: return 'Strong';
             }
         },
         importanceCss(importance) {
             switch (importance) {
-                case c.STATUS_NORMAL: return 'text-secondary';
-                case c.STATUS_MEDIUM: return 'text-primary';
-                case c.STATUS_STRONG: return 'text-danger';
+                case constants.STATUS_NORMAL: return 'text-secondary';
+                case constants.STATUS_MEDIUM: return 'text-primary';
+                case constants.STATUS_STRONG: return 'text-danger';
+            }
+            return '';
+        },
+        statusText(status) {
+            switch (status) {
+                case constants.STATUS_NEW: return 'New';
+                case constants.STATUS_PROGRESS: return 'Progress';
+                case constants.STATUS_FINISHED: return 'Finished';
             }
             return '';
         },
@@ -64,8 +87,26 @@ export default {
             this.$refs.closeShowTask.click();
             this.$emit('deleteTaskModal');
         },
-        mounted() {
-            console.log('hi')
+        changeStatus(newStatus) {
+            this.task.status = newStatus;
+            axios
+                .post(route('tasks.update', this.task.id), {'status': newStatus})
+                .then(response => {
+                    this.$emit('statusUpdated', this.task.id);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        archive() {
+            axios
+                .delete(route('tasks.destroy', this.task.id))
+                .then(response => {
+                    this.$emit('archived', this.task.id);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
     },
 }

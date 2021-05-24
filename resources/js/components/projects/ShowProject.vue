@@ -62,7 +62,12 @@
 
         <button v-show="false" data-toggle="modal" data-target="#showTaskModal" ref="showTaskModalButton"></button>
         <div class="modal fade show mt-5 pb-5" id="showTaskModal" tabindex="-1" ref="showTaskModal">
-            <show-task-modal :task="currentTask" @deleteTaskModal="$refs.deleteTaskModalButton.click()"></show-task-modal>
+            <show-task-modal
+                :task="currentTask"
+                @deleteTaskModal="$refs.deleteTaskModalButton.click()"
+                @archived="taskArchived"
+                @statusUpdated="taskStatusUpdated"
+            ></show-task-modal>
         </div>
 
         <button v-show="false" data-toggle="modal" data-target="#deleteTaskModal" ref="deleteTaskModalButton"></button>
@@ -158,6 +163,7 @@ export default {
             this.tasksFinished = this.tasksFinished.filter(function (task) {
                 return task.id !== id;
             });
+            this.$emit('taskArchived');
         },
         taskDeleted() {
             this.getProject();
@@ -177,6 +183,9 @@ export default {
                     console.log(error)
                 });
         },
+        taskStatusUpdated(id) {
+            this.getProject();
+        }
     },
     mounted() {
         this.getProject();

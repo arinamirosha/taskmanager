@@ -5,7 +5,14 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-12 p-0 m-0">
-                <index-task :tasks="tasks" :type="type" :isDataLoaded="isDataLoaded" @taskDeleted="getUpcoming()"></index-task>
+                <index-task
+                    :tasks="tasks"
+                    :type="type"
+                    :isDataLoaded="isDataLoaded"
+                    @statusUpdated="getUpcoming"
+                    @archived="archived"
+                    @taskDeleted="getUpcoming"
+                ></index-task>
             </div>
         </div>
     </div>
@@ -38,6 +45,10 @@ export default {
                 .catch(error => {
                     console.log(error);
                 });
+        },
+        archived(id) {
+            this.getUpcoming();
+            this.$emit('taskArchived');
         }
     },
     mounted() {
