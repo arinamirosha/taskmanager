@@ -1937,6 +1937,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2524,9 +2531,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['task'],
+  props: {
+    task: {
+      type: Object,
+      "default": {}
+    },
+    deletable: {
+      type: Boolean,
+      "default": true
+    }
+  },
   methods: {
     importanceText: function importanceText(importance) {
       switch (importance) {
@@ -2557,6 +2574,9 @@ __webpack_require__.r(__webpack_exports__);
     deleteTaskModal: function deleteTaskModal() {
       this.$refs.closeShowTask.click();
       this.$emit('deleteTaskModal');
+    },
+    mounted: function mounted() {
+      console.log('hi');
     }
   }
 });
@@ -2578,6 +2598,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2749,6 +2777,19 @@ __webpack_require__.r(__webpack_exports__);
     taskDeleted: function taskDeleted() {
       this.getProject();
       this.currentTask = 0;
+    },
+    changeFav: function changeFav(projectId, favorite) {
+      var _this3 = this;
+
+      axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.update', projectId), {
+        'favorite': favorite
+      }).then(function (response) {
+        _this3.getProject();
+
+        _this3.$emit('updated');
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   mounted: function mounted() {
@@ -2793,7 +2834,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       tasks: {},
-      type: _constants__WEBPACK_IMPORTED_MODULE_1__.ARCHIVE
+      type: _constants__WEBPACK_IMPORTED_MODULE_1__.ARCHIVE,
+      isDataLoaded: false
     };
   },
   methods: {
@@ -2806,6 +2848,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this.tasks = response.data;
+        _this.isDataLoaded = true;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2888,11 +2931,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['tasks', 'type'],
+  props: ['tasks', 'type', 'isDataLoaded'],
+  data: function data() {
+    return {
+      currentTask: {}
+    };
+  },
   computed: {
     c: function c() {
       return _constants__WEBPACK_IMPORTED_MODULE_1__;
@@ -2900,11 +2965,18 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     formatDate: function formatDate(date) {
-      if (!date) {
-        return '';
-      }
-
-      return moment__WEBPACK_IMPORTED_MODULE_2___default()(date).format('MMMM d, YYYY');
+      return moment__WEBPACK_IMPORTED_MODULE_2___default()(date).format('MMMM DD, YYYY');
+    },
+    showTask: function showTask(task) {
+      this.currentTask = task;
+      this.$refs.showTaskModalButton.click();
+    },
+    taskDeleted: function taskDeleted() {
+      this.currentTask = 0;
+      this.$emit('taskDeleted');
+    },
+    isOverdue: function isOverdue(schedule) {
+      return moment__WEBPACK_IMPORTED_MODULE_2___default()(schedule).isBefore(new Date(), 'day');
     }
   }
 });
@@ -2941,9 +3013,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 
@@ -2965,7 +3034,7 @@ __webpack_require__.r(__webpack_exports__);
       return '';
     },
     titleSchedule: function titleSchedule(schedule) {
-      return moment__WEBPACK_IMPORTED_MODULE_2___default()(new Date(schedule)).format('MMMM d, YYYY');
+      return moment__WEBPACK_IMPORTED_MODULE_2___default()(new Date(schedule)).format('MMMM DD, YYYY');
     },
     archive: function archive(id) {
       var _this = this;
@@ -3013,7 +3082,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       tasks: {},
-      type: _constants__WEBPACK_IMPORTED_MODULE_1__.NOT_SCHEDULED
+      type: _constants__WEBPACK_IMPORTED_MODULE_1__.NOT_SCHEDULED,
+      isDataLoaded: false
     };
   },
   methods: {
@@ -3026,6 +3096,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this.tasks = response.data;
+        _this.isDataLoaded = true;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3070,7 +3141,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       tasks: {},
-      type: _constants__WEBPACK_IMPORTED_MODULE_1__.TODAY
+      type: _constants__WEBPACK_IMPORTED_MODULE_1__.TODAY,
+      isDataLoaded: false
     };
   },
   methods: {
@@ -3083,6 +3155,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this.tasks = response.data;
+        _this.isDataLoaded = true;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3127,7 +3200,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       tasks: {},
-      type: _constants__WEBPACK_IMPORTED_MODULE_1__.UPCOMING
+      type: _constants__WEBPACK_IMPORTED_MODULE_1__.UPCOMING,
+      isDataLoaded: false
     };
   },
   methods: {
@@ -3140,6 +3214,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this.tasks = response.data;
+        _this.isDataLoaded = true;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -7758,7 +7833,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nnav a[data-v-f2b6376c]:hover,\n.active[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px;\n    cursor: pointer;\n}\nnav a[data-v-f2b6376c]:hover {\n    text-decoration: none;\n}\n.cursor-pointer[data-v-f2b6376c]{\n    cursor: pointer;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nnav a[data-v-f2b6376c]:hover,\n.active[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px;\n    cursor: pointer;\n}\nnav a[data-v-f2b6376c]:hover {\n    text-decoration: none;\n}\n.cursor-pointer[data-v-f2b6376c]{\n    cursor: pointer;\n}\n.text-custom-secondary[data-v-f2b6376c] {\n    color: #c8c8c8;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -7806,7 +7881,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.cursor-pointer[data-v-fe328f1c]{\n    cursor: pointer;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.cursor-pointer[data-v-fe328f1c]{\n    cursor: pointer;\n}\n.fav-star-full[data-v-fe328f1c] {\n    color: #f7c948;\n}\n.text-custom-secondary[data-v-fe328f1c] {\n    color: #c8c8c8;\n}\n#fav[data-v-fe328f1c]:hover {\n    color: #c8c8c8;\n}\n#not-fav[data-v-fe328f1c]:hover {\n    color: #f7c948;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -65742,9 +65817,7 @@ var render = function() {
                     _vm._v("Favorites (" + _vm._s(_vm.favorites.length) + ")")
                   ]),
                   _vm._v(" "),
-                  _c("span", { staticClass: "text-muted h4 pr-2 pt-2" }, [
-                    _vm._v("☆")
-                  ])
+                  _c("i", { staticClass: "far fa-star pr-2 text-secondary" })
                 ]
               )
             : _vm._e(),
@@ -65767,20 +65840,27 @@ var render = function() {
                   "a",
                   {
                     key: project.id,
-                    staticClass: "nav-link",
+                    staticClass: "nav-link d-flex justify-content-between",
                     class: {
                       active:
                         _vm.currentComponent === "show-project" &&
                         _vm.selectedProjectId === project.id
                     },
-                    style: { color: project.color },
                     on: {
                       click: function($event) {
                         return _vm.selectProject(project.id)
                       }
                     }
                   },
-                  [_vm._v(_vm._s(project.name))]
+                  [
+                    _c("span", { style: { color: project.color } }, [
+                      _vm._v(_vm._s(project.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "text-custom-secondary" }, [
+                      _vm._v(_vm._s(project.tasks_count))
+                    ])
+                  ]
                 )
               }),
               0
@@ -65842,20 +65922,27 @@ var render = function() {
                   "a",
                   {
                     key: project.id,
-                    staticClass: "nav-link",
+                    staticClass: "nav-link d-flex justify-content-between",
                     class: {
                       active:
                         _vm.currentComponent === "show-project" &&
                         _vm.selectedProjectId === project.id
                     },
-                    style: { color: project.color },
                     on: {
                       click: function($event) {
                         return _vm.selectProject(project.id)
                       }
                     }
                   },
-                  [_vm._v(_vm._s(project.name))]
+                  [
+                    _c("span", { style: { color: project.color } }, [
+                      _vm._v(_vm._s(project.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "text-custom-secondary" }, [
+                      _vm._v(_vm._s(project.tasks_count))
+                    ])
+                  ]
                 )
               }),
               0
@@ -66728,15 +66815,17 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "modal-footer justify-content-between" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-danger",
-                attrs: { type: "button" },
-                on: { click: _vm.deleteTaskModal }
-              },
-              [_vm._v("Delete")]
-            ),
+            _vm.deletable
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-danger",
+                    attrs: { type: "button" },
+                    on: { click: _vm.deleteTaskModal }
+                  },
+                  [_vm._v("Delete")]
+                )
+              : _c("div"),
             _vm._v(" "),
             _c(
               "button",
@@ -66777,11 +66866,33 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.project
-    ? _c("div", [
+    ? _c("div", { staticClass: "ml-5" }, [
         _c("div", { staticClass: "row mb-3 justify-content-between" }, [
           _c("div", { staticClass: "col-md-8" }, [
             _c("span", { staticClass: "font-weight-bold h4" }, [
               _vm._v(_vm._s(_vm.project.name))
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "h5 pl-2 mt-5 cursor-pointer" }, [
+              _vm.project.favorite
+                ? _c("i", {
+                    staticClass: "fa fa-star fav-star-full",
+                    attrs: { id: "fav" },
+                    on: {
+                      click: function($event) {
+                        return _vm.changeFav(_vm.project.id, false)
+                      }
+                    }
+                  })
+                : _c("i", {
+                    staticClass: "far fa-star text-custom-secondary",
+                    attrs: { id: "not-fav" },
+                    on: {
+                      click: function($event) {
+                        return _vm.changeFav(_vm.project.id, true)
+                      }
+                    }
+                  })
             ]),
             _vm._v(" "),
             _c(
@@ -66817,7 +66928,7 @@ var render = function() {
         _c("div", { staticClass: "row" }, [
           _c(
             "div",
-            { staticClass: "col-md-4" },
+            { staticClass: "col-md-3" },
             [
               _c(
                 "draggable",
@@ -66853,7 +66964,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "col-md-4" },
+            { staticClass: "col-md-3" },
             [
               _c(
                 "draggable",
@@ -66889,7 +67000,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "col-md-4" },
+            { staticClass: "col-md-3" },
             [
               _c(
                 "draggable",
@@ -67058,11 +67169,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row font-weight-bold h6" }, [
-      _c("div", { staticClass: "col-md-4" }, [_vm._v("New")]),
+      _c("div", { staticClass: "col-md-3" }, [_vm._v("New")]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }, [_vm._v("In progress")]),
+      _c("div", { staticClass: "col-md-3" }, [_vm._v("In progress")]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }, [_vm._v("Finished")])
+      _c("div", { staticClass: "col-md-3" }, [_vm._v("Finished")])
     ])
   }
 ]
@@ -67097,7 +67208,15 @@ var render = function() {
       _c(
         "div",
         { staticClass: "col-md-12 p-0 m-0" },
-        [_c("index-task", { attrs: { tasks: _vm.tasks, type: _vm.type } })],
+        [
+          _c("index-task", {
+            attrs: {
+              tasks: _vm.tasks,
+              type: _vm.type,
+              isDataLoaded: _vm.isDataLoaded
+            }
+          })
+        ],
         1
       )
     ])
@@ -67165,72 +67284,152 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.tasks.length !== 0
-      ? _c(
-          "div",
-          [
-            _c("div", { staticClass: "row h5 font-weight-bold" }, [
-              _c("div", { staticClass: "col-md-3" }, [_vm._v("Project")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3" }, [_vm._v("Task")]),
-              _vm._v(" "),
-              _vm.type !== "notScheduled"
-                ? _c("div", { staticClass: "col-md-3" }, [_vm._v("Schedule")])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.type === "archive"
-                ? _c("div", { staticClass: "col-md-3" }, [_vm._v("Archived")])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.tasks, function(task) {
-              return _c(
+    _vm.isDataLoaded
+      ? _c("div", [
+          _vm.tasks.length !== 0
+            ? _c(
                 "div",
-                { key: task.id, staticClass: "row cursor-pointer p-1" },
                 [
-                  _c("div", { staticClass: "col-md-3" }, [
-                    _vm._v(_vm._s(task.project.name))
+                  _c("div", { staticClass: "row h5 font-weight-bold" }, [
+                    _c("div", { staticClass: "col-md-1" }, [_vm._v("#")]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-3" }, [_vm._v("Task")]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-3" }, [_vm._v("Project")]),
+                    _vm._v(" "),
+                    _vm.type !== "notScheduled"
+                      ? _c("div", { staticClass: "col-md-2" }, [
+                          _vm._v("Schedule")
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.type === "archive"
+                      ? _c("div", { staticClass: "col-md-2" }, [
+                          _vm._v("Archived")
+                        ])
+                      : _vm._e()
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-md-3" }, [
-                    _c(
-                      "span",
+                  _vm._l(_vm.tasks, function(task, index) {
+                    return _c(
+                      "div",
                       {
-                        class: {
-                          "text-secondary":
-                            task.importance === _vm.c.STATUS_NORMAL,
-                          "text-primary":
-                            task.importance === _vm.c.STATUS_MEDIUM,
-                          "text-danger": task.importance === _vm.c.STATUS_STRONG
+                        key: task.id,
+                        staticClass: "row cursor-pointer p-1",
+                        class: { "text-danger": _vm.isOverdue(task.schedule) },
+                        on: {
+                          click: function($event) {
+                            return _vm.showTask(task)
+                          }
                         }
                       },
-                      [_vm._v("•")]
-                    ),
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(task.name) +
-                        "\n            "
+                      [
+                        _c("div", { staticClass: "col-md-1" }, [
+                          _vm._v(_vm._s(++index))
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-3" }, [
+                          _c(
+                            "span",
+                            {
+                              class: {
+                                "text-secondary":
+                                  task.importance === _vm.c.STATUS_NORMAL,
+                                "text-primary":
+                                  task.importance === _vm.c.STATUS_MEDIUM,
+                                "text-danger":
+                                  task.importance === _vm.c.STATUS_STRONG
+                              }
+                            },
+                            [_vm._v("•")]
+                          ),
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(task.name) +
+                              "\n                "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-3" }, [
+                          _vm._v(_vm._s(task.project.name))
+                        ]),
+                        _vm._v(" "),
+                        _vm.type !== "notScheduled"
+                          ? _c("div", { staticClass: "col-md-2" }, [
+                              _vm._v(_vm._s(_vm.formatDate(task.schedule)))
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.type === "archive"
+                          ? _c("div", { staticClass: "col-md-2" }, [
+                              _vm._v(_vm._s(_vm.formatDate(task.deleted_at)))
+                            ])
+                          : _vm._e()
+                      ]
                     )
-                  ]),
-                  _vm._v(" "),
-                  _vm.type !== "notScheduled"
-                    ? _c("div", { staticClass: "col-md-3" }, [
-                        _vm._v(_vm._s(_vm.formatDate(task.schedule)))
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.type === "archive"
-                    ? _c("div", { staticClass: "col-md-3" }, [
-                        _vm._v(_vm._s(_vm.formatDate(task.deleted_at)))
-                      ])
-                    : _vm._e()
-                ]
+                  })
+                ],
+                2
               )
-            })
-          ],
-          2
-        )
-      : _vm._e()
+            : _c("div", [_vm._v("No Tasks")])
+        ])
+      : _c("div", [_vm._v("Loading...")]),
+    _vm._v(" "),
+    _c("button", {
+      directives: [
+        { name: "show", rawName: "v-show", value: false, expression: "false" }
+      ],
+      ref: "showTaskModalButton",
+      attrs: { "data-toggle": "modal", "data-target": "#showTaskModal" }
+    }),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        ref: "showTaskModal",
+        staticClass: "modal fade show mt-5 pb-5",
+        attrs: { id: "showTaskModal", tabindex: "-1" }
+      },
+      [
+        _c("show-task-modal", {
+          attrs: { task: _vm.currentTask, deletable: _vm.type !== "archive" },
+          on: {
+            deleteTaskModal: function($event) {
+              return _vm.$refs.deleteTaskModalButton.click()
+            }
+          }
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("button", {
+      directives: [
+        { name: "show", rawName: "v-show", value: false, expression: "false" }
+      ],
+      ref: "deleteTaskModalButton",
+      attrs: { "data-toggle": "modal", "data-target": "#deleteTaskModal" }
+    }),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade show mt-5",
+        attrs: { id: "deleteTaskModal", tabindex: "-1" }
+      },
+      [
+        _c("delete-task-modal", {
+          attrs: { task: _vm.currentTask },
+          on: {
+            deleted: _vm.taskDeleted,
+            cancel: function($event) {
+              return _vm.$refs.showTaskModalButton.click()
+            }
+          }
+        })
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -67285,34 +67484,7 @@ var render = function() {
               },
               [
                 _vm.task.schedule
-                  ? _c(
-                      "svg",
-                      {
-                        staticClass: "bi bi-clock",
-                        attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          width: "16",
-                          height: "16",
-                          fill: "currentColor",
-                          viewBox: "0 0 16 16"
-                        }
-                      },
-                      [
-                        _c("path", {
-                          attrs: {
-                            d:
-                              "M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("path", {
-                          attrs: {
-                            d:
-                              "M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"
-                          }
-                        })
-                      ]
-                    )
+                  ? _c("i", { staticClass: "far fa-clock pl-1 text-secondary" })
                   : _vm._e()
               ]
             )
@@ -67370,7 +67542,20 @@ var render = function() {
       _c(
         "div",
         { staticClass: "col-md-12 p-0 m-0" },
-        [_c("index-task", { attrs: { tasks: _vm.tasks, type: _vm.type } })],
+        [
+          _c("index-task", {
+            attrs: {
+              tasks: _vm.tasks,
+              type: _vm.type,
+              isDataLoaded: _vm.isDataLoaded
+            },
+            on: {
+              taskDeleted: function($event) {
+                return _vm.getNotScheduled()
+              }
+            }
+          })
+        ],
         1
       )
     ])
@@ -67408,7 +67593,20 @@ var render = function() {
       _c(
         "div",
         { staticClass: "col-md-12 p-0 m-0" },
-        [_c("index-task", { attrs: { tasks: _vm.tasks, type: _vm.type } })],
+        [
+          _c("index-task", {
+            attrs: {
+              tasks: _vm.tasks,
+              type: _vm.type,
+              isDataLoaded: _vm.isDataLoaded
+            },
+            on: {
+              taskDeleted: function($event) {
+                return _vm.getToday()
+              }
+            }
+          })
+        ],
         1
       )
     ])
@@ -67446,7 +67644,20 @@ var render = function() {
       _c(
         "div",
         { staticClass: "col-md-12 p-0 m-0" },
-        [_c("index-task", { attrs: { tasks: _vm.tasks, type: _vm.type } })],
+        [
+          _c("index-task", {
+            attrs: {
+              tasks: _vm.tasks,
+              type: _vm.type,
+              isDataLoaded: _vm.isDataLoaded
+            },
+            on: {
+              taskDeleted: function($event) {
+                return _vm.getUpcoming()
+              }
+            }
+          })
+        ],
         1
       )
     ])

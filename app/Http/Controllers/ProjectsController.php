@@ -15,7 +15,7 @@ class ProjectsController extends Controller
 
     public function index()
     {
-        return Auth::user()->projects()->get();
+        return Auth::user()->projects()->withCount('tasks')->get();
     }
 
     public function show(Project $project)

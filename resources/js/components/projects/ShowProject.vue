@@ -1,9 +1,15 @@
 <template>
-    <div v-if="project">
+    <div v-if="project" class="ml-5">
 
         <div class="row mb-3 justify-content-between">
             <div class="col-md-8">
                 <span class="font-weight-bold h4">{{project.name}}</span>
+
+                <span class="h5 pl-2 mt-5 cursor-pointer">
+                    <i class="fa fa-star fav-star-full" v-if="project.favorite" id="fav" @click="changeFav(project.id, false)"></i>
+                    <i class="far fa-star text-custom-secondary" v-else id="not-fav" @click="changeFav(project.id, true)"></i>
+                </span>
+
                 <a class="cursor-pointer text-muted pl-2 pr-2" data-toggle="modal" data-target="#editProjectModal">Edit</a>
                 <a class="cursor-pointer text-danger" data-toggle="modal" data-target="#deleteProjectModal">Delete</a>
             </div>
@@ -13,27 +19,27 @@
         </div>
 
         <div class="row font-weight-bold h6">
-            <div class="col-md-4">New</div>
-            <div class="col-md-4">In progress</div>
-            <div class="col-md-4">Finished</div>
+            <div class="col-md-3">New</div>
+            <div class="col-md-3">In progress</div>
+            <div class="col-md-3">Finished</div>
         </div>
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <draggable :list="tasksNew" group="tasks" @change="update" :move="isMove">
                     <div v-for="task in tasksNew" :key="task.id">
                         <list-item-task :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
                     </div>
                 </draggable>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <draggable :list="tasksProgress" group="tasks" @change="update" :move="isMove">
                     <div v-for="task in tasksProgress" :key="task.id">
                         <list-item-task :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
                     </div>
                 </draggable>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <draggable :list="tasksFinished" group="tasks" @change="update" :move="isMove">
                     <div v-for="task in tasksFinished" :key="task.id">
                         <list-item-task :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
@@ -49,9 +55,11 @@
         <div class="modal fade show mt-5" id="deleteProjectModal" tabindex="-1">
             <delete-project-modal :project="project" @deleted="projectDeleted"></delete-project-modal>
         </div>
+
         <div class="modal fade show mt-5" id="createTaskModal" tabindex="-1">
             <create-task-modal :id="project.id" @stored="getProject"></create-task-modal>
         </div>
+
         <button v-show="false" data-toggle="modal" data-target="#showTaskModal" ref="showTaskModalButton"></button>
         <div class="modal fade show mt-5 pb-5" id="showTaskModal" tabindex="-1" ref="showTaskModal">
             <show-task-modal :task="currentTask" @deleteTaskModal="$refs.deleteTaskModalButton.click()"></show-task-modal>
@@ -156,6 +164,19 @@ export default {
             this.currentTask = 0;
 
         },
+        changeFav(projectId, favorite) {
+            axios
+                .post(route('projects.update', projectId), {
+                    'favorite': favorite,
+                })
+                .then(response => {
+                    this.getProject();
+                    this.$emit('updated');
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+        },
     },
     mounted() {
         this.getProject();
@@ -169,5 +190,17 @@ export default {
 <style scoped>
 .cursor-pointer{
     cursor: pointer;
+}
+.fav-star-full {
+    color: #f7c948;
+}
+.text-custom-secondary {
+    color: #c8c8c8;
+}
+#fav:hover {
+    color: #c8c8c8;
+}
+#not-fav:hover {
+    color: #f7c948;
 }
 </style>

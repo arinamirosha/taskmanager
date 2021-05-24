@@ -52,13 +52,13 @@ class TaskController extends Controller
                     $tasks = $tasks->onlyTrashed()->orderBy('deleted_at', 'desc');
                     break;
                 case Task::TODAY:
-                    $tasks = $tasks->where('schedule', Carbon::today()->format('Y-m-d'))->orderBy('created_at', 'desc');
+                    $tasks = $tasks->where('schedule', '<=', Carbon::today()->format('Y-m-d'))->orderBy('schedule', 'desc');
                     break;
                 case Task::NOT_SCHEDULED:
                     $tasks = $tasks->whereNull('schedule')->orderBy('created_at', 'desc');
                     break;
                 case Task::UPCOMING:
-                    $tasks = $tasks->where('schedule', '>', Carbon::today()->format('Y-m-d'))->orderBy('created_at', 'desc');
+                    $tasks = $tasks->where('schedule', '<>', Carbon::today()->format('Y-m-d'))->orderBy('schedule', 'desc');
                     break;
             }
         }

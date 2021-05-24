@@ -21,7 +21,8 @@
                 </div>
 
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-outline-danger" @click="deleteTaskModal">Delete</button>
+                    <button type="button" class="btn btn-outline-danger" v-if="deletable" @click="deleteTaskModal">Delete</button>
+                    <div v-else></div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="closeShowTask">Close</button>
                 </div>
             </form>
@@ -33,7 +34,16 @@
 import * as c from '../../../constants';
 
 export default {
-    props: ['task'],
+    props: {
+        task: {
+            type: Object,
+            default: {},
+        },
+        deletable: {
+            type: Boolean,
+            default: true,
+        },
+    },
     methods: {
         importanceText(importance) {
             switch (importance) {
@@ -54,6 +64,9 @@ export default {
             this.$refs.closeShowTask.click();
             this.$emit('deleteTaskModal');
         },
+        mounted() {
+            console.log('hi')
+        }
     },
 }
 </script>

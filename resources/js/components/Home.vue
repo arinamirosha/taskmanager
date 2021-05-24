@@ -14,17 +14,19 @@
                     <span v-if="isOpenFav">&#8595;</span>
                     <span v-else>&#8593;</span>
                     <span class="ml-2">Favorites ({{favorites.length}})</span>
-                    <span class="text-muted h4 pr-2 pt-2">&#9734;</span>
+                    <i class="far fa-star pr-2 text-secondary"></i>
                 </h6>
                 <collapse-transition>
                     <div v-show="isOpenFav">
-                        <a class="nav-link"
+                        <a class="nav-link d-flex justify-content-between"
                            v-for="project in favorites"
                            :key="project.id"
                            @click="selectProject(project.id)"
                            :class="{'active': currentComponent==='show-project' && selectedProjectId === project.id }"
-                           :style="{color: project.color}"
-                        >{{project.name}}</a>
+                        >
+                            <span :style="{color: project.color}">{{project.name}}</span>
+                            <span class="text-custom-secondary">{{project.tasks_count}}</span>
+                        </a>
                     </div>
                 </collapse-transition>
 
@@ -37,13 +39,15 @@
                 </h6>
                 <collapse-transition>
                     <div v-show="isOpenProjects">
-                        <a class="nav-link"
+                        <a class="nav-link d-flex justify-content-between"
                            v-for="project in projects"
                            :key="project.id"
                            @click="selectProject(project.id)"
                            :class="{'active': currentComponent==='show-project' && selectedProjectId === project.id }"
-                           :style="{color: project.color}"
-                        >{{project.name}}</a>
+                        >
+                            <span :style="{color: project.color}">{{project.name}}</span>
+                            <span class="text-custom-secondary">{{project.tasks_count}}</span>
+                        </a>
                     </div>
                 </collapse-transition>
 
@@ -74,6 +78,9 @@ nav a:hover {
 }
 .cursor-pointer{
     cursor: pointer;
+}
+.text-custom-secondary {
+    color: #c8c8c8;
 }
 </style>
 
