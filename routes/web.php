@@ -34,5 +34,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/tasks/{task}', [App\Http\Controllers\TaskController::class, 'show'])->name('tasks.show');
     Route::post('/tasks/{task}', [App\Http\Controllers\TaskController::class, 'update'])->name('tasks.update');
     Route::delete('/tasks/{task}', [App\Http\Controllers\TaskController::class, 'destroy'])->name('tasks.destroy');
+    Route::delete('/tasks/archive/all', [App\Http\Controllers\TaskController::class, 'archive'])->name('tasks.archive');
     Route::delete('/tasks/{task}/force', [App\Http\Controllers\TaskController::class, 'destroyForce'])->name('tasks.destroy-force');
 });

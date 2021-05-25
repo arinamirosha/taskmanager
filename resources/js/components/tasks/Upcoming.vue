@@ -1,26 +1,30 @@
 <template>
     <div class="container" v-if="isDataLoaded">
+
         <div class="row">
             <div class="col-md-5 font-weight-bold h3">Upcoming tasks</div>
             <div class="col-md-6">
                 <div class="row justify-content-between h5">
                     <label><input type="checkbox" :checked="hideFinished" @click="switchHideFinished"> Hide Finished</label>
-                    <button class="btn btn-sm btn-outline-secondary" v-if="countFinished">Archive all ({{countFinished}})</button>
+                    <button class="btn btn-sm btn-outline-secondary" @click="archiveAllUpcoming">Archive Finished</button>
                 </div>
             </div>
         </div>
+
         <div class="row justify-content-center">
             <div class="col-md-12 p-0 m-0">
                 <index-task
                     :tasks="tasks"
                     :type="type"
-                    :hideFinished="hideFinished"
                     @statusUpdated="getUpcoming"
-                    @archived="archived"
                     @taskDeleted="getUpcoming"
                 ></index-task>
             </div>
         </div>
+
+        <!-- Toast -->
+        <toast :body="infoBody" />
+
     </div>
     <div v-else>Loading...</div>
 </template>
@@ -36,15 +40,8 @@ export default {
             tasks: [],
             type: constants.UPCOMING,
             isDataLoaded: false,
+            infoBody: '',
         }
-    },
-    computed: {
-        countFinished: function () {
-            let finishedTasks = this.tasks.filter(task => {
-                return task.status === constants.STATUS_FINISHED;
-            });
-            return finishedTasks.length;
-        },
     },
     methods: {
         getUpcoming() {
@@ -62,10 +59,6 @@ export default {
                     console.log(error);
                 });
         },
-        archived(id) {
-            this.getUpcoming();
-            this.$emit('taskArchived');
-        },
         switchHideFinished(e) {
             axios
                 .post(route('users.update'), {
@@ -74,6 +67,30 @@ export default {
                 .then(response => {
                     this.getUpcoming();
                     this.$emit('userUpdated');
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        archiveAllUpcoming() {
+            axios
+                .delete(route('tasks.archive'), {
+                    params: {
+                        'type': this.type,
+                    }
+                })
+                .then(response => {
+                    let countArchived = response.data;
+
+                    if (countArchived) {
+                        this.infoBody = 'Archived: ' + countArchived;
+                    } else {
+                        this.infoBody = 'Nothing to Archive';
+                    }
+
+                    $('.toast').toast('show');
+                    this.getUpcoming();
+                    this.$emit('taskArchived');
                 })
                 .catch(error => {
                     console.log(error);

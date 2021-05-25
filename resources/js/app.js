@@ -10,7 +10,7 @@ Vue.use(Vuelidate);
 
 Vue.component('welcome', require('./components/Welcome.vue').default);
 Vue.component('home', require('./components/Home.vue').default);
-
+Vue.component('toast', require('./components/Toast.vue').default);
 
 // PROJECTS
 Vue.component('show-project', require('./components/projects/ShowProject.vue').default);

@@ -51,4 +51,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Project::class);
     }
+
+    /**
+     * User tasks
+     *
+     * @return mixed
+     *
+     */
+    public function tasks()
+    {
+        return Task::leftJoin('projects', function ($query) {
+            $query
+                ->on('projects.id', '=', 'tasks.project_id')
+                ->where('projects.user_id', $this->id);
+        });
+    }
 }

@@ -7,7 +7,6 @@
                 <div class="col-md-3">Project</div>
                 <div class="col-md-2" v-if="type !== c.NOT_SCHEDULED">Schedule</div>
                 <div class="col-md-2" v-if="type === c.ARCHIVE">Archived</div>
-                <div class="col-md-1" v-else-if="!hideFinished">Archive</div>
             </div>
 
             <div v-for="(task, index) in tasks"
@@ -27,11 +26,6 @@
                     <i v-if="isNeedStyleOverdue(task)" class="fas fa-exclamation"></i>
                 </div>
                 <div class="col-md-2" v-if="type === c.ARCHIVE">{{formatDate(task.deleted_at)}}</div>
-                <div class="col-md-1 text-center" v-else-if="!hideFinished">
-                        <span v-if="task.status === c.STATUS_FINISHED" @click.stop="archive(task.id)" class="btn btn-sm btn-outline-secondary">
-                            &#10003;
-                        </span>
-                </div>
             </div>
         </div>
         <div v-else>No Tasks</div>
@@ -55,7 +49,7 @@ import * as constants from '../../constants';
 import moment from "moment";
 
 export default {
-    props: ['tasks', 'type', 'hideFinished'],
+    props: ['tasks', 'type'],
     data() {
         return {
             currentTask: {},
@@ -104,16 +98,6 @@ export default {
                 case constants.STATUS_STRONG: return 'text-danger';
             }
             return '';
-        },
-        archive(id) {
-            axios
-                .delete(route('tasks.destroy', id))
-                .then(response => {
-                    this.$emit('archived', id);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
         },
     },
 }

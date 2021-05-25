@@ -1,26 +1,30 @@
 <template>
     <div class="container" v-if="isDataLoaded">
+
         <div class="row">
             <div class="col-md-5 font-weight-bold h3">Today tasks</div>
             <div class="col-md-6">
                 <div class="row justify-content-between h5">
                     <label><input type="checkbox" :checked="hideFinished" @click="switchHideFinished"> Hide Finished</label>
-                    <button class="btn btn-sm btn-outline-secondary" v-if="countFinished">Archive all ({{countFinished}})</button>
+                    <button class="btn btn-sm btn-outline-secondary" @click="archiveAllToday">Archive Finished</button>
                 </div>
             </div>
         </div>
+
         <div class="row justify-content-center">
             <div class="col-md-12 p-0 m-0">
                 <index-task
                     :tasks="tasks"
                     :type="type"
-                    :hideFinished="hideFinished"
                     @statusUpdated="getToday"
-                    @archived="archived"
                     @taskDeleted="getToday"
                 ></index-task>
             </div>
         </div>
+
+        <!-- Toast -->
+        <toast :body="infoBody" />
+
     </div>
     <div v-else>Loading...</div>
 </template>
@@ -36,15 +40,8 @@ export default {
             tasks: [],
             type: constants.TODAY,
             isDataLoaded: false,
+            infoBody: '',
         }
-    },
-    computed: {
-        countFinished: function () {
-            let finishedTasks = this.tasks.filter(task => {
-                return task.status === constants.STATUS_FINISHED;
-            });
-            return finishedTasks.length;
-        },
     },
     methods: {
         getToday() {
@@ -62,10 +59,6 @@ export default {
                     console.log(error);
                 });
         },
-        archived(id) {
-            this.getToday();
-            this.$emit('taskArchived');
-        },
         switchHideFinished(e) {
             axios
                 .post(route('users.update'), {
@@ -74,6 +67,30 @@ export default {
                 .then(response => {
                     this.getToday();
                     this.$emit('userUpdated');
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        archiveAllToday() {
+            axios
+                .delete(route('tasks.archive'), {
+                    params: {
+                        'type': this.type,
+                    }
+                })
+                .then(response => {
+                    let countArchived = response.data;
+
+                    if (countArchived) {
+                        this.infoBody = 'Archived: ' + countArchived;
+                    } else {
+                        this.infoBody = 'Nothing to Archive';
+                    }
+
+                    $('.toast').toast('show');
+                    this.getToday();
+                    this.$emit('taskArchived');
                 })
                 .catch(error => {
                     console.log(error);

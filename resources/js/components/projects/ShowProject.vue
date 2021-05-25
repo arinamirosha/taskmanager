@@ -2,7 +2,7 @@
     <div v-if="project" class="ml-5">
 
         <div class="row mb-3 justify-content-between">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <span class="font-weight-bold h4">{{project.name}}</span>
 
                 <span class="h5 pl-2 mt-5 cursor-pointer">
@@ -13,8 +13,9 @@
                 <a class="cursor-pointer text-muted pl-2 pr-2" data-toggle="modal" data-target="#editProjectModal">Edit</a>
                 <a class="cursor-pointer text-danger" data-toggle="modal" data-target="#deleteProjectModal">Delete</a>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createTaskModal">Add Task</button>
+<!--                <button class="btn btn-sm btn-outline-secondary" @click="archiveAllNotScheduled" v-if="tasksFinished.length">Archive Finished</button>-->
             </div>
         </div>
 

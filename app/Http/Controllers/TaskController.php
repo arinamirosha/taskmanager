@@ -32,6 +32,33 @@ class TaskController extends Controller
         return true;
     }
 
+    public function archive(Request $request) {
+        $type  = $request->get('type', false);
+        $tasks = Auth::user()->tasks();
+
+        if ($type) {
+            switch ($type) {
+                case Task::TODAY:
+                    $tasks = $tasks->where('schedule', '<=', Carbon::today()->format('Y-m-d'));
+                    break;
+                case Task::NOT_SCHEDULED:
+                    $tasks = $tasks->whereNull('schedule');
+                    break;
+                case Task::UPCOMING:
+                    $tasks = $tasks->where('schedule', '<>', Carbon::today()->format('Y-m-d'));
+                    break;
+            }
+
+            $tasks = $tasks->where('status', Task::STATUS_FINISHED);
+            $count = $tasks->count();
+            $tasks->delete();
+
+            return $count;
+        }
+
+        return 0;
+    }
+
     public function destroyForce(Task $task)
     {
         $task->forceDelete();
@@ -40,13 +67,8 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
-        $user = Auth::user();
-
-        $tasks = Task::leftJoin('projects', function ($query) use ($user) {
-            $query
-                ->on('projects.id', '=', 'tasks.project_id')
-                ->where('projects.user_id', $user->id);
-        });
+        $user  = Auth::user();
+        $tasks = $user->tasks();
 
         $type = $request->get('type', false);
 
