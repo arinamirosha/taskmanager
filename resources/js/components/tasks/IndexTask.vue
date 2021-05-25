@@ -36,7 +36,7 @@
         <!-- Modals-->
         <button v-show="false" data-toggle="modal" data-target="#showTaskModal" ref="showTaskModalButton"></button>
         <div class="modal fade show mt-5 pb-5" id="showTaskModal" tabindex="-1" ref="showTaskModal">
-            <show-task-modal :task="currentTask" :deletable="type !== c.ARCHIVE" @archived="$emit('archived')" @deleteTaskModal="$refs.deleteTaskModalButton.click()"></show-task-modal>
+            <show-task-modal :task="currentTask" :deletable="type !== c.ARCHIVE" @archived="$emit('archived')" @statusUpdated="$emit('statusUpdated')" @deleteTaskModal="$refs.deleteTaskModalButton.click()"></show-task-modal>
         </div>
 
         <button v-show="false" data-toggle="modal" data-target="#deleteTaskModal" ref="deleteTaskModalButton"></button>
@@ -65,7 +65,7 @@ export default {
     },
     methods: {
         formatDate(date) {
-            return moment(date).format('MMMM DD, YYYY');
+            return date ? moment(date).format('MMMM DD, YYYY') : '';
         },
         showTask(task) {
             this.currentTask = task;

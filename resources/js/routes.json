@@ -10,6 +10,8 @@
     "password.confirm": "password\/confirm",
     "welcome": "\/",
     "home": "home",
+    "users.show": "users",
+    "users.update": "users",
     "projects.index": "projects",
     "projects.store": "projects",
     "projects.show": "projects\/{project}",

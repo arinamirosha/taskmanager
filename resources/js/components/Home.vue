@@ -58,9 +58,11 @@
             <component
                 v-bind:is="currentComponent"
                 :id="this.selectedProjectId"
+                :hideFinished="isHideFinished"
                 @updated="getProjects"
                 @deleted="getProjects"
                 @taskArchived="getProjects"
+                @userUpdated="getUser"
             ></component>
         </div>
 
@@ -102,6 +104,7 @@ export default {
             selectedProjectId: 0,
             isOpenFav: true,
             isOpenProjects: true,
+            user: {},
         }
     },
     computed: {
@@ -109,6 +112,9 @@ export default {
             return this.projects.filter(project => {
                 return project.favorite;
             });
+        },
+        isHideFinished: function () {
+            return this.user.hide_finished;
         },
     },
     methods: {
@@ -133,9 +139,20 @@ export default {
             this.selectedProjectId = id;
             this.setComponent('show-project');
         },
+        getUser() {
+            axios
+                .get(route('users.show'))
+                .then(response => {
+                    this.user = response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
     },
     mounted() {
         this.getProjects();
+        this.getUser();
     },
     components: {
         CollapseTransition,

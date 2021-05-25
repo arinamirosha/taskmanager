@@ -1950,6 +1950,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -1959,7 +1961,8 @@ __webpack_require__.r(__webpack_exports__);
       projects: [],
       selectedProjectId: 0,
       isOpenFav: true,
-      isOpenProjects: true
+      isOpenProjects: true,
+      user: {}
     };
   },
   computed: {
@@ -1967,6 +1970,9 @@ __webpack_require__.r(__webpack_exports__);
       return this.projects.filter(function (project) {
         return project.favorite;
       });
+    },
+    isHideFinished: function isHideFinished() {
+      return this.user.hide_finished;
     }
   },
   methods: {
@@ -1989,10 +1995,20 @@ __webpack_require__.r(__webpack_exports__);
     selectProject: function selectProject(id) {
       this.selectedProjectId = id;
       this.setComponent('show-project');
+    },
+    getUser: function getUser() {
+      var _this2 = this;
+
+      axios.get((0,_route__WEBPACK_IMPORTED_MODULE_1__.default)('users.show')).then(function (response) {
+        _this2.user = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   mounted: function mounted() {
     this.getProjects();
+    this.getUser();
   },
   components: {
     CollapseTransition: _ivanv_vue_collapse_transition__WEBPACK_IMPORTED_MODULE_0__.CollapseTransition
@@ -3032,7 +3048,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     formatDate: function formatDate(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_2___default()(date).format('MMMM DD, YYYY');
+      return date ? moment__WEBPACK_IMPORTED_MODULE_2___default()(date).format('MMMM DD, YYYY') : '';
     },
     showTask: function showTask(task) {
       this.currentTask = task;
@@ -3184,9 +3200,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['hideFinished'],
   data: function data() {
     return {
       tasks: {},
@@ -3212,6 +3230,19 @@ __webpack_require__.r(__webpack_exports__);
     archived: function archived(id) {
       this.getNotScheduled();
       this.$emit('taskArchived');
+    },
+    switchHideFinished: function switchHideFinished(e) {
+      var _this2 = this;
+
+      axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('users.update'), {
+        'hide_finished': e.target.checked
+      }).then(function (response) {
+        _this2.getNotScheduled();
+
+        _this2.$emit('userUpdated');
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   mounted: function mounted() {
@@ -3254,9 +3285,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['hideFinished'],
   data: function data() {
     return {
       tasks: {},
@@ -3282,6 +3315,19 @@ __webpack_require__.r(__webpack_exports__);
     archived: function archived(id) {
       this.getToday();
       this.$emit('taskArchived');
+    },
+    switchHideFinished: function switchHideFinished(e) {
+      var _this2 = this;
+
+      axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('users.update'), {
+        'hide_finished': e.target.checked
+      }).then(function (response) {
+        _this2.getToday();
+
+        _this2.$emit('userUpdated');
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   mounted: function mounted() {
@@ -3324,9 +3370,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['hideFinished'],
   data: function data() {
     return {
       tasks: {},
@@ -3352,6 +3400,19 @@ __webpack_require__.r(__webpack_exports__);
     archived: function archived(id) {
       this.getUpcoming();
       this.$emit('taskArchived');
+    },
+    switchHideFinished: function switchHideFinished(e) {
+      var _this2 = this;
+
+      axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('users.update'), {
+        'hide_finished': e.target.checked
+      }).then(function (response) {
+        _this2.getUpcoming();
+
+        _this2.$emit('userUpdated');
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   mounted: function mounted() {
@@ -66093,11 +66154,15 @@ var render = function() {
       [
         _c(_vm.currentComponent, {
           tag: "component",
-          attrs: { id: this.selectedProjectId },
+          attrs: {
+            id: this.selectedProjectId,
+            hideFinished: _vm.isHideFinished
+          },
           on: {
             updated: _vm.getProjects,
             deleted: _vm.getProjects,
-            taskArchived: _vm.getProjects
+            taskArchived: _vm.getProjects,
+            userUpdated: _vm.getUser
           }
         })
       ],
@@ -67609,6 +67674,9 @@ var render = function() {
             archived: function($event) {
               return _vm.$emit("archived")
             },
+            statusUpdated: function($event) {
+              return _vm.$emit("statusUpdated")
+            },
             deleteTaskModal: function($event) {
               return _vm.$refs.deleteTaskModalButton.click()
             }
@@ -67749,9 +67817,24 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row font-weight-bold h3" }, [
-      _vm._v("\n        Not scheduled tasks\n    ")
-    ]),
+    _c(
+      "div",
+      { staticClass: "row font-weight-bold h3 justify-content-between" },
+      [
+        _c("span", [_vm._v("Not scheduled tasks")]),
+        _vm._v(" "),
+        _c("span", { staticClass: "h5" }, [
+          _c("label", [
+            _c("input", {
+              attrs: { type: "checkbox" },
+              domProps: { checked: _vm.hideFinished },
+              on: { click: _vm.switchHideFinished }
+            }),
+            _vm._v(" Hide Finished")
+          ])
+        ])
+      ]
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center" }, [
       _c(
@@ -67800,8 +67883,21 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row font-weight-bold h3" }, [
-      _vm._v("\n        Today tasks\n    ")
+    _c("div", { staticClass: "row justify-content-between" }, [
+      _c("span", { staticClass: "font-weight-bold h3" }, [
+        _vm._v("Today tasks")
+      ]),
+      _vm._v(" "),
+      _c("span", { staticClass: "h5" }, [
+        _c("label", [
+          _c("input", {
+            attrs: { type: "checkbox" },
+            domProps: { checked: _vm.hideFinished },
+            on: { click: _vm.switchHideFinished }
+          }),
+          _vm._v(" Hide Finished")
+        ])
+      ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center" }, [
@@ -67851,9 +67947,24 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row font-weight-bold h3" }, [
-      _vm._v("\n        Upcoming tasks\n    ")
-    ]),
+    _c(
+      "div",
+      { staticClass: "row font-weight-bold h3 justify-content-between" },
+      [
+        _c("span", [_vm._v("Upcoming tasks")]),
+        _vm._v(" "),
+        _c("span", { staticClass: "h5" }, [
+          _c("label", [
+            _c("input", {
+              attrs: { type: "checkbox" },
+              domProps: { checked: _vm.hideFinished },
+              on: { click: _vm.switchHideFinished }
+            }),
+            _vm._v(" Hide Finished")
+          ])
+        ])
+      ]
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center" }, [
       _c(
@@ -84372,7 +84483,7 @@ exports.withParams = withParams;
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"\":\"password/confirm\",\"login\":\"login\",\"logout\":\"logout\",\"register\":\"register\",\"password.request\":\"password/reset\",\"password.email\":\"password/email\",\"password.reset\":\"password/reset/{token}\",\"password.update\":\"password/reset\",\"password.confirm\":\"password/confirm\",\"welcome\":\"/\",\"home\":\"home\",\"projects.index\":\"projects\",\"projects.store\":\"projects\",\"projects.show\":\"projects/{project}\",\"projects.update\":\"projects/{project}\",\"projects.destroy\":\"projects/{project}\",\"tasks.index\":\"tasks\",\"tasks.store\":\"tasks\",\"tasks.show\":\"tasks/{task}\",\"tasks.update\":\"tasks/{task}\",\"tasks.destroy\":\"tasks/{task}\",\"tasks.destroy-force\":\"tasks/{task}/force\"}");
+module.exports = JSON.parse("{\"\":\"password/confirm\",\"login\":\"login\",\"logout\":\"logout\",\"register\":\"register\",\"password.request\":\"password/reset\",\"password.email\":\"password/email\",\"password.reset\":\"password/reset/{token}\",\"password.update\":\"password/reset\",\"password.confirm\":\"password/confirm\",\"welcome\":\"/\",\"home\":\"home\",\"users.show\":\"users\",\"users.update\":\"users\",\"projects.index\":\"projects\",\"projects.store\":\"projects\",\"projects.show\":\"projects/{project}\",\"projects.update\":\"projects/{project}\",\"projects.destroy\":\"projects/{project}\",\"tasks.index\":\"tasks\",\"tasks.store\":\"tasks\",\"tasks.show\":\"tasks/{task}\",\"tasks.update\":\"tasks/{task}\",\"tasks.destroy\":\"tasks/{task}\",\"tasks.destroy-force\":\"tasks/{task}/force\"}");
 
 /***/ })
 

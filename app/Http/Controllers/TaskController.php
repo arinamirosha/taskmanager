@@ -40,13 +40,21 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
-        $tasks = Task::leftJoin('projects', function ($query) {
+        $user = Auth::user();
+
+        $tasks = Task::leftJoin('projects', function ($query) use ($user) {
             $query
                 ->on('projects.id', '=', 'tasks.project_id')
-                ->where('projects.user_id', Auth::id());
+                ->where('projects.user_id', $user->id);
         });
 
-        if ($type = $request->get('type', false)) {
+        $type = $request->get('type', false);
+
+        if ($user->hide_finished && $type != Task::ARCHIVE) {
+            $tasks->where('status', '<>', Task::STATUS_FINISHED);
+        }
+
+        if ($type) {
             switch ($type) {
                 case Task::ARCHIVE:
                     $tasks = $tasks->onlyTrashed()->orderBy('deleted_at', 'desc');

@@ -20,6 +20,9 @@ Route::get('/', [App\Http\Controllers\WelcomeController::class, 'welcome'])->nam
 Route::middleware('auth')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+    Route::get('/users', [App\Http\Controllers\UserController::class, 'show'])->name('users.show');
+    Route::post('/users', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+
     Route::get('/projects', [App\Http\Controllers\ProjectsController::class, 'index'])->name('projects.index');
     Route::post('/projects', [App\Http\Controllers\ProjectsController::class, 'store'])->name('projects.store');
     Route::get('/projects/{project}', [App\Http\Controllers\ProjectsController::class, 'show'])->name('projects.show');
