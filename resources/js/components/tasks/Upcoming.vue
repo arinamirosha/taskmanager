@@ -1,15 +1,20 @@
 <template>
-    <div class="container">
-        <div class="row font-weight-bold h3 justify-content-between">
-            <span>Upcoming tasks</span>
-            <span class="h5"><label><input type="checkbox" :checked="hideFinished" @click="switchHideFinished"> Hide Finished</label></span>
+    <div class="container" v-if="isDataLoaded">
+        <div class="row">
+            <div class="col-md-5 font-weight-bold h3">Upcoming tasks</div>
+            <div class="col-md-6">
+                <div class="row justify-content-between h5">
+                    <label><input type="checkbox" :checked="hideFinished" @click="switchHideFinished"> Hide Finished</label>
+                    <button class="btn btn-sm btn-outline-secondary" v-if="countFinished">Archive all ({{countFinished}})</button>
+                </div>
+            </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-md-12 p-0 m-0">
                 <index-task
                     :tasks="tasks"
                     :type="type"
-                    :isDataLoaded="isDataLoaded"
+                    :hideFinished="hideFinished"
                     @statusUpdated="getUpcoming"
                     @archived="archived"
                     @taskDeleted="getUpcoming"
@@ -17,20 +22,29 @@
             </div>
         </div>
     </div>
+    <div v-else>Loading...</div>
 </template>
 
 <script>
 import route from "../../route";
-import * as c from "../../constants";
+import * as constants from "../../constants";
 
 export default {
     props: ['hideFinished'],
     data() {
         return {
-            tasks: {},
-            type: c.UPCOMING,
+            tasks: [],
+            type: constants.UPCOMING,
             isDataLoaded: false,
         }
+    },
+    computed: {
+        countFinished: function () {
+            let finishedTasks = this.tasks.filter(task => {
+                return task.status === constants.STATUS_FINISHED;
+            });
+            return finishedTasks.length;
+        },
     },
     methods: {
         getUpcoming() {

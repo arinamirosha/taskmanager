@@ -1,37 +1,40 @@
 <template>
     <div>
-        <div v-if="isDataLoaded">
-            <div v-if="tasks.length !== 0">
-                <div class="row h5 font-weight-bold">
-                    <div class="col-md-1">#</div>
-                    <div class="col-md-3">Task</div>
-                    <div class="col-md-3">Project</div>
-                    <div class="col-md-2" v-if="type !== c.NOT_SCHEDULED">Schedule</div>
-                    <div class="col-md-2" v-if="type === c.ARCHIVE">Archived</div>
-                </div>
+        <div v-if="tasks.length !== 0">
+            <div class="row h5 font-weight-bold">
+                <div class="col-md-1">#</div>
+                <div class="col-md-3">Task</div>
+                <div class="col-md-3">Project</div>
+                <div class="col-md-2" v-if="type !== c.NOT_SCHEDULED">Schedule</div>
+                <div class="col-md-2" v-if="type === c.ARCHIVE">Archived</div>
+                <div class="col-md-1" v-else-if="!hideFinished">Archive</div>
+            </div>
 
-                <div v-for="(task, index) in tasks"
-                     :key="task.id"
-                     class="row cursor-pointer p-1"
-                     @click="showTask(task)"
-                     :class="{'task-finished': isNeedStyleFinished(task)}"
-                >
-                    <div class="col-md-1">{{++index}} <i v-if="type !== c.ARCHIVE" :class="statusIconClass(task.status)"></i></div>
-                    <div class="col-md-3">
-                        <span :class="isNeedStyleFinished(task) ? 'task-finished' : importanceCss(task.importance)">&bull;</span>
-                        {{task.name}}
-                    </div>
-                    <div class="col-md-3">{{task.project.name}}</div>
-                    <div class="col-md-2" v-if="type !== c.NOT_SCHEDULED" :class="{'text-danger': isNeedStyleOverdue(task)}">
-                        {{formatDate(task.schedule)}}
-                        <i v-if="isNeedStyleOverdue(task)" class="fas fa-exclamation"></i>
-                    </div>
-                    <div class="col-md-2" v-if="type === c.ARCHIVE">{{formatDate(task.deleted_at)}}</div>
+            <div v-for="(task, index) in tasks"
+                 :key="task.id"
+                 class="row cursor-pointer p-1"
+                 @click="showTask(task)"
+                 :class="{'task-finished': isNeedStyleFinished(task)}"
+            >
+                <div class="col-md-1">{{++index}} <i v-if="type !== c.ARCHIVE" :class="statusIconClass(task.status)"></i></div>
+                <div class="col-md-3">
+                    <span :class="isNeedStyleFinished(task) ? 'task-finished' : importanceCss(task.importance)">&bull;</span>
+                    {{task.name}}
+                </div>
+                <div class="col-md-3">{{task.project.name}}</div>
+                <div class="col-md-2" v-if="type !== c.NOT_SCHEDULED" :class="{'text-danger': isNeedStyleOverdue(task)}">
+                    {{formatDate(task.schedule)}}
+                    <i v-if="isNeedStyleOverdue(task)" class="fas fa-exclamation"></i>
+                </div>
+                <div class="col-md-2" v-if="type === c.ARCHIVE">{{formatDate(task.deleted_at)}}</div>
+                <div class="col-md-1 text-center" v-else-if="!hideFinished">
+                        <span v-if="task.status === c.STATUS_FINISHED" @click.stop="archive(task.id)" class="btn btn-sm btn-outline-secondary">
+                            &#10003;
+                        </span>
                 </div>
             </div>
-            <div v-else>No Tasks</div>
         </div>
-        <div v-else>Loading...</div>
+        <div v-else>No Tasks</div>
 
         <!-- Modals-->
         <button v-show="false" data-toggle="modal" data-target="#showTaskModal" ref="showTaskModalButton"></button>
@@ -52,7 +55,7 @@ import * as constants from '../../constants';
 import moment from "moment";
 
 export default {
-    props: ['tasks', 'type', 'isDataLoaded'],
+    props: ['tasks', 'type', 'hideFinished'],
     data() {
         return {
             currentTask: {},
@@ -101,6 +104,16 @@ export default {
                 case constants.STATUS_STRONG: return 'text-danger';
             }
             return '';
+        },
+        archive(id) {
+            axios
+                .delete(route('tasks.destroy', id))
+                .then(response => {
+                    this.$emit('archived', id);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         },
     },
 }

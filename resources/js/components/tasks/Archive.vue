@@ -1,14 +1,15 @@
 <template>
-    <div class="container">
+    <div class="container" v-if="isDataLoaded">
         <div class="row font-weight-bold h3">
             Archive
         </div>
         <div class="row justify-content-center">
             <div class="col-md-12 p-0 m-0">
-                <index-task :tasks="tasks" :type="type" :isDataLoaded="isDataLoaded"></index-task>
+                <index-task :tasks="tasks" :type="type"></index-task>
             </div>
         </div>
     </div>
+    <div v-else>Loading...</div>
 </template>
 
 <script>

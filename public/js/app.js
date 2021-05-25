@@ -2907,6 +2907,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3031,11 +3032,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['tasks', 'type', 'isDataLoaded'],
+  props: ['tasks', 'type', 'hideFinished'],
   data: function data() {
     return {
       currentTask: {}
@@ -3094,6 +3098,15 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return '';
+    },
+    archive: function archive(id) {
+      var _this = this;
+
+      axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.destroy', id)).then(function (response) {
+        _this.$emit('archived', id);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });
@@ -3135,6 +3148,11 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['task'],
+  computed: {
+    c: function c() {
+      return _constants__WEBPACK_IMPORTED_MODULE_1__;
+    }
+  },
   methods: {
     importanceCss: function importanceCss(importance) {
       switch (importance) {
@@ -3201,16 +3219,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['hideFinished'],
   data: function data() {
     return {
-      tasks: {},
+      tasks: [],
       type: _constants__WEBPACK_IMPORTED_MODULE_1__.NOT_SCHEDULED,
       isDataLoaded: false
     };
+  },
+  computed: {
+    countFinished: function countFinished() {
+      var finishedTasks = this.tasks.filter(function (task) {
+        return task.status === _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_FINISHED;
+      });
+      return finishedTasks.length;
+    }
   },
   methods: {
     getNotScheduled: function getNotScheduled() {
@@ -3286,16 +3318,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['hideFinished'],
   data: function data() {
     return {
-      tasks: {},
+      tasks: [],
       type: _constants__WEBPACK_IMPORTED_MODULE_1__.TODAY,
       isDataLoaded: false
     };
+  },
+  computed: {
+    countFinished: function countFinished() {
+      var finishedTasks = this.tasks.filter(function (task) {
+        return task.status === _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_FINISHED;
+      });
+      return finishedTasks.length;
+    }
   },
   methods: {
     getToday: function getToday() {
@@ -3371,16 +3417,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['hideFinished'],
   data: function data() {
     return {
-      tasks: {},
+      tasks: [],
       type: _constants__WEBPACK_IMPORTED_MODULE_1__.UPCOMING,
       isDataLoaded: false
     };
+  },
+  computed: {
+    countFinished: function countFinished() {
+      var finishedTasks = this.tasks.filter(function (task) {
+        return task.status === _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_FINISHED;
+      });
+      return finishedTasks.length;
+    }
   },
   methods: {
     getUpcoming: function getUpcoming() {
@@ -67453,28 +67513,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row font-weight-bold h3" }, [
-      _vm._v("\n        Archive\n    ")
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-12 p-0 m-0" },
-        [
-          _c("index-task", {
-            attrs: {
-              tasks: _vm.tasks,
-              type: _vm.type,
-              isDataLoaded: _vm.isDataLoaded
-            }
-          })
-        ],
-        1
-      )
-    ])
-  ])
+  return _vm.isDataLoaded
+    ? _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row font-weight-bold h3" }, [
+          _vm._v("\n        Archive\n    ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row justify-content-center" }, [
+          _c(
+            "div",
+            { staticClass: "col-md-12 p-0 m-0" },
+            [_c("index-task", { attrs: { tasks: _vm.tasks, type: _vm.type } })],
+            1
+          )
+        ])
+      ])
+    : _c("div", [_vm._v("Loading...")])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -67538,116 +67592,124 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.isDataLoaded
-      ? _c("div", [
-          _vm.tasks.length !== 0
-            ? _c(
+    _vm.tasks.length !== 0
+      ? _c(
+          "div",
+          [
+            _c("div", { staticClass: "row h5 font-weight-bold" }, [
+              _c("div", { staticClass: "col-md-1" }, [_vm._v("#")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [_vm._v("Task")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [_vm._v("Project")]),
+              _vm._v(" "),
+              _vm.type !== _vm.c.NOT_SCHEDULED
+                ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Schedule")])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.type === _vm.c.ARCHIVE
+                ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Archived")])
+                : !_vm.hideFinished
+                ? _c("div", { staticClass: "col-md-1" }, [_vm._v("Archive")])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.tasks, function(task, index) {
+              return _c(
                 "div",
+                {
+                  key: task.id,
+                  staticClass: "row cursor-pointer p-1",
+                  class: { "task-finished": _vm.isNeedStyleFinished(task) },
+                  on: {
+                    click: function($event) {
+                      return _vm.showTask(task)
+                    }
+                  }
+                },
                 [
-                  _c("div", { staticClass: "row h5 font-weight-bold" }, [
-                    _c("div", { staticClass: "col-md-1" }, [_vm._v("#")]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-3" }, [_vm._v("Task")]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-3" }, [_vm._v("Project")]),
-                    _vm._v(" "),
-                    _vm.type !== _vm.c.NOT_SCHEDULED
-                      ? _c("div", { staticClass: "col-md-2" }, [
-                          _vm._v("Schedule")
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.type === _vm.c.ARCHIVE
-                      ? _c("div", { staticClass: "col-md-2" }, [
-                          _vm._v("Archived")
-                        ])
+                  _c("div", { staticClass: "col-md-1" }, [
+                    _vm._v(_vm._s(++index) + " "),
+                    _vm.type !== _vm.c.ARCHIVE
+                      ? _c("i", { class: _vm.statusIconClass(task.status) })
                       : _vm._e()
                   ]),
                   _vm._v(" "),
-                  _vm._l(_vm.tasks, function(task, index) {
-                    return _c(
-                      "div",
+                  _c("div", { staticClass: "col-md-3" }, [
+                    _c(
+                      "span",
                       {
-                        key: task.id,
-                        staticClass: "row cursor-pointer p-1",
-                        class: {
-                          "task-finished": _vm.isNeedStyleFinished(task)
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.showTask(task)
-                          }
-                        }
+                        class: _vm.isNeedStyleFinished(task)
+                          ? "task-finished"
+                          : _vm.importanceCss(task.importance)
                       },
-                      [
-                        _c("div", { staticClass: "col-md-1" }, [
-                          _vm._v(_vm._s(++index) + " "),
-                          _vm.type !== _vm.c.ARCHIVE
-                            ? _c("i", {
-                                class: _vm.statusIconClass(task.status)
-                              })
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-3" }, [
-                          _c(
-                            "span",
-                            {
-                              class: _vm.isNeedStyleFinished(task)
-                                ? "task-finished"
-                                : _vm.importanceCss(task.importance)
-                            },
-                            [_vm._v("•")]
-                          ),
+                      [_vm._v("•")]
+                    ),
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(task.name) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-3" }, [
+                    _vm._v(_vm._s(task.project.name))
+                  ]),
+                  _vm._v(" "),
+                  _vm.type !== _vm.c.NOT_SCHEDULED
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "col-md-2",
+                          class: { "text-danger": _vm.isNeedStyleOverdue(task) }
+                        },
+                        [
                           _vm._v(
-                            "\n                    " +
-                              _vm._s(task.name) +
+                            "\n                " +
+                              _vm._s(_vm.formatDate(task.schedule)) +
                               "\n                "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-3" }, [
-                          _vm._v(_vm._s(task.project.name))
-                        ]),
-                        _vm._v(" "),
-                        _vm.type !== _vm.c.NOT_SCHEDULED
+                          ),
+                          _vm.isNeedStyleOverdue(task)
+                            ? _c("i", { staticClass: "fas fa-exclamation" })
+                            : _vm._e()
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.type === _vm.c.ARCHIVE
+                    ? _c("div", { staticClass: "col-md-2" }, [
+                        _vm._v(_vm._s(_vm.formatDate(task.deleted_at)))
+                      ])
+                    : !_vm.hideFinished
+                    ? _c("div", { staticClass: "col-md-1 text-center" }, [
+                        task.status === _vm.c.STATUS_FINISHED
                           ? _c(
-                              "div",
+                              "span",
                               {
-                                staticClass: "col-md-2",
-                                class: {
-                                  "text-danger": _vm.isNeedStyleOverdue(task)
+                                staticClass: "btn btn-sm btn-outline-secondary",
+                                on: {
+                                  click: function($event) {
+                                    $event.stopPropagation()
+                                    return _vm.archive(task.id)
+                                  }
                                 }
                               },
                               [
                                 _vm._v(
-                                  "\n                    " +
-                                    _vm._s(_vm.formatDate(task.schedule)) +
-                                    "\n                    "
-                                ),
-                                _vm.isNeedStyleOverdue(task)
-                                  ? _c("i", {
-                                      staticClass: "fas fa-exclamation"
-                                    })
-                                  : _vm._e()
+                                  "\n                        ✓\n                    "
+                                )
                               ]
                             )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.type === _vm.c.ARCHIVE
-                          ? _c("div", { staticClass: "col-md-2" }, [
-                              _vm._v(_vm._s(_vm.formatDate(task.deleted_at)))
-                            ])
                           : _vm._e()
-                      ]
-                    )
-                  })
-                ],
-                2
+                      ])
+                    : _vm._e()
+                ]
               )
-            : _c("div", [_vm._v("No Tasks")])
-        ])
-      : _c("div", [_vm._v("Loading...")]),
+            })
+          ],
+          2
+        )
+      : _c("div", [_vm._v("No Tasks")]),
     _vm._v(" "),
     _c("button", {
       directives: [
@@ -67773,7 +67835,7 @@ var render = function() {
             )
           : _vm._e(),
         _vm._v(" "),
-        _vm.task.status === 6
+        _vm.task.status === _vm.c.STATUS_FINISHED
           ? _c(
               "span",
               {
@@ -67816,48 +67878,58 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c(
-      "div",
-      { staticClass: "row font-weight-bold h3 justify-content-between" },
-      [
-        _c("span", [_vm._v("Not scheduled tasks")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "h5" }, [
-          _c("label", [
-            _c("input", {
-              attrs: { type: "checkbox" },
-              domProps: { checked: _vm.hideFinished },
-              on: { click: _vm.switchHideFinished }
-            }),
-            _vm._v(" Hide Finished")
+  return _vm.isDataLoaded
+    ? _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-5 font-weight-bold h3" }, [
+            _vm._v("Not scheduled tasks")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "row justify-content-between h5" }, [
+              _c("label", [
+                _c("input", {
+                  attrs: { type: "checkbox" },
+                  domProps: { checked: _vm.hideFinished },
+                  on: { click: _vm.switchHideFinished }
+                }),
+                _vm._v(" Hide Finished")
+              ]),
+              _vm._v(" "),
+              _vm.countFinished
+                ? _c(
+                    "button",
+                    { staticClass: "btn btn-sm btn-outline-secondary" },
+                    [_vm._v("Archive all (" + _vm._s(_vm.countFinished) + ")")]
+                  )
+                : _vm._e()
+            ])
           ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row justify-content-center" }, [
+          _c(
+            "div",
+            { staticClass: "col-md-12 p-0 m-0" },
+            [
+              _c("index-task", {
+                attrs: {
+                  tasks: _vm.tasks,
+                  type: _vm.type,
+                  hideFinished: _vm.hideFinished
+                },
+                on: {
+                  statusUpdated: _vm.getNotScheduled,
+                  archived: _vm.archived,
+                  taskDeleted: _vm.getNotScheduled
+                }
+              })
+            ],
+            1
+          )
         ])
-      ]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-12 p-0 m-0" },
-        [
-          _c("index-task", {
-            attrs: {
-              tasks: _vm.tasks,
-              type: _vm.type,
-              isDataLoaded: _vm.isDataLoaded
-            },
-            on: {
-              statusUpdated: _vm.getNotScheduled,
-              archived: _vm.archived,
-              taskDeleted: _vm.getNotScheduled
-            }
-          })
-        ],
-        1
-      )
-    ])
-  ])
+      ])
+    : _c("div", [_vm._v("Loading...")])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -67882,46 +67954,58 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-between" }, [
-      _c("span", { staticClass: "font-weight-bold h3" }, [
-        _vm._v("Today tasks")
-      ]),
-      _vm._v(" "),
-      _c("span", { staticClass: "h5" }, [
-        _c("label", [
-          _c("input", {
-            attrs: { type: "checkbox" },
-            domProps: { checked: _vm.hideFinished },
-            on: { click: _vm.switchHideFinished }
-          }),
-          _vm._v(" Hide Finished")
+  return _vm.isDataLoaded
+    ? _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-5 font-weight-bold h3" }, [
+            _vm._v("Today tasks")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "row justify-content-between h5" }, [
+              _c("label", [
+                _c("input", {
+                  attrs: { type: "checkbox" },
+                  domProps: { checked: _vm.hideFinished },
+                  on: { click: _vm.switchHideFinished }
+                }),
+                _vm._v(" Hide Finished")
+              ]),
+              _vm._v(" "),
+              _vm.countFinished
+                ? _c(
+                    "button",
+                    { staticClass: "btn btn-sm btn-outline-secondary" },
+                    [_vm._v("Archive all (" + _vm._s(_vm.countFinished) + ")")]
+                  )
+                : _vm._e()
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row justify-content-center" }, [
+          _c(
+            "div",
+            { staticClass: "col-md-12 p-0 m-0" },
+            [
+              _c("index-task", {
+                attrs: {
+                  tasks: _vm.tasks,
+                  type: _vm.type,
+                  hideFinished: _vm.hideFinished
+                },
+                on: {
+                  statusUpdated: _vm.getToday,
+                  archived: _vm.archived,
+                  taskDeleted: _vm.getToday
+                }
+              })
+            ],
+            1
+          )
         ])
       ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-12 p-0 m-0" },
-        [
-          _c("index-task", {
-            attrs: {
-              tasks: _vm.tasks,
-              type: _vm.type,
-              isDataLoaded: _vm.isDataLoaded
-            },
-            on: {
-              statusUpdated: _vm.getToday,
-              archived: _vm.archived,
-              taskDeleted: _vm.getToday
-            }
-          })
-        ],
-        1
-      )
-    ])
-  ])
+    : _c("div", [_vm._v("Loading...")])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -67946,48 +68030,58 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c(
-      "div",
-      { staticClass: "row font-weight-bold h3 justify-content-between" },
-      [
-        _c("span", [_vm._v("Upcoming tasks")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "h5" }, [
-          _c("label", [
-            _c("input", {
-              attrs: { type: "checkbox" },
-              domProps: { checked: _vm.hideFinished },
-              on: { click: _vm.switchHideFinished }
-            }),
-            _vm._v(" Hide Finished")
+  return _vm.isDataLoaded
+    ? _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-5 font-weight-bold h3" }, [
+            _vm._v("Upcoming tasks")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "row justify-content-between h5" }, [
+              _c("label", [
+                _c("input", {
+                  attrs: { type: "checkbox" },
+                  domProps: { checked: _vm.hideFinished },
+                  on: { click: _vm.switchHideFinished }
+                }),
+                _vm._v(" Hide Finished")
+              ]),
+              _vm._v(" "),
+              _vm.countFinished
+                ? _c(
+                    "button",
+                    { staticClass: "btn btn-sm btn-outline-secondary" },
+                    [_vm._v("Archive all (" + _vm._s(_vm.countFinished) + ")")]
+                  )
+                : _vm._e()
+            ])
           ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row justify-content-center" }, [
+          _c(
+            "div",
+            { staticClass: "col-md-12 p-0 m-0" },
+            [
+              _c("index-task", {
+                attrs: {
+                  tasks: _vm.tasks,
+                  type: _vm.type,
+                  hideFinished: _vm.hideFinished
+                },
+                on: {
+                  statusUpdated: _vm.getUpcoming,
+                  archived: _vm.archived,
+                  taskDeleted: _vm.getUpcoming
+                }
+              })
+            ],
+            1
+          )
         ])
-      ]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-12 p-0 m-0" },
-        [
-          _c("index-task", {
-            attrs: {
-              tasks: _vm.tasks,
-              type: _vm.type,
-              isDataLoaded: _vm.isDataLoaded
-            },
-            on: {
-              statusUpdated: _vm.getUpcoming,
-              archived: _vm.archived,
-              taskDeleted: _vm.getUpcoming
-            }
-          })
-        ],
-        1
-      )
-    ])
-  ])
+      ])
+    : _c("div", [_vm._v("Loading...")])
 }
 var staticRenderFns = []
 render._withStripped = true

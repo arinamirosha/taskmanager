@@ -6,7 +6,7 @@
             <span v-if="task.schedule" :data-title="titleSchedule(task.schedule)" class="schedule">
                 <i v-if="task.schedule" class="far fa-clock pl-1 text-secondary"></i>
             </span>
-            <span v-if="task.status === 6" @click.stop="archive(task.id)" class="btn btn-sm btn-outline-secondary mr-3" style="float: right">
+            <span v-if="task.status === c.STATUS_FINISHED" @click.stop="archive(task.id)" class="btn btn-sm btn-outline-secondary mr-3" style="float: right">
                 &#10003;
             </span>
         </a>
@@ -15,17 +15,22 @@
 
 <script>
 import route from "../../route";
-import * as c from '../../constants';
+import * as constants from '../../constants';
 import moment from "moment";
 
 export default {
     props: ['task'],
+    computed: {
+        c: function () {
+            return constants;
+        },
+    },
     methods: {
         importanceCss(importance) {
             switch (importance) {
-                case c.STATUS_NORMAL: return 'text-secondary';
-                case c.STATUS_MEDIUM: return 'text-primary';
-                case c.STATUS_STRONG: return 'text-danger';
+                case constants.STATUS_NORMAL: return 'text-secondary';
+                case constants.STATUS_MEDIUM: return 'text-primary';
+                case constants.STATUS_STRONG: return 'text-danger';
             }
             return '';
         },
