@@ -21,7 +21,10 @@
                     <span :class="isNeedStyleFinished(task) ? 'task-finished' : importanceCss(task.importance)">&bull;</span> {{task.name}}
                 </div>
 
-                <div class="col-md-3">{{task.project.name}}</div>
+                <div class="col-md-3">
+                    {{task.project.name}}
+                    <span v-if="task.project.deleted_at" class="text-info">ARCHIVED</span>
+                </div>
 
                 <div class="col-md-2" v-if="type !== c.NOT_SCHEDULED" :class="{'text-danger': isNeedStyleOverdue(task)}">
                     {{formatDate(task.schedule)}} <i v-if="isNeedStyleOverdue(task)" class="fas fa-exclamation"></i>

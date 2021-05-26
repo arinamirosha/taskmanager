@@ -44,7 +44,7 @@ export default {
     validations: {
         name: {
             required,
-            maxLength: maxLength(15),
+            maxLength: maxLength(100),
         },
         fav: {
             boolean: value => typeof value === 'boolean',

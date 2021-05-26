@@ -24,6 +24,10 @@
                             <i class="far fa-edit"></i>
                         </a>
 
+                        <a class="cursor-pointer" data-toggle="modal" data-target="#archiveProjectModal">
+                            <i class="fas fa-archive text-secondary"></i>
+                        </a>
+
                         <a class="cursor-pointer text-danger" data-toggle="modal" data-target="#deleteProjectModal">
                             <i class="far fa-trash-alt"></i>
                         </a>
@@ -68,6 +72,9 @@
             </div>
             <div class="modal fade show mt-5" id="deleteProjectModal" tabindex="-1">
                 <delete-project-modal :project="project" @deleted="projectDeleted"></delete-project-modal>
+            </div>
+            <div class="modal fade show mt-5" id="archiveProjectModal" tabindex="-1">
+                <archive-project-modal :project="project" @deleted="projectDeleted"></archive-project-modal>
             </div>
 
             <div class="modal fade show mt-5" id="createTaskModal" tabindex="-1">
@@ -261,7 +268,7 @@ export default {
 #not-fav:hover {
     color: #f7c948;
 }
-.fa-edit:hover {
+.fa-edit:hover, .fa-archive:hover {
     color: #212529;
 }
 </style>

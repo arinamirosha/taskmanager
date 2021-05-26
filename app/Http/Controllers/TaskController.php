@@ -18,6 +18,7 @@ class TaskController extends Controller
     public function update(Task $task, Request $request)
     {
         $task->update($request->all());
+
         return $task;
     }
 
@@ -29,6 +30,7 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         $task->delete();
+
         return true;
     }
 
@@ -66,6 +68,7 @@ class TaskController extends Controller
     public function destroyForce(Task $task)
     {
         $task->forceDelete();
+
         return true;
     }
 
@@ -97,6 +100,10 @@ class TaskController extends Controller
             }
         }
 
-        return $tasks->with('project')->select('tasks.*')->get();
+        return $tasks->with([
+            'project' => function ($query) {
+                $query->withTrashed();
+            },
+        ])->select('tasks.*')->get();
     }
 }

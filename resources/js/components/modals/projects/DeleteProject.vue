@@ -29,7 +29,7 @@ export default {
     methods: {
         deleteProject(e) {
             axios
-                .delete(route('projects.destroy', this.project.id))
+                .delete(route('projects.destroy-force', this.project.id))
                 .then(response => {
                     this.$refs.cancel.click();
                     this.$emit('deleted');

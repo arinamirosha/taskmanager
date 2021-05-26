@@ -19,6 +19,7 @@ class CreateProjectsTable extends Migration
             $table->string('name');
             $table->boolean('favorite');
             $table->string('color');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

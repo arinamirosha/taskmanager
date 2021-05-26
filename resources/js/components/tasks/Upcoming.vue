@@ -19,6 +19,7 @@
                     :tasks="tasks"
                     :type="type"
                     :isDataLoaded="isDataLoaded"
+                    @archived="taskArchived"
                     @statusUpdated="getUpcoming"
                     @taskDeleted="getUpcoming"
                     @showProject="showProject"
@@ -101,6 +102,10 @@ export default {
         },
         showProject(id) {
             this.$emit('showProject', id);
+        },
+        taskArchived() {
+            this.getUpcoming();
+            this.$emit('taskArchived');
         }
     },
     mounted() {

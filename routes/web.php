@@ -27,7 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/projects', [App\Http\Controllers\ProjectsController::class, 'store'])->name('projects.store');
     Route::get('/projects/{project}', [App\Http\Controllers\ProjectsController::class, 'show'])->name('projects.show');
     Route::post('/projects/{project}', [App\Http\Controllers\ProjectsController::class, 'update'])->name('projects.update');
-    Route::delete('/projects/{project}', [App\Http\Controllers\ProjectsController::class, 'destroy'])->name('projects.destroy');
+    Route::delete('/projects/{project}/archive', [App\Http\Controllers\ProjectsController::class, 'archive'])->name('projects.archive');
+    Route::delete('/projects/{project}/force', [App\Http\Controllers\ProjectsController::class, 'destroyForce'])->name('projects.destroy-force');
 
     Route::get('/tasks', [App\Http\Controllers\TaskController::class, 'index'])->name('tasks.index');
     Route::post('/tasks', [App\Http\Controllers\TaskController::class, 'store'])->name('tasks.store');

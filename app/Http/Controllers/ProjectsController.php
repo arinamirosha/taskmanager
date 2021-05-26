@@ -26,12 +26,26 @@ class ProjectsController extends Controller
     public function update(Project $project, Request $request)
     {
         $project->update($request->all());
+
         return $project;
     }
 
-    public function destroy(Project $project)
+    public function archive(Project $project, Request $request)
     {
+        $archiveTasks = $request->get('archive_tasks', true);
+
+        if ($archiveTasks) {
+            $project->tasks()->delete();
+        }
         $project->delete();
+
+        return true;
+    }
+
+    public function destroyForce(Project $project)
+    {
+        $project->forceDelete();
+
         return true;
     }
 }

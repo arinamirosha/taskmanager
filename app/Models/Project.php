@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -36,13 +37,15 @@ class Project extends Model
     }
 
     /**
-     * On delete cascade tasks
+     * On force delete cascade force delete tasks
      */
     public static function boot() {
         parent::boot();
 
-        static::deleting(function($project) { // before delete() method call this
-            $project->tasks()->forceDelete();
+        static::deleting(function ($project) {
+            if ($project->forceDeleting) {
+                $project->tasks()->forceDelete();
+            }
         });
     }
 }
