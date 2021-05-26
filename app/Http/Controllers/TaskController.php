@@ -32,9 +32,13 @@ class TaskController extends Controller
         return true;
     }
 
-    public function archive(Request $request) {
-        $type  = $request->get('type', false);
-        $tasks = Auth::user()->tasks();
+    public function archive(Request $request)
+    {
+        $type      = $request->get('type', false);
+        $projectId = $request->get('project_id', false);
+
+        $tasks = Auth::user()->tasks()->where('status', Task::STATUS_FINISHED);
+        $count = 0;
 
         if ($type) {
             switch ($type) {
@@ -48,15 +52,15 @@ class TaskController extends Controller
                     $tasks = $tasks->where('schedule', '<>', Carbon::today()->format('Y-m-d'));
                     break;
             }
-
-            $tasks = $tasks->where('status', Task::STATUS_FINISHED);
             $count = $tasks->count();
             $tasks->delete();
-
-            return $count;
+        } elseif ($projectId) {
+            $tasks = $tasks->where('project_id', $projectId);
+            $count = $tasks->count();
+            $tasks->delete();
         }
 
-        return 0;
+        return $count;
     }
 
     public function destroyForce(Task $task)

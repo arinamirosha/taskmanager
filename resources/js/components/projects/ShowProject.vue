@@ -1,83 +1,101 @@
 <template>
-    <div v-if="project" class="ml-5">
+    <div class="container">
 
-        <div class="row mb-3 justify-content-between">
-            <div class="col-md-6">
-                <span class="font-weight-bold h4">{{project.name}}</span>
+        <div v-if="project">
 
-                <span class="h5 pl-2 mt-5 cursor-pointer">
-                    <i class="fa fa-star fav-star-full" v-if="project.favorite" id="fav" @click="changeFav(project.id, false)"></i>
-                    <i class="far fa-star text-custom-secondary" v-else id="not-fav" @click="changeFav(project.id, true)"></i>
-                </span>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <span class="font-weight-bold h4">{{project.name}}</span>
+                </div>
+                <div class="col-md-6">
 
-                <a class="cursor-pointer text-muted pl-2 pr-2" data-toggle="modal" data-target="#editProjectModal">Edit</a>
-                <a class="cursor-pointer text-danger" data-toggle="modal" data-target="#deleteProjectModal">Delete</a>
-            </div>
-            <div class="col-md-6">
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createTaskModal">Add Task</button>
-<!--                <button class="btn btn-sm btn-outline-secondary" @click="archiveAllNotScheduled" v-if="tasksFinished.length">Archive Finished</button>-->
-            </div>
-        </div>
+                    <div class="row justify-content-between h5">
 
-        <div class="row font-weight-bold h6">
-            <div class="col-md-3">New</div>
-            <div class="col-md-3">In progress</div>
-            <div class="col-md-3">Finished</div>
-        </div>
+                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createTaskModal">Add New Task</button>
 
-        <div class="row">
-            <div class="col-md-3">
-                <draggable :list="tasksNew" group="tasks" @change="update" :move="isMove">
-                    <div v-for="task in tasksNew" :key="task.id">
-                        <list-item-task :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
+                        <button class="btn btn-sm btn-outline-secondary" @click="archiveAllForProject">Archive Finished</button>
+
+                        <span class="cursor-pointer">
+                            <i class="fa fa-star fav-star-full" v-if="project.favorite" id="fav" @click="changeFav(project.id, false)"></i>
+                            <i class="far fa-star text-custom-secondary" v-else id="not-fav" @click="changeFav(project.id, true)"></i>
+                        </span>
+
+                        <a class="cursor-pointer text-muted" data-toggle="modal" data-target="#editProjectModal">
+                            <i class="far fa-edit"></i>
+                        </a>
+
+                        <a class="cursor-pointer text-danger" data-toggle="modal" data-target="#deleteProjectModal">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+
                     </div>
-                </draggable>
+                </div>
             </div>
-            <div class="col-md-3">
-                <draggable :list="tasksProgress" group="tasks" @change="update" :move="isMove">
-                    <div v-for="task in tasksProgress" :key="task.id">
-                        <list-item-task :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
-                    </div>
-                </draggable>
+
+            <div class="row font-weight-bold h6">
+                <div class="col-md-4">New</div>
+                <div class="col-md-4">In progress</div>
+                <div class="col-md-4">Finished</div>
             </div>
-            <div class="col-md-3">
-                <draggable :list="tasksFinished" group="tasks" @change="update" :move="isMove">
-                    <div v-for="task in tasksFinished" :key="task.id">
-                        <list-item-task :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
-                    </div>
-                </draggable>
+
+            <div class="row">
+                <div class="col-md-4 border-left">
+                    <draggable :list="tasksNew" group="tasks" @change="update" :move="isMove">
+                        <div v-for="task in tasksNew" :key="task.id">
+                            <list-item-task :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
+                        </div>
+                    </draggable>
+                </div>
+                <div class="col-md-4 border-left">
+                    <draggable :list="tasksProgress" group="tasks" @change="update" :move="isMove">
+                        <div v-for="task in tasksProgress" :key="task.id">
+                            <list-item-task :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
+                        </div>
+                    </draggable>
+                </div>
+                <div class="col-md-4 border-left">
+                    <draggable :list="tasksFinished" group="tasks" @change="update" :move="isMove">
+                        <div v-for="task in tasksFinished" :key="task.id">
+                            <list-item-task :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
+                        </div>
+                    </draggable>
+                </div>
             </div>
-        </div>
 
-        <!-- Modals-->
-        <div class="modal fade show mt-5" id="editProjectModal" tabindex="-1">
-            <edit-project-modal :project="project" @updated="projectUpdated"></edit-project-modal>
-        </div>
-        <div class="modal fade show mt-5" id="deleteProjectModal" tabindex="-1">
-            <delete-project-modal :project="project" @deleted="projectDeleted"></delete-project-modal>
-        </div>
+            <!-- Modals-->
+            <div class="modal fade show mt-5" id="editProjectModal" tabindex="-1">
+                <edit-project-modal :project="project" @updated="projectUpdated"></edit-project-modal>
+            </div>
+            <div class="modal fade show mt-5" id="deleteProjectModal" tabindex="-1">
+                <delete-project-modal :project="project" @deleted="projectDeleted"></delete-project-modal>
+            </div>
 
-        <div class="modal fade show mt-5" id="createTaskModal" tabindex="-1">
-            <create-task-modal :id="project.id" @stored="getProject"></create-task-modal>
-        </div>
+            <div class="modal fade show mt-5" id="createTaskModal" tabindex="-1">
+                <create-task-modal :id="project.id" @stored="taskStored"></create-task-modal>
+            </div>
 
-        <button v-show="false" data-toggle="modal" data-target="#showTaskModal" ref="showTaskModalButton"></button>
-        <div class="modal fade show mt-5 pb-5" id="showTaskModal" tabindex="-1" ref="showTaskModal">
-            <show-task-modal
-                :task="currentTask"
-                @deleteTaskModal="$refs.deleteTaskModalButton.click()"
-                @archived="taskArchived"
-                @statusUpdated="taskStatusUpdated"
-            ></show-task-modal>
-        </div>
+            <button v-show="false" data-toggle="modal" data-target="#showTaskModal" ref="showTaskModalButton"></button>
+            <div class="modal fade show mt-5 pb-5" id="showTaskModal" tabindex="-1" ref="showTaskModal">
+                <show-task-modal
+                    :task="currentTask"
+                    @deleteTaskModal="$refs.deleteTaskModalButton.click()"
+                    @archived="taskArchived"
+                    @statusUpdated="taskStatusUpdated"
+                ></show-task-modal>
+            </div>
 
-        <button v-show="false" data-toggle="modal" data-target="#deleteTaskModal" ref="deleteTaskModalButton"></button>
-        <div class="modal fade show mt-5" id="deleteTaskModal" tabindex="-1">
-            <delete-task-modal :task="currentTask" @deleted="taskDeleted" @cancel="$refs.showTaskModalButton.click();"></delete-task-modal>
+            <button v-show="false" data-toggle="modal" data-target="#deleteTaskModal" ref="deleteTaskModalButton"></button>
+            <div class="modal fade show mt-5" id="deleteTaskModal" tabindex="-1">
+                <delete-task-modal :task="currentTask" @deleted="taskDeleted" @cancel="$refs.showTaskModalButton.click();"></delete-task-modal>
+            </div>
+
+            <!-- Toast -->
+            <toast :body="infoBody" />
+
         </div>
+        <div v-else class="h4">Select project</div>
 
     </div>
-    <div v-else class="h4">Select project</div>
 </template>
 
 <script>
@@ -98,6 +116,7 @@ export default {
             tasksProgressLength: 0,
             tasksFinishedLength: 0,
             currentTask: {},
+            infoBody: '',
         }
     },
     watch: {
@@ -168,8 +187,13 @@ export default {
         },
         taskDeleted() {
             this.getProject();
-            this.currentTask = 0;
+            this.currentTask = {};
+            this.$emit('taskDeleted');
 
+        },
+        taskStored() {
+            this.getProject();
+            this.$emit('taskStored');
         },
         changeFav(projectId, favorite) {
             axios
@@ -186,7 +210,31 @@ export default {
         },
         taskStatusUpdated(id) {
             this.getProject();
-        }
+        },
+        archiveAllForProject() {
+            axios
+                .delete(route('tasks.archive'), {
+                    params: {
+                        'project_id': this.id,
+                    }
+                })
+                .then(response => {
+                    let countArchived = response.data;
+
+                    if (countArchived) {
+                        this.infoBody = 'Archived: ' + countArchived;
+                    } else {
+                        this.infoBody = 'Nothing to Archive';
+                    }
+
+                    $('.toast').toast('show');
+                    this.getProject();
+                    this.$emit('taskArchived');
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
     },
     mounted() {
         this.getProject();
@@ -212,5 +260,8 @@ export default {
 }
 #not-fav:hover {
     color: #f7c948;
+}
+.fa-edit:hover {
+    color: #212529;
 }
 </style>

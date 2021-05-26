@@ -1,15 +1,22 @@
 <template>
-    <div class="container" v-if="isDataLoaded">
-        <div class="row font-weight-bold h3">
-            Archive
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-12 p-0 m-0">
-                <index-task :tasks="tasks" :type="type"></index-task>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-6 font-weight-bold h3">Archive
+                <transition name="fade" appear><i v-if="!isDataLoaded" class="fas fa-spinner fa-spin h3"></i></transition>
             </div>
         </div>
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <index-task
+                    :tasks="tasks"
+                    :type="type"
+                    :isDataLoaded="isDataLoaded"
+                ></index-task>
+            </div>
+        </div>
+
     </div>
-    <div v-else>Loading...</div>
 </template>
 
 <script>

@@ -62,6 +62,8 @@
                 @updated="getProjects"
                 @deleted="getProjects"
                 @taskArchived="getProjects"
+                @taskStored="getProjects"
+                @taskDeleted="getProjects"
                 @userUpdated="getUser"
             ></component>
         </div>

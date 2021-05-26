@@ -6,9 +6,7 @@
             <span v-if="task.schedule" :data-title="titleSchedule(task.schedule)" class="schedule">
                 <i v-if="task.schedule" class="far fa-clock pl-1 text-secondary"></i>
             </span>
-            <span v-if="task.status === c.STATUS_FINISHED" @click.stop="archive(task.id)" class="btn btn-sm btn-outline-secondary mr-3" style="float: right">
-                &#10003;
-            </span>
+            <span v-if="task.status === c.STATUS_FINISHED" @click.stop="archive(task.id)" class="mr-2 float-right"><i class="fas fa-archive text-secondary"></i></span>
         </a>
     </div>
 </template>
@@ -78,5 +76,8 @@ export default {
 .cursor-pointer:hover{
     background-color: #e0eeee;
     border-radius: 5px;
+}
+.fa-archive:hover {
+    color: #212529;
 }
 </style>

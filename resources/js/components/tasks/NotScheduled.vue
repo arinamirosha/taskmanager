@@ -1,8 +1,10 @@
 <template>
-    <div class="container" v-if="isDataLoaded">
+    <div class="container">
 
         <div class="row">
-            <div class="col-md-5 font-weight-bold h3">Not scheduled tasks</div>
+            <div class="col-md-6 font-weight-bold h3">Not scheduled tasks
+                <transition name="fade" appear><i v-if="!isDataLoaded" class="fas fa-spinner fa-spin h3"></i></transition>
+            </div>
             <div class="col-md-6">
                 <div class="row justify-content-between h5">
                     <label><input type="checkbox" :checked="hideFinished" @click="switchHideFinished"> Hide Finished</label>
@@ -11,11 +13,12 @@
             </div>
         </div>
 
-        <div class="row justify-content-center">
-            <div class="col-md-12 p-0 m-0">
+        <div class="row">
+            <div class="col-md-12">
                 <index-task
                     :tasks="tasks"
                     :type="type"
+                    :isDataLoaded="isDataLoaded"
                     @statusUpdated="getNotScheduled"
                     @taskDeleted="getNotScheduled"
                 ></index-task>
@@ -26,7 +29,6 @@
         <toast :body="infoBody" />
 
     </div>
-    <div v-else>Loading...</div>
 </template>
 
 <script>

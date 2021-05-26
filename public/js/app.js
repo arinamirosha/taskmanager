@@ -1952,6 +1952,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2796,6 +2798,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2811,7 +2831,8 @@ __webpack_require__.r(__webpack_exports__);
       tasksNewLength: 0,
       tasksProgressLength: 0,
       tasksFinishedLength: 0,
-      currentTask: {}
+      currentTask: {},
+      infoBody: ''
     };
   },
   watch: {
@@ -2899,7 +2920,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     taskDeleted: function taskDeleted() {
       this.getProject();
-      this.currentTask = 0;
+      this.currentTask = {};
+      this.$emit('taskDeleted');
+    },
+    taskStored: function taskStored() {
+      this.getProject();
+      this.$emit('taskStored');
     },
     changeFav: function changeFav(projectId, favorite) {
       var _this3 = this;
@@ -2916,6 +2942,31 @@ __webpack_require__.r(__webpack_exports__);
     },
     taskStatusUpdated: function taskStatusUpdated(id) {
       this.getProject();
+    },
+    archiveAllForProject: function archiveAllForProject() {
+      var _this4 = this;
+
+      axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.archive'), {
+        params: {
+          'project_id': this.id
+        }
+      }).then(function (response) {
+        var countArchived = response.data;
+
+        if (countArchived) {
+          _this4.infoBody = 'Archived: ' + countArchived;
+        } else {
+          _this4.infoBody = 'Nothing to Archive';
+        }
+
+        $('.toast').toast('show');
+
+        _this4.getProject();
+
+        _this4.$emit('taskArchived');
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   mounted: function mounted() {
@@ -2941,6 +2992,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../route */ "./resources/js/route.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3076,11 +3134,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['tasks', 'type'],
+  props: ['tasks', 'type', 'isDataLoaded'],
   data: function data() {
     return {
       currentTask: {}
@@ -3173,8 +3232,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -3230,6 +3287,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../route */ "./resources/js/route.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
+//
+//
 //
 //
 //
@@ -3378,6 +3437,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3464,6 +3525,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../route */ "./resources/js/route.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
+//
+//
 //
 //
 //
@@ -8247,7 +8310,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.cursor-pointer[data-v-fe328f1c]{\n    cursor: pointer;\n}\n.fav-star-full[data-v-fe328f1c] {\n    color: #f7c948;\n}\n.text-custom-secondary[data-v-fe328f1c] {\n    color: #c8c8c8;\n}\n#fav[data-v-fe328f1c]:hover {\n    color: #c8c8c8;\n}\n#not-fav[data-v-fe328f1c]:hover {\n    color: #f7c948;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.cursor-pointer[data-v-fe328f1c]{\n    cursor: pointer;\n}\n.fav-star-full[data-v-fe328f1c] {\n    color: #f7c948;\n}\n.text-custom-secondary[data-v-fe328f1c] {\n    color: #c8c8c8;\n}\n#fav[data-v-fe328f1c]:hover {\n    color: #c8c8c8;\n}\n#not-fav[data-v-fe328f1c]:hover {\n    color: #f7c948;\n}\n.fa-edit[data-v-fe328f1c]:hover {\n    color: #212529;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8271,7 +8334,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.cursor-pointer[data-v-9b6facca]{\n    cursor: pointer;\n}\n.cursor-pointer[data-v-9b6facca]:hover{\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished[data-v-9b6facca] {\n    color: #dedede;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.cursor-pointer[data-v-9b6facca]{\n    cursor: pointer;\n}\n.cursor-pointer[data-v-9b6facca]:hover{\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished[data-v-9b6facca] {\n    color: #dedede;\n}\n.fade-enter-active[data-v-9b6facca], .fade-leave-active[data-v-9b6facca] {\n    transition: opacity .5s;\n}\n.fade-enter[data-v-9b6facca], .fade-leave-to[data-v-9b6facca] /* .fade-leave-active до версии 2.1.8 */ {\n    opacity: 0;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8295,7 +8358,31 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.cursor-pointer[data-v-a3c2b5fc]{\n    cursor: pointer;\n}\n.schedule[data-v-a3c2b5fc]:hover::after {\n    position: absolute;\n    content: attr(data-title);\n    margin-left: 5px;\n    z-index: 1;\n    background: #f8f9fa;\n    text-align: center;\n    padding: 5px 10px;\n    border: 1px solid #212529;\n    border-radius: 5px;\n}\n.stretch-a[data-v-a3c2b5fc] {\n    width: 100%;\n    display: block;\n    text-decoration: none;\n    color: #212529;\n}\n.cursor-pointer[data-v-a3c2b5fc]{\n    cursor: pointer;\n}\n.cursor-pointer[data-v-a3c2b5fc]:hover{\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.cursor-pointer[data-v-a3c2b5fc]{\n    cursor: pointer;\n}\n.schedule[data-v-a3c2b5fc]:hover::after {\n    position: absolute;\n    content: attr(data-title);\n    margin-left: 5px;\n    z-index: 1;\n    background: #f8f9fa;\n    text-align: center;\n    padding: 5px 10px;\n    border: 1px solid #212529;\n    border-radius: 5px;\n}\n.stretch-a[data-v-a3c2b5fc] {\n    width: 100%;\n    display: block;\n    text-decoration: none;\n    color: #212529;\n}\n.cursor-pointer[data-v-a3c2b5fc]{\n    cursor: pointer;\n}\n.cursor-pointer[data-v-a3c2b5fc]:hover{\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.fa-archive[data-v-a3c2b5fc]:hover {\n    color: #212529;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/Today.vue?vue&type=style&index=0&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/Today.vue?vue&type=style&index=0&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -64594,6 +64681,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/Today.vue?vue&type=style&index=0&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/Today.vue?vue&type=style&index=0&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Today_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Today.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/Today.vue?vue&type=style&index=0&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Today_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Today_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
 /*!****************************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
@@ -65483,15 +65600,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Today_vue_vue_type_template_id_dba1bf36___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Today.vue?vue&type=template&id=dba1bf36& */ "./resources/js/components/tasks/Today.vue?vue&type=template&id=dba1bf36&");
 /* harmony import */ var _Today_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Today.vue?vue&type=script&lang=js& */ "./resources/js/components/tasks/Today.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _Today_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Today.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/tasks/Today.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
+;
 
 
 /* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__.default)(
   _Today_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
   _Today_vue_vue_type_template_id_dba1bf36___WEBPACK_IMPORTED_MODULE_0__.render,
   _Today_vue_vue_type_template_id_dba1bf36___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
@@ -65894,6 +66013,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ListItemTask_vue_vue_type_style_index_0_id_a3c2b5fc_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ListItemTask.vue?vue&type=style&index=0&id=a3c2b5fc&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/ListItemTask.vue?vue&type=style&index=0&id=a3c2b5fc&scoped=true&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tasks/Today.vue?vue&type=style&index=0&lang=css&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/tasks/Today.vue?vue&type=style&index=0&lang=css& ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Today_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Today.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/Today.vue?vue&type=style&index=0&lang=css&");
 
 
 /***/ }),
@@ -66450,6 +66582,8 @@ var render = function() {
             updated: _vm.getProjects,
             deleted: _vm.getProjects,
             taskArchived: _vm.getProjects,
+            taskStored: _vm.getProjects,
+            taskDeleted: _vm.getProjects,
             userUpdated: _vm.getUser
           }
         })
@@ -67452,317 +67586,342 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.project
-    ? _c("div", { staticClass: "ml-5" }, [
-        _c("div", { staticClass: "row mb-3 justify-content-between" }, [
-          _c("div", { staticClass: "col-md-6" }, [
-            _c("span", { staticClass: "font-weight-bold h4" }, [
-              _vm._v(_vm._s(_vm.project.name))
+  return _c("div", { staticClass: "container" }, [
+    _vm.project
+      ? _c(
+          "div",
+          [
+            _c("div", { staticClass: "row mb-3" }, [
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("span", { staticClass: "font-weight-bold h4" }, [
+                  _vm._v(_vm._s(_vm.project.name))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("div", { staticClass: "row justify-content-between h5" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-sm",
+                      attrs: {
+                        "data-toggle": "modal",
+                        "data-target": "#createTaskModal"
+                      }
+                    },
+                    [_vm._v("Add New Task")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-outline-secondary",
+                      on: { click: _vm.archiveAllForProject }
+                    },
+                    [_vm._v("Archive Finished")]
+                  ),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "cursor-pointer" }, [
+                    _vm.project.favorite
+                      ? _c("i", {
+                          staticClass: "fa fa-star fav-star-full",
+                          attrs: { id: "fav" },
+                          on: {
+                            click: function($event) {
+                              return _vm.changeFav(_vm.project.id, false)
+                            }
+                          }
+                        })
+                      : _c("i", {
+                          staticClass: "far fa-star text-custom-secondary",
+                          attrs: { id: "not-fav" },
+                          on: {
+                            click: function($event) {
+                              return _vm.changeFav(_vm.project.id, true)
+                            }
+                          }
+                        })
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _vm._m(1)
+                ])
+              ])
             ]),
             _vm._v(" "),
-            _c("span", { staticClass: "h5 pl-2 mt-5 cursor-pointer" }, [
-              _vm.project.favorite
-                ? _c("i", {
-                    staticClass: "fa fa-star fav-star-full",
-                    attrs: { id: "fav" },
-                    on: {
-                      click: function($event) {
-                        return _vm.changeFav(_vm.project.id, false)
-                      }
-                    }
-                  })
-                : _c("i", {
-                    staticClass: "far fa-star text-custom-secondary",
-                    attrs: { id: "not-fav" },
-                    on: {
-                      click: function($event) {
-                        return _vm.changeFav(_vm.project.id, true)
-                      }
-                    }
-                  })
+            _vm._m(2),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                { staticClass: "col-md-4 border-left" },
+                [
+                  _c(
+                    "draggable",
+                    {
+                      attrs: {
+                        list: _vm.tasksNew,
+                        group: "tasks",
+                        move: _vm.isMove
+                      },
+                      on: { change: _vm.update }
+                    },
+                    _vm._l(_vm.tasksNew, function(task) {
+                      return _c(
+                        "div",
+                        { key: task.id },
+                        [
+                          _c("list-item-task", {
+                            attrs: { task: task },
+                            on: {
+                              showTask: _vm.showTask,
+                              archived: _vm.taskArchived
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    }),
+                    0
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-4 border-left" },
+                [
+                  _c(
+                    "draggable",
+                    {
+                      attrs: {
+                        list: _vm.tasksProgress,
+                        group: "tasks",
+                        move: _vm.isMove
+                      },
+                      on: { change: _vm.update }
+                    },
+                    _vm._l(_vm.tasksProgress, function(task) {
+                      return _c(
+                        "div",
+                        { key: task.id },
+                        [
+                          _c("list-item-task", {
+                            attrs: { task: task },
+                            on: {
+                              showTask: _vm.showTask,
+                              archived: _vm.taskArchived
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    }),
+                    0
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-4 border-left" },
+                [
+                  _c(
+                    "draggable",
+                    {
+                      attrs: {
+                        list: _vm.tasksFinished,
+                        group: "tasks",
+                        move: _vm.isMove
+                      },
+                      on: { change: _vm.update }
+                    },
+                    _vm._l(_vm.tasksFinished, function(task) {
+                      return _c(
+                        "div",
+                        { key: task.id },
+                        [
+                          _c("list-item-task", {
+                            attrs: { task: task },
+                            on: {
+                              showTask: _vm.showTask,
+                              archived: _vm.taskArchived
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    }),
+                    0
+                  )
+                ],
+                1
+              )
             ]),
             _vm._v(" "),
             _c(
-              "a",
+              "div",
               {
-                staticClass: "cursor-pointer text-muted pl-2 pr-2",
-                attrs: {
-                  "data-toggle": "modal",
-                  "data-target": "#editProjectModal"
-                }
+                staticClass: "modal fade show mt-5",
+                attrs: { id: "editProjectModal", tabindex: "-1" }
               },
-              [_vm._v("Edit")]
+              [
+                _c("edit-project-modal", {
+                  attrs: { project: _vm.project },
+                  on: { updated: _vm.projectUpdated }
+                })
+              ],
+              1
             ),
             _vm._v(" "),
             _c(
-              "a",
+              "div",
               {
-                staticClass: "cursor-pointer text-danger",
-                attrs: {
-                  "data-toggle": "modal",
-                  "data-target": "#deleteProjectModal"
-                }
+                staticClass: "modal fade show mt-5",
+                attrs: { id: "deleteProjectModal", tabindex: "-1" }
               },
-              [_vm._v("Delete")]
-            )
-          ]),
-          _vm._v(" "),
-          _vm._m(0)
-        ]),
-        _vm._v(" "),
-        _vm._m(1),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c(
-            "div",
-            { staticClass: "col-md-3" },
-            [
-              _c(
-                "draggable",
+              [
+                _c("delete-project-modal", {
+                  attrs: { project: _vm.project },
+                  on: { deleted: _vm.projectDeleted }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "modal fade show mt-5",
+                attrs: { id: "createTaskModal", tabindex: "-1" }
+              },
+              [
+                _c("create-task-modal", {
+                  attrs: { id: _vm.project.id },
+                  on: { stored: _vm.taskStored }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("button", {
+              directives: [
                 {
-                  attrs: {
-                    list: _vm.tasksNew,
-                    group: "tasks",
-                    move: _vm.isMove
-                  },
-                  on: { change: _vm.update }
-                },
-                _vm._l(_vm.tasksNew, function(task) {
-                  return _c(
-                    "div",
-                    { key: task.id },
-                    [
-                      _c("list-item-task", {
-                        attrs: { task: task },
-                        on: {
-                          showTask: _vm.showTask,
-                          archived: _vm.taskArchived
-                        }
-                      })
-                    ],
-                    1
-                  )
-                }),
-                0
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-md-3" },
-            [
-              _c(
-                "draggable",
-                {
-                  attrs: {
-                    list: _vm.tasksProgress,
-                    group: "tasks",
-                    move: _vm.isMove
-                  },
-                  on: { change: _vm.update }
-                },
-                _vm._l(_vm.tasksProgress, function(task) {
-                  return _c(
-                    "div",
-                    { key: task.id },
-                    [
-                      _c("list-item-task", {
-                        attrs: { task: task },
-                        on: {
-                          showTask: _vm.showTask,
-                          archived: _vm.taskArchived
-                        }
-                      })
-                    ],
-                    1
-                  )
-                }),
-                0
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-md-3" },
-            [
-              _c(
-                "draggable",
-                {
-                  attrs: {
-                    list: _vm.tasksFinished,
-                    group: "tasks",
-                    move: _vm.isMove
-                  },
-                  on: { change: _vm.update }
-                },
-                _vm._l(_vm.tasksFinished, function(task) {
-                  return _c(
-                    "div",
-                    { key: task.id },
-                    [
-                      _c("list-item-task", {
-                        attrs: { task: task },
-                        on: {
-                          showTask: _vm.showTask,
-                          archived: _vm.taskArchived
-                        }
-                      })
-                    ],
-                    1
-                  )
-                }),
-                0
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "modal fade show mt-5",
-            attrs: { id: "editProjectModal", tabindex: "-1" }
-          },
-          [
-            _c("edit-project-modal", {
-              attrs: { project: _vm.project },
-              on: { updated: _vm.projectUpdated }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "modal fade show mt-5",
-            attrs: { id: "deleteProjectModal", tabindex: "-1" }
-          },
-          [
-            _c("delete-project-modal", {
-              attrs: { project: _vm.project },
-              on: { deleted: _vm.projectDeleted }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "modal fade show mt-5",
-            attrs: { id: "createTaskModal", tabindex: "-1" }
-          },
-          [
-            _c("create-task-modal", {
-              attrs: { id: _vm.project.id },
-              on: { stored: _vm.getProject }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("button", {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: false,
-              expression: "false"
-            }
-          ],
-          ref: "showTaskModalButton",
-          attrs: { "data-toggle": "modal", "data-target": "#showTaskModal" }
-        }),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            ref: "showTaskModal",
-            staticClass: "modal fade show mt-5 pb-5",
-            attrs: { id: "showTaskModal", tabindex: "-1" }
-          },
-          [
-            _c("show-task-modal", {
-              attrs: { task: _vm.currentTask },
-              on: {
-                deleteTaskModal: function($event) {
-                  return _vm.$refs.deleteTaskModalButton.click()
-                },
-                archived: _vm.taskArchived,
-                statusUpdated: _vm.taskStatusUpdated
-              }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("button", {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: false,
-              expression: "false"
-            }
-          ],
-          ref: "deleteTaskModalButton",
-          attrs: { "data-toggle": "modal", "data-target": "#deleteTaskModal" }
-        }),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "modal fade show mt-5",
-            attrs: { id: "deleteTaskModal", tabindex: "-1" }
-          },
-          [
-            _c("delete-task-modal", {
-              attrs: { task: _vm.currentTask },
-              on: {
-                deleted: _vm.taskDeleted,
-                cancel: function($event) {
-                  return _vm.$refs.showTaskModalButton.click()
+                  name: "show",
+                  rawName: "v-show",
+                  value: false,
+                  expression: "false"
                 }
+              ],
+              ref: "showTaskModalButton",
+              attrs: { "data-toggle": "modal", "data-target": "#showTaskModal" }
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                ref: "showTaskModal",
+                staticClass: "modal fade show mt-5 pb-5",
+                attrs: { id: "showTaskModal", tabindex: "-1" }
+              },
+              [
+                _c("show-task-modal", {
+                  attrs: { task: _vm.currentTask },
+                  on: {
+                    deleteTaskModal: function($event) {
+                      return _vm.$refs.deleteTaskModalButton.click()
+                    },
+                    archived: _vm.taskArchived,
+                    statusUpdated: _vm.taskStatusUpdated
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("button", {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: false,
+                  expression: "false"
+                }
+              ],
+              ref: "deleteTaskModalButton",
+              attrs: {
+                "data-toggle": "modal",
+                "data-target": "#deleteTaskModal"
               }
-            })
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "modal fade show mt-5",
+                attrs: { id: "deleteTaskModal", tabindex: "-1" }
+              },
+              [
+                _c("delete-task-modal", {
+                  attrs: { task: _vm.currentTask },
+                  on: {
+                    deleted: _vm.taskDeleted,
+                    cancel: function($event) {
+                      return _vm.$refs.showTaskModalButton.click()
+                    }
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("toast", { attrs: { body: _vm.infoBody } })
           ],
           1
         )
-      ])
-    : _c("div", { staticClass: "h4" }, [_vm._v("Select project")])
+      : _c("div", { staticClass: "h4" }, [_vm._v("Select project")])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary btn-sm",
-          attrs: { "data-toggle": "modal", "data-target": "#createTaskModal" }
-        },
-        [_vm._v("Add Task")]
-      )
-    ])
+    return _c(
+      "a",
+      {
+        staticClass: "cursor-pointer text-muted",
+        attrs: { "data-toggle": "modal", "data-target": "#editProjectModal" }
+      },
+      [_c("i", { staticClass: "far fa-edit" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "cursor-pointer text-danger",
+        attrs: { "data-toggle": "modal", "data-target": "#deleteProjectModal" }
+      },
+      [_c("i", { staticClass: "far fa-trash-alt" })]
+    )
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row font-weight-bold h6" }, [
-      _c("div", { staticClass: "col-md-3" }, [_vm._v("New")]),
+      _c("div", { staticClass: "col-md-4" }, [_vm._v("New")]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [_vm._v("In progress")]),
+      _c("div", { staticClass: "col-md-4" }, [_vm._v("In progress")]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [_vm._v("Finished")])
+      _c("div", { staticClass: "col-md-4" }, [_vm._v("Finished")])
     ])
   }
 ]
@@ -67788,22 +67947,40 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.isDataLoaded
-    ? _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "row font-weight-bold h3" }, [
-          _vm._v("\n        Archive\n    ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row justify-content-center" }, [
-          _c(
-            "div",
-            { staticClass: "col-md-12 p-0 m-0" },
-            [_c("index-task", { attrs: { tasks: _vm.tasks, type: _vm.type } })],
-            1
-          )
-        ])
-      ])
-    : _c("div", [_vm._v("Loading...")])
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-6 font-weight-bold h3" },
+        [
+          _vm._v("Archive\n            "),
+          _c("transition", { attrs: { name: "fade", appear: "" } }, [
+            !_vm.isDataLoaded
+              ? _c("i", { staticClass: "fas fa-spinner fa-spin h3" })
+              : _vm._e()
+          ])
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-12" },
+        [
+          _c("index-task", {
+            attrs: {
+              tasks: _vm.tasks,
+              type: _vm.type,
+              isDataLoaded: _vm.isDataLoaded
+            }
+          })
+        ],
+        1
+      )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -67866,33 +68043,35 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.tasks.length !== 0
-      ? _c(
-          "div",
-          [
-            _c("div", { staticClass: "row h5 font-weight-bold" }, [
-              _c("div", { staticClass: "col-md-1" }, [_vm._v("#")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3" }, [_vm._v("Task")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3" }, [_vm._v("Project")]),
-              _vm._v(" "),
-              _vm.type !== _vm.c.NOT_SCHEDULED
-                ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Schedule")])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.type === _vm.c.ARCHIVE
-                ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Archived")])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.tasks, function(task, index) {
-              return _c(
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "row h5 font-weight-bold" }, [
+        _c("div", { staticClass: "col-md-1" }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3" }, [_vm._v("Task")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3" }, [_vm._v("Project")]),
+        _vm._v(" "),
+        _vm.type !== _vm.c.NOT_SCHEDULED
+          ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Schedule")])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.type === _vm.c.ARCHIVE
+          ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Archived")])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c(
+        "transition-group",
+        { attrs: { name: "fade", appear: "" } },
+        _vm._l(_vm.tasks, function(task, index) {
+          return _vm.isDataLoaded && _vm.tasks.length !== 0
+            ? _c(
                 "div",
                 {
                   key: task.id,
-                  staticClass: "row cursor-pointer p-1",
+                  staticClass: "row cursor-pointer pt-1 pb-1",
                   class: { "task-finished": _vm.isNeedStyleFinished(task) },
                   on: {
                     click: function($event) {
@@ -67918,11 +68097,7 @@ var render = function() {
                       },
                       [_vm._v("•")]
                     ),
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(task.name) +
-                        "\n            "
-                    )
+                    _vm._v(" " + _vm._s(task.name) + "\n            ")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-3" }, [
@@ -67940,7 +68115,7 @@ var render = function() {
                           _vm._v(
                             "\n                " +
                               _vm._s(_vm.formatDate(task.schedule)) +
-                              "\n                "
+                              " "
                           ),
                           _vm.isNeedStyleOverdue(task)
                             ? _c("i", { staticClass: "fas fa-exclamation" })
@@ -67956,77 +68131,78 @@ var render = function() {
                     : _vm._e()
                 ]
               )
-            })
-          ],
-          2
-        )
-      : _c("div", [_vm._v("No Tasks")]),
-    _vm._v(" "),
-    _c("button", {
-      directives: [
-        { name: "show", rawName: "v-show", value: false, expression: "false" }
-      ],
-      ref: "showTaskModalButton",
-      attrs: { "data-toggle": "modal", "data-target": "#showTaskModal" }
-    }),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        ref: "showTaskModal",
-        staticClass: "modal fade show mt-5 pb-5",
-        attrs: { id: "showTaskModal", tabindex: "-1" }
-      },
-      [
-        _c("show-task-modal", {
-          attrs: {
-            task: _vm.currentTask,
-            deletable: _vm.type !== _vm.c.ARCHIVE
-          },
-          on: {
-            archived: function($event) {
-              return _vm.$emit("archived")
+            : _vm._e()
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _c("button", {
+        directives: [
+          { name: "show", rawName: "v-show", value: false, expression: "false" }
+        ],
+        ref: "showTaskModalButton",
+        attrs: { "data-toggle": "modal", "data-target": "#showTaskModal" }
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          ref: "showTaskModal",
+          staticClass: "modal fade show mt-5 pb-5",
+          attrs: { id: "showTaskModal", tabindex: "-1" }
+        },
+        [
+          _c("show-task-modal", {
+            attrs: {
+              task: _vm.currentTask,
+              deletable: _vm.type !== _vm.c.ARCHIVE
             },
-            statusUpdated: function($event) {
-              return _vm.$emit("statusUpdated")
-            },
-            deleteTaskModal: function($event) {
-              return _vm.$refs.deleteTaskModalButton.click()
+            on: {
+              archived: function($event) {
+                return _vm.$emit("archived")
+              },
+              statusUpdated: function($event) {
+                return _vm.$emit("statusUpdated")
+              },
+              deleteTaskModal: function($event) {
+                return _vm.$refs.deleteTaskModalButton.click()
+              }
             }
-          }
-        })
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c("button", {
-      directives: [
-        { name: "show", rawName: "v-show", value: false, expression: "false" }
-      ],
-      ref: "deleteTaskModalButton",
-      attrs: { "data-toggle": "modal", "data-target": "#deleteTaskModal" }
-    }),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "modal fade show mt-5",
-        attrs: { id: "deleteTaskModal", tabindex: "-1" }
-      },
-      [
-        _c("delete-task-modal", {
-          attrs: { task: _vm.currentTask },
-          on: {
-            deleted: _vm.taskDeleted,
-            cancel: function($event) {
-              return _vm.$refs.showTaskModalButton.click()
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("button", {
+        directives: [
+          { name: "show", rawName: "v-show", value: false, expression: "false" }
+        ],
+        ref: "deleteTaskModalButton",
+        attrs: { "data-toggle": "modal", "data-target": "#deleteTaskModal" }
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade show mt-5",
+          attrs: { id: "deleteTaskModal", tabindex: "-1" }
+        },
+        [
+          _c("delete-task-modal", {
+            attrs: { task: _vm.currentTask },
+            on: {
+              deleted: _vm.taskDeleted,
+              cancel: function($event) {
+                return _vm.$refs.showTaskModalButton.click()
+              }
             }
-          }
-        })
-      ],
-      1
-    )
-  ])
+          })
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -68090,8 +68266,7 @@ var render = function() {
           ? _c(
               "span",
               {
-                staticClass: "btn btn-sm btn-outline-secondary mr-3",
-                staticStyle: { float: "right" },
+                staticClass: "mr-2 float-right",
                 on: {
                   click: function($event) {
                     $event.stopPropagation()
@@ -68099,7 +68274,7 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("\n            ✓\n        ")]
+              [_c("i", { staticClass: "fas fa-archive text-secondary" })]
             )
           : _vm._e()
       ]
@@ -68129,61 +68304,73 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.isDataLoaded
-    ? _c(
-        "div",
-        { staticClass: "container" },
-        [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-5 font-weight-bold h3" }, [
-              _vm._v("Not scheduled tasks")
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-6 font-weight-bold h3" },
+          [
+            _vm._v("Not scheduled tasks\n            "),
+            _c("transition", { attrs: { name: "fade", appear: "" } }, [
+              !_vm.isDataLoaded
+                ? _c("i", { staticClass: "fas fa-spinner fa-spin h3" })
+                : _vm._e()
+            ])
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "row justify-content-between h5" }, [
+            _c("label", [
+              _c("input", {
+                attrs: { type: "checkbox" },
+                domProps: { checked: _vm.hideFinished },
+                on: { click: _vm.switchHideFinished }
+              }),
+              _vm._v(" Hide Finished")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "row justify-content-between h5" }, [
-                _c("label", [
-                  _c("input", {
-                    attrs: { type: "checkbox" },
-                    domProps: { checked: _vm.hideFinished },
-                    on: { click: _vm.switchHideFinished }
-                  }),
-                  _vm._v(" Hide Finished")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-sm btn-outline-secondary",
-                    on: { click: _vm.archiveAllNotScheduled }
-                  },
-                  [_vm._v("Archive Finished")]
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row justify-content-center" }, [
             _c(
-              "div",
-              { staticClass: "col-md-12 p-0 m-0" },
-              [
-                _c("index-task", {
-                  attrs: { tasks: _vm.tasks, type: _vm.type },
-                  on: {
-                    statusUpdated: _vm.getNotScheduled,
-                    taskDeleted: _vm.getNotScheduled
-                  }
-                })
-              ],
-              1
+              "button",
+              {
+                staticClass: "btn btn-sm btn-outline-secondary",
+                on: { click: _vm.archiveAllNotScheduled }
+              },
+              [_vm._v("Archive Finished")]
             )
-          ]),
-          _vm._v(" "),
-          _c("toast", { attrs: { body: _vm.infoBody } })
-        ],
-        1
-      )
-    : _c("div", [_vm._v("Loading...")])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-12" },
+          [
+            _c("index-task", {
+              attrs: {
+                tasks: _vm.tasks,
+                type: _vm.type,
+                isDataLoaded: _vm.isDataLoaded
+              },
+              on: {
+                statusUpdated: _vm.getNotScheduled,
+                taskDeleted: _vm.getNotScheduled
+              }
+            })
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("toast", { attrs: { body: _vm.infoBody } })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -68208,58 +68395,70 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.isDataLoaded
-    ? _c(
-        "div",
-        { staticClass: "container" },
-        [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-5 font-weight-bold h3" }, [
-              _vm._v("Today tasks")
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-6 font-weight-bold h3" },
+          [
+            _vm._v("Today tasks\n            "),
+            _c("transition", { attrs: { name: "fade", appear: "" } }, [
+              !_vm.isDataLoaded
+                ? _c("i", { staticClass: "fas fa-spinner fa-spin h3" })
+                : _vm._e()
+            ])
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "row justify-content-between h5" }, [
+            _c("label", [
+              _c("input", {
+                attrs: { type: "checkbox" },
+                domProps: { checked: _vm.hideFinished },
+                on: { click: _vm.switchHideFinished }
+              }),
+              _vm._v(" Hide Finished")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "row justify-content-between h5" }, [
-                _c("label", [
-                  _c("input", {
-                    attrs: { type: "checkbox" },
-                    domProps: { checked: _vm.hideFinished },
-                    on: { click: _vm.switchHideFinished }
-                  }),
-                  _vm._v(" Hide Finished")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-sm btn-outline-secondary",
-                    on: { click: _vm.archiveAllToday }
-                  },
-                  [_vm._v("Archive Finished")]
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row justify-content-center" }, [
             _c(
-              "div",
-              { staticClass: "col-md-12 p-0 m-0" },
-              [
-                _c("index-task", {
-                  attrs: { tasks: _vm.tasks, type: _vm.type },
-                  on: { statusUpdated: _vm.getToday, taskDeleted: _vm.getToday }
-                })
-              ],
-              1
+              "button",
+              {
+                staticClass: "btn btn-sm btn-outline-secondary",
+                on: { click: _vm.archiveAllToday }
+              },
+              [_vm._v("Archive Finished")]
             )
-          ]),
-          _vm._v(" "),
-          _c("toast", { attrs: { body: _vm.infoBody } })
-        ],
-        1
-      )
-    : _c("div", [_vm._v("Loading...")])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-12" },
+          [
+            _c("index-task", {
+              attrs: {
+                tasks: _vm.tasks,
+                type: _vm.type,
+                isDataLoaded: _vm.isDataLoaded
+              },
+              on: { statusUpdated: _vm.getToday, taskDeleted: _vm.getToday }
+            })
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("toast", { attrs: { body: _vm.infoBody } })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -68284,61 +68483,73 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.isDataLoaded
-    ? _c(
-        "div",
-        { staticClass: "container" },
-        [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-5 font-weight-bold h3" }, [
-              _vm._v("Upcoming tasks")
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-6 font-weight-bold h3" },
+          [
+            _vm._v("Upcoming tasks\n            "),
+            _c("transition", { attrs: { name: "fade", appear: "" } }, [
+              !_vm.isDataLoaded
+                ? _c("i", { staticClass: "fas fa-spinner fa-spin h3" })
+                : _vm._e()
+            ])
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "row justify-content-between h5" }, [
+            _c("label", [
+              _c("input", {
+                attrs: { type: "checkbox" },
+                domProps: { checked: _vm.hideFinished },
+                on: { click: _vm.switchHideFinished }
+              }),
+              _vm._v(" Hide Finished")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "row justify-content-between h5" }, [
-                _c("label", [
-                  _c("input", {
-                    attrs: { type: "checkbox" },
-                    domProps: { checked: _vm.hideFinished },
-                    on: { click: _vm.switchHideFinished }
-                  }),
-                  _vm._v(" Hide Finished")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-sm btn-outline-secondary",
-                    on: { click: _vm.archiveAllUpcoming }
-                  },
-                  [_vm._v("Archive Finished")]
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row justify-content-center" }, [
             _c(
-              "div",
-              { staticClass: "col-md-12 p-0 m-0" },
-              [
-                _c("index-task", {
-                  attrs: { tasks: _vm.tasks, type: _vm.type },
-                  on: {
-                    statusUpdated: _vm.getUpcoming,
-                    taskDeleted: _vm.getUpcoming
-                  }
-                })
-              ],
-              1
+              "button",
+              {
+                staticClass: "btn btn-sm btn-outline-secondary",
+                on: { click: _vm.archiveAllUpcoming }
+              },
+              [_vm._v("Archive Finished")]
             )
-          ]),
-          _vm._v(" "),
-          _c("toast", { attrs: { body: _vm.infoBody } })
-        ],
-        1
-      )
-    : _c("div", [_vm._v("Loading...")])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-12" },
+          [
+            _c("index-task", {
+              attrs: {
+                tasks: _vm.tasks,
+                type: _vm.type,
+                isDataLoaded: _vm.isDataLoaded
+              },
+              on: {
+                statusUpdated: _vm.getUpcoming,
+                taskDeleted: _vm.getUpcoming
+              }
+            })
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("toast", { attrs: { body: _vm.infoBody } })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
