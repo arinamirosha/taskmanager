@@ -65,6 +65,7 @@
                 @taskStored="getProjects"
                 @taskDeleted="getProjects"
                 @userUpdated="getUser"
+                @showProject="selectProject"
             ></component>
         </div>
 

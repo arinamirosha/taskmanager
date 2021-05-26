@@ -8,6 +8,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         Are you sure want to delete "<strong>{{project.name}}</strong>"?
+                        All tasks of this project will be deleted including archived ones.
                     </div>
                 </div>
 

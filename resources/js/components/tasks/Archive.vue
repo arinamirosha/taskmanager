@@ -12,6 +12,7 @@
                     :tasks="tasks"
                     :type="type"
                     :isDataLoaded="isDataLoaded"
+                    @showProject="showProject"
                 ></index-task>
             </div>
         </div>
@@ -46,6 +47,9 @@ export default {
                 .catch(error => {
                     console.log(error);
                 });
+        },
+        showProject(id) {
+            this.$emit('showProject', id);
         }
     },
     mounted() {

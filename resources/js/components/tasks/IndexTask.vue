@@ -34,7 +34,14 @@
         <!-- Modals-->
         <button v-show="false" data-toggle="modal" data-target="#showTaskModal" ref="showTaskModalButton"></button>
         <div class="modal fade show mt-5 pb-5" id="showTaskModal" tabindex="-1" ref="showTaskModal">
-            <show-task-modal :task="currentTask" :deletable="type !== c.ARCHIVE" @archived="$emit('archived')" @statusUpdated="$emit('statusUpdated')" @deleteTaskModal="$refs.deleteTaskModalButton.click()"></show-task-modal>
+            <show-task-modal
+                :task="currentTask"
+                :deletable="type !== c.ARCHIVE"
+                @archived="$emit('archived')"
+                @statusUpdated="$emit('statusUpdated')"
+                @deleteTaskModal="$refs.deleteTaskModalButton.click()"
+                @showProject="showProject"
+            ></show-task-modal>
         </div>
 
         <button v-show="false" data-toggle="modal" data-target="#deleteTaskModal" ref="deleteTaskModalButton"></button>
@@ -100,6 +107,9 @@ export default {
             }
             return '';
         },
+        showProject(id) {
+            this.$emit('showProject', id);
+        }
     },
 }
 </script>

@@ -1954,6 +1954,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2208,6 +2209,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../route */ "./resources/js/route.js");
+//
 //
 //
 //
@@ -2612,6 +2614,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2695,6 +2701,10 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    showProject: function showProject(id) {
+      this.$refs.closeShowTask.click();
+      this.$emit('showProject', id);
     }
   }
 });
@@ -3013,6 +3023,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3037,6 +3048,9 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    showProject: function showProject(id) {
+      this.$emit('showProject', id);
     }
   },
   mounted: function mounted() {
@@ -3089,6 +3103,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3198,6 +3219,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return '';
+    },
+    showProject: function showProject(id) {
+      this.$emit('showProject', id);
     }
   }
 });
@@ -3320,6 +3344,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3384,6 +3409,9 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    showProject: function showProject(id) {
+      this.$emit('showProject', id);
     }
   },
   mounted: function mounted() {
@@ -3406,6 +3434,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../route */ "./resources/js/route.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
+//
 //
 //
 //
@@ -3503,6 +3532,9 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    showProject: function showProject(id) {
+      this.$emit('showProject', id);
     }
   },
   mounted: function mounted() {
@@ -3525,6 +3557,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../route */ "./resources/js/route.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
+//
 //
 //
 //
@@ -3622,6 +3655,9 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    showProject: function showProject(id) {
+      this.$emit('showProject', id);
     }
   },
   mounted: function mounted() {
@@ -8286,7 +8322,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.cursor-pointer[data-v-4b751e31]{\n    cursor: pointer;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.cursor-pointer[data-v-4b751e31] {\n    cursor: pointer;\n}\n.project-name[data-v-4b751e31]:hover {\n    color: #bcbcbc;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -66584,7 +66620,8 @@ var render = function() {
             taskArchived: _vm.getProjects,
             taskStored: _vm.getProjects,
             taskDeleted: _vm.getProjects,
-            userUpdated: _vm.getUser
+            userUpdated: _vm.getUser,
+            showProject: _vm.selectProject
           }
         })
       ],
@@ -66913,7 +66950,9 @@ var render = function() {
             _c("div", { staticClass: "form-group" }, [
               _vm._v('\n                    Are you sure want to delete "'),
               _c("strong", [_vm._v(_vm._s(_vm.project.name))]),
-              _vm._v('"?\n                ')
+              _vm._v(
+                '"?\n                    All tasks of this project will be deleted including archived ones.\n                '
+              )
             ])
           ]),
           _vm._v(" "),
@@ -67462,6 +67501,27 @@ var render = function() {
                 ])
               : _vm._e(),
             _vm._v(" "),
+            _vm.task.project
+              ? _c("div", { staticClass: "mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bold" }, [
+                    _vm._v("Project")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "cursor-pointer project-name",
+                      on: {
+                        click: function($event) {
+                          return _vm.showProject(_vm.task.project.id)
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(_vm.task.project.name))]
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
             _vm.task.schedule
               ? _c("div", { staticClass: "mb-2" }, [
                   _c("div", { staticClass: "font-weight-bold" }, [
@@ -67974,7 +68034,8 @@ var render = function() {
               tasks: _vm.tasks,
               type: _vm.type,
               isDataLoaded: _vm.isDataLoaded
-            }
+            },
+            on: { showProject: _vm.showProject }
           })
         ],
         1
@@ -68166,7 +68227,8 @@ var render = function() {
               },
               deleteTaskModal: function($event) {
                 return _vm.$refs.deleteTaskModalButton.click()
-              }
+              },
+              showProject: _vm.showProject
             }
           })
         ],
@@ -68359,7 +68421,8 @@ var render = function() {
               },
               on: {
                 statusUpdated: _vm.getNotScheduled,
-                taskDeleted: _vm.getNotScheduled
+                taskDeleted: _vm.getNotScheduled,
+                showProject: _vm.showProject
               }
             })
           ],
@@ -68448,7 +68511,11 @@ var render = function() {
                 type: _vm.type,
                 isDataLoaded: _vm.isDataLoaded
               },
-              on: { statusUpdated: _vm.getToday, taskDeleted: _vm.getToday }
+              on: {
+                statusUpdated: _vm.getToday,
+                taskDeleted: _vm.getToday,
+                showProject: _vm.showProject
+              }
             })
           ],
           1
@@ -68538,7 +68605,8 @@ var render = function() {
               },
               on: {
                 statusUpdated: _vm.getUpcoming,
-                taskDeleted: _vm.getUpcoming
+                taskDeleted: _vm.getUpcoming,
+                showProject: _vm.showProject
               }
             })
           ],

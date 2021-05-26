@@ -10,6 +10,10 @@
                         <div class="font-weight-bold">Details</div>
                         <div>{{task.details}}</div>
                     </div>
+                    <div class="mb-2" v-if="task.project">
+                        <div class="font-weight-bold">Project</div>
+                        <div class="cursor-pointer project-name" @click="showProject(task.project.id)">{{task.project.name}}</div>
+                    </div>
                     <div v-if="task.schedule" class="mb-2">
                         <div class="font-weight-bold">Schedule</div>
                         <div>{{task.schedule}}</div>
@@ -107,13 +111,20 @@ export default {
                 .catch(error => {
                     console.log(error);
                 });
-        }
+        },
+        showProject(id) {
+            this.$refs.closeShowTask.click();
+            this.$emit('showProject', id)
+        },
     },
 }
 </script>
 
 <style scoped>
-.cursor-pointer{
+.cursor-pointer {
     cursor: pointer;
+}
+.project-name:hover {
+    color: #bcbcbc;
 }
 </style>

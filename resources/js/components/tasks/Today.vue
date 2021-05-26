@@ -21,6 +21,7 @@
                     :isDataLoaded="isDataLoaded"
                     @statusUpdated="getToday"
                     @taskDeleted="getToday"
+                    @showProject="showProject"
                 ></index-task>
             </div>
         </div>
@@ -98,6 +99,9 @@ export default {
                     console.log(error);
                 });
         },
+        showProject(id) {
+            this.$emit('showProject', id);
+        }
     },
     mounted() {
         this.getToday();

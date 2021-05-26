@@ -34,4 +34,15 @@ class Project extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    /**
+     * On delete cascade tasks
+     */
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($project) { // before delete() method call this
+            $project->tasks()->forceDelete();
+        });
+    }
 }
