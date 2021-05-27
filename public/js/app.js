@@ -1955,6 +1955,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -8373,7 +8383,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nnav a[data-v-f2b6376c]:hover,\n.active[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px;\n    cursor: pointer;\n}\nnav a[data-v-f2b6376c]:hover {\n    text-decoration: none;\n}\n.cursor-pointer[data-v-f2b6376c]{\n    cursor: pointer;\n}\n.text-custom-secondary[data-v-f2b6376c] {\n    color: #c8c8c8;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nnav a[data-v-f2b6376c]:hover,\n.active[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px;\n    cursor: pointer;\n}\nnav a[data-v-f2b6376c]:hover {\n    text-decoration: none;\n}\n.cursor-pointer[data-v-f2b6376c]{\n    cursor: pointer;\n}\n.text-custom-secondary[data-v-f2b6376c] {\n    color: #c8c8c8;\n}\n.left-menu[data-v-f2b6376c] {\n    width: 305px;\n    height: calc(100vh - 44px);\n    position: fixed;\n    left: 0;\n}\n.main-content[data-v-f2b6376c] {\n    margin-left: 305px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8397,7 +8407,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.toast {\n    position: absolute;\n    top: 0;\n    right: 30px;\n    min-width: 300px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.toast {\n    position: absolute;\n    top: 0;\n    right: 0;\n    min-width: 300px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8517,7 +8527,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\r\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\r\n    opacity: 0;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -66542,8 +66552,8 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-md-2 pl-md-5 pt-4" }, [
+  return _c("div", [
+    _c("div", { staticClass: "left-menu bg-light px-2 pt-4" }, [
       _c(
         "nav",
         { staticClass: "nav flex-column" },
@@ -66777,7 +66787,7 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "col-md-10 pt-4" },
+      { staticClass: "main-content pt-4" },
       [
         _c(_vm.currentComponent, {
           tag: "component",

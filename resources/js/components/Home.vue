@@ -1,7 +1,7 @@
 <template>
-    <div class="row">
+    <div>
 
-        <div class="col-md-2 pl-md-5 pt-4">
+        <div class="left-menu bg-light px-2 pt-4">
             <nav class="nav flex-column">
                 <a class="nav-link text-dark" :class="{'active': currentComponent==='incoming'}" @click="setComponent('incoming')">Incoming</a>
                 <a class="nav-link text-dark" :class="{'active': currentComponent==='today'}" @click="setComponent('today')">Today</a>
@@ -54,7 +54,8 @@
             </nav>
         </div>
 
-        <div class="col-md-10 pt-4">
+        <div class="main-content pt-4">
+<!--        <div class="col-md-10">-->
             <component
                 v-bind:is="currentComponent"
                 :id="this.selectedProjectId"
@@ -92,6 +93,15 @@ nav a:hover {
 }
 .text-custom-secondary {
     color: #c8c8c8;
+}
+.left-menu {
+    width: 305px;
+    height: calc(100vh - 44px);
+    position: fixed;
+    left: 0;
+}
+.main-content {
+    margin-left: 305px;
 }
 </style>
 

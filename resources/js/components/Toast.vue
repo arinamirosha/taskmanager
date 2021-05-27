@@ -13,7 +13,7 @@
 .toast {
     position: absolute;
     top: 0;
-    right: 30px;
+    right: 0;
     min-width: 300px;
 }
 </style>
