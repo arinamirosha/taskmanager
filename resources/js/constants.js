@@ -10,3 +10,5 @@ export const ARCHIVE = 'archive';
 export const TODAY = 'today';
 export const NOT_SCHEDULED = 'notScheduled';
 export const UPCOMING = 'upcoming';
+
+export const INCOMING = 'incoming';

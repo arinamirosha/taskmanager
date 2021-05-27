@@ -3,11 +3,11 @@
 
         <div class="left-menu bg-light px-2 pt-4">
             <nav class="nav flex-column">
-                <a class="nav-link text-dark" :class="{'active': currentComponent==='incoming'}" @click="setComponent('incoming')">Incoming</a>
-                <a class="nav-link text-dark" :class="{'active': currentComponent==='today'}" @click="setComponent('today')">Today</a>
-                <a class="nav-link text-dark" :class="{'active': currentComponent==='upcoming'}" @click="setComponent('upcoming')">Upcoming</a>
-                <a class="nav-link text-dark" :class="{'active': currentComponent==='not-scheduled'}" @click="setComponent('not-scheduled')">Not Scheduled</a>
-                <a class="nav-link text-dark" :class="{'active': currentComponent==='archive'}" @click="setComponent('archive')">Archive</a>
+                <a class="nav-link text-dark" :class="{'active': type===c.INCOMING}" @click="setType(c.INCOMING)">Incoming</a>
+                <a class="nav-link text-dark" :class="{'active': type===c.TODAY}" @click="setType(c.TODAY)">Today</a>
+                <a class="nav-link text-dark" :class="{'active': type===c.UPCOMING}" @click="setType(c.UPCOMING)">Upcoming</a>
+                <a class="nav-link text-dark" :class="{'active': type===c.NOT_SCHEDULED}" @click="setType(c.NOT_SCHEDULED)">Not Scheduled</a>
+                <a class="nav-link text-dark" :class="{'active': type===c.ARCHIVE}" @click="setType(c.ARCHIVE)">Archive</a>
 
                 <h6 v-if="favorites.length > 0" @click="isOpenFav = !isOpenFav"
                     class="cursor-pointer font-weight-bold sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -55,17 +55,15 @@
         </div>
 
         <div class="main-content pt-4">
-<!--        <div class="col-md-10">-->
             <component
                 v-bind:is="currentComponent"
                 :id="this.selectedProjectId"
-                :hideFinished="isHideFinished"
+                :type="type"
                 @updated="getProjects"
                 @deleted="getProjects"
                 @taskArchived="getProjects"
                 @taskStored="getProjects"
                 @taskDeleted="getProjects"
-                @userUpdated="getUser"
                 @showProject="selectProject"
             ></component>
         </div>
@@ -95,29 +93,30 @@ nav a:hover {
     color: #c8c8c8;
 }
 .left-menu {
-    width: 305px;
+    width: 300px;
     height: calc(100vh - 44px);
     position: fixed;
     left: 0;
 }
 .main-content {
-    margin-left: 305px;
+    margin-left: 300px;
 }
 </style>
 
 <script>
 import { CollapseTransition } from "@ivanv/vue-collapse-transition";
 import route from "../route";
+import * as constants from "../constants";
 
 export default {
     data() {
         return {
-            currentComponent: 'today',
+            currentComponent: 'common-index-task',
             projects: [],
             selectedProjectId: 0,
             isOpenFav: true,
             isOpenProjects: true,
-            user: {},
+            type: 'today',
         }
     },
     computed: {
@@ -126,13 +125,17 @@ export default {
                 return project.favorite;
             });
         },
-        isHideFinished: function () {
-            return this.user.hide_finished;
+        c: function () {
+            return constants;
         },
     },
     methods: {
         setComponent(component) {
             this.currentComponent = component;
+        },
+        setType(type) {
+            this.type = type;
+            this.setComponent('common-index-task');
         },
         getProjects() {
             axios
@@ -150,22 +153,12 @@ export default {
         },
         selectProject(id) {
             this.selectedProjectId = id;
+            this.type = '';
             this.setComponent('show-project');
-        },
-        getUser() {
-            axios
-                .get(route('users.show'))
-                .then(response => {
-                    this.user = response.data;
-                })
-                .catch(error => {
-                    console.log(error);
-                });
         },
     },
     mounted() {
         this.getProjects();
-        this.getUser();
     },
     components: {
         CollapseTransition,

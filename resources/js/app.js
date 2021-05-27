@@ -32,6 +32,8 @@ Vue.component('not-scheduled', require('./components/tasks/NotScheduled.vue').de
 Vue.component('archive', require('./components/tasks/Archive.vue').default);
 Vue.component('list-item-task', require('./components/tasks/ListItemTask.vue').default);
 
+Vue.component('common-index-task', require('./components/tasks/CommonIndexTask.vue').default);
+
 // modals
 Vue.component('create-task-modal', require('./components/modals/tasks/CreateTask.vue').default);
 Vue.component('show-task-modal', require('./components/modals/tasks/ShowTask.vue').default);
