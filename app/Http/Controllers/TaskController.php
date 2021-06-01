@@ -18,13 +18,13 @@ class TaskController extends Controller
         return $project->tasks()->create($request->all());
     }
 
-//    public function update(Task $task, Request $request)
-//    {
-//        $task->update($request->all());
-//
-//        return $task;
-//    }
-//
+    public function update(Task $task, Request $request)
+    {
+        $task->update($request->all());
+
+        return $task;
+    }
+
 //    public function show(Task $task)
 //    {
 //        return $task;
