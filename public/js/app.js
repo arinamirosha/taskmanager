@@ -2965,6 +2965,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.projectName = _this.project.name;
       })["catch"](function (error) {
         console.log(error);
+        _this.project = null;
       });
     },
     projectUpdated: function projectUpdated(projectId) {

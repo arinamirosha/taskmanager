@@ -150,6 +150,7 @@ export default {
                 })
                 .catch(error => {
                     console.log(error);
+                    this.project = null;
                 });
         },
         projectUpdated(projectId) {
