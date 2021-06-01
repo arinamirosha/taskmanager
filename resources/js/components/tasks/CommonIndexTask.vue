@@ -50,6 +50,8 @@
             </div>
         </div>
 
+        <archived-projects v-if="type === c.ARCHIVE"></archived-projects>
+
         <!-- Toast -->
         <toast :body="infoBody" />
 
@@ -101,7 +103,7 @@ export default {
                 case constants.TODAY: title = 'Today tasks'; break;
                 case constants.UPCOMING: title = 'Upcoming tasks'; break;
                 case constants.NOT_SCHEDULED: title = 'Not Scheduled tasks'; break;
-                case constants.ARCHIVE: title = 'Archive tasks'; break;
+                case constants.ARCHIVE: title = 'Archived Tasks'; break;
             }
             return title;
         },

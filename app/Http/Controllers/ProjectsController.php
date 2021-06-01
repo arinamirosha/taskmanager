@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,9 +14,16 @@ class ProjectsController extends Controller
         return Auth::user()->projects()->create($request->all());
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return Auth::user()->projects()->withCount('tasks')->get();
+        $type     = $request->get('type', false);
+        $projects = Auth::user()->projects();
+
+        if ($type === Task::ARCHIVE) {
+            $projects = $projects->onlyTrashed();
+        }
+
+        return $projects->withCount('tasks')->get();
     }
 
     public function show(Project $project)

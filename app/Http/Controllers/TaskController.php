@@ -41,9 +41,8 @@ class TaskController extends Controller
     {
         $type      = $request->get('type', false);
         $projectId = $request->get('project_id', false);
-
-        $tasks = Auth::user()->tasks()->where('status', Task::STATUS_FINISHED);
-        $count = 0;
+        $tasks     = Auth::user()->tasks()->where('status', Task::STATUS_FINISHED);
+        $count     = 0;
 
         if ($type) {
             switch ($type) {

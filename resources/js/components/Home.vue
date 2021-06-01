@@ -116,7 +116,7 @@ export default {
             selectedProjectId: 0,
             isOpenFav: true,
             isOpenProjects: true,
-            type: 'today',
+            type: 'archive', //today
         }
     },
     computed: {
