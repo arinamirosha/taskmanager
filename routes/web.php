@@ -25,10 +25,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/projects', [App\Http\Controllers\ProjectsController::class, 'index'])->name('projects.index');
     Route::post('/projects', [App\Http\Controllers\ProjectsController::class, 'store'])->name('projects.store');
-    Route::get('/projects/{project}', [App\Http\Controllers\ProjectsController::class, 'show'])->name('projects.show')->middleware('can:view,project');
+    Route::get('/projects/{project}', [App\Http\Controllers\ProjectsController::class, 'show'])->name('projects.show');
     Route::post('/projects/{project}', [App\Http\Controllers\ProjectsController::class, 'update'])->name('projects.update')->middleware('can:update,project');
     Route::delete('/projects/{project}/archive', [App\Http\Controllers\ProjectsController::class, 'archive'])->name('projects.archive')->middleware('can:delete,project');
-    Route::delete('/projects/{project}/force', [App\Http\Controllers\ProjectsController::class, 'destroyForce'])->name('projects.destroy-force')->middleware('can:forceDelete,project');
+    Route::delete('/projects/{project}/force', [App\Http\Controllers\ProjectsController::class, 'destroyForce'])->name('projects.destroy-force');
 
     Route::get('/tasks', [App\Http\Controllers\TaskController::class, 'index'])->name('tasks.index');
     Route::post('/tasks', [App\Http\Controllers\TaskController::class, 'store'])->name('tasks.store');
@@ -36,5 +36,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/tasks/{task}', [App\Http\Controllers\TaskController::class, 'update'])->name('tasks.update')->middleware('can:update,task');
     Route::delete('/tasks/{task}', [App\Http\Controllers\TaskController::class, 'destroy'])->name('tasks.destroy')->middleware('can:delete,task');
     Route::delete('/tasks/archive/all', [App\Http\Controllers\TaskController::class, 'archive'])->name('tasks.archive');
-    Route::delete('/tasks/{task}/force', [App\Http\Controllers\TaskController::class, 'destroyForce'])->name('tasks.destroy-force')->middleware('can:forceDelete,task');
+    Route::delete('/tasks/{task}/force', [App\Http\Controllers\TaskController::class, 'destroyForce'])->name('tasks.destroy-force');
 });

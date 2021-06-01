@@ -67,8 +67,10 @@ class TaskController extends Controller
         return $count;
     }
 
-    public function destroyForce(Task $task)
+    public function destroyForce($id)
     {
+        $task = Task::withTrashed()->findOrFail($id);
+        $this->authorize('forceDelete', $task);
         $task->forceDelete();
 
         return true;

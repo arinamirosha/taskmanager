@@ -2697,19 +2697,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: {
-    task: {
-      type: Object,
-      "default": {}
-    },
-    deletable: {
-      type: Boolean,
-      "default": true
-    }
-  },
+  props: ['task'],
   computed: {
     c: function c() {
       return _constants__WEBPACK_IMPORTED_MODULE_0__;
@@ -2835,7 +2828,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -2843,8 +2835,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       projects: [],
-      isDataLoaded: false // currentProject: {},
-
+      isDataLoaded: false
     };
   },
   computed: {
@@ -2869,10 +2860,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     formatDate: function formatDate(date) {
       return date ? moment__WEBPACK_IMPORTED_MODULE_2___default()(date).format('MMMM DD, YYYY') : '';
-    } //     showProject(id) {
-    //         this.$emit('showProject', id);
-    //     },
-
+    },
+    showProject: function showProject(id) {
+      this.$emit('showProject', id);
+    }
   },
   mounted: function mounted() {
     this.getProjects();
@@ -3003,6 +2994,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -3018,6 +3011,7 @@ __webpack_require__.r(__webpack_exports__);
       tasksNewLength: 0,
       tasksProgressLength: 0,
       tasksFinishedLength: 0,
+      isProjectLoaded: false,
       currentTask: {},
       infoBody: ''
     };
@@ -3055,6 +3049,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.tasksProgressLength = _this.tasksProgress.length;
         _this.tasksFinishedLength = _this.tasksFinished.length;
         _this.projectName = _this.project.name;
+        _this.isProjectLoaded = true;
       })["catch"](function (error) {
         console.log(error);
         _this.project = null;
@@ -3182,7 +3177,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
-//
 //
 //
 //
@@ -67303,17 +67297,15 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "modal-footer justify-content-between" }, [
-            _vm.deletable
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-outline-danger",
-                    attrs: { type: "button" },
-                    on: { click: _vm.deleteTaskModal }
-                  },
-                  [_vm._v("Delete")]
-                )
-              : _c("div"),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-danger",
+                attrs: { type: "button" },
+                on: { click: _vm.deleteTaskModal }
+              },
+              [_vm._v("Delete")]
+            ),
             _vm._v(" "),
             !_vm.task.deleted_at && _vm.task.status !== _vm.c.STATUS_FINISHED
               ? _c(
@@ -67430,19 +67422,20 @@ var render = function() {
         [
           _vm._m(0),
           _vm._v(" "),
-          _vm._l(_vm.projects, function(project, index) {
+          _vm._l(_vm.projects, function(project) {
             return _vm.isDataLoaded && _vm.projects.length !== 0
               ? _c(
                   "div",
                   {
                     key: project.id,
-                    staticClass: "row cursor-pointer task pt-1 pb-1"
+                    staticClass: "row cursor-pointer task pt-1 pb-1",
+                    on: {
+                      click: function($event) {
+                        return _vm.showProject(project.id)
+                      }
+                    }
                   },
                   [
-                    _c("div", { staticClass: "col-md-1" }, [
-                      _vm._v(_vm._s(++index))
-                    ]),
-                    _vm._v(" "),
                     _c("div", { staticClass: "col-md-3" }, [
                       _vm._v(_vm._s(project.name))
                     ]),
@@ -67470,8 +67463,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row h5 font-weight-bold" }, [
-      _c("div", { staticClass: "col-md-1" }, [_vm._v("#")]),
-      _vm._v(" "),
       _c("div", { staticClass: "col-md-3" }, [_vm._v("Project")]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-3" }, [_vm._v("Count Active Tasks")]),
@@ -67504,347 +67495,379 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _vm.project
-      ? _c(
-          "div",
-          [
-            _c("div", { staticClass: "row mb-3" }, [
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("span", { staticClass: "font-weight-bold h4" }, [
-                  _vm._v(_vm._s(_vm.project.name))
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "row justify-content-between h5" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary btn-sm",
-                      attrs: {
-                        "data-toggle": "modal",
-                        "data-target": "#createTaskModal"
-                      }
-                    },
-                    [_vm._v("Add New Task")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-sm btn-outline-secondary",
-                      on: { click: _vm.archiveAllForProject }
-                    },
-                    [_vm._v("Archive Finished")]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "cursor-pointer" }, [
-                    _vm.project.favorite
-                      ? _c("i", {
-                          staticClass: "fa fa-star fav-star-full",
-                          attrs: { id: "fav" },
-                          on: {
-                            click: function($event) {
-                              return _vm.changeFav(_vm.project.id, false)
-                            }
-                          }
-                        })
-                      : _c("i", {
-                          staticClass: "far fa-star text-custom-secondary",
-                          attrs: { id: "not-fav" },
-                          on: {
-                            click: function($event) {
-                              return _vm.changeFav(_vm.project.id, true)
-                            }
-                          }
-                        })
+      ? _c("div", [
+          _vm.isProjectLoaded
+            ? _c(
+                "div",
+                [
+                  _c("div", { staticClass: "row mb-3" }, [
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("span", { staticClass: "font-weight-bold h4" }, [
+                        _vm._v(_vm._s(_vm.project.name))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "row h5",
+                          class: _vm.project.deleted_at
+                            ? "justify-content-end"
+                            : "justify-content-between"
+                        },
+                        [
+                          !_vm.project.deleted_at
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-primary btn-sm",
+                                  attrs: {
+                                    "data-toggle": "modal",
+                                    "data-target": "#createTaskModal"
+                                  }
+                                },
+                                [_vm._v("Add New Task")]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          !_vm.project.deleted_at
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-sm btn-outline-secondary",
+                                  on: { click: _vm.archiveAllForProject }
+                                },
+                                [_vm._v("Archive Finished")]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          !_vm.project.deleted_at
+                            ? _c("span", { staticClass: "cursor-pointer" }, [
+                                _vm.project.favorite
+                                  ? _c("i", {
+                                      staticClass: "fa fa-star fav-star-full",
+                                      attrs: { id: "fav" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.changeFav(
+                                            _vm.project.id,
+                                            false
+                                          )
+                                        }
+                                      }
+                                    })
+                                  : _c("i", {
+                                      staticClass:
+                                        "far fa-star text-custom-secondary",
+                                      attrs: { id: "not-fav" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.changeFav(
+                                            _vm.project.id,
+                                            true
+                                          )
+                                        }
+                                      }
+                                    })
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          !_vm.project.deleted_at
+                            ? _c(
+                                "a",
+                                {
+                                  staticClass: "cursor-pointer text-muted",
+                                  attrs: {
+                                    "data-toggle": "modal",
+                                    "data-target": "#editProjectModal"
+                                  }
+                                },
+                                [_c("i", { staticClass: "far fa-edit" })]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          !_vm.project.deleted_at
+                            ? _c(
+                                "a",
+                                {
+                                  staticClass: "cursor-pointer",
+                                  attrs: {
+                                    "data-toggle": "modal",
+                                    "data-target": "#archiveProjectModal"
+                                  }
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "fas fa-archive text-secondary"
+                                  })
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm._m(0)
+                        ]
+                      )
+                    ])
                   ]),
-                  _vm._v(" "),
-                  _vm._m(0),
                   _vm._v(" "),
                   _vm._m(1),
                   _vm._v(" "),
-                  _vm._m(2)
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(3),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                { staticClass: "col-md-4 border-left" },
-                [
+                  _c("div", { staticClass: "row" }, [
+                    _c(
+                      "div",
+                      { staticClass: "col-md-4 border-left" },
+                      [
+                        _c(
+                          "draggable",
+                          {
+                            attrs: {
+                              list: _vm.tasksNew,
+                              group: "tasks",
+                              move: _vm.isMove
+                            },
+                            on: { change: _vm.update }
+                          },
+                          _vm._l(_vm.tasksNew, function(task) {
+                            return _c(
+                              "div",
+                              { key: task.id },
+                              [
+                                _c("list-item-task", {
+                                  attrs: { task: task },
+                                  on: {
+                                    showTask: _vm.showTask,
+                                    archived: _vm.taskArchived
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          }),
+                          0
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-md-4 border-left" },
+                      [
+                        _c(
+                          "draggable",
+                          {
+                            attrs: {
+                              list: _vm.tasksProgress,
+                              group: "tasks",
+                              move: _vm.isMove
+                            },
+                            on: { change: _vm.update }
+                          },
+                          _vm._l(_vm.tasksProgress, function(task) {
+                            return _c(
+                              "div",
+                              { key: task.id },
+                              [
+                                _c("list-item-task", {
+                                  attrs: { task: task },
+                                  on: {
+                                    showTask: _vm.showTask,
+                                    archived: _vm.taskArchived
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          }),
+                          0
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-md-4 border-left" },
+                      [
+                        _c(
+                          "draggable",
+                          {
+                            attrs: {
+                              list: _vm.tasksFinished,
+                              group: "tasks",
+                              move: _vm.isMove
+                            },
+                            on: { change: _vm.update }
+                          },
+                          _vm._l(_vm.tasksFinished, function(task) {
+                            return _c(
+                              "div",
+                              { key: task.id },
+                              [
+                                _c("list-item-task", {
+                                  attrs: { task: task },
+                                  on: {
+                                    showTask: _vm.showTask,
+                                    archived: _vm.taskArchived
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          }),
+                          0
+                        )
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
                   _c(
-                    "draggable",
+                    "div",
                     {
-                      attrs: {
-                        list: _vm.tasksNew,
-                        group: "tasks",
-                        move: _vm.isMove
-                      },
-                      on: { change: _vm.update }
+                      staticClass: "modal fade show mt-5",
+                      attrs: { id: "editProjectModal", tabindex: "-1" }
                     },
-                    _vm._l(_vm.tasksNew, function(task) {
-                      return _c(
-                        "div",
-                        { key: task.id },
-                        [
-                          _c("list-item-task", {
-                            attrs: { task: task },
-                            on: {
-                              showTask: _vm.showTask,
-                              archived: _vm.taskArchived
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    }),
-                    0
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-md-4 border-left" },
-                [
+                    [
+                      _c("edit-project-modal", {
+                        attrs: { project: _vm.project },
+                        on: { updated: _vm.projectUpdated }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
                   _c(
-                    "draggable",
+                    "div",
                     {
-                      attrs: {
-                        list: _vm.tasksProgress,
-                        group: "tasks",
-                        move: _vm.isMove
-                      },
-                      on: { change: _vm.update }
+                      staticClass: "modal fade show mt-5",
+                      attrs: { id: "deleteProjectModal", tabindex: "-1" }
                     },
-                    _vm._l(_vm.tasksProgress, function(task) {
-                      return _c(
-                        "div",
-                        { key: task.id },
-                        [
-                          _c("list-item-task", {
-                            attrs: { task: task },
-                            on: {
-                              showTask: _vm.showTask,
-                              archived: _vm.taskArchived
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    }),
-                    0
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-md-4 border-left" },
-                [
+                    [
+                      _c("delete-project-modal", {
+                        attrs: { project: _vm.project },
+                        on: { deleted: _vm.projectDeleted }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
                   _c(
-                    "draggable",
+                    "div",
                     {
-                      attrs: {
-                        list: _vm.tasksFinished,
-                        group: "tasks",
-                        move: _vm.isMove
-                      },
-                      on: { change: _vm.update }
+                      staticClass: "modal fade show mt-5",
+                      attrs: { id: "archiveProjectModal", tabindex: "-1" }
                     },
-                    _vm._l(_vm.tasksFinished, function(task) {
-                      return _c(
-                        "div",
-                        { key: task.id },
-                        [
-                          _c("list-item-task", {
-                            attrs: { task: task },
-                            on: {
-                              showTask: _vm.showTask,
-                              archived: _vm.taskArchived
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    }),
-                    0
-                  )
+                    [
+                      _c("archive-project-modal", {
+                        attrs: { project: _vm.project },
+                        on: { deleted: _vm.projectDeleted }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "modal fade show mt-5",
+                      attrs: { id: "createTaskModal", tabindex: "-1" }
+                    },
+                    [
+                      _c("create-task-modal", {
+                        attrs: { id: _vm.project.id },
+                        on: { stored: _vm.taskStored }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("button", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: false,
+                        expression: "false"
+                      }
+                    ],
+                    ref: "showTaskModalButton",
+                    attrs: {
+                      "data-toggle": "modal",
+                      "data-target": "#showTaskModal"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      ref: "showTaskModal",
+                      staticClass: "modal fade show mt-5 pb-5",
+                      attrs: { id: "showTaskModal", tabindex: "-1" }
+                    },
+                    [
+                      _c("show-task-modal", {
+                        attrs: { task: _vm.currentTask },
+                        on: {
+                          deleteTaskModal: function($event) {
+                            return _vm.$refs.deleteTaskModalButton.click()
+                          },
+                          archived: _vm.taskArchived,
+                          statusUpdated: _vm.taskStatusUpdated
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("button", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: false,
+                        expression: "false"
+                      }
+                    ],
+                    ref: "deleteTaskModalButton",
+                    attrs: {
+                      "data-toggle": "modal",
+                      "data-target": "#deleteTaskModal"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "modal fade show mt-5",
+                      attrs: { id: "deleteTaskModal", tabindex: "-1" }
+                    },
+                    [
+                      _c("delete-task-modal", {
+                        attrs: { task: _vm.currentTask },
+                        on: {
+                          deleted: _vm.taskDeleted,
+                          cancel: function($event) {
+                            return _vm.$refs.showTaskModalButton.click()
+                          }
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("toast", { attrs: { body: _vm.infoBody } })
                 ],
                 1
               )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "modal fade show mt-5",
-                attrs: { id: "editProjectModal", tabindex: "-1" }
-              },
-              [
-                _c("edit-project-modal", {
-                  attrs: { project: _vm.project },
-                  on: { updated: _vm.projectUpdated }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "modal fade show mt-5",
-                attrs: { id: "deleteProjectModal", tabindex: "-1" }
-              },
-              [
-                _c("delete-project-modal", {
-                  attrs: { project: _vm.project },
-                  on: { deleted: _vm.projectDeleted }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "modal fade show mt-5",
-                attrs: { id: "archiveProjectModal", tabindex: "-1" }
-              },
-              [
-                _c("archive-project-modal", {
-                  attrs: { project: _vm.project },
-                  on: { deleted: _vm.projectDeleted }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "modal fade show mt-5",
-                attrs: { id: "createTaskModal", tabindex: "-1" }
-              },
-              [
-                _c("create-task-modal", {
-                  attrs: { id: _vm.project.id },
-                  on: { stored: _vm.taskStored }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("button", {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: false,
-                  expression: "false"
-                }
-              ],
-              ref: "showTaskModalButton",
-              attrs: { "data-toggle": "modal", "data-target": "#showTaskModal" }
-            }),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                ref: "showTaskModal",
-                staticClass: "modal fade show mt-5 pb-5",
-                attrs: { id: "showTaskModal", tabindex: "-1" }
-              },
-              [
-                _c("show-task-modal", {
-                  attrs: { task: _vm.currentTask },
-                  on: {
-                    deleteTaskModal: function($event) {
-                      return _vm.$refs.deleteTaskModalButton.click()
-                    },
-                    archived: _vm.taskArchived,
-                    statusUpdated: _vm.taskStatusUpdated
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("button", {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: false,
-                  expression: "false"
-                }
-              ],
-              ref: "deleteTaskModalButton",
-              attrs: {
-                "data-toggle": "modal",
-                "data-target": "#deleteTaskModal"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "modal fade show mt-5",
-                attrs: { id: "deleteTaskModal", tabindex: "-1" }
-              },
-              [
-                _c("delete-task-modal", {
-                  attrs: { task: _vm.currentTask },
-                  on: {
-                    deleted: _vm.taskDeleted,
-                    cancel: function($event) {
-                      return _vm.$refs.showTaskModalButton.click()
-                    }
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("toast", { attrs: { body: _vm.infoBody } })
-          ],
-          1
-        )
+            : _vm._e()
+        ])
       : _c("div", { staticClass: "h4" }, [_vm._v("Select project")])
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "cursor-pointer text-muted",
-        attrs: { "data-toggle": "modal", "data-target": "#editProjectModal" }
-      },
-      [_c("i", { staticClass: "far fa-edit" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "cursor-pointer",
-        attrs: { "data-toggle": "modal", "data-target": "#archiveProjectModal" }
-      },
-      [_c("i", { staticClass: "fas fa-archive text-secondary" })]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -67977,7 +68000,9 @@ var render = function() {
           { staticClass: "col-md-12" },
           [
             _c("div", { staticClass: "row h5 font-weight-bold" }, [
-              _c("div", { staticClass: "col-md-1" }, [_vm._v("#")]),
+              _vm.type !== _vm.c.ARCHIVE
+                ? _c("div", { staticClass: "col-md-1" }, [_vm._v("#")])
+                : _vm._e(),
               _vm._v(" "),
               _c("div", { staticClass: "col-md-3" }, [_vm._v("Task")]),
               _vm._v(" "),
@@ -68007,12 +68032,16 @@ var render = function() {
                       }
                     },
                     [
-                      _c("div", { staticClass: "col-md-1" }, [
-                        _vm._v(_vm._s(++index) + " "),
-                        _vm.type !== _vm.c.ARCHIVE
-                          ? _c("i", { class: _vm.statusIconClass(task.status) })
-                          : _vm._e()
-                      ]),
+                      _vm.type !== _vm.c.ARCHIVE
+                        ? _c("div", { staticClass: "col-md-1" }, [
+                            _vm._v(_vm._s(++index) + " "),
+                            _vm.type !== _vm.c.ARCHIVE
+                              ? _c("i", {
+                                  class: _vm.statusIconClass(task.status)
+                                })
+                              : _vm._e()
+                          ])
+                        : _vm._e(),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-3" }, [
                         _c(
@@ -68076,7 +68105,9 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm.type === _vm.c.ARCHIVE ? _c("archived-projects") : _vm._e(),
+      _vm.type === _vm.c.ARCHIVE
+        ? _c("archived-projects", { on: { showProject: _vm.showProject } })
+        : _vm._e(),
       _vm._v(" "),
       _c("toast", { attrs: { body: _vm.infoBody } }),
       _vm._v(" "),
@@ -68097,10 +68128,7 @@ var render = function() {
         },
         [
           _c("show-task-modal", {
-            attrs: {
-              task: _vm.currentTask,
-              deletable: _vm.type !== _vm.c.ARCHIVE
-            },
+            attrs: { task: _vm.currentTask },
             on: {
               archived: _vm.taskArchived,
               statusUpdated: _vm.getTasks,

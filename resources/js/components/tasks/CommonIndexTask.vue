@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="row h5 font-weight-bold">
-                    <div class="col-md-1">#</div>
+                    <div class="col-md-1" v-if="type !== c.ARCHIVE">#</div>
                     <div class="col-md-3">Task</div>
                     <div class="col-md-3">Project</div>
                     <div class="col-md-2" v-if="type !== c.NOT_SCHEDULED">Schedule</div>
@@ -29,7 +29,7 @@
                      @click="showTask(task)"
                      :class="{'task-finished': isNeedStyleFinished(task)}"
                 >
-                    <div class="col-md-1">{{++index}} <i v-if="type !== c.ARCHIVE" :class="statusIconClass(task.status)"></i></div>
+                    <div class="col-md-1" v-if="type !== c.ARCHIVE">{{++index}} <i v-if="type !== c.ARCHIVE" :class="statusIconClass(task.status)"></i></div>
 
                     <div class="col-md-3">
                         <span :class="isNeedStyleFinished(task) ? 'task-finished' : importanceCss(task.importance)">&bull;</span> {{task.name}}
@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <archived-projects v-if="type === c.ARCHIVE"></archived-projects>
+        <archived-projects v-if="type === c.ARCHIVE" @showProject="showProject"></archived-projects>
 
         <!-- Toast -->
         <toast :body="infoBody" />
@@ -60,7 +60,6 @@
         <div class="modal fade show mt-5 pb-5" id="showTaskModal" tabindex="-1" ref="showTaskModal">
             <show-task-modal
                 :task="currentTask"
-                :deletable="type !== c.ARCHIVE"
                 @archived="taskArchived"
                 @statusUpdated="getTasks"
                 @deleteTaskModal="$refs.deleteTaskModalButton.click()"

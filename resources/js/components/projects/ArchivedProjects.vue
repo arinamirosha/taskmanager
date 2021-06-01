@@ -9,17 +9,16 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="row h5 font-weight-bold">
-                    <div class="col-md-1">#</div>
                     <div class="col-md-3">Project</div>
                     <div class="col-md-3">Count Active Tasks</div>
                     <div class="col-md-2">Archived</div>
                 </div>
 
-                <div v-if="isDataLoaded && projects.length !== 0" v-for="(project, index) in projects"
+                <div v-if="isDataLoaded && projects.length !== 0" v-for="project in projects"
                      :key="project.id"
                      class="row cursor-pointer task pt-1 pb-1"
+                     @click="showProject(project.id)"
                 >
-                    <div class="col-md-1">{{++index}}</div>
                     <div class="col-md-3">{{project.name}}</div>
                     <div class="col-md-3">{{project.tasks_count}}</div>
                     <div class="col-md-2">{{formatDate(project.deleted_at)}}</div>
@@ -39,7 +38,6 @@ export default {
         return {
             projects: [],
             isDataLoaded: false,
-            // currentProject: {},
         }
     },
     computed: {
@@ -66,9 +64,9 @@ export default {
         formatDate(date) {
             return date ? moment(date).format('MMMM DD, YYYY') : '';
         },
-    //     showProject(id) {
-    //         this.$emit('showProject', id);
-    //     },
+        showProject(id) {
+            this.$emit('showProject', id);
+        },
     },
     mounted() {
         this.getProjects();

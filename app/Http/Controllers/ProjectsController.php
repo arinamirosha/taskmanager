@@ -26,8 +26,11 @@ class ProjectsController extends Controller
         return $projects->withCount('tasks')->get();
     }
 
-    public function show(Project $project)
+    public function show($id)
     {
+        $project = Project::withTrashed()->findOrFail($id);
+        $this->authorize('view', $project);
+
         return $project->load('tasks');
     }
 
@@ -50,8 +53,10 @@ class ProjectsController extends Controller
         return true;
     }
 
-    public function destroyForce(Project $project)
+    public function destroyForce($id)
     {
+        $project = Project::withTrashed()->findOrFail($id);
+        $this->authorize('forceDelete', $project);
         $project->forceDelete();
 
         return true;
