@@ -20,8 +20,6 @@
     "projects.destroy-force": "projects\/{project}\/force",
     "tasks.index": "tasks",
     "tasks.store": "tasks",
-    "tasks.show": "tasks\/{task}",
-    "tasks.update": "tasks\/{task}",
     "tasks.destroy": "tasks\/{task}",
     "tasks.archive": "tasks\/archive\/all",
     "tasks.destroy-force": "tasks\/{task}\/force"

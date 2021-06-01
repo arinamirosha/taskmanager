@@ -24,14 +24,7 @@ Vue.component('archive-project-modal', require('./components/modals/projects/Arc
 
 
 // TASKS
-Vue.component('index-task', require('./components/tasks/IndexTask.vue').default);
-Vue.component('incoming', require('./components/tasks/Incoming.vue').default);
-Vue.component('upcoming', require('./components/tasks/Upcoming.vue').default);
-Vue.component('today', require('./components/tasks/Today.vue').default);
-Vue.component('not-scheduled', require('./components/tasks/NotScheduled.vue').default);
-Vue.component('archive', require('./components/tasks/Archive.vue').default);
 Vue.component('list-item-task', require('./components/tasks/ListItemTask.vue').default);
-
 Vue.component('common-index-task', require('./components/tasks/CommonIndexTask.vue').default);
 
 // modals

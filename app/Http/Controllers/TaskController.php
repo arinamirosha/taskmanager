@@ -12,20 +12,23 @@ class TaskController extends Controller
 {
     public function store(Request $request)
     {
-        return Project::findOrFail($request->get('project_id'))->tasks()->create($request->all());
+        $project = Project::findOrFail($request->get('project_id', 0));
+        $this->authorize('update', $project);
+
+        return $project->tasks()->create($request->all());
     }
 
-    public function update(Task $task, Request $request)
-    {
-        $task->update($request->all());
-
-        return $task;
-    }
-
-    public function show(Task $task)
-    {
-        return $task;
-    }
+//    public function update(Task $task, Request $request)
+//    {
+//        $task->update($request->all());
+//
+//        return $task;
+//    }
+//
+//    public function show(Task $task)
+//    {
+//        return $task;
+//    }
 
     public function destroy(Task $task)
     {
@@ -76,8 +79,7 @@ class TaskController extends Controller
     {
         $user  = Auth::user();
         $tasks = $user->tasks();
-
-        $type = $request->get('type', false);
+        $type  = $request->get('type', false);
 
         if ($user->hide_finished && $type != Task::ARCHIVE) {
             $tasks->where('status', '<>', Task::STATUS_FINISHED);
@@ -100,10 +102,6 @@ class TaskController extends Controller
             }
         }
 
-        return $tasks->with([
-            'project' => function ($query) {
-                $query->withTrashed();
-            },
-        ])->select('tasks.*')->get();
+        return $tasks->with(['project'])->get();
     }
 }

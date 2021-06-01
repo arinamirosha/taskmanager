@@ -60,10 +60,8 @@ class User extends Authenticatable
      */
     public function tasks()
     {
-        return Task::leftJoin('projects', function ($query) {
-            $query
-                ->on('projects.id', '=', 'tasks.project_id')
-                ->where('projects.user_id', $this->id);
-        });
+        $project_ids = $this->projects()->withTrashed()->pluck('id');
+
+        return Task::whereIn('project_id', $project_ids);
     }
 }

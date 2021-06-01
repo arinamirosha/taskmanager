@@ -3437,12 +3437,6 @@ Vue.component('edit-project-modal', __webpack_require__(/*! ./components/modals/
 Vue.component('delete-project-modal', __webpack_require__(/*! ./components/modals/projects/DeleteProject.vue */ "./resources/js/components/modals/projects/DeleteProject.vue").default);
 Vue.component('archive-project-modal', __webpack_require__(/*! ./components/modals/projects/ArchiveProject.vue */ "./resources/js/components/modals/projects/ArchiveProject.vue").default); // TASKS
 
-Vue.component('index-task', Object(function webpackMissingModule() { var e = new Error("Cannot find module './components/tasks/IndexTask.vue'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()).default);
-Vue.component('incoming', Object(function webpackMissingModule() { var e = new Error("Cannot find module './components/tasks/Incoming.vue'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()).default);
-Vue.component('upcoming', Object(function webpackMissingModule() { var e = new Error("Cannot find module './components/tasks/Upcoming.vue'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()).default);
-Vue.component('today', Object(function webpackMissingModule() { var e = new Error("Cannot find module './components/tasks/Today.vue'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()).default);
-Vue.component('not-scheduled', Object(function webpackMissingModule() { var e = new Error("Cannot find module './components/tasks/NotScheduled.vue'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()).default);
-Vue.component('archive', Object(function webpackMissingModule() { var e = new Error("Cannot find module './components/tasks/Archive.vue'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()).default);
 Vue.component('list-item-task', __webpack_require__(/*! ./components/tasks/ListItemTask.vue */ "./resources/js/components/tasks/ListItemTask.vue").default);
 Vue.component('common-index-task', __webpack_require__(/*! ./components/tasks/CommonIndexTask.vue */ "./resources/js/components/tasks/CommonIndexTask.vue").default); // modals
 
@@ -84387,7 +84381,7 @@ exports.withParams = withParams;
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"\":\"password/confirm\",\"login\":\"login\",\"logout\":\"logout\",\"register\":\"register\",\"password.request\":\"password/reset\",\"password.email\":\"password/email\",\"password.reset\":\"password/reset/{token}\",\"password.update\":\"password/reset\",\"password.confirm\":\"password/confirm\",\"welcome\":\"/\",\"home\":\"home\",\"users.show\":\"users\",\"users.update\":\"users\",\"projects.index\":\"projects\",\"projects.store\":\"projects\",\"projects.show\":\"projects/{project}\",\"projects.update\":\"projects/{project}\",\"projects.archive\":\"projects/{project}/archive\",\"projects.destroy-force\":\"projects/{project}/force\",\"tasks.index\":\"tasks\",\"tasks.store\":\"tasks\",\"tasks.show\":\"tasks/{task}\",\"tasks.update\":\"tasks/{task}\",\"tasks.destroy\":\"tasks/{task}\",\"tasks.archive\":\"tasks/archive/all\",\"tasks.destroy-force\":\"tasks/{task}/force\"}");
+module.exports = JSON.parse("{\"\":\"password/confirm\",\"login\":\"login\",\"logout\":\"logout\",\"register\":\"register\",\"password.request\":\"password/reset\",\"password.email\":\"password/email\",\"password.reset\":\"password/reset/{token}\",\"password.update\":\"password/reset\",\"password.confirm\":\"password/confirm\",\"welcome\":\"/\",\"home\":\"home\",\"users.show\":\"users\",\"users.update\":\"users\",\"projects.index\":\"projects\",\"projects.store\":\"projects\",\"projects.show\":\"projects/{project}\",\"projects.update\":\"projects/{project}\",\"projects.archive\":\"projects/{project}/archive\",\"projects.destroy-force\":\"projects/{project}/force\",\"tasks.index\":\"tasks\",\"tasks.store\":\"tasks\",\"tasks.destroy\":\"tasks/{task}\",\"tasks.archive\":\"tasks/archive/all\",\"tasks.destroy-force\":\"tasks/{task}/force\"}");
 
 /***/ })
 

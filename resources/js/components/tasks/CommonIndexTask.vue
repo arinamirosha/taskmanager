@@ -53,7 +53,7 @@
         <!-- Toast -->
         <toast :body="infoBody" />
 
-        <!-- Modals-->
+        <!-- Modals -->
         <button v-show="false" data-toggle="modal" data-target="#showTaskModal" ref="showTaskModalButton"></button>
         <div class="modal fade show mt-5 pb-5" id="showTaskModal" tabindex="-1" ref="showTaskModal">
             <show-task-modal
