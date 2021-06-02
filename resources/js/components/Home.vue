@@ -4,13 +4,21 @@
         <div class="left-menu bg-light px-2 pt-4">
             <nav class="nav flex-column">
                 <a class="nav-link text-dark" :class="{'active': type===c.INCOMING}" @click="setType(c.INCOMING)">Incoming</a>
-                <a class="nav-link text-dark" :class="{'active': type===c.TODAY}" @click="setType(c.TODAY)">Today</a>
-                <a class="nav-link text-dark" :class="{'active': type===c.UPCOMING}" @click="setType(c.UPCOMING)">Upcoming</a>
-                <a class="nav-link text-dark" :class="{'active': type===c.NOT_SCHEDULED}" @click="setType(c.NOT_SCHEDULED)">Not Scheduled</a>
-                <a class="nav-link text-dark" :class="{'active': type===c.ARCHIVE}" @click="setType(c.ARCHIVE)">Archive</a>
+                <a class="nav-link text-dark name-count-space" :class="{'active': type===c.TODAY}" @click="setType(c.TODAY)">
+                    Today <span class="text-custom-secondary">{{counts[c.TODAY]}}</span>
+                </a>
+                <a class="nav-link text-dark name-count-space" :class="{'active': type===c.UPCOMING}" @click="setType(c.UPCOMING)">
+                    Upcoming <span class="text-custom-secondary">{{counts[c.UPCOMING]}}</span>
+                </a>
+                <a class="nav-link text-dark name-count-space" :class="{'active': type===c.NOT_SCHEDULED}" @click="setType(c.NOT_SCHEDULED)">
+                    Not Scheduled <span class="text-custom-secondary">{{counts[c.NOT_SCHEDULED]}}</span>
+                </a>
+                <a class="nav-link text-dark name-count-space" :class="{'active': type===c.ARCHIVE}" @click="setType(c.ARCHIVE)">
+                    Archive <span class="text-custom-secondary">{{counts[c.ARCHIVE]}}</span>
+                </a>
 
                 <h6 v-if="favorites.length > 0" @click="isOpenFav = !isOpenFav"
-                    class="cursor-pointer font-weight-bold sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    class="cursor-pointer font-weight-bold sidebar-heading name-count-space align-items-center px-3 mt-4 mb-1 text-muted">
                     <span v-if="isOpenFav">&#8595;</span>
                     <span v-else>&#8593;</span>
                     <span class="ml-2">Favorites ({{favorites.length}})</span>
@@ -18,7 +26,7 @@
                 </h6>
                 <collapse-transition>
                     <div v-show="isOpenFav">
-                        <a class="nav-link d-flex justify-content-between"
+                        <a class="nav-link name-count-space"
                            v-for="project in favorites"
                            :key="project.id"
                            @click="selectProject(project.id)"
@@ -31,7 +39,7 @@
                 </collapse-transition>
 
                 <h6 @click.self="isOpenProjects = !isOpenProjects"
-                    class="cursor-pointer font-weight-bold sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    class="cursor-pointer font-weight-bold sidebar-heading name-count-space align-items-center px-3 mt-4 mb-1 text-muted">
                     <span v-if="isOpenProjects">&#8595;</span>
                     <span v-else>&#8593;</span>
                     <span class="ml-2">Projects ({{projects.length}})</span>
@@ -39,7 +47,7 @@
                 </h6>
                 <collapse-transition>
                     <div v-show="isOpenProjects">
-                        <a class="nav-link d-flex justify-content-between"
+                        <a class="nav-link name-count-space"
                            v-for="project in projects"
                            :key="project.id"
                            @click="selectProject(project.id)"
@@ -101,6 +109,10 @@ nav a:hover {
 .main-content {
     margin-left: 300px;
 }
+.name-count-space {
+    display: flex;
+    justify-content: space-between;
+}
 </style>
 
 <script>
@@ -113,6 +125,7 @@ export default {
         return {
             currentComponent: 'common-index-task',
             projects: [],
+            counts: [],
             selectedProjectId: 0,
             isOpenFav: true,
             isOpenProjects: true,
@@ -139,9 +152,14 @@ export default {
         },
         getProjects() {
             axios
-                .get(route('projects.index'))
+                .get(route('projects.index'), {
+                    params: {
+                        'get_counts': true,
+                    }
+                })
                 .then(response => {
-                    this.projects = response.data;
+                    this.projects = response.data.projects;
+                    this.counts   = response.data.counts;
                 })
                 .catch(error => {
                     console.log(error);

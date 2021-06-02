@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,14 +17,26 @@ class ProjectsController extends Controller
 
     public function index(Request $request)
     {
-        $type     = $request->get('type', false);
-        $projects = Auth::user()->projects();
+        $type      = $request->get('type', false);
+        $getCounts = $request->get('get_counts', false);
+        $projects  = Auth::user()->projects();
 
         if ($type === Task::ARCHIVE) {
             $projects = $projects->onlyTrashed();
         }
 
-        return $projects->withCount('tasks')->get();
+        $data['projects'] = $projects->withCount( 'tasks' )->get();
+
+        if ( $getCounts ) {
+            $data['counts'] = array(
+                Task::TODAY         => Task::where('schedule', '<=', Carbon::today()->format('Y-m-d'))->count(),
+                Task::UPCOMING      => Task::where('schedule', '<>', Carbon::today()->format('Y-m-d'))->count(),
+                Task::NOT_SCHEDULED => Task::whereNull('schedule')->orderBy('created_at', 'desc')->count(),
+                Task::ARCHIVE       => Task::onlyTrashed()->count(),
+            );
+        }
+
+        return $data;
     }
 
     public function show($id)

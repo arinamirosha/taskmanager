@@ -54,7 +54,7 @@ export default {
                     }
                 })
                 .then(response => {
-                    this.projects = response.data;
+                    this.projects = response.data.projects;
                     this.isDataLoaded = true;
                 })
                 .catch(error => {

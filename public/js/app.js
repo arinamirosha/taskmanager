@@ -1964,6 +1964,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1972,6 +1984,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       currentComponent: 'common-index-task',
       projects: [],
+      counts: [],
       selectedProjectId: 0,
       isOpenFav: true,
       isOpenProjects: true,
@@ -2000,8 +2013,13 @@ __webpack_require__.r(__webpack_exports__);
     getProjects: function getProjects() {
       var _this = this;
 
-      axios.get((0,_route__WEBPACK_IMPORTED_MODULE_1__.default)('projects.index')).then(function (response) {
-        _this.projects = response.data;
+      axios.get((0,_route__WEBPACK_IMPORTED_MODULE_1__.default)('projects.index'), {
+        params: {
+          'get_counts': true
+        }
+      }).then(function (response) {
+        _this.projects = response.data.projects;
+        _this.counts = response.data.counts;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2854,7 +2872,7 @@ __webpack_require__.r(__webpack_exports__);
           'type': _constants__WEBPACK_IMPORTED_MODULE_1__.ARCHIVE
         }
       }).then(function (response) {
-        _this.projects = response.data;
+        _this.projects = response.data.projects;
         _this.isDataLoaded = true;
       })["catch"](function (error) {
         console.log(error);
@@ -8110,7 +8128,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nnav a[data-v-f2b6376c]:hover,\n.active[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px;\n    cursor: pointer;\n}\nnav a[data-v-f2b6376c]:hover {\n    text-decoration: none;\n}\n.cursor-pointer[data-v-f2b6376c]{\n    cursor: pointer;\n}\n.text-custom-secondary[data-v-f2b6376c] {\n    color: #c8c8c8;\n}\n.left-menu[data-v-f2b6376c] {\n    width: 300px;\n    height: calc(100vh - 44px);\n    position: fixed;\n    left: 0;\n}\n.main-content[data-v-f2b6376c] {\n    margin-left: 300px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nnav a[data-v-f2b6376c]:hover,\n.active[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px;\n    cursor: pointer;\n}\nnav a[data-v-f2b6376c]:hover {\n    text-decoration: none;\n}\n.cursor-pointer[data-v-f2b6376c]{\n    cursor: pointer;\n}\n.text-custom-secondary[data-v-f2b6376c] {\n    color: #c8c8c8;\n}\n.left-menu[data-v-f2b6376c] {\n    width: 300px;\n    height: calc(100vh - 44px);\n    position: fixed;\n    left: 0;\n}\n.main-content[data-v-f2b6376c] {\n    margin-left: 300px;\n}\n.name-count-space[data-v-f2b6376c] {\n    display: flex;\n    justify-content: space-between;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -66014,7 +66032,7 @@ var render = function() {
           _c(
             "a",
             {
-              staticClass: "nav-link text-dark",
+              staticClass: "nav-link text-dark name-count-space",
               class: { active: _vm.type === _vm.c.TODAY },
               on: {
                 click: function($event) {
@@ -66022,13 +66040,18 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("Today")]
+            [
+              _vm._v("\n                Today "),
+              _c("span", { staticClass: "text-custom-secondary" }, [
+                _vm._v(_vm._s(_vm.counts[_vm.c.TODAY]))
+              ])
+            ]
           ),
           _vm._v(" "),
           _c(
             "a",
             {
-              staticClass: "nav-link text-dark",
+              staticClass: "nav-link text-dark name-count-space",
               class: { active: _vm.type === _vm.c.UPCOMING },
               on: {
                 click: function($event) {
@@ -66036,13 +66059,18 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("Upcoming")]
+            [
+              _vm._v("\n                Upcoming "),
+              _c("span", { staticClass: "text-custom-secondary" }, [
+                _vm._v(_vm._s(_vm.counts[_vm.c.UPCOMING]))
+              ])
+            ]
           ),
           _vm._v(" "),
           _c(
             "a",
             {
-              staticClass: "nav-link text-dark",
+              staticClass: "nav-link text-dark name-count-space",
               class: { active: _vm.type === _vm.c.NOT_SCHEDULED },
               on: {
                 click: function($event) {
@@ -66050,13 +66078,18 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("Not Scheduled")]
+            [
+              _vm._v("\n                Not Scheduled "),
+              _c("span", { staticClass: "text-custom-secondary" }, [
+                _vm._v(_vm._s(_vm.counts[_vm.c.NOT_SCHEDULED]))
+              ])
+            ]
           ),
           _vm._v(" "),
           _c(
             "a",
             {
-              staticClass: "nav-link text-dark",
+              staticClass: "nav-link text-dark name-count-space",
               class: { active: _vm.type === _vm.c.ARCHIVE },
               on: {
                 click: function($event) {
@@ -66064,7 +66097,12 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("Archive")]
+            [
+              _vm._v("\n                Archive "),
+              _c("span", { staticClass: "text-custom-secondary" }, [
+                _vm._v(_vm._s(_vm.counts[_vm.c.ARCHIVE]))
+              ])
+            ]
           ),
           _vm._v(" "),
           _vm.favorites.length > 0
@@ -66072,7 +66110,7 @@ var render = function() {
                 "h6",
                 {
                   staticClass:
-                    "cursor-pointer font-weight-bold sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted",
+                    "cursor-pointer font-weight-bold sidebar-heading name-count-space align-items-center px-3 mt-4 mb-1 text-muted",
                   on: {
                     click: function($event) {
                       _vm.isOpenFav = !_vm.isOpenFav
@@ -66111,7 +66149,7 @@ var render = function() {
                   "a",
                   {
                     key: project.id,
-                    staticClass: "nav-link d-flex justify-content-between",
+                    staticClass: "nav-link name-count-space",
                     class: {
                       active:
                         _vm.currentComponent === "show-project" &&
@@ -66142,7 +66180,7 @@ var render = function() {
             "h6",
             {
               staticClass:
-                "cursor-pointer font-weight-bold sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted",
+                "cursor-pointer font-weight-bold sidebar-heading name-count-space align-items-center px-3 mt-4 mb-1 text-muted",
               on: {
                 click: function($event) {
                   if ($event.target !== $event.currentTarget) {
@@ -66193,7 +66231,7 @@ var render = function() {
                   "a",
                   {
                     key: project.id,
-                    staticClass: "nav-link d-flex justify-content-between",
+                    staticClass: "nav-link name-count-space",
                     class: {
                       active:
                         _vm.currentComponent === "show-project" &&
