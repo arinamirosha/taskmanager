@@ -59,6 +59,7 @@ class TaskController extends Controller
             $count = $tasks->count();
             $tasks->delete();
         } elseif ($projectId) {
+            Project::findOrFail($projectId);
             $tasks = $tasks->where('project_id', $projectId);
             $count = $tasks->count();
             $tasks->delete();
