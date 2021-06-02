@@ -12,8 +12,10 @@
                     </div>
                     <div class="mb-2" v-if="task.project">
                         <div class="font-weight-bold">Project</div>
-                        <div v-if="task.project.deleted_at">{{task.project.name}} <span class="text-info">ARCHIVED</span></div>
-                        <div v-else class="cursor-pointer project-name" @click="showProject(task.project.id)">{{task.project.name}}</div>
+                        <div class="cursor-pointer project-name" @click="showProject(task.project.id)">
+                            {{task.project.name}}
+                            <span v-if="task.project.deleted_at" class="text-info">ARCHIVED</span>
+                        </div>
                     </div>
                     <div v-if="task.schedule" class="mb-2">
                         <div class="font-weight-bold">Schedule</div>

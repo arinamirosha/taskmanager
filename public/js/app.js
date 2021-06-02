@@ -2699,6 +2699,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2887,6 +2889,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
 //
 //
 //
@@ -67242,25 +67247,29 @@ var render = function() {
                     _vm._v("Project")
                   ]),
                   _vm._v(" "),
-                  _vm.task.project.deleted_at
-                    ? _c("div", [
-                        _vm._v(_vm._s(_vm.task.project.name) + " "),
-                        _c("span", { staticClass: "text-info" }, [
-                          _vm._v("ARCHIVED")
-                        ])
-                      ])
-                    : _c(
-                        "div",
-                        {
-                          staticClass: "cursor-pointer project-name",
-                          on: {
-                            click: function($event) {
-                              return _vm.showProject(_vm.task.project.id)
-                            }
-                          }
-                        },
-                        [_vm._v(_vm._s(_vm.task.project.name))]
-                      )
+                  _c(
+                    "div",
+                    {
+                      staticClass: "cursor-pointer project-name",
+                      on: {
+                        click: function($event) {
+                          return _vm.showProject(_vm.task.project.id)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(_vm.task.project.name) +
+                          "\n                        "
+                      ),
+                      _vm.task.project.deleted_at
+                        ? _c("span", { staticClass: "text-info" }, [
+                            _vm._v("ARCHIVED")
+                          ])
+                        : _vm._e()
+                    ]
+                  )
                 ])
               : _vm._e(),
             _vm._v(" "),
@@ -67503,7 +67512,16 @@ var render = function() {
                   _c("div", { staticClass: "row mb-3" }, [
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("span", { staticClass: "font-weight-bold h4" }, [
-                        _vm._v(_vm._s(_vm.project.name))
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(_vm.project.name) +
+                            "\n                        "
+                        ),
+                        _vm.project.deleted_at
+                          ? _c("span", { staticClass: "text-info" }, [
+                              _vm._v("ARCHIVED")
+                            ])
+                          : _vm._e()
                       ])
                     ]),
                     _vm._v(" "),

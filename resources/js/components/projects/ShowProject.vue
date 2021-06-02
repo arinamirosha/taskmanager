@@ -6,7 +6,10 @@
 
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <span class="font-weight-bold h4">{{project.name}}</span>
+                        <span class="font-weight-bold h4">
+                            {{project.name}}
+                            <span v-if="project.deleted_at" class="text-info">ARCHIVED</span>
+                        </span>
                     </div>
                     <div class="col-md-6">
 
