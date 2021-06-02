@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Libraries\TaskManager\Facade\TaskManager;
 use App\Models\Project;
 use App\Models\Task;
 use Carbon\Carbon;
@@ -47,13 +48,13 @@ class TaskController extends Controller
         if ($type) {
             switch ($type) {
                 case Task::TODAY:
-                    $tasks = $tasks->where('schedule', '<=', Carbon::today()->format('Y-m-d'));
+                    TaskManager::filterToday($tasks);
                     break;
                 case Task::NOT_SCHEDULED:
-                    $tasks = $tasks->whereNull('schedule');
+                    TaskManager::filterNotScheduled($tasks);
                     break;
                 case Task::UPCOMING:
-                    $tasks = $tasks->where('schedule', '<>', Carbon::today()->format('Y-m-d'));
+                    TaskManager::filterUpcoming($tasks);
                     break;
             }
             $count = $tasks->count();
@@ -90,16 +91,16 @@ class TaskController extends Controller
         if ($type) {
             switch ($type) {
                 case Task::ARCHIVE:
-                    $tasks = $tasks->onlyTrashed()->orderBy('deleted_at', 'desc');
+                    TaskManager::filterArchived($tasks, true);
                     break;
                 case Task::TODAY:
-                    $tasks = $tasks->where('schedule', '<=', Carbon::today()->format('Y-m-d'))->orderBy('schedule', 'desc');
+                    TaskManager::filterToday($tasks, true);
                     break;
                 case Task::NOT_SCHEDULED:
-                    $tasks = $tasks->whereNull('schedule')->orderBy('created_at', 'desc');
+                    TaskManager::filterNotScheduled($tasks, true);
                     break;
                 case Task::UPCOMING:
-                    $tasks = $tasks->where('schedule', '<>', Carbon::today()->format('Y-m-d'))->orderBy('schedule', 'desc');
+                    TaskManager::filterUpcoming($tasks, true);
                     break;
             }
         }

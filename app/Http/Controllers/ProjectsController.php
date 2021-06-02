@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Libraries\TaskManager\Facade\TaskManager;
 use App\Models\Project;
 use App\Models\Task;
 use Carbon\Carbon;
@@ -28,11 +29,12 @@ class ProjectsController extends Controller
         $data['projects'] = $projects->withCount( 'tasks' )->get();
 
         if ( $getCounts ) {
+            $user = Auth::user();
             $data['counts'] = array(
-                Task::TODAY         => Task::where('schedule', '<=', Carbon::today()->format('Y-m-d'))->count(),
-                Task::UPCOMING      => Task::where('schedule', '<>', Carbon::today()->format('Y-m-d'))->count(),
-                Task::NOT_SCHEDULED => Task::whereNull('schedule')->orderBy('created_at', 'desc')->count(),
-                Task::ARCHIVE       => Task::onlyTrashed()->count(),
+                Task::TODAY         => TaskManager::filterToday($user->tasks())->count(),
+                Task::UPCOMING      => TaskManager::filterUpcoming($user->tasks())->count(),
+                Task::NOT_SCHEDULED => TaskManager::filterNotScheduled($user->tasks())->count(),
+                Task::ARCHIVE       => TaskManager::filterArchived($user->tasks())->count(),
             );
         }
 
