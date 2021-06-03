@@ -31,9 +31,9 @@
                             <a v-if="!project.deleted_at" class="cursor-pointer" data-toggle="modal" data-target="#archiveProjectModal">
                                 <i class="fas fa-archive text-secondary"></i>
                             </a>
-<!--                            <a v-else class="cursor-pointer" data-toggle="modal" data-target="#restoreProjectModal">-->
-<!--                                <i class="fas fa-trash-restore"></i>-->
-<!--                            </a>-->
+                            <a v-else class="cursor-pointer" data-toggle="modal" data-target="#restoreProjectModal">
+                                <i class="fas fa-trash-restore"></i>
+                            </a>
 
                             <a class="cursor-pointer text-danger" data-toggle="modal" data-target="#deleteProjectModal">
                                 <i class="far fa-trash-alt"></i>
@@ -83,9 +83,9 @@
                 <div class="modal fade show mt-5" id="archiveProjectModal" tabindex="-1">
                     <archive-project-modal :project="project" @deleted="projectDeleted"></archive-project-modal>
                 </div>
-<!--                <div class="modal fade show mt-5" id="restoreProjectModal" tabindex="-1">-->
-<!--                    <restore-project-modal :project="project" @updated="projectUpdated"></restore-project-modal>-->
-<!--                </div>-->
+                <div class="modal fade show mt-5" id="restoreProjectModal" tabindex="-1">
+                    <restore-project-modal :project="project" @updated="projectUpdated"></restore-project-modal>
+                </div>
 
                 <div class="modal fade show mt-5" id="createTaskModal" tabindex="-1">
                     <create-task-modal :id="project.id" @stored="taskStored"></create-task-modal>

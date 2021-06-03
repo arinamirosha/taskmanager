@@ -2486,7 +2486,7 @@ __webpack_require__.r(__webpack_exports__);
     restoreProject: function restoreProject() {
       var _this = this;
 
-      axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.restore', this.id)).then(function (response) {
+      axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.restore', this.project.id)).then(function (response) {
         _this.$refs.cancel.click();
 
         _this.$emit('updated');
@@ -67094,7 +67094,7 @@ var render = function() {
                 ),
                 _c("strong", [_vm._v(_vm._s(_vm.project.name))]),
                 _vm._v(
-                  '"?\n                        Tasks with statuses "NEW" and "IN PROCESS" will be restored too.\n                        If you desire, tasks with status "FINISHED" you can restore manually.\n                    '
+                  '"?\n                        Tasks with statuses "NEW" and "IN PROCESS" will be restored too.\n                        If you desire, tasks with status "FINISHED" you could restore manually.\n                    '
                 )
               ])
             ])
@@ -67752,9 +67752,9 @@ var render = function() {
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("span", { staticClass: "font-weight-bold h4" }, [
                         _vm._v(
-                          "\n                            " +
+                          "\n                        " +
                             _vm._s(_vm.project.name) +
-                            "\n                            "
+                            "\n                        "
                         ),
                         _vm.project.deleted_at
                           ? _c("span", { staticClass: "text-info" }, [
@@ -67856,7 +67856,21 @@ var render = function() {
                                   })
                                 ]
                               )
-                            : _vm._e(),
+                            : _c(
+                                "a",
+                                {
+                                  staticClass: "cursor-pointer",
+                                  attrs: {
+                                    "data-toggle": "modal",
+                                    "data-target": "#restoreProjectModal"
+                                  }
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "fas fa-trash-restore"
+                                  })
+                                ]
+                              ),
                           _vm._v(" "),
                           _vm._m(0)
                         ]
@@ -68016,6 +68030,21 @@ var render = function() {
                       _c("archive-project-modal", {
                         attrs: { project: _vm.project },
                         on: { deleted: _vm.projectDeleted }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "modal fade show mt-5",
+                      attrs: { id: "restoreProjectModal", tabindex: "-1" }
+                    },
+                    [
+                      _c("restore-project-modal", {
+                        attrs: { project: _vm.project },
+                        on: { updated: _vm.projectUpdated }
                       })
                     ],
                     1
@@ -84991,7 +85020,7 @@ exports.withParams = withParams;
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"\":\"password/confirm\",\"login\":\"login\",\"logout\":\"logout\",\"register\":\"register\",\"password.request\":\"password/reset\",\"password.email\":\"password/email\",\"password.reset\":\"password/reset/{token}\",\"password.update\":\"password/reset\",\"password.confirm\":\"password/confirm\",\"welcome\":\"/\",\"home\":\"home\",\"users.show\":\"users\",\"users.update\":\"users\",\"projects.index\":\"projects\",\"projects.store\":\"projects\",\"projects.show\":\"projects/{project}\",\"projects.update\":\"projects/{project}\",\"projects.archive\":\"projects/{project}/archive\",\"projects.destroy-force\":\"projects/{project}/force\",\"tasks.index\":\"tasks\",\"tasks.store\":\"tasks\",\"tasks.restore\":\"tasks/{task}/restore\",\"tasks.update\":\"tasks/{task}\",\"tasks.destroy\":\"tasks/{task}\",\"tasks.archive\":\"tasks/archive/all\",\"tasks.destroy-force\":\"tasks/{task}/force\"}");
+module.exports = JSON.parse("{\"\":\"password/confirm\",\"login\":\"login\",\"logout\":\"logout\",\"register\":\"register\",\"password.request\":\"password/reset\",\"password.email\":\"password/email\",\"password.reset\":\"password/reset/{token}\",\"password.update\":\"password/reset\",\"password.confirm\":\"password/confirm\",\"welcome\":\"/\",\"home\":\"home\",\"users.show\":\"users\",\"users.update\":\"users\",\"projects.index\":\"projects\",\"projects.store\":\"projects\",\"projects.show\":\"projects/{project}\",\"projects.restore\":\"projects/{project}/restore\",\"projects.update\":\"projects/{project}\",\"projects.archive\":\"projects/{project}/archive\",\"projects.destroy-force\":\"projects/{project}/force\",\"tasks.index\":\"tasks\",\"tasks.store\":\"tasks\",\"tasks.restore\":\"tasks/{task}/restore\",\"tasks.update\":\"tasks/{task}\",\"tasks.destroy\":\"tasks/{task}\",\"tasks.archive\":\"tasks/archive/all\",\"tasks.destroy-force\":\"tasks/{task}/force\"}");
 
 /***/ })
 

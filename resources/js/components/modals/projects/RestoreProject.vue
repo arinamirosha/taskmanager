@@ -10,7 +10,7 @@
                         <p>
                             Are you sure want to restore "<strong>{{project.name}}</strong>"?
                             Tasks with statuses "NEW" and "IN PROCESS" will be restored too.
-                            If you desire, tasks with status "FINISHED" you can restore manually.
+                            If you desire, tasks with status "FINISHED" you could restore manually.
                         </p>
                     </div>
                 </div>
@@ -32,7 +32,7 @@ export default {
     methods: {
         restoreProject() {
             axios
-                .post(route('projects.restore', this.id))
+                .post(route('projects.restore', this.project.id))
                 .then(response => {
                     this.$refs.cancel.click();
                     this.$emit('updated');

@@ -77,6 +77,16 @@ class ProjectsController extends Controller
         return true;
     }
 
+    public function restore($id)
+    {
+        $project = Project::withTrashed()->findOrFail($id);
+        $this->authorize('restore', $project);
+        $project->tasks()->withTrashed()->whereIn('status', [Task::STATUS_NEW, Task::STATUS_PROGRESS])->restore();
+        $project->restore();
+
+        return true;
+    }
+
     public function destroyForce($id)
     {
         $project = Project::withTrashed()->findOrFail($id);

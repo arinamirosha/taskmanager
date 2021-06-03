@@ -15,6 +15,7 @@
     "projects.index": "projects",
     "projects.store": "projects",
     "projects.show": "projects\/{project}",
+    "projects.restore": "projects\/{project}\/restore",
     "projects.update": "projects\/{project}",
     "projects.archive": "projects\/{project}\/archive",
     "projects.destroy-force": "projects\/{project}\/force",

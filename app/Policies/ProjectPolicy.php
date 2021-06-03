@@ -77,7 +77,7 @@ class ProjectPolicy
      */
     public function restore(User $user, Project $project)
     {
-        //
+        return $user->id === $project->user_id && $project->trashed();
     }
 
     /**
