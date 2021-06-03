@@ -2158,25 +2158,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['project'],
-  data: function data() {
-    return {
-      archiveTasks: true
-    };
-  },
   methods: {
     archiveProject: function archiveProject(e) {
       var _this = this;
 
-      axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.archive', this.project.id), {
-        data: {
-          'archive_tasks': this.archiveTasks
-        }
-      }).then(function (response) {
+      axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.archive', this.project.id)).then(function (response) {
         _this.$refs.cancel.click();
 
         _this.$emit('deleted');
@@ -2446,6 +2435,64 @@ __webpack_require__.r(__webpack_exports__);
       this.favorite = Boolean(this.project.favorite);
       this.color = this.project.color;
       this.$v.$reset();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/modals/projects/RestoreProject.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/modals/projects/RestoreProject.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../route */ "./resources/js/route.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['project'],
+  methods: {
+    restoreProject: function restoreProject() {
+      var _this = this;
+
+      axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.restore', this.id)).then(function (response) {
+        _this.$refs.cancel.click();
+
+        _this.$emit('updated');
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });
@@ -3033,6 +3080,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3214,7 +3267,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
-//
 //
 //
 //
@@ -3566,7 +3618,8 @@ Vue.component('archived-projects', __webpack_require__(/*! ./components/projects
 Vue.component('create-project-modal', __webpack_require__(/*! ./components/modals/projects/CreateProject.vue */ "./resources/js/components/modals/projects/CreateProject.vue").default);
 Vue.component('edit-project-modal', __webpack_require__(/*! ./components/modals/projects/EditProject.vue */ "./resources/js/components/modals/projects/EditProject.vue").default);
 Vue.component('delete-project-modal', __webpack_require__(/*! ./components/modals/projects/DeleteProject.vue */ "./resources/js/components/modals/projects/DeleteProject.vue").default);
-Vue.component('archive-project-modal', __webpack_require__(/*! ./components/modals/projects/ArchiveProject.vue */ "./resources/js/components/modals/projects/ArchiveProject.vue").default); // TASKS
+Vue.component('archive-project-modal', __webpack_require__(/*! ./components/modals/projects/ArchiveProject.vue */ "./resources/js/components/modals/projects/ArchiveProject.vue").default);
+Vue.component('restore-project-modal', __webpack_require__(/*! ./components/modals/projects/RestoreProject.vue */ "./resources/js/components/modals/projects/RestoreProject.vue").default); // TASKS
 
 Vue.component('list-item-task', __webpack_require__(/*! ./components/tasks/ListItemTask.vue */ "./resources/js/components/tasks/ListItemTask.vue").default);
 Vue.component('common-index-task', __webpack_require__(/*! ./components/tasks/CommonIndexTask.vue */ "./resources/js/components/tasks/CommonIndexTask.vue").default); // modals
@@ -8266,7 +8319,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n.cursor-pointer {\n    cursor: pointer;\n}\n.task:hover {\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished {\n    color: #dedede;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n.cursor-pointer {\n    cursor: pointer;\n}\n.task:hover {\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished {\n    color: #dedede;\n}\n.text-custom-secondary {\n    color: #c8c8c8;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -65175,6 +65228,45 @@ component.options.__file = "resources/js/components/modals/projects/EditProject.
 
 /***/ }),
 
+/***/ "./resources/js/components/modals/projects/RestoreProject.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/modals/projects/RestoreProject.vue ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _RestoreProject_vue_vue_type_template_id_0605d0e2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RestoreProject.vue?vue&type=template&id=0605d0e2& */ "./resources/js/components/modals/projects/RestoreProject.vue?vue&type=template&id=0605d0e2&");
+/* harmony import */ var _RestoreProject_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RestoreProject.vue?vue&type=script&lang=js& */ "./resources/js/components/modals/projects/RestoreProject.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _RestoreProject_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _RestoreProject_vue_vue_type_template_id_0605d0e2___WEBPACK_IMPORTED_MODULE_0__.render,
+  _RestoreProject_vue_vue_type_template_id_0605d0e2___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/modals/projects/RestoreProject.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/modals/tasks/CreateTask.vue":
 /*!*************************************************************!*\
   !*** ./resources/js/components/modals/tasks/CreateTask.vue ***!
@@ -65570,6 +65662,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/modals/projects/RestoreProject.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/modals/projects/RestoreProject.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RestoreProject_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RestoreProject.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/modals/projects/RestoreProject.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RestoreProject_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/modals/tasks/CreateTask.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************!*\
   !*** ./resources/js/components/modals/tasks/CreateTask.vue?vue&type=script&lang=js& ***!
@@ -65888,6 +65996,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditProject_vue_vue_type_template_id_048323f0___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditProject_vue_vue_type_template_id_048323f0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./EditProject.vue?vue&type=template&id=048323f0& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/modals/projects/EditProject.vue?vue&type=template&id=048323f0&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/modals/projects/RestoreProject.vue?vue&type=template&id=0605d0e2&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/modals/projects/RestoreProject.vue?vue&type=template&id=0605d0e2& ***!
+  \***************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RestoreProject_vue_vue_type_template_id_0605d0e2___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RestoreProject_vue_vue_type_template_id_0605d0e2___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RestoreProject_vue_vue_type_template_id_0605d0e2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RestoreProject.vue?vue&type=template&id=0605d0e2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/modals/projects/RestoreProject.vue?vue&type=template&id=0605d0e2&");
 
 
 /***/ }),
@@ -66437,56 +66562,11 @@ var render = function() {
         [
           _c("div", { staticClass: "modal-body" }, [
             _c("div", { staticClass: "form-group" }, [
-              _c("p", [
-                _vm._v(
-                  '\n                        Are you sure want to archive "'
-                ),
-                _c("strong", [_vm._v(_vm._s(_vm.project.name))]),
-                _vm._v(
-                  '"?\n                        If you check "Archive tasks" all task of this project will be archived including not finished.\n                        If you don\'t check it no one task will be archived.\n                    '
-                )
-              ]),
-              _vm._v(" "),
-              _c("label", [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.archiveTasks,
-                      expression: "archiveTasks"
-                    }
-                  ],
-                  attrs: { type: "checkbox" },
-                  domProps: {
-                    checked: Array.isArray(_vm.archiveTasks)
-                      ? _vm._i(_vm.archiveTasks, null) > -1
-                      : _vm.archiveTasks
-                  },
-                  on: {
-                    change: function($event) {
-                      var $$a = _vm.archiveTasks,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = null,
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 && (_vm.archiveTasks = $$a.concat([$$v]))
-                        } else {
-                          $$i > -1 &&
-                            (_vm.archiveTasks = $$a
-                              .slice(0, $$i)
-                              .concat($$a.slice($$i + 1)))
-                        }
-                      } else {
-                        _vm.archiveTasks = $$c
-                      }
-                    }
-                  }
-                }),
-                _vm._v(" Archive tasks")
-              ])
+              _vm._v('\n                    Are you sure want to archive "'),
+              _c("strong", [_vm._v(_vm._s(_vm.project.name))]),
+              _vm._v(
+                '"?\n                    All tasks will be archived too.\n                    If you decide to restore project later, tasks only with status "NEW" and "IN PROGRESS" will be restored.\n                    Tasks with status "FINISHED" you will be able to restore manually.\n                '
+              )
             ])
           ]),
           _vm._v(" "),
@@ -66975,6 +67055,89 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/modals/projects/RestoreProject.vue?vue&type=template&id=0605d0e2&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/modals/projects/RestoreProject.vue?vue&type=template&id=0605d0e2& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "modal-dialog" }, [
+    _c("div", { staticClass: "modal-content" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.restoreProject($event)
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "modal-body" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("p", [
+                _vm._v(
+                  '\n                        Are you sure want to restore "'
+                ),
+                _c("strong", [_vm._v(_vm._s(_vm.project.name))]),
+                _vm._v(
+                  '"?\n                        Tasks with statuses "NEW" and "IN PROCESS" will be restored too.\n                        If you desire, tasks with status "FINISHED" you can restore manually.\n                    '
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                ref: "cancel",
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button", "data-dismiss": "modal" }
+              },
+              [_vm._v("Cancel")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              [_vm._v("Restore")]
+            )
+          ])
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Restore Project")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/modals/tasks/CreateTask.vue?vue&type=template&id=0750b370&":
 /*!***********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/modals/tasks/CreateTask.vue?vue&type=template&id=0750b370& ***!
@@ -67426,7 +67589,7 @@ var render = function() {
                 )
               : _vm._e(),
             _vm._v(" "),
-            _vm.task.deleted_at
+            _vm.task.deleted_at && !_vm.task.project.deleted_at
               ? _c(
                   "button",
                   { staticClass: "btn btn-primary", attrs: { type: "button" } },
@@ -67548,7 +67711,9 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row h5 font-weight-bold" }, [
       _c("div", { staticClass: "col-md-3" }, [_vm._v("Project")]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [_vm._v("Count Active Tasks")]),
+      _c("div", { staticClass: "col-md-3" }, [
+        _vm._v("Count Tasks To Restore")
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-2" }, [_vm._v("Archived")])
     ])
@@ -67587,9 +67752,9 @@ var render = function() {
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("span", { staticClass: "font-weight-bold h4" }, [
                         _vm._v(
-                          "\n                        " +
+                          "\n                            " +
                             _vm._s(_vm.project.name) +
-                            "\n                        "
+                            "\n                            "
                         ),
                         _vm.project.deleted_at
                           ? _c("span", { staticClass: "text-info" }, [
@@ -67602,12 +67767,7 @@ var render = function() {
                     _c("div", { staticClass: "col-md-6" }, [
                       _c(
                         "div",
-                        {
-                          staticClass: "row h5",
-                          class: _vm.project.deleted_at
-                            ? "justify-content-end"
-                            : "justify-content-between"
-                        },
+                        { staticClass: "row h5 justify-content-between" },
                         [
                           !_vm.project.deleted_at
                             ? _c(
@@ -68092,9 +68252,7 @@ var render = function() {
           { staticClass: "col-md-12" },
           [
             _c("div", { staticClass: "row h5 font-weight-bold" }, [
-              _vm.type !== _vm.c.ARCHIVE
-                ? _c("div", { staticClass: "col-md-1" }, [_vm._v("#")])
-                : _vm._e(),
+              _c("div", { staticClass: "col-md-1" }, [_vm._v("Status")]),
               _vm._v(" "),
               _c("div", { staticClass: "col-md-3" }, [_vm._v("Task")]),
               _vm._v(" "),
@@ -68109,7 +68267,7 @@ var render = function() {
                 : _vm._e()
             ]),
             _vm._v(" "),
-            _vm._l(_vm.tasks, function(task, index) {
+            _vm._l(_vm.tasks, function(task) {
               return _vm.isDataLoaded && _vm.tasks.length !== 0
                 ? _c(
                     "div",
@@ -68124,12 +68282,9 @@ var render = function() {
                       }
                     },
                     [
-                      _vm.type !== _vm.c.ARCHIVE
-                        ? _c("div", { staticClass: "col-md-1" }, [
-                            _vm._v(_vm._s(++index) + " "),
-                            _c("i", { class: _vm.statusIconClass(task.status) })
-                          ])
-                        : _vm._e(),
+                      _c("div", { staticClass: "col-md-1" }, [
+                        _c("i", { class: _vm.statusIconClass(task.status) })
+                      ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-3" }, [
                         _c(
@@ -68144,18 +68299,22 @@ var render = function() {
                         _vm._v(" " + _vm._s(task.name) + "\n                ")
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-3" }, [
-                        _vm._v(
-                          "\n                    " +
-                            _vm._s(task.project.name) +
-                            "\n                    "
-                        ),
-                        task.project.deleted_at
-                          ? _c("span", { staticClass: "text-info" }, [
-                              _vm._v("ARCHIVED")
-                            ])
-                          : _vm._e()
-                      ]),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "col-md-3",
+                          class: {
+                            "text-custom-secondary": task.project.deleted_at
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(task.project.name) +
+                              "\n                "
+                          )
+                        ]
+                      ),
                       _vm._v(" "),
                       _vm.type !== _vm.c.NOT_SCHEDULED
                         ? _c(

@@ -24,9 +24,14 @@ class ProjectsController extends Controller
 
         if ($type === Task::ARCHIVE) {
             $projects = $projects->onlyTrashed();
+            $data['projects'] = $projects->withCount([
+                'tasks'=> function ($query) {
+                    $query->whereIn('status', [Task::STATUS_NEW, Task::STATUS_PROGRESS])->withTrashed();
+                },
+            ])->get();
+        } else {
+            $data['projects'] = $projects->withCount('tasks')->get();
         }
-
-        $data['projects'] = $projects->withCount( 'tasks' )->get();
 
         if ( $getCounts ) {
             $user = Auth::user();
@@ -46,7 +51,15 @@ class ProjectsController extends Controller
         $project = Project::withTrashed()->findOrFail($id);
         $this->authorize('view', $project);
 
-        return $project->load('tasks');
+        if ($project->trashed()) {
+            return $project->load([
+                'tasks'=> function ($query) {
+                    $query->whereIn('status', [Task::STATUS_NEW, Task::STATUS_PROGRESS])->withTrashed();
+                },
+            ]);
+        } else {
+            return $project->load('tasks');
+        }
     }
 
     public function update(Project $project, Request $request)
@@ -56,13 +69,9 @@ class ProjectsController extends Controller
         return $project;
     }
 
-    public function archive(Project $project, Request $request)
+    public function archive(Project $project)
     {
-        $archiveTasks = $request->get('archive_tasks', true);
-
-        if ($archiveTasks) {
-            $project->tasks()->delete();
-        }
+        $project->tasks()->delete();
         $project->delete();
 
         return true;

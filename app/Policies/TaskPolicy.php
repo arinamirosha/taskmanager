@@ -78,7 +78,7 @@ class TaskPolicy
      */
     public function restore(User $user, Task $task)
     {
-        //
+        return $user->id === $task->project->user_id && !$task->project->trashed();
     }
 
     /**

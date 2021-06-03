@@ -2,21 +2,22 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Archive Project</h5>
+                <h5 class="modal-title">Restore Project</h5>
             </div>
-            <form @submit.prevent="archiveProject">
+            <form @submit.prevent="restoreProject">
                 <div class="modal-body">
                     <div class="form-group">
-                        Are you sure want to archive "<strong>{{project.name}}</strong>"?
-                        All tasks will be archived too.
-                        If you decide to restore project later, tasks only with status "NEW" and "IN PROGRESS" will be restored.
-                        Tasks with status "FINISHED" you will be able to restore manually.
+                        <p>
+                            Are you sure want to restore "<strong>{{project.name}}</strong>"?
+                            Tasks with statuses "NEW" and "IN PROCESS" will be restored too.
+                            If you desire, tasks with status "FINISHED" you can restore manually.
+                        </p>
                     </div>
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="cancel">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Archive</button>
+                    <button type="submit" class="btn btn-primary">Restore</button>
                 </div>
             </form>
         </div>
@@ -29,15 +30,15 @@ import route from "../../../route";
 export default {
     props: ['project'],
     methods: {
-        archiveProject(e) {
+        restoreProject() {
             axios
-                .delete(route('projects.archive', this.project.id))
+                .post(route('projects.restore', this.id))
                 .then(response => {
                     this.$refs.cancel.click();
-                    this.$emit('deleted');
+                    this.$emit('updated');
                 })
                 .catch(error => {
-                    console.log(error)
+                    console.log(error);
                 });
         },
     },

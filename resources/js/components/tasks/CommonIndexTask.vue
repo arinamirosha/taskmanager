@@ -16,28 +16,27 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="row h5 font-weight-bold">
-                    <div class="col-md-1" v-if="type !== c.ARCHIVE">#</div>
+                    <div class="col-md-1">Status</div>
                     <div class="col-md-3">Task</div>
                     <div class="col-md-3">Project</div>
                     <div class="col-md-2" v-if="type !== c.NOT_SCHEDULED">Schedule</div>
                     <div class="col-md-2" v-if="type === c.ARCHIVE">Archived</div>
                 </div>
 
-                <div v-if="isDataLoaded && tasks.length !== 0" v-for="(task, index) in tasks"
+                <div v-if="isDataLoaded && tasks.length !== 0" v-for="task in tasks"
                      :key="task.id"
                      class="row cursor-pointer task pt-1 pb-1"
                      @click="showTask(task)"
                      :class="{'task-finished': isNeedStyleFinished(task)}"
                 >
-                    <div class="col-md-1" v-if="type !== c.ARCHIVE">{{++index}} <i :class="statusIconClass(task.status)"></i></div>
+                    <div class="col-md-1"><i :class="statusIconClass(task.status)"></i></div>
 
                     <div class="col-md-3">
                         <span :class="isNeedStyleFinished(task) ? 'task-finished' : importanceCss(task.importance)">&bull;</span> {{task.name}}
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-3" :class="{'text-custom-secondary': task.project.deleted_at}">
                         {{task.project.name}}
-                        <span v-if="task.project.deleted_at" class="text-info">ARCHIVED</span>
                     </div>
 
                     <div class="col-md-2" v-if="type !== c.NOT_SCHEDULED" :class="{'text-danger': isNeedStyleOverdue(task)}">
@@ -248,5 +247,8 @@ export default {
 }
 .task-finished {
     color: #dedede;
+}
+.text-custom-secondary {
+    color: #c8c8c8;
 }
 </style>

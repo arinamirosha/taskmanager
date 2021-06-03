@@ -29,7 +29,7 @@ class TaskController extends Controller
     public function restore($id)
     {
         $task = Task::withTrashed()->findOrFail($id);
-        $this->authorize('update', $task);
+        $this->authorize('restore', $task);
         $task->restore();
 
         return true;
