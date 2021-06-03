@@ -106,6 +106,7 @@ nav a:hover {
     height: calc(100vh - 44px);
     position: fixed;
     left: 0;
+    overflow-y:scroll;
 }
 .main-content {
     margin-left: 300px;
@@ -113,6 +114,16 @@ nav a:hover {
 .name-count-space {
     display: flex;
     justify-content: space-between;
+}
+::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px #e0eeee;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px #e1e1e1;
 }
 </style>
 

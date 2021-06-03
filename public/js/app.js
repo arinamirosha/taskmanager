@@ -1977,6 +1977,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -8199,7 +8210,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nnav a[data-v-f2b6376c]:hover,\n.active[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px;\n    cursor: pointer;\n}\nnav a[data-v-f2b6376c]:hover {\n    text-decoration: none;\n}\n.cursor-pointer[data-v-f2b6376c]{\n    cursor: pointer;\n}\n.text-custom-secondary[data-v-f2b6376c] {\n    color: #c8c8c8;\n}\n.left-menu[data-v-f2b6376c] {\n    width: 300px;\n    height: calc(100vh - 44px);\n    position: fixed;\n    left: 0;\n}\n.main-content[data-v-f2b6376c] {\n    margin-left: 300px;\n}\n.name-count-space[data-v-f2b6376c] {\n    display: flex;\n    justify-content: space-between;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nnav a[data-v-f2b6376c]:hover,\n.active[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px;\n    cursor: pointer;\n}\nnav a[data-v-f2b6376c]:hover {\n    text-decoration: none;\n}\n.cursor-pointer[data-v-f2b6376c]{\n    cursor: pointer;\n}\n.text-custom-secondary[data-v-f2b6376c] {\n    color: #c8c8c8;\n}\n.left-menu[data-v-f2b6376c] {\n    width: 300px;\n    height: calc(100vh - 44px);\n    position: fixed;\n    left: 0;\n    overflow-y:scroll;\n}\n.main-content[data-v-f2b6376c] {\n    margin-left: 300px;\n}\n.name-count-space[data-v-f2b6376c] {\n    display: flex;\n    justify-content: space-between;\n}\n[data-v-f2b6376c]::-webkit-scrollbar {\n    width: 12px;\n}\n[data-v-f2b6376c]::-webkit-scrollbar-track {\n    -webkit-box-shadow: inset 0 0 6px #e0eeee;\n}\n[data-v-f2b6376c]::-webkit-scrollbar-thumb {\n    border-radius: 10px;\n    -webkit-box-shadow: inset 0 0 6px #e1e1e1;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
