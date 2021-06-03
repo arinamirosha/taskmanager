@@ -29,7 +29,7 @@
                      @click="showTask(task)"
                      :class="{'task-finished': isNeedStyleFinished(task)}"
                 >
-                    <div class="col-md-1" v-if="type !== c.ARCHIVE">{{++index}} <i v-if="type !== c.ARCHIVE" :class="statusIconClass(task.status)"></i></div>
+                    <div class="col-md-1" v-if="type !== c.ARCHIVE">{{++index}} <i :class="statusIconClass(task.status)"></i></div>
 
                     <div class="col-md-3">
                         <span :class="isNeedStyleFinished(task) ? 'task-finished' : importanceCss(task.importance)">&bull;</span> {{task.name}}
@@ -61,7 +61,7 @@
             <show-task-modal
                 :task="currentTask"
                 @archived="taskArchived"
-                @statusUpdated="getTasks"
+                @taskUpdated="taskUpdated"
                 @deleteTaskModal="$refs.deleteTaskModalButton.click()"
                 @showProject="showProject"
             ></show-task-modal>
@@ -170,6 +170,10 @@ export default {
         taskArchived() {
             this.getTasks();
             this.$emit('taskArchived');
+        },
+        taskUpdated() {
+            this.getTasks();
+            this.$emit('taskUpdated');
         },
         getHideFinished() {
             axios

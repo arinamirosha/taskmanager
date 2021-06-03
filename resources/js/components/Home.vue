@@ -70,6 +70,7 @@
                 @updated="getProjects"
                 @deleted="getProjects"
                 @taskArchived="getProjects"
+                @taskUpdated="getProjects"
                 @taskStored="getProjects"
                 @taskDeleted="getProjects"
                 @showProject="selectProject"

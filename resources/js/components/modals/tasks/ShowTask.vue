@@ -45,6 +45,10 @@
                         <span @click="archive" data-dismiss="modal">Archive</span>
                     </button>
 
+                    <button type="button" class="btn btn-primary" v-if="task.deleted_at">
+                        <span @click="restore" data-dismiss="modal">Restore</span>
+                    </button>
+
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="closeShowTask">Close</button>
                 </div>
             </form>
@@ -96,7 +100,7 @@ export default {
             axios
                 .post(route('tasks.update', this.task.id), {'status': newStatus})
                 .then(response => {
-                    this.$emit('statusUpdated', this.task.id);
+                    this.$emit('taskUpdated', this.task.id);
                 })
                 .catch(error => {
                     console.log(error);
@@ -107,6 +111,16 @@ export default {
                 .delete(route('tasks.destroy', this.task.id))
                 .then(response => {
                     this.$emit('archived', this.task.id);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        restore() {
+            axios
+                .post(route('tasks.restore', this.task.id))
+                .then(response => {
+                    this.$emit('taskUpdated', this.task.id);
                 })
                 .catch(error => {
                     console.log(error);

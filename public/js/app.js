@@ -1976,6 +1976,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2719,6 +2720,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2780,7 +2785,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post((0,_route__WEBPACK_IMPORTED_MODULE_1__.default)('tasks.update', this.task.id), {
         'status': newStatus
       }).then(function (response) {
-        _this.$emit('statusUpdated', _this.task.id);
+        _this.$emit('taskUpdated', _this.task.id);
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2790,6 +2795,15 @@ __webpack_require__.r(__webpack_exports__);
 
       axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_1__.default)('tasks.destroy', this.task.id)).then(function (response) {
         _this2.$emit('archived', _this2.task.id);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    restore: function restore() {
+      var _this3 = this;
+
+      axios.post((0,_route__WEBPACK_IMPORTED_MODULE_1__.default)('tasks.restore', this.task.id)).then(function (response) {
+        _this3.$emit('taskUpdated', _this3.task.id);
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3384,6 +3398,10 @@ __webpack_require__.r(__webpack_exports__);
     taskArchived: function taskArchived() {
       this.getTasks();
       this.$emit('taskArchived');
+    },
+    taskUpdated: function taskUpdated() {
+      this.getTasks();
+      this.$emit('taskUpdated');
     },
     getHideFinished: function getHideFinished() {
       var _this4 = this;
@@ -66273,6 +66291,7 @@ var render = function() {
             updated: _vm.getProjects,
             deleted: _vm.getProjects,
             taskArchived: _vm.getProjects,
+            taskUpdated: _vm.getProjects,
             taskStored: _vm.getProjects,
             taskDeleted: _vm.getProjects,
             showProject: _vm.selectProject
@@ -67407,6 +67426,23 @@ var render = function() {
                 )
               : _vm._e(),
             _vm._v(" "),
+            _vm.task.deleted_at
+              ? _c(
+                  "button",
+                  { staticClass: "btn btn-primary", attrs: { type: "button" } },
+                  [
+                    _c(
+                      "span",
+                      {
+                        attrs: { "data-dismiss": "modal" },
+                        on: { click: _vm.restore }
+                      },
+                      [_vm._v("Restore")]
+                    )
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
             _c(
               "button",
               {
@@ -68091,11 +68127,7 @@ var render = function() {
                       _vm.type !== _vm.c.ARCHIVE
                         ? _c("div", { staticClass: "col-md-1" }, [
                             _vm._v(_vm._s(++index) + " "),
-                            _vm.type !== _vm.c.ARCHIVE
-                              ? _c("i", {
-                                  class: _vm.statusIconClass(task.status)
-                                })
-                              : _vm._e()
+                            _c("i", { class: _vm.statusIconClass(task.status) })
                           ])
                         : _vm._e(),
                       _vm._v(" "),
@@ -68187,7 +68219,7 @@ var render = function() {
             attrs: { task: _vm.currentTask },
             on: {
               archived: _vm.taskArchived,
-              statusUpdated: _vm.getTasks,
+              taskUpdated: _vm.taskUpdated,
               deleteTaskModal: function($event) {
                 return _vm.$refs.deleteTaskModalButton.click()
               },
@@ -84800,7 +84832,7 @@ exports.withParams = withParams;
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"\":\"password/confirm\",\"login\":\"login\",\"logout\":\"logout\",\"register\":\"register\",\"password.request\":\"password/reset\",\"password.email\":\"password/email\",\"password.reset\":\"password/reset/{token}\",\"password.update\":\"password/reset\",\"password.confirm\":\"password/confirm\",\"welcome\":\"/\",\"home\":\"home\",\"users.show\":\"users\",\"users.update\":\"users\",\"projects.index\":\"projects\",\"projects.store\":\"projects\",\"projects.show\":\"projects/{project}\",\"projects.update\":\"projects/{project}\",\"projects.archive\":\"projects/{project}/archive\",\"projects.destroy-force\":\"projects/{project}/force\",\"tasks.index\":\"tasks\",\"tasks.store\":\"tasks\",\"tasks.update\":\"tasks/{task}\",\"tasks.destroy\":\"tasks/{task}\",\"tasks.archive\":\"tasks/archive/all\",\"tasks.destroy-force\":\"tasks/{task}/force\"}");
+module.exports = JSON.parse("{\"\":\"password/confirm\",\"login\":\"login\",\"logout\":\"logout\",\"register\":\"register\",\"password.request\":\"password/reset\",\"password.email\":\"password/email\",\"password.reset\":\"password/reset/{token}\",\"password.update\":\"password/reset\",\"password.confirm\":\"password/confirm\",\"welcome\":\"/\",\"home\":\"home\",\"users.show\":\"users\",\"users.update\":\"users\",\"projects.index\":\"projects\",\"projects.store\":\"projects\",\"projects.show\":\"projects/{project}\",\"projects.update\":\"projects/{project}\",\"projects.archive\":\"projects/{project}/archive\",\"projects.destroy-force\":\"projects/{project}/force\",\"tasks.index\":\"tasks\",\"tasks.store\":\"tasks\",\"tasks.restore\":\"tasks/{task}/restore\",\"tasks.update\":\"tasks/{task}\",\"tasks.destroy\":\"tasks/{task}\",\"tasks.archive\":\"tasks/archive/all\",\"tasks.destroy-force\":\"tasks/{task}/force\"}");
 
 /***/ })
 

@@ -26,6 +26,15 @@ class TaskController extends Controller
         return $task;
     }
 
+    public function restore($id)
+    {
+        $task = Task::withTrashed()->findOrFail($id);
+        $this->authorize('update', $task);
+        $task->restore();
+
+        return true;
+    }
+
 //    public function show(Task $task)
 //    {
 //        return $task;
