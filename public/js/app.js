@@ -1988,6 +1988,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2408,7 +2417,7 @@ __webpack_require__.r(__webpack_exports__);
   validations: {
     name: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.required,
-      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.maxLength)(15)
+      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.maxLength)(100)
     },
     favorite: {
       "boolean": function boolean(value) {
@@ -2724,6 +2733,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../constants */ "./resources/js/constants.js");
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../route */ "./resources/js/route.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -2782,6 +2793,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2869,6 +2883,13 @@ __webpack_require__.r(__webpack_exports__);
     showProject: function showProject(id) {
       this.$refs.closeShowTask.click();
       this.$emit('showProject', id);
+    },
+    isOverdue: function isOverdue() {
+      if (this.task.deleted_at) {
+        return false;
+      }
+
+      return moment__WEBPACK_IMPORTED_MODULE_2___default()(this.task.schedule).isBefore(new Date(), 'day');
     }
   }
 });
@@ -66197,7 +66218,18 @@ var render = function() {
             [
               _vm._v("\n                Today "),
               _c("span", { staticClass: "text-custom-secondary" }, [
-                _vm._v(_vm._s(_vm.counts[_vm.c.TODAY]))
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.counts[_vm.c.TODAY]) +
+                    "\n                "
+                ),
+                _vm.counts[_vm.c.TODAY] !== _vm.counts[_vm.c.TODAY + "_active"]
+                  ? _c("span", [
+                      _vm._v(
+                        "(" + _vm._s(_vm.counts[_vm.c.TODAY + "_active"]) + ")"
+                      )
+                    ])
+                  : _vm._e()
               ])
             ]
           ),
@@ -66216,7 +66248,21 @@ var render = function() {
             [
               _vm._v("\n                Upcoming "),
               _c("span", { staticClass: "text-custom-secondary" }, [
-                _vm._v(_vm._s(_vm.counts[_vm.c.UPCOMING]))
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.counts[_vm.c.UPCOMING]) +
+                    "\n                "
+                ),
+                _vm.counts[_vm.c.UPCOMING] !==
+                _vm.counts[_vm.c.UPCOMING + "_active"]
+                  ? _c("span", [
+                      _vm._v(
+                        "(" +
+                          _vm._s(_vm.counts[_vm.c.UPCOMING + "_active"]) +
+                          ")"
+                      )
+                    ])
+                  : _vm._e()
               ])
             ]
           ),
@@ -66235,7 +66281,21 @@ var render = function() {
             [
               _vm._v("\n                Not Scheduled "),
               _c("span", { staticClass: "text-custom-secondary" }, [
-                _vm._v(_vm._s(_vm.counts[_vm.c.NOT_SCHEDULED]))
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.counts[_vm.c.NOT_SCHEDULED]) +
+                    "\n                "
+                ),
+                _vm.counts[_vm.c.NOT_SCHEDULED] !==
+                _vm.counts[_vm.c.NOT_SCHEDULED + "_active"]
+                  ? _c("span", [
+                      _vm._v(
+                        "(" +
+                          _vm._s(_vm.counts[_vm.c.NOT_SCHEDULED + "_active"]) +
+                          ")"
+                      )
+                    ])
+                  : _vm._e()
               ])
             ]
           ),
@@ -66251,12 +66311,7 @@ var render = function() {
                 }
               }
             },
-            [
-              _vm._v("\n                Archive "),
-              _c("span", { staticClass: "text-custom-secondary" }, [
-                _vm._v(_vm._s(_vm.counts[_vm.c.ARCHIVE]))
-              ])
-            ]
+            [_vm._v("\n                Archive\n            ")]
           ),
           _vm._v(" "),
           _vm.favorites.length > 0
@@ -67510,7 +67565,16 @@ var render = function() {
                     _vm._v("Schedule")
                   ]),
                   _vm._v(" "),
-                  _c("div", [_vm._v(_vm._s(_vm.task.schedule))])
+                  _c("div", { class: { "text-danger": _vm.isOverdue() } }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(_vm.task.schedule) +
+                        " "
+                    ),
+                    _vm.isOverdue()
+                      ? _c("i", { staticClass: "fas fa-exclamation" })
+                      : _vm._e()
+                  ])
                 ])
               : _vm._e(),
             _vm._v(" "),

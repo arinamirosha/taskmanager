@@ -5,16 +5,25 @@
             <nav class="nav flex-column">
                 <a class="nav-link text-dark" :class="{'active': type===c.INCOMING}" @click="setType(c.INCOMING)">Incoming</a>
                 <a class="nav-link text-dark name-count-space" :class="{'active': type===c.TODAY}" @click="setType(c.TODAY)">
-                    Today <span class="text-custom-secondary">{{counts[c.TODAY]}}</span>
+                    Today <span class="text-custom-secondary">
+                    {{counts[c.TODAY]}}
+                    <span v-if="counts[c.TODAY] !== counts[c.TODAY+'_active']">({{counts[c.TODAY+'_active']}})</span>
+                </span>
                 </a>
                 <a class="nav-link text-dark name-count-space" :class="{'active': type===c.UPCOMING}" @click="setType(c.UPCOMING)">
-                    Upcoming <span class="text-custom-secondary">{{counts[c.UPCOMING]}}</span>
+                    Upcoming <span class="text-custom-secondary">
+                    {{counts[c.UPCOMING]}}
+                    <span v-if="counts[c.UPCOMING] !== counts[c.UPCOMING+'_active']">({{counts[c.UPCOMING+'_active']}})</span>
+                </span>
                 </a>
                 <a class="nav-link text-dark name-count-space" :class="{'active': type===c.NOT_SCHEDULED}" @click="setType(c.NOT_SCHEDULED)">
-                    Not Scheduled <span class="text-custom-secondary">{{counts[c.NOT_SCHEDULED]}}</span>
+                    Not Scheduled <span class="text-custom-secondary">
+                    {{counts[c.NOT_SCHEDULED]}}
+                    <span v-if="counts[c.NOT_SCHEDULED] !== counts[c.NOT_SCHEDULED+'_active']">({{counts[c.NOT_SCHEDULED+'_active']}})</span>
+                </span>
                 </a>
                 <a class="nav-link text-dark name-count-space" :class="{'active': type===c.ARCHIVE}" @click="setType(c.ARCHIVE)">
-                    Archive <span class="text-custom-secondary">{{counts[c.ARCHIVE]}}</span>
+                    Archive
                 </a>
 
                 <h6 v-if="favorites.length > 0" @click="isOpenFav = !isOpenFav"

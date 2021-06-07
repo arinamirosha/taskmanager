@@ -19,7 +19,9 @@
                     </div>
                     <div v-if="task.schedule" class="mb-2">
                         <div class="font-weight-bold">Schedule</div>
-                        <div>{{task.schedule}}</div>
+                        <div :class="{'text-danger': isOverdue()}">
+                            {{task.schedule}} <i v-if="isOverdue()" class="fas fa-exclamation"></i>
+                        </div>
                     </div>
                     <div class="mb-2">
                         <div class="font-weight-bold">Importance</div>
@@ -59,6 +61,7 @@
 <script>
 import * as constants from '../../../constants';
 import route from "../../../route";
+import moment from "moment";
 
 export default {
     props: ['task'],
@@ -129,6 +132,12 @@ export default {
         showProject(id) {
             this.$refs.closeShowTask.click();
             this.$emit('showProject', id)
+        },
+        isOverdue() {
+            if (this.task.deleted_at) {
+                return false;
+            }
+            return moment(this.task.schedule).isBefore(new Date, 'day');
         },
     },
 }

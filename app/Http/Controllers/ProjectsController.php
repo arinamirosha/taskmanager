@@ -33,13 +33,15 @@ class ProjectsController extends Controller
             $data['projects'] = $projects->withCount('tasks')->get();
         }
 
-        if ( $getCounts ) {
-            $user = Auth::user();
+        if ($getCounts) {
+            $user           = Auth::user();
             $data['counts'] = array(
-                Task::TODAY         => TaskManager::filterToday($user->tasks())->count(),
-                Task::UPCOMING      => TaskManager::filterUpcoming($user->tasks())->count(),
-                Task::NOT_SCHEDULED => TaskManager::filterNotScheduled($user->tasks())->count(),
-                Task::ARCHIVE       => TaskManager::filterArchived($user->tasks())->count(),
+                Task::TODAY                     => TaskManager::filterToday($user->tasks())->count(),
+                Task::UPCOMING                  => TaskManager::filterUpcoming($user->tasks())->count(),
+                Task::NOT_SCHEDULED             => TaskManager::filterNotScheduled($user->tasks())->count(),
+                Task::TODAY . '_active'         => TaskManager::filterToday($user->tasks())->whereIn('status', [Task::STATUS_NEW, Task::STATUS_PROGRESS])->count(),
+                Task::UPCOMING . '_active'      => TaskManager::filterUpcoming($user->tasks())->whereIn('status', [Task::STATUS_NEW, Task::STATUS_PROGRESS])->count(),
+                Task::NOT_SCHEDULED . '_active' => TaskManager::filterNotScheduled($user->tasks())->whereIn('status', [Task::STATUS_NEW, Task::STATUS_PROGRESS])->count(),
             );
         }
 
