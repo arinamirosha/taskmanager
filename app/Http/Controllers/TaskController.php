@@ -111,6 +111,8 @@ class TaskController extends Controller
                 case Task::UPCOMING:
                     TaskManager::filterUpcoming($tasks, true);
                     break;
+                default:
+                    return [];
             }
         }
 

@@ -1997,6 +1997,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2005,7 +2024,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       currentComponent: 'common-index-task',
       projects: [],
-      counts: [],
+      cToday: [],
+      cUpcoming: [],
+      cNotScheduled: [],
       selectedProjectId: 0,
       isOpenFav: true,
       isOpenProjects: true,
@@ -2040,7 +2061,10 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this.projects = response.data.projects;
-        _this.counts = response.data.counts;
+        var counts = response.data.counts;
+        _this.cToday = counts[_constants__WEBPACK_IMPORTED_MODULE_2__.TODAY];
+        _this.cUpcoming = counts[_constants__WEBPACK_IMPORTED_MODULE_2__.UPCOMING];
+        _this.cNotScheduled = counts[_constants__WEBPACK_IMPORTED_MODULE_2__.NOT_SCHEDULED];
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3724,6 +3748,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "STATUS_NEW": () => (/* binding */ STATUS_NEW),
 /* harmony export */   "STATUS_PROGRESS": () => (/* binding */ STATUS_PROGRESS),
 /* harmony export */   "STATUS_FINISHED": () => (/* binding */ STATUS_FINISHED),
+/* harmony export */   "STATUS_NEW_TEXT": () => (/* binding */ STATUS_NEW_TEXT),
+/* harmony export */   "STATUS_PROGRESS_TEXT": () => (/* binding */ STATUS_PROGRESS_TEXT),
+/* harmony export */   "STATUS_FINISHED_TEXT": () => (/* binding */ STATUS_FINISHED_TEXT),
+/* harmony export */   "TOTAL": () => (/* binding */ TOTAL),
 /* harmony export */   "ARCHIVE": () => (/* binding */ ARCHIVE),
 /* harmony export */   "TODAY": () => (/* binding */ TODAY),
 /* harmony export */   "NOT_SCHEDULED": () => (/* binding */ NOT_SCHEDULED),
@@ -3736,6 +3764,10 @@ var STATUS_STRONG = 3;
 var STATUS_NEW = 4;
 var STATUS_PROGRESS = 5;
 var STATUS_FINISHED = 6;
+var STATUS_NEW_TEXT = 'new';
+var STATUS_PROGRESS_TEXT = 'progress';
+var STATUS_FINISHED_TEXT = 'finished';
+var TOTAL = 'total';
 var ARCHIVE = 'archive';
 var TODAY = 'today';
 var NOT_SCHEDULED = 'notScheduled';
@@ -8231,7 +8263,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nnav a[data-v-f2b6376c]:hover,\n.active[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px;\n    cursor: pointer;\n}\nnav a[data-v-f2b6376c]:hover {\n    text-decoration: none;\n}\n.cursor-pointer[data-v-f2b6376c]{\n    cursor: pointer;\n}\n.text-custom-secondary[data-v-f2b6376c] {\n    color: #c8c8c8;\n}\n.left-menu[data-v-f2b6376c] {\n    width: 300px;\n    height: calc(100vh - 44px);\n    position: fixed;\n    left: 0;\n    overflow-y:scroll;\n}\n.main-content[data-v-f2b6376c] {\n    margin-left: 300px;\n}\n.name-count-space[data-v-f2b6376c] {\n    display: flex;\n    justify-content: space-between;\n}\n[data-v-f2b6376c]::-webkit-scrollbar {\n    width: 12px;\n}\n[data-v-f2b6376c]::-webkit-scrollbar-track {\n    -webkit-box-shadow: inset 0 0 6px #e0eeee;\n}\n[data-v-f2b6376c]::-webkit-scrollbar-thumb {\n    border-radius: 10px;\n    -webkit-box-shadow: inset 0 0 6px #e1e1e1;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nnav a[data-v-f2b6376c]:hover,\n.active[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px;\n    cursor: pointer;\n}\nnav a[data-v-f2b6376c]:hover {\n    text-decoration: none;\n}\n.cursor-pointer[data-v-f2b6376c]{\n    cursor: pointer;\n}\n.text-custom-secondary[data-v-f2b6376c] {\n    color: #c8c8c8;\n}\n.left-menu[data-v-f2b6376c] {\n    width: 300px;\n    height: calc(100vh - 55px);\n    position: fixed;\n    left: 0;\n    bottom: 0;\n    overflow-y:scroll;\n}\n.main-content[data-v-f2b6376c] {\n    margin-left: 300px;\n}\n.name-count-space[data-v-f2b6376c] {\n    display: flex;\n    justify-content: space-between;\n}\n[data-v-f2b6376c]::-webkit-scrollbar {\n    width: 12px;\n}\n[data-v-f2b6376c]::-webkit-scrollbar-track {\n    -webkit-box-shadow: inset 0 0 6px #e0eeee;\n}\n[data-v-f2b6376c]::-webkit-scrollbar-thumb {\n    border-radius: 10px;\n    -webkit-box-shadow: inset 0 0 6px #e1e1e1;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -66185,7 +66217,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "left-menu bg-light px-2 pt-4" }, [
+    _c("div", { staticClass: "left-menu bg-light px-2 pt-2" }, [
       _c(
         "nav",
         { staticClass: "nav flex-column" },
@@ -66216,20 +66248,30 @@ var render = function() {
               }
             },
             [
-              _vm._v("\n                Today "),
+              _vm._v("\n                Today\n                "),
               _c("span", { staticClass: "text-custom-secondary" }, [
                 _vm._v(
-                  "\n                " +
-                    _vm._s(_vm.counts[_vm.c.TODAY]) +
-                    "\n                "
+                  "\n                    " +
+                    _vm._s(_vm.cToday[_vm.c.TOTAL]) +
+                    "\n                    "
                 ),
-                _vm.counts[_vm.c.TODAY] !== _vm.counts[_vm.c.TODAY + "_active"]
+                _vm.cToday[_vm.c.TOTAL]
                   ? _c("span", [
                       _vm._v(
-                        "(" + _vm._s(_vm.counts[_vm.c.TODAY + "_active"]) + ")"
+                        "\n                        (" +
+                          _vm._s(_vm.cToday[_vm.c.STATUS_NEW_TEXT]) +
+                          "/" +
+                          _vm._s(_vm.cToday[_vm.c.STATUS_PROGRESS_TEXT]) +
+                          "/" +
+                          _vm._s(_vm.cToday[_vm.c.STATUS_FINISHED_TEXT]) +
+                          ")\n                    "
                       )
                     ])
-                  : _vm._e()
+                  : _c("span", [
+                      _vm._v(
+                        "\n                        (0/0/0)\n                    "
+                      )
+                    ])
               ])
             ]
           ),
@@ -66246,23 +66288,30 @@ var render = function() {
               }
             },
             [
-              _vm._v("\n                Upcoming "),
+              _vm._v("\n                Upcoming\n                "),
               _c("span", { staticClass: "text-custom-secondary" }, [
                 _vm._v(
-                  "\n                " +
-                    _vm._s(_vm.counts[_vm.c.UPCOMING]) +
-                    "\n                "
+                  "\n                    " +
+                    _vm._s(_vm.cUpcoming[_vm.c.TOTAL]) +
+                    "\n                    "
                 ),
-                _vm.counts[_vm.c.UPCOMING] !==
-                _vm.counts[_vm.c.UPCOMING + "_active"]
+                _vm.cUpcoming[_vm.c.TOTAL]
                   ? _c("span", [
                       _vm._v(
-                        "(" +
-                          _vm._s(_vm.counts[_vm.c.UPCOMING + "_active"]) +
-                          ")"
+                        "\n                        (" +
+                          _vm._s(_vm.cUpcoming[_vm.c.STATUS_NEW_TEXT]) +
+                          "/" +
+                          _vm._s(_vm.cUpcoming[_vm.c.STATUS_PROGRESS_TEXT]) +
+                          "/" +
+                          _vm._s(_vm.cUpcoming[_vm.c.STATUS_FINISHED_TEXT]) +
+                          ")\n                    "
                       )
                     ])
-                  : _vm._e()
+                  : _c("span", [
+                      _vm._v(
+                        "\n                        (0/0/0)\n                    "
+                      )
+                    ])
               ])
             ]
           ),
@@ -66279,23 +66328,34 @@ var render = function() {
               }
             },
             [
-              _vm._v("\n                Not Scheduled "),
+              _vm._v("\n                Not Scheduled\n                "),
               _c("span", { staticClass: "text-custom-secondary" }, [
                 _vm._v(
-                  "\n                " +
-                    _vm._s(_vm.counts[_vm.c.NOT_SCHEDULED]) +
-                    "\n                "
+                  "\n                    " +
+                    _vm._s(_vm.cNotScheduled[_vm.c.TOTAL]) +
+                    "\n                    "
                 ),
-                _vm.counts[_vm.c.NOT_SCHEDULED] !==
-                _vm.counts[_vm.c.NOT_SCHEDULED + "_active"]
+                _vm.cNotScheduled[_vm.c.TOTAL]
                   ? _c("span", [
                       _vm._v(
-                        "(" +
-                          _vm._s(_vm.counts[_vm.c.NOT_SCHEDULED + "_active"]) +
-                          ")"
+                        "\n                        (" +
+                          _vm._s(_vm.cNotScheduled[_vm.c.STATUS_NEW_TEXT]) +
+                          "/" +
+                          _vm._s(
+                            _vm.cNotScheduled[_vm.c.STATUS_PROGRESS_TEXT]
+                          ) +
+                          "/" +
+                          _vm._s(
+                            _vm.cNotScheduled[_vm.c.STATUS_FINISHED_TEXT]
+                          ) +
+                          ")\n                    "
                       )
                     ])
-                  : _vm._e()
+                  : _c("span", [
+                      _vm._v(
+                        "\n                        (0/0/0)\n                    "
+                      )
+                    ])
               ])
             ]
           ),

@@ -1,26 +1,44 @@
 <template>
     <div>
 
-        <div class="left-menu bg-light px-2 pt-4">
+        <div class="left-menu bg-light px-2 pt-2">
             <nav class="nav flex-column">
                 <a class="nav-link text-dark" :class="{'active': type===c.INCOMING}" @click="setType(c.INCOMING)">Incoming</a>
                 <a class="nav-link text-dark name-count-space" :class="{'active': type===c.TODAY}" @click="setType(c.TODAY)">
-                    Today <span class="text-custom-secondary">
-                    {{counts[c.TODAY]}}
-                    <span v-if="counts[c.TODAY] !== counts[c.TODAY+'_active']">({{counts[c.TODAY+'_active']}})</span>
-                </span>
+                    Today
+                    <span class="text-custom-secondary">
+                        {{cToday[c.TOTAL]}}
+                        <span v-if="cToday[c.TOTAL]">
+                            ({{cToday[c.STATUS_NEW_TEXT]}}/{{cToday[c.STATUS_PROGRESS_TEXT]}}/{{cToday[c.STATUS_FINISHED_TEXT]}})
+                        </span>
+                        <span v-else>
+                            (0/0/0)
+                        </span>
+                    </span>
                 </a>
                 <a class="nav-link text-dark name-count-space" :class="{'active': type===c.UPCOMING}" @click="setType(c.UPCOMING)">
-                    Upcoming <span class="text-custom-secondary">
-                    {{counts[c.UPCOMING]}}
-                    <span v-if="counts[c.UPCOMING] !== counts[c.UPCOMING+'_active']">({{counts[c.UPCOMING+'_active']}})</span>
-                </span>
+                    Upcoming
+                    <span class="text-custom-secondary">
+                        {{cUpcoming[c.TOTAL]}}
+                        <span v-if="cUpcoming[c.TOTAL]">
+                            ({{cUpcoming[c.STATUS_NEW_TEXT]}}/{{cUpcoming[c.STATUS_PROGRESS_TEXT]}}/{{cUpcoming[c.STATUS_FINISHED_TEXT]}})
+                        </span>
+                        <span v-else>
+                            (0/0/0)
+                        </span>
+                    </span>
                 </a>
                 <a class="nav-link text-dark name-count-space" :class="{'active': type===c.NOT_SCHEDULED}" @click="setType(c.NOT_SCHEDULED)">
-                    Not Scheduled <span class="text-custom-secondary">
-                    {{counts[c.NOT_SCHEDULED]}}
-                    <span v-if="counts[c.NOT_SCHEDULED] !== counts[c.NOT_SCHEDULED+'_active']">({{counts[c.NOT_SCHEDULED+'_active']}})</span>
-                </span>
+                    Not Scheduled
+                    <span class="text-custom-secondary">
+                        {{cNotScheduled[c.TOTAL]}}
+                        <span v-if="cNotScheduled[c.TOTAL]">
+                            ({{cNotScheduled[c.STATUS_NEW_TEXT]}}/{{cNotScheduled[c.STATUS_PROGRESS_TEXT]}}/{{cNotScheduled[c.STATUS_FINISHED_TEXT]}})
+                        </span>
+                        <span v-else>
+                            (0/0/0)
+                        </span>
+                    </span>
                 </a>
                 <a class="nav-link text-dark name-count-space" :class="{'active': type===c.ARCHIVE}" @click="setType(c.ARCHIVE)">
                     Archive
@@ -112,9 +130,10 @@ nav a:hover {
 }
 .left-menu {
     width: 300px;
-    height: calc(100vh - 44px);
+    height: calc(100vh - 55px);
     position: fixed;
     left: 0;
+    bottom: 0;
     overflow-y:scroll;
 }
 .main-content {
@@ -146,7 +165,9 @@ export default {
         return {
             currentComponent: 'common-index-task',
             projects: [],
-            counts: [],
+            cToday: [],
+            cUpcoming: [],
+            cNotScheduled: [],
             selectedProjectId: 0,
             isOpenFav: true,
             isOpenProjects: true,
@@ -180,7 +201,10 @@ export default {
                 })
                 .then(response => {
                     this.projects = response.data.projects;
-                    this.counts   = response.data.counts;
+                    let counts = response.data.counts;
+                    this.cToday = counts[constants.TODAY];
+                    this.cUpcoming = counts[constants.UPCOMING];
+                    this.cNotScheduled = counts[constants.NOT_SCHEDULED];
                 })
                 .catch(error => {
                     console.log(error);

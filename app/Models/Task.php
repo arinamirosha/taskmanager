@@ -14,14 +14,20 @@ class Task extends Model
     const STATUS_MEDIUM = 2;
     const STATUS_STRONG = 3;
 
-    const STATUS_NEW = 4;
+    const STATUS_NEW      = 4;
     const STATUS_PROGRESS = 5;
     const STATUS_FINISHED = 6;
 
-    const ARCHIVE = 'archive';
-    const TODAY = 'today';
+    const STATUS_NEW_TEXT      = 'new';
+    const STATUS_PROGRESS_TEXT = 'progress';
+    const STATUS_FINISHED_TEXT = 'finished';
+
+    const TOTAL = 'total';
+
+    const ARCHIVE       = 'archive';
+    const TODAY         = 'today';
     const NOT_SCHEDULED = 'notScheduled';
-    const UPCOMING = 'upcoming';
+    const UPCOMING      = 'upcoming';
 
     protected $fillable = [
         'name',
