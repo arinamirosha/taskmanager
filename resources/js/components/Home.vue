@@ -89,7 +89,7 @@
             </nav>
         </div>
 
-        <div class="main-content pt-4">
+        <div class="main-content pt-3">
             <component
                 v-bind:is="currentComponent"
                 :id="this.selectedProjectId"
@@ -134,7 +134,7 @@ nav a:hover {
     position: fixed;
     left: 0;
     bottom: 0;
-    overflow-y:scroll;
+    overflow-y: scroll;
 }
 .main-content {
     margin-left: 300px;

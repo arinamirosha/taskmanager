@@ -2965,6 +2965,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2972,7 +2978,11 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       projects: [],
-      isDataLoaded: false
+      isDataLoaded: false,
+      dataLoading: false,
+      page: 0,
+      lastPage: 0,
+      isLastPage: false
     };
   },
   computed: {
@@ -2989,10 +2999,31 @@ __webpack_require__.r(__webpack_exports__);
           'type': _constants__WEBPACK_IMPORTED_MODULE_1__.ARCHIVE
         }
       }).then(function (response) {
-        _this.projects = response.data.projects;
+        _this.isLastPage = response.data.projects.current_page === response.data.projects.last_page;
+        _this.page = 1;
+        _this.lastPage = response.data.projects.last_page;
+        _this.projects = response.data.projects.data;
         _this.isDataLoaded = true;
       })["catch"](function (error) {
         console.log(error);
+      });
+    },
+    loadMore: function loadMore() {
+      var _this2 = this;
+
+      this.dataLoading = true;
+      axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.index'), {
+        params: {
+          'type': _constants__WEBPACK_IMPORTED_MODULE_1__.ARCHIVE,
+          'page': ++this.page
+        }
+      }).then(function (response) {
+        _this2.isLastPage = response.data.projects.current_page === response.data.projects.last_page;
+        _this2.projects = _this2.projects.concat(response.data.projects.data);
+        _this2.dataLoading = false;
+      })["catch"](function (error) {
+        console.log(error);
+        _this2.dataLoading = false;
       });
     },
     formatDate: function formatDate(date) {
@@ -3401,6 +3432,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -3410,9 +3446,13 @@ __webpack_require__.r(__webpack_exports__);
     return {
       tasks: [],
       isDataLoaded: false,
+      dataLoading: false,
       infoBody: '',
       hideFinished: false,
-      currentTask: {}
+      currentTask: {},
+      page: 0,
+      isLastPage: false,
+      lastPage: 0
     };
   },
   computed: {
@@ -3462,25 +3502,46 @@ __webpack_require__.r(__webpack_exports__);
           'type': this.type
         }
       }).then(function (response) {
-        _this.tasks = response.data;
+        _this.isLastPage = response.data.current_page === response.data.last_page;
+        _this.page = 1;
+        _this.lastPage = response.data.last_page;
+        _this.tasks = response.data.data;
         _this.isDataLoaded = true;
       })["catch"](function (error) {
         console.log(error);
       });
     },
-    switchHideFinished: function switchHideFinished() {
+    loadMore: function loadMore() {
       var _this2 = this;
+
+      this.dataLoading = true;
+      axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.index'), {
+        params: {
+          'type': this.type,
+          'page': ++this.page
+        }
+      }).then(function (response) {
+        _this2.isLastPage = response.data.current_page === response.data.last_page;
+        _this2.tasks = _this2.tasks.concat(response.data.data);
+        _this2.dataLoading = false;
+      })["catch"](function (error) {
+        console.log(error);
+        _this2.dataLoading = false;
+      });
+    },
+    switchHideFinished: function switchHideFinished() {
+      var _this3 = this;
 
       axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('users.update'), {
         'hide_finished': !this.hideFinished
       }).then(function (response) {
-        _this2.getTasks();
+        _this3.getTasks();
       })["catch"](function (error) {
         console.log(error);
       });
     },
     archiveAllTasks: function archiveAllTasks() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.archive'), {
         params: {
@@ -3490,14 +3551,14 @@ __webpack_require__.r(__webpack_exports__);
         var countArchived = response.data;
 
         if (countArchived) {
-          _this3.infoBody = 'Archived: ' + countArchived;
+          _this4.infoBody = 'Archived: ' + countArchived;
         } else {
-          _this3.infoBody = 'Nothing to Archive';
+          _this4.infoBody = 'Nothing to Archive';
         }
 
         $('.toast').toast('show');
 
-        _this3.taskArchived();
+        _this4.taskArchived();
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3514,10 +3575,10 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('taskUpdated');
     },
     getHideFinished: function getHideFinished() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('users.show')).then(function (response) {
-        _this4.hideFinished = response.data.hide_finished;
+        _this5.hideFinished = response.data.hide_finished;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -8265,7 +8326,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nnav a[data-v-f2b6376c]:hover,\n.active[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px;\n    cursor: pointer;\n}\nnav a[data-v-f2b6376c]:hover {\n    text-decoration: none;\n}\n.cursor-pointer[data-v-f2b6376c]{\n    cursor: pointer;\n}\n.text-custom-secondary[data-v-f2b6376c] {\n    color: #c8c8c8;\n}\n.left-menu[data-v-f2b6376c] {\n    width: 300px;\n    height: calc(100vh - 55px);\n    position: fixed;\n    left: 0;\n    bottom: 0;\n    overflow-y:scroll;\n}\n.main-content[data-v-f2b6376c] {\n    margin-left: 300px;\n}\n.name-count-space[data-v-f2b6376c] {\n    display: flex;\n    justify-content: space-between;\n}\n[data-v-f2b6376c]::-webkit-scrollbar {\n    width: 12px;\n}\n[data-v-f2b6376c]::-webkit-scrollbar-track {\n    -webkit-box-shadow: inset 0 0 6px #e0eeee;\n}\n[data-v-f2b6376c]::-webkit-scrollbar-thumb {\n    border-radius: 10px;\n    -webkit-box-shadow: inset 0 0 6px #e1e1e1;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nnav a[data-v-f2b6376c]:hover,\n.active[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px;\n    cursor: pointer;\n}\nnav a[data-v-f2b6376c]:hover {\n    text-decoration: none;\n}\n.cursor-pointer[data-v-f2b6376c]{\n    cursor: pointer;\n}\n.text-custom-secondary[data-v-f2b6376c] {\n    color: #c8c8c8;\n}\n.left-menu[data-v-f2b6376c] {\n    width: 300px;\n    height: calc(100vh - 55px);\n    position: fixed;\n    left: 0;\n    bottom: 0;\n    overflow-y: scroll;\n}\n.main-content[data-v-f2b6376c] {\n    margin-left: 300px;\n}\n.name-count-space[data-v-f2b6376c] {\n    display: flex;\n    justify-content: space-between;\n}\n[data-v-f2b6376c]::-webkit-scrollbar {\n    width: 12px;\n}\n[data-v-f2b6376c]::-webkit-scrollbar-track {\n    -webkit-box-shadow: inset 0 0 6px #e0eeee;\n}\n[data-v-f2b6376c]::-webkit-scrollbar-thumb {\n    border-radius: 10px;\n    -webkit-box-shadow: inset 0 0 6px #e1e1e1;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8337,7 +8398,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n.cursor-pointer {\n    cursor: pointer;\n}\n.task:hover {\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished {\n    color: #dedede;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n.cursor-pointer {\n    cursor: pointer;\n}\n.task:hover {\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished {\n    color: #dedede;\n}\n.half {\n    height: calc(50vh - 120px);\n    overflow-y: scroll;\n    overflow-x:hidden;\n}\n::-webkit-scrollbar {\n    width: 12px;\n}\n::-webkit-scrollbar-track {\n    -webkit-box-shadow: inset 0 0 6px #e0eeee;\n}\n::-webkit-scrollbar-thumb {\n    border-radius: 10px;\n    -webkit-box-shadow: inset 0 0 6px #e1e1e1;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8385,7 +8446,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n.cursor-pointer {\n    cursor: pointer;\n}\n.task:hover {\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished {\n    color: #dedede;\n}\n.text-custom-secondary {\n    color: #c8c8c8;\n}\n.mh-half {\n    min-height: calc(50vh - 60px);\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n.cursor-pointer {\n    cursor: pointer;\n}\n.task:hover {\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished {\n    color: #dedede;\n}\n.text-custom-secondary {\n    color: #c8c8c8;\n}\n.half {\n    height: calc(50vh - 120px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n.full {\n    height: calc(100vh - 165px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n::-webkit-scrollbar {\n    width: 12px;\n}\n::-webkit-scrollbar-track {\n    -webkit-box-shadow: inset 0 0 6px #edf3f3;\n}\n::-webkit-scrollbar-thumb {\n    border-radius: 10px;\n    -webkit-box-shadow: inset 0 0 6px #e9e9e9;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -66535,7 +66596,7 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "main-content pt-4" },
+      { staticClass: "main-content pt-3" },
       [
         _c(_vm.currentComponent, {
           tag: "component",
@@ -67781,7 +67842,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "pb-4" }, [
     _c("div", { staticClass: "row" }, [
       _c(
         "div",
@@ -67789,7 +67850,7 @@ var render = function() {
         [
           _vm._v("Archived Projects\n            "),
           _c("transition", { attrs: { name: "fade", appear: "" } }, [
-            !_vm.isDataLoaded
+            !_vm.isDataLoaded || _vm.dataLoading
               ? _c("i", { staticClass: "fas fa-spinner fa-spin h3" })
               : _vm._e()
           ])
@@ -67799,44 +67860,72 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-12" },
-        [
-          _vm._m(0),
-          _vm._v(" "),
-          _vm._l(_vm.projects, function(project) {
-            return _vm.isDataLoaded && _vm.projects.length !== 0
+      _c("div", { staticClass: "col-md-12" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "half" },
+          [
+            _vm._l(_vm.projects, function(project) {
+              return _vm.isDataLoaded && _vm.projects.length !== 0
+                ? _c(
+                    "div",
+                    {
+                      key: project.id,
+                      staticClass: "row cursor-pointer task pt-1 pb-1",
+                      on: {
+                        click: function($event) {
+                          return _vm.showProject(project.id)
+                        }
+                      }
+                    },
+                    [
+                      _c("div", { staticClass: "col-md-3" }, [
+                        _vm._v(_vm._s(project.name))
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-3" }, [
+                        _vm._v(_vm._s(project.tasks_count))
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _vm._v(_vm._s(_vm.formatDate(project.deleted_at)))
+                      ])
+                    ]
+                  )
+                : _vm._e()
+            }),
+            _vm._v(" "),
+            !_vm.isLastPage
               ? _c(
                   "div",
-                  {
-                    key: project.id,
-                    staticClass: "row cursor-pointer task pt-1 pb-1",
-                    on: {
-                      click: function($event) {
-                        return _vm.showProject(project.id)
-                      }
-                    }
-                  },
+                  { staticClass: "m-0 pr-2 row justify-content-between pb-1" },
                   [
-                    _c("div", { staticClass: "col-md-3" }, [
-                      _vm._v(_vm._s(project.name))
+                    _c("span", [
+                      _vm._v(
+                        "Page " +
+                          _vm._s(_vm.page) +
+                          " of " +
+                          _vm._s(_vm.lastPage)
+                      )
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-3" }, [
-                      _vm._v(_vm._s(project.tasks_count))
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-2" }, [
-                      _vm._v(_vm._s(_vm.formatDate(project.deleted_at)))
-                    ])
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-secondary btn-sm",
+                        on: { click: _vm.loadMore }
+                      },
+                      [_vm._v("Load More...")]
+                    )
                   ]
                 )
               : _vm._e()
-          })
-        ],
-        2
-      )
+          ],
+          2
+        )
+      ])
     ])
   ])
 }
@@ -68345,7 +68434,7 @@ var render = function() {
           [
             _vm._v(_vm._s(_vm.pageTitle) + "\n            "),
             _c("transition", { attrs: { name: "fade", appear: "" } }, [
-              !_vm.isDataLoaded
+              !_vm.isDataLoaded || _vm.dataLoading
                 ? _c("i", { staticClass: "fas fa-spinner fa-spin h3" })
                 : _vm._e()
             ])
@@ -68412,33 +68501,28 @@ var render = function() {
           : _vm._e()
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "row",
-          class: { "mh-half": _vm.type === _vm.c.ARCHIVE }
-        },
-        [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "row h5 font-weight-bold" }, [
+            _c("div", { staticClass: "col-md-1" }, [_vm._v("Status")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3" }, [_vm._v("Task")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3" }, [_vm._v("Project")]),
+            _vm._v(" "),
+            _vm.type !== _vm.c.NOT_SCHEDULED
+              ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Schedule")])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.type === _vm.c.ARCHIVE
+              ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Archived")])
+              : _vm._e()
+          ]),
+          _vm._v(" "),
           _c(
             "div",
-            { staticClass: "col-md-12" },
+            { class: _vm.type === _vm.c.ARCHIVE ? "half mb-1" : "full mb-4" },
             [
-              _c("div", { staticClass: "row h5 font-weight-bold" }, [
-                _c("div", { staticClass: "col-md-1" }, [_vm._v("Status")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-3" }, [_vm._v("Task")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-3" }, [_vm._v("Project")]),
-                _vm._v(" "),
-                _vm.type !== _vm.c.NOT_SCHEDULED
-                  ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Schedule")])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.type === _vm.c.ARCHIVE
-                  ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Archived")])
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
               _vm._l(_vm.tasks, function(task) {
                 return _vm.isDataLoaded && _vm.tasks.length !== 0
                   ? _c(
@@ -68470,7 +68554,9 @@ var render = function() {
                             },
                             [_vm._v("•")]
                           ),
-                          _vm._v(" " + _vm._s(task.name) + "\n                ")
+                          _vm._v(
+                            " " + _vm._s(task.name) + "\n                    "
+                          )
                         ]),
                         _vm._v(" "),
                         _c(
@@ -68483,9 +68569,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                    " +
+                              "\n                        " +
                                 _vm._s(task.project.name) +
-                                "\n                "
+                                "\n                    "
                             )
                           ]
                         ),
@@ -68501,7 +68587,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                    " +
+                                  "\n                        " +
                                     _vm._s(_vm.formatDate(task.schedule)) +
                                     " "
                                 ),
@@ -68522,18 +68608,43 @@ var render = function() {
                       ]
                     )
                   : _vm._e()
-              })
+              }),
+              _vm._v(" "),
+              !_vm.isLastPage
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "m-0 pr-2 row justify-content-between pb-1"
+                    },
+                    [
+                      _c("span", [
+                        _vm._v(
+                          "Page " +
+                            _vm._s(_vm.page) +
+                            " of " +
+                            _vm._s(_vm.lastPage)
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-outline-secondary btn-sm",
+                          on: { click: _vm.loadMore }
+                        },
+                        [_vm._v("Load More...")]
+                      )
+                    ]
+                  )
+                : _vm._e()
             ],
             2
           )
-        ]
-      ),
+        ])
+      ]),
       _vm._v(" "),
       _vm.type === _vm.c.ARCHIVE
-        ? _c("archived-projects", {
-            staticClass: "mh-half",
-            on: { showProject: _vm.showProject }
-          })
+        ? _c("archived-projects", { on: { showProject: _vm.showProject } })
         : _vm._e(),
       _vm._v(" "),
       _c("toast", { attrs: { body: _vm.infoBody } }),

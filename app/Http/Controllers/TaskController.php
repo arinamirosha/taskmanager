@@ -116,6 +116,7 @@ class TaskController extends Controller
             }
         }
 
-        return $tasks->with(['project'])->get();
+//        return $tasks->with(['project'])->get();
+        return $tasks->with(['project'])->paginate(25);
     }
 }

@@ -3,7 +3,7 @@
 
         <div class="row">
             <div class="col-md-6 font-weight-bold h3">{{pageTitle}}
-                <transition name="fade" appear><i v-if="!isDataLoaded" class="fas fa-spinner fa-spin h3"></i></transition>
+                <transition name="fade" appear><i v-if="!isDataLoaded || dataLoading" class="fas fa-spinner fa-spin h3"></i></transition>
             </div>
             <div class="col-md-6" v-if="type !== c.ARCHIVE">
                 <div class="row justify-content-between h5">
@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <div class="row" :class="{'mh-half': type === c.ARCHIVE}">
+        <div class="row">
             <div class="col-md-12">
                 <div class="row h5 font-weight-bold">
                     <div class="col-md-1">Status</div>
@@ -23,33 +23,38 @@
                     <div class="col-md-2" v-if="type === c.ARCHIVE">Archived</div>
                 </div>
 
-                <div v-if="isDataLoaded && tasks.length !== 0" v-for="task in tasks"
-                     :key="task.id"
-                     class="row cursor-pointer task pt-1 pb-1"
-                     @click="showTask(task)"
-                     :class="{'task-finished': isNeedStyleFinished(task)}"
-                >
-                    <div class="col-md-1"><i :class="statusIconClass(task.status)"></i></div>
+                <div :class="type === c.ARCHIVE ? 'half mb-1' : 'full mb-4'">
+                    <div v-if="isDataLoaded && tasks.length !== 0" v-for="task in tasks"
+                         :key="task.id"
+                         class="row cursor-pointer task pt-1 pb-1"
+                         @click="showTask(task)"
+                         :class="{'task-finished': isNeedStyleFinished(task)}"
+                    >
+                        <div class="col-md-1"><i :class="statusIconClass(task.status)"></i></div>
 
-                    <div class="col-md-3">
-                        <span :class="isNeedStyleFinished(task) ? 'task-finished' : importanceCss(task.importance)">&bull;</span> {{task.name}}
+                        <div class="col-md-3">
+                            <span :class="isNeedStyleFinished(task) ? 'task-finished' : importanceCss(task.importance)">&bull;</span> {{task.name}}
+                        </div>
+
+                        <div class="col-md-3" :class="{'text-custom-secondary': task.project.deleted_at}">
+                            {{task.project.name}}
+                        </div>
+
+                        <div class="col-md-2" v-if="type !== c.NOT_SCHEDULED" :class="{'text-danger': isNeedStyleOverdue(task)}">
+                            {{formatDate(task.schedule)}} <i v-if="isNeedStyleOverdue(task)" class="fas fa-exclamation"></i>
+                        </div>
+
+                        <div class="col-md-2" v-if="type === c.ARCHIVE">{{formatDate(task.deleted_at)}}</div>
                     </div>
-
-                    <div class="col-md-3" :class="{'text-custom-secondary': task.project.deleted_at}">
-                        {{task.project.name}}
+                    <div class="m-0 pr-2 row justify-content-between pb-1" v-if="!isLastPage">
+                        <span>Page {{page}} of {{lastPage}}</span>
+                        <button class="btn btn-outline-secondary btn-sm" @click="loadMore">Load More...</button>
                     </div>
-
-                    <div class="col-md-2" v-if="type !== c.NOT_SCHEDULED" :class="{'text-danger': isNeedStyleOverdue(task)}">
-                        {{formatDate(task.schedule)}} <i v-if="isNeedStyleOverdue(task)" class="fas fa-exclamation"></i>
-                    </div>
-
-                    <div class="col-md-2" v-if="type === c.ARCHIVE">{{formatDate(task.deleted_at)}}</div>
                 </div>
-
             </div>
         </div>
 
-        <archived-projects v-if="type === c.ARCHIVE" class="mh-half" @showProject="showProject"></archived-projects>
+        <archived-projects v-if="type === c.ARCHIVE" @showProject="showProject"></archived-projects>
 
         <!-- Toast -->
         <toast :body="infoBody" />
@@ -85,9 +90,13 @@ export default {
         return {
             tasks: [],
             isDataLoaded: false,
+            dataLoading: false,
             infoBody: '',
             hideFinished: false,
             currentTask: {},
+            page: 0,
+            isLastPage: false,
+            lastPage: 0,
         }
     },
     computed: {
@@ -121,11 +130,33 @@ export default {
                     }
                 })
                 .then(response => {
-                    this.tasks = response.data;
+                    this.isLastPage = response.data.current_page === response.data.last_page;
+                    this.page = 1;
+                    this.lastPage = response.data.last_page;
+                    this.tasks = response.data.data;
                     this.isDataLoaded = true;
                 })
                 .catch(error => {
                     console.log(error);
+                });
+        },
+        loadMore() {
+            this.dataLoading = true;
+            axios
+                .get(route('tasks.index'), {
+                    params: {
+                        'type': this.type,
+                        'page': ++this.page,
+                    }
+                })
+                .then(response => {
+                    this.isLastPage = response.data.current_page === response.data.last_page;
+                    this.tasks = this.tasks.concat(response.data.data);
+                    this.dataLoading = false;
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.dataLoading = false;
                 });
         },
         switchHideFinished() {
@@ -251,7 +282,24 @@ export default {
 .text-custom-secondary {
     color: #c8c8c8;
 }
-.mh-half {
-    min-height: calc(50vh - 60px);
+.half {
+    height: calc(50vh - 120px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.full {
+    height: calc(100vh - 165px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px #edf3f3;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px #e9e9e9;
 }
 </style>

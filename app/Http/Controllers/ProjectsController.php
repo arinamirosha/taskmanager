@@ -28,7 +28,7 @@ class ProjectsController extends Controller
                 'tasks'=> function ($query) {
                     $query->whereIn('status', [Task::STATUS_NEW, Task::STATUS_PROGRESS])->withTrashed();
                 },
-            ])->get();
+            ])->paginate(25);
         } else {
             $data['projects'] = $projects->withCount('tasks')->get();
         }
