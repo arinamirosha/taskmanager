@@ -74,15 +74,20 @@
                 @archived="taskArchived"
                 @taskUpdated="taskUpdated"
                 @deleteTaskModal="$refs.deleteTaskModalButton.click()"
+                @editTaskModal="$refs.editTaskModalButton.click()"
                 @showProject="showProject"
             ></show-task-modal>
         </div>
 
         <button v-show="false" data-toggle="modal" data-target="#deleteTaskModal" ref="deleteTaskModalButton"></button>
         <div class="modal fade show mt-5" id="deleteTaskModal" tabindex="-1">
-            <delete-task-modal :task="currentTask" @deleted="taskDeleted" @cancel="$refs.showTaskModalButton.click();"></delete-task-modal>
+            <delete-task-modal :task="currentTask" @deleted="taskDeleted" @cancel="$refs.showTaskModalButton.click()"></delete-task-modal>
         </div>
 
+        <button v-show="false" data-toggle="modal" data-target="#editTaskModal" ref="editTaskModalButton"></button>
+        <div class="modal fade show mt-5" id="editTaskModal" tabindex="-1">
+            <edit-task-modal :task="currentTask" @updated="taskUpdated" @cancel="$refs.showTaskModalButton.click()"></edit-task-modal>
+        </div>
     </div>
 </template>
 
@@ -219,9 +224,13 @@ export default {
             this.getTasks();
             this.$emit('taskArchived');
         },
-        taskUpdated() {
+        taskUpdated(task) {
             this.getTasks();
             this.$emit('taskUpdated');
+            if (typeof task !== 'number') {
+                this.currentTask = task;
+                this.$refs.showTaskModalButton.click();
+            }
         },
         getHideFinished() {
             axios

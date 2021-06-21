@@ -1,8 +1,11 @@
 <template>
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header justify-content-between">
                 <h5 class="modal-title">{{task.name}}</h5>
+                <a v-if="!task.deleted_at" class="cursor-pointer text-muted" @click="editTaskModal">
+                    <i class="far fa-edit"></i>
+                </a>
             </div>
             <form @submit.prevent="updateTask">
                 <div class="modal-body">
@@ -98,6 +101,10 @@ export default {
             this.$refs.closeShowTask.click();
             this.$emit('deleteTaskModal');
         },
+        editTaskModal() {
+            this.$refs.closeShowTask.click();
+            this.$emit('editTaskModal');
+        },
         changeStatus(newStatus) {
             this.task.status = newStatus;
             axios
@@ -149,5 +156,8 @@ export default {
 }
 .project-name:hover {
     color: #bcbcbc;
+}
+.fa-edit:hover {
+    color: #212529;
 }
 </style>

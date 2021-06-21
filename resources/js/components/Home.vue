@@ -171,7 +171,7 @@ export default {
             selectedProjectId: 0,
             isOpenFav: true,
             isOpenProjects: true,
-            type: 'archive', //today
+            type: constants.NOT_SCHEDULED,
         }
     },
     computed: {

@@ -2,13 +2,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Create New Task</h5>
+                <h5 class="modal-title">Edit Task</h5>
             </div>
-            <form @submit.prevent="storeTask">
+            <form @submit.prevent="updateTask">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name">Name</label> <span class="text-danger">*</span>
-                        <input class="form-control" id="name" v-model="name" :class="{'is-invalid': this.$v.name.$error}">
+                        <label for="name1">Name</label> <span class="text-danger">*</span>
+                        <input class="form-control" id="name1" v-model="name" :class="{'is-invalid': this.$v.name.$error}">
                     </div>
                     <div class="form-group">
                         <label for="details">Details</label>
@@ -30,8 +30,8 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="reset" ref="cancel">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="cancel" @click="reset">Cancel</button>
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal"  @click="updateTask">Update</button>
                 </div>
             </form>
         </div>
@@ -43,9 +43,10 @@ import { required, maxLength, minValue } from 'vuelidate/lib/validators';
 import route from "../../../route";
 import moment from "moment";
 import * as c from '../../../constants';
+import * as constants from "../../../constants";
 
 export default {
-    props: ['id'],
+    props: ['task'],
     data() {
         return {
             name: '',
@@ -55,6 +56,14 @@ export default {
             importance: c.STATUS_NORMAL,
             statuses: [c.STATUS_NORMAL, c.STATUS_MEDIUM, c.STATUS_STRONG],
         }
+    },
+    watch: {
+        task: function() {
+            this.name = this.task.name;
+            this.details = this.task.details;
+            this.schedule = this.task.schedule;
+            this.importance = this.task.importance;
+        },
     },
     validations: {
         name: {
@@ -72,20 +81,18 @@ export default {
         },
     },
     methods: {
-        storeTask(e) {
+        updateTask(e) {
             this.$v.$touch();
             if (!this.$v.$invalid) {
                 axios
-                    .post(route('tasks.store'), {
-                        'project_id': this.id,
+                    .post(route('tasks.update', this.task.id), {
                         'name': this.name,
                         'details': this.details,
                         'schedule': this.schedule,
                         'importance': this.importance,
                     })
                     .then(response => {
-                        this.$refs.cancel.click();
-                        this.$emit('stored');
+                        this.$emit('updated', response.data);
                     })
                     .catch(error => {
                         console.log(error)
@@ -108,11 +115,12 @@ export default {
             return '';
         },
         reset() {
-            this.name = '';
-            this.details = '';
-            this.schedule = null;
-            this.importance = c.STATUS_NORMAL;
+            this.name = this.task.name;
+            this.details = this.task.details;
+            this.schedule = this.task.schedule;
+            this.importance = this.task.importance;
             this.$v.$reset();
+            this.$emit('cancel');
         },
     },
 }

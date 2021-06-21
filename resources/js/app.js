@@ -33,6 +33,7 @@ Vue.component('common-index-task', require('./components/tasks/CommonIndexTask.v
 Vue.component('create-task-modal', require('./components/modals/tasks/CreateTask.vue').default);
 Vue.component('show-task-modal', require('./components/modals/tasks/ShowTask.vue').default);
 Vue.component('delete-task-modal', require('./components/modals/tasks/DeleteTask.vue').default);
+Vue.component('edit-task-modal', require('./components/modals/tasks/EditTask.vue').default);
 
 
 const app = new Vue({
