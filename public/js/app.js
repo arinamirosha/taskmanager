@@ -3660,6 +3660,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -3676,7 +3679,8 @@ __webpack_require__.r(__webpack_exports__);
       page: 0,
       isLastPage: false,
       lastPage: 0,
-      s: ''
+      s: '',
+      notTrashed: false
     };
   },
   computed: {
@@ -3719,6 +3723,10 @@ __webpack_require__.r(__webpack_exports__);
     s: function s() {
       this.dataLoading = true;
       this.debouncedGetUsers();
+    },
+    notTrashed: function notTrashed() {
+      this.dataLoading = true;
+      this.getTasks();
     }
   },
   created: function created() {
@@ -3731,7 +3739,8 @@ __webpack_require__.r(__webpack_exports__);
       axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.index'), {
         params: {
           'type': this.type,
-          's': this.s
+          's': this.s,
+          'notTrashed': this.notTrashed ? this.notTrashed : ''
         }
       }).then(function (response) {
         _this.isLastPage = response.data.current_page === response.data.last_page;
@@ -3752,6 +3761,7 @@ __webpack_require__.r(__webpack_exports__);
         params: {
           'type': this.type,
           's': this.s,
+          'notTrashed': this.notTrashed ? this.notTrashed : '',
           'page': ++this.page
         }
       }).then(function (response) {
@@ -69139,11 +69149,52 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
+                        value: _vm.notTrashed,
+                        expression: "notTrashed"
+                      }
+                    ],
+                    attrs: { type: "checkbox" },
+                    domProps: {
+                      checked: Array.isArray(_vm.notTrashed)
+                        ? _vm._i(_vm.notTrashed, null) > -1
+                        : _vm.notTrashed
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.notTrashed,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.notTrashed = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.notTrashed = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.notTrashed = $$c
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(" Not trashed projects\n                ")
+                ]),
+                _vm._v(" "),
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
                         value: _vm.s,
                         expression: "s"
                       }
                     ],
-                    staticClass: "form-control form-control-sm",
+                    staticClass: "form-control form-control-sm ml-2",
                     attrs: {
                       type: "text",
                       placeholder: "Search task or project..."

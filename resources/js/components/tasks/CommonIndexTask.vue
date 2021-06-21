@@ -12,7 +12,10 @@
                 </div>
                 <div v-else class="row justify-content-end pr-2">
                     <label>
-                        <input class="form-control form-control-sm" v-model="s" type="text" placeholder="Search task or project...">
+                        <input type="checkbox" v-model="notTrashed"> Not trashed projects
+                    </label>
+                    <label>
+                        <input class="form-control form-control-sm ml-2" v-model="s" type="text" placeholder="Search task or project...">
                     </label>
                 </div>
             </div>
@@ -110,6 +113,7 @@ export default {
             isLastPage: false,
             lastPage: 0,
             s: '',
+            notTrashed: false,
         }
     },
     computed: {
@@ -136,7 +140,11 @@ export default {
         s: function () {
             this.dataLoading = true;
             this.debouncedGetUsers();
-        }
+        },
+        notTrashed: function () {
+            this.dataLoading = true;
+            this.getTasks();
+        },
     },
     created() {
         this.debouncedGetUsers = _.debounce(this.getTasks, 500);
@@ -148,6 +156,7 @@ export default {
                     params: {
                         'type': this.type,
                         's': this.s,
+                        'notTrashed': this.notTrashed ? this.notTrashed : '',
                     }
                 })
                 .then(response => {
@@ -169,6 +178,7 @@ export default {
                     params: {
                         'type': this.type,
                         's': this.s,
+                        'notTrashed': this.notTrashed ? this.notTrashed : '',
                         'page': ++this.page,
                     }
                 })

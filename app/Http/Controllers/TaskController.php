@@ -89,18 +89,27 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
-        $user  = Auth::user();
-        $tasks = $user->tasks();
-        $type  = $request->get('type', false);
-        $s     = $request->get('s', false);
+        $user       = Auth::user();
+        $tasks      = $user->tasks();
+        $type       = $request->get('type', false);
+        $s          = $request->get('s', false);
+        $notTrashed = $request->get('notTrashed', false);
 
         if ($user->hide_finished && $type != Task::ARCHIVE) {
             $tasks->where('status', '<>', Task::STATUS_FINISHED);
         }
 
+        if ($notTrashed) {
+            $tasks->whereHas('project', function($q) use ($s) {
+                $q->whereNull('deleted_at');
+            });
+        }
+
         if ($s) {
-            $tasks->where('name', 'like', "%$s%")->orWhereHas('project', function($q) use ($s) {
-                $q->where('name', 'like', "%$s%");
+            $tasks->where(function($q) use ($s) {
+                $q->where('name', 'like', "%$s%")->orWhereHas('project', function($q) use ($s) {
+                    $q->where('name', 'like', "%$s%");
+                });
             });
         }
 
