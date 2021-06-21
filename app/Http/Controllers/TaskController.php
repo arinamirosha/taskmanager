@@ -21,9 +21,12 @@ class TaskController extends Controller
 
     public function update(Task $task, Request $request)
     {
+        if ($projectId = $request->get('project_id', false)) {
+            Project::findOrFail($projectId);
+        }
         $task->update($request->all());
 
-        return $task;
+        return $task->load(['project']);
     }
 
     public function restore($id)

@@ -95,10 +95,12 @@
                 <div class="modal fade show mt-5 pb-5" id="showTaskModal" tabindex="-1" ref="showTaskModal">
                     <show-task-modal
                         :task="currentTask"
+                        :project="project"
                         @deleteTaskModal="$refs.deleteTaskModalButton.click()"
                         @editTaskModal="$refs.editTaskModalButton.click()"
                         @archived="taskArchived"
                         @statusUpdated="taskStatusUpdated"
+                        @showProject="showProject"
                     ></show-task-modal>
                 </div>
 
@@ -179,6 +181,9 @@ export default {
         projectDeleted() {
             this.project = null;
             this.$emit('deleted');
+        },
+        showProject(id) {
+            this.$emit('showProject', id);
         },
         isMove(e) {
             return e.from !== e.to;

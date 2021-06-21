@@ -2799,6 +2799,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2813,15 +2819,15 @@ __webpack_require__.r(__webpack_exports__);
       schedule: null,
       today: moment__WEBPACK_IMPORTED_MODULE_1___default()().format("YYYY-MM-DD"),
       importance: _constants__WEBPACK_IMPORTED_MODULE_2__.STATUS_NORMAL,
-      statuses: [_constants__WEBPACK_IMPORTED_MODULE_2__.STATUS_NORMAL, _constants__WEBPACK_IMPORTED_MODULE_2__.STATUS_MEDIUM, _constants__WEBPACK_IMPORTED_MODULE_2__.STATUS_STRONG]
+      statuses: [_constants__WEBPACK_IMPORTED_MODULE_2__.STATUS_NORMAL, _constants__WEBPACK_IMPORTED_MODULE_2__.STATUS_MEDIUM, _constants__WEBPACK_IMPORTED_MODULE_2__.STATUS_STRONG],
+      projectId: 0,
+      projects: []
     };
   },
   watch: {
     task: function task() {
-      this.name = this.task.name;
-      this.details = this.task.details;
-      this.schedule = this.task.schedule;
-      this.importance = this.task.importance;
+      this.setOriginValues();
+      this.getProjects();
     }
   },
   validations: {
@@ -2844,8 +2850,17 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    updateTask: function updateTask(e) {
+    getProjects: function getProjects() {
       var _this = this;
+
+      axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.index')).then(function (response) {
+        _this.projects = response.data.projects;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    updateTask: function updateTask(e) {
+      var _this2 = this;
 
       this.$v.$touch();
 
@@ -2854,11 +2869,12 @@ __webpack_require__.r(__webpack_exports__);
           'name': this.name,
           'details': this.details,
           'schedule': this.schedule,
-          'importance': this.importance
+          'importance': this.importance,
+          'project_id': this.projectId
         }).then(function (response) {
-          _this.$refs.cancel.click();
+          _this2.$refs.cancel.click();
 
-          _this.$emit('updated', response.data);
+          _this2.$emit('updated', response.data);
         })["catch"](function (error) {
           console.log(error);
         });
@@ -2891,12 +2907,16 @@ __webpack_require__.r(__webpack_exports__);
       return '';
     },
     reset: function reset() {
+      this.setOriginValues();
+      this.$v.$reset();
+      this.$emit('cancel');
+    },
+    setOriginValues: function setOriginValues() {
       this.name = this.task.name;
       this.details = this.task.details;
       this.schedule = this.task.schedule;
       this.importance = this.task.importance;
-      this.$v.$reset();
-      this.$emit('cancel');
+      this.projectId = this.task.project_id;
     }
   }
 });
@@ -2981,11 +3001,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['task'],
+  props: ['task', 'project'],
   computed: {
     c: function c() {
       return _constants__WEBPACK_IMPORTED_MODULE_0__;
@@ -3375,6 +3398,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -3441,6 +3466,9 @@ __webpack_require__.r(__webpack_exports__);
     projectDeleted: function projectDeleted() {
       this.project = null;
       this.$emit('deleted');
+    },
+    showProject: function showProject(id) {
+      this.$emit('showProject', id);
     },
     isMove: function isMove(e) {
       return e.from !== e.to;
@@ -68088,27 +68116,72 @@ var render = function() {
                 }),
                 0
               )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "project-id" } }, [
+                _vm._v("Project")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.projectId,
+                      expression: "projectId"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "project-id" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.projectId = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                _vm._l(_vm.projects, function(project) {
+                  return _c("option", { domProps: { value: project.id } }, [
+                    _vm._v(_vm._s(project.name))
+                  ])
+                }),
+                0
+              )
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "modal-footer" }, [
-            _c(
-              "button",
-              {
-                ref: "cancel",
-                staticClass: "btn btn-secondary",
-                attrs: { type: "button", "data-dismiss": "modal" },
-                on: { click: _vm.reset }
-              },
-              [_vm._v("Cancel")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-              [_vm._v("Update")]
-            )
-          ])
+          _vm.projects.length > 0
+            ? _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    ref: "cancel",
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                    on: { click: _vm.reset }
+                  },
+                  [_vm._v("Cancel")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+                  [_vm._v("Update")]
+                )
+              ])
+            : _vm._e()
         ]
       )
     ])
@@ -68187,13 +68260,13 @@ var render = function() {
                 ])
               : _vm._e(),
             _vm._v(" "),
-            _vm.task.project
-              ? _c("div", { staticClass: "mb-2" }, [
-                  _c("div", { staticClass: "font-weight-bold" }, [
-                    _vm._v("Project")
-                  ]),
-                  _vm._v(" "),
-                  _c(
+            _c("div", { staticClass: "mb-2" }, [
+              _c("div", { staticClass: "font-weight-bold" }, [
+                _vm._v("Project")
+              ]),
+              _vm._v(" "),
+              _vm.task.project
+                ? _c(
                     "div",
                     {
                       staticClass: "cursor-pointer project-name",
@@ -68216,8 +68289,27 @@ var render = function() {
                         : _vm._e()
                     ]
                   )
-                ])
-              : _vm._e(),
+                : _vm.project
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "cursor-pointer project-name",
+                      on: {
+                        click: function($event) {
+                          return _vm.showProject(_vm.project.id)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(_vm.project.name) +
+                          "\n                    "
+                      )
+                    ]
+                  )
+                : _vm._e()
+            ]),
             _vm._v(" "),
             _vm.task.schedule
               ? _c("div", { staticClass: "mb-2" }, [
@@ -68922,7 +69014,7 @@ var render = function() {
                     },
                     [
                       _c("show-task-modal", {
-                        attrs: { task: _vm.currentTask },
+                        attrs: { task: _vm.currentTask, project: _vm.project },
                         on: {
                           deleteTaskModal: function($event) {
                             return _vm.$refs.deleteTaskModalButton.click()
@@ -68931,7 +69023,8 @@ var render = function() {
                             return _vm.$refs.editTaskModalButton.click()
                           },
                           archived: _vm.taskArchived,
-                          statusUpdated: _vm.taskStatusUpdated
+                          statusUpdated: _vm.taskStatusUpdated,
+                          showProject: _vm.showProject
                         }
                       })
                     ],

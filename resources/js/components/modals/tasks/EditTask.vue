@@ -27,9 +27,15 @@
                             >{{importanceText(importance)}}</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="project-id">Project</label>
+                        <select class="form-control" id="project-id" v-model="projectId">
+                            <option v-for="project in projects" :value="project.id">{{project.name}}</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="modal-footer">
+                <div class="modal-footer" v-if="projects.length > 0">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="cancel" @click="reset">Cancel</button>
                     <button type="submit" class="btn btn-primary">Update</button>
                 </div>
@@ -55,14 +61,14 @@ export default {
             today: moment().format("YYYY-MM-DD"),
             importance: c.STATUS_NORMAL,
             statuses: [c.STATUS_NORMAL, c.STATUS_MEDIUM, c.STATUS_STRONG],
+            projectId: 0,
+            projects: [],
         }
     },
     watch: {
         task: function() {
-            this.name = this.task.name;
-            this.details = this.task.details;
-            this.schedule = this.task.schedule;
-            this.importance = this.task.importance;
+            this.setOriginValues();
+            this.getProjects();
         },
     },
     validations: {
@@ -81,6 +87,16 @@ export default {
         },
     },
     methods: {
+        getProjects() {
+            axios
+                .get(route('projects.index'))
+                .then(response => {
+                    this.projects = response.data.projects;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
         updateTask(e) {
             this.$v.$touch();
             if (!this.$v.$invalid) {
@@ -90,6 +106,7 @@ export default {
                         'details': this.details,
                         'schedule': this.schedule,
                         'importance': this.importance,
+                        'project_id': this.projectId,
                     })
                     .then(response => {
                         this.$refs.cancel.click();
@@ -116,12 +133,16 @@ export default {
             return '';
         },
         reset() {
+            this.setOriginValues();
+            this.$v.$reset();
+            this.$emit('cancel');
+        },
+        setOriginValues() {
             this.name = this.task.name;
             this.details = this.task.details;
             this.schedule = this.task.schedule;
             this.importance = this.task.importance;
-            this.$v.$reset();
-            this.$emit('cancel');
+            this.projectId = this.task.project_id;
         },
     },
 }

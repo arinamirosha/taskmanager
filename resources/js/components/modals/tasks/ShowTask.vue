@@ -13,11 +13,14 @@
                         <div class="font-weight-bold">Details</div>
                         <div>{{task.details}}</div>
                     </div>
-                    <div class="mb-2" v-if="task.project">
+                    <div class="mb-2">
                         <div class="font-weight-bold">Project</div>
-                        <div class="cursor-pointer project-name" @click="showProject(task.project.id)">
+                        <div v-if="task.project" class="cursor-pointer project-name" @click="showProject(task.project.id)">
                             {{task.project.name}}
                             <span v-if="task.project.deleted_at" class="text-info">ARCHIVED</span>
+                        </div>
+                        <div v-else-if="project" class="cursor-pointer project-name" @click="showProject(project.id)">
+                            {{project.name}}
                         </div>
                     </div>
                     <div v-if="task.schedule" class="mb-2">
@@ -67,7 +70,7 @@ import route from "../../../route";
 import moment from "moment";
 
 export default {
-    props: ['task'],
+    props: ['task', 'project'],
     computed: {
         c: function () {
             return constants;

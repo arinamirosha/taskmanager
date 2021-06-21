@@ -30,6 +30,7 @@ class Task extends Model
     const UPCOMING      = 'upcoming';
 
     protected $fillable = [
+        'project_id',
         'name',
         'details',
         'schedule',
