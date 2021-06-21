@@ -23,12 +23,25 @@ class ProjectsController extends Controller
         $projects  = Auth::user()->projects();
 
         if ($type === Task::ARCHIVE) {
-            $projects = $projects->onlyTrashed();
-            $data['projects'] = $projects->withCount([
+            $s              = $request->get('s', false);
+            $hasNotFinished = $request->get('hasNotFinished', false);
+            $projects       = $projects->onlyTrashed();
+
+            if ($s) {
+                $projects->where('name', 'like', "%$s%");
+            }
+
+            $projects->withCount([
                 'tasks'=> function ($query) {
                     $query->whereIn('status', [Task::STATUS_NEW, Task::STATUS_PROGRESS])->withTrashed();
                 },
-            ])->paginate(25);
+            ]);
+
+            if ($hasNotFinished) {
+                $projects->havingRaw('tasks_count > 0');
+            }
+
+            $data['projects'] = $projects->paginate(25);
         } else {
             $data['projects'] = $projects->withCount('tasks')->get();
         }

@@ -5,10 +5,15 @@
             <div class="col-md-6 font-weight-bold h3">{{pageTitle}}
                 <transition name="fade" appear><i v-if="!isDataLoaded || dataLoading" class="fas fa-spinner fa-spin h3"></i></transition>
             </div>
-            <div class="col-md-6" v-if="type !== c.ARCHIVE">
-                <div class="row justify-content-between h5">
+            <div class="col-md-6">
+                <div class="row justify-content-between h5" v-if="type !== c.ARCHIVE">
                     <label><input type="checkbox" :checked="hideFinished" v-model="hideFinished" @click="switchHideFinished"> Hide Finished</label>
                     <button class="btn btn-sm btn-outline-secondary" @click="archiveAllTasks">Archive Finished</button>
+                </div>
+                <div v-else class="row justify-content-end pr-2">
+                    <label>
+                        <input class="form-control form-control-sm" v-model="s" type="text" placeholder="Search task or project...">
+                    </label>
                 </div>
             </div>
         </div>
@@ -54,6 +59,8 @@
             </div>
         </div>
 
+        <hr v-if="type === c.ARCHIVE">
+
         <archived-projects v-if="type === c.ARCHIVE" @showProject="showProject"></archived-projects>
 
         <!-- Toast -->
@@ -97,6 +104,7 @@ export default {
             page: 0,
             isLastPage: false,
             lastPage: 0,
+            s: '',
         }
     },
     computed: {
@@ -119,7 +127,14 @@ export default {
         type: function() {
             this.isDataLoaded = false;
             this.getTasks();
+        },
+        s: function () {
+            this.dataLoading = true;
+            this.debouncedGetUsers();
         }
+    },
+    created() {
+        this.debouncedGetUsers = _.debounce(this.getTasks, 500);
     },
     methods: {
         getTasks() {
@@ -127,6 +142,7 @@ export default {
                 .get(route('tasks.index'), {
                     params: {
                         'type': this.type,
+                        's': this.s,
                     }
                 })
                 .then(response => {
@@ -135,6 +151,7 @@ export default {
                     this.lastPage = response.data.last_page;
                     this.tasks = response.data.data;
                     this.isDataLoaded = true;
+                    this.dataLoading = false;
                 })
                 .catch(error => {
                     console.log(error);
@@ -146,6 +163,7 @@ export default {
                 .get(route('tasks.index'), {
                     params: {
                         'type': this.type,
+                        's': this.s,
                         'page': ++this.page,
                     }
                 })
@@ -283,7 +301,7 @@ export default {
     color: #c8c8c8;
 }
 .half {
-    height: calc(50vh - 120px);
+    height: calc(50vh - 135px);
     overflow-y: scroll;
     overflow-x: hidden;
 }

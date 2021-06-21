@@ -92,9 +92,16 @@ class TaskController extends Controller
         $user  = Auth::user();
         $tasks = $user->tasks();
         $type  = $request->get('type', false);
+        $s     = $request->get('s', false);
 
         if ($user->hide_finished && $type != Task::ARCHIVE) {
             $tasks->where('status', '<>', Task::STATUS_FINISHED);
+        }
+
+        if ($s) {
+            $tasks->where('name', 'like', "%$s%")->orWhereHas('project', function($q) use ($s) {
+                $q->where('name', 'like', "%$s%");
+            });
         }
 
         if ($type) {
@@ -116,7 +123,6 @@ class TaskController extends Controller
             }
         }
 
-//        return $tasks->with(['project'])->get();
         return $tasks->with(['project'])->paginate(25);
     }
 }

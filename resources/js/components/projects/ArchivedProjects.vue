@@ -4,6 +4,16 @@
             <div class="col-md-6 font-weight-bold h3">Archived Projects
                 <transition name="fade" appear><i v-if="!isDataLoaded || dataLoading" class="fas fa-spinner fa-spin h3"></i></transition>
             </div>
+            <div class="col-md-6">
+                <div class="row justify-content-end pr-2">
+                    <label>
+                        <input type="checkbox" v-model="hasNotFinished"> Has not finished
+                    </label>
+                    <label>
+                        <input class="form-control form-control-sm ml-2" v-model="s" type="text" placeholder="Search project...">
+                    </label>
+                </div>
+            </div>
         </div>
 
         <div class="row">
@@ -48,6 +58,8 @@ export default {
             page: 0,
             lastPage: 0,
             isLastPage: false,
+            s: '',
+            hasNotFinished: false,
         }
     },
     computed: {
@@ -55,12 +67,27 @@ export default {
             return constants;
         },
     },
+    watch: {
+        s: function () {
+            this.dataLoading = true;
+            this.debouncedGetUsers();
+        },
+        hasNotFinished: function () {
+            this.dataLoading = true;
+            this.getProjects();
+        },
+    },
+    created() {
+        this.debouncedGetUsers = _.debounce(this.getProjects, 500);
+    },
     methods: {
         getProjects() {
             axios
                 .get(route('projects.index'), {
                     params: {
                         'type': constants.ARCHIVE,
+                        's': this.s,
+                        'hasNotFinished': this.hasNotFinished ? this.hasNotFinished : '',
                     }
                 })
                 .then(response => {
@@ -69,6 +96,7 @@ export default {
                     this.lastPage = response.data.projects.last_page;
                     this.projects = response.data.projects.data;
                     this.isDataLoaded = true;
+                    this.dataLoading = false;
                 })
                 .catch(error => {
                     console.log(error);
@@ -80,6 +108,8 @@ export default {
                 .get(route('projects.index'), {
                     params: {
                         'type': constants.ARCHIVE,
+                        's': this.s,
+                        'hasNotFinished': this.hasNotFinished ? this.hasNotFinished : '',
                         'page': ++this.page,
                     }
                 })

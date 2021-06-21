@@ -2971,6 +2971,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2982,7 +2992,9 @@ __webpack_require__.r(__webpack_exports__);
       dataLoading: false,
       page: 0,
       lastPage: 0,
-      isLastPage: false
+      isLastPage: false,
+      s: '',
+      hasNotFinished: false
     };
   },
   computed: {
@@ -2990,13 +3002,28 @@ __webpack_require__.r(__webpack_exports__);
       return _constants__WEBPACK_IMPORTED_MODULE_1__;
     }
   },
+  watch: {
+    s: function s() {
+      this.dataLoading = true;
+      this.debouncedGetUsers();
+    },
+    hasNotFinished: function hasNotFinished() {
+      this.dataLoading = true;
+      this.getProjects();
+    }
+  },
+  created: function created() {
+    this.debouncedGetUsers = _.debounce(this.getProjects, 500);
+  },
   methods: {
     getProjects: function getProjects() {
       var _this = this;
 
       axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.index'), {
         params: {
-          'type': _constants__WEBPACK_IMPORTED_MODULE_1__.ARCHIVE
+          'type': _constants__WEBPACK_IMPORTED_MODULE_1__.ARCHIVE,
+          's': this.s,
+          'hasNotFinished': this.hasNotFinished ? this.hasNotFinished : ''
         }
       }).then(function (response) {
         _this.isLastPage = response.data.projects.current_page === response.data.projects.last_page;
@@ -3004,6 +3031,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.lastPage = response.data.projects.last_page;
         _this.projects = response.data.projects.data;
         _this.isDataLoaded = true;
+        _this.dataLoading = false;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3015,6 +3043,8 @@ __webpack_require__.r(__webpack_exports__);
       axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.index'), {
         params: {
           'type': _constants__WEBPACK_IMPORTED_MODULE_1__.ARCHIVE,
+          's': this.s,
+          'hasNotFinished': this.hasNotFinished ? this.hasNotFinished : '',
           'page': ++this.page
         }
       }).then(function (response) {
@@ -3437,6 +3467,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3452,7 +3489,8 @@ __webpack_require__.r(__webpack_exports__);
       currentTask: {},
       page: 0,
       isLastPage: false,
-      lastPage: 0
+      lastPage: 0,
+      s: ''
     };
   },
   computed: {
@@ -3491,7 +3529,14 @@ __webpack_require__.r(__webpack_exports__);
     type: function type() {
       this.isDataLoaded = false;
       this.getTasks();
+    },
+    s: function s() {
+      this.dataLoading = true;
+      this.debouncedGetUsers();
     }
+  },
+  created: function created() {
+    this.debouncedGetUsers = _.debounce(this.getTasks, 500);
   },
   methods: {
     getTasks: function getTasks() {
@@ -3499,7 +3544,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.index'), {
         params: {
-          'type': this.type
+          'type': this.type,
+          's': this.s
         }
       }).then(function (response) {
         _this.isLastPage = response.data.current_page === response.data.last_page;
@@ -3507,6 +3553,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.lastPage = response.data.last_page;
         _this.tasks = response.data.data;
         _this.isDataLoaded = true;
+        _this.dataLoading = false;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3518,6 +3565,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.index'), {
         params: {
           'type': this.type,
+          's': this.s,
           'page': ++this.page
         }
       }).then(function (response) {
@@ -8446,7 +8494,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n.cursor-pointer {\n    cursor: pointer;\n}\n.task:hover {\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished {\n    color: #dedede;\n}\n.text-custom-secondary {\n    color: #c8c8c8;\n}\n.half {\n    height: calc(50vh - 120px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n.full {\n    height: calc(100vh - 165px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n::-webkit-scrollbar {\n    width: 12px;\n}\n::-webkit-scrollbar-track {\n    -webkit-box-shadow: inset 0 0 6px #edf3f3;\n}\n::-webkit-scrollbar-thumb {\n    border-radius: 10px;\n    -webkit-box-shadow: inset 0 0 6px #e9e9e9;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n.cursor-pointer {\n    cursor: pointer;\n}\n.task:hover {\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished {\n    color: #dedede;\n}\n.text-custom-secondary {\n    color: #c8c8c8;\n}\n.half {\n    height: calc(50vh - 135px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n.full {\n    height: calc(100vh - 165px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n::-webkit-scrollbar {\n    width: 12px;\n}\n::-webkit-scrollbar-track {\n    -webkit-box-shadow: inset 0 0 6px #edf3f3;\n}\n::-webkit-scrollbar-thumb {\n    border-radius: 10px;\n    -webkit-box-shadow: inset 0 0 6px #e9e9e9;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -67856,7 +67904,76 @@ var render = function() {
           ])
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "row justify-content-end pr-2" }, [
+          _c("label", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.hasNotFinished,
+                  expression: "hasNotFinished"
+                }
+              ],
+              attrs: { type: "checkbox" },
+              domProps: {
+                checked: Array.isArray(_vm.hasNotFinished)
+                  ? _vm._i(_vm.hasNotFinished, null) > -1
+                  : _vm.hasNotFinished
+              },
+              on: {
+                change: function($event) {
+                  var $$a = _vm.hasNotFinished,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = null,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && (_vm.hasNotFinished = $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        (_vm.hasNotFinished = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
+                    }
+                  } else {
+                    _vm.hasNotFinished = $$c
+                  }
+                }
+              }
+            }),
+            _vm._v(" Has not finished\n                ")
+          ]),
+          _vm._v(" "),
+          _c("label", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.s,
+                  expression: "s"
+                }
+              ],
+              staticClass: "form-control form-control-sm ml-2",
+              attrs: { type: "text", placeholder: "Search project..." },
+              domProps: { value: _vm.s },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.s = $event.target.value
+                }
+              }
+            })
+          ])
+        ])
+      ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
@@ -68442,9 +68559,9 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _vm.type !== _vm.c.ARCHIVE
-          ? _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "row justify-content-between h5" }, [
+        _c("div", { staticClass: "col-md-6" }, [
+          _vm.type !== _vm.c.ARCHIVE
+            ? _c("div", { staticClass: "row justify-content-between h5" }, [
                 _c("label", [
                   _c("input", {
                     directives: [
@@ -68497,8 +68614,35 @@ var render = function() {
                   [_vm._v("Archive Finished")]
                 )
               ])
-            ])
-          : _vm._e()
+            : _c("div", { staticClass: "row justify-content-end pr-2" }, [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.s,
+                        expression: "s"
+                      }
+                    ],
+                    staticClass: "form-control form-control-sm",
+                    attrs: {
+                      type: "text",
+                      placeholder: "Search task or project..."
+                    },
+                    domProps: { value: _vm.s },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.s = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ])
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
@@ -68642,6 +68786,8 @@ var render = function() {
           )
         ])
       ]),
+      _vm._v(" "),
+      _vm.type === _vm.c.ARCHIVE ? _c("hr") : _vm._e(),
       _vm._v(" "),
       _vm.type === _vm.c.ARCHIVE
         ? _c("archived-projects", { on: { showProject: _vm.showProject } })
