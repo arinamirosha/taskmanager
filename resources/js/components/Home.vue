@@ -1,13 +1,13 @@
 <template>
     <div>
 
-        <div class="bg-light" :class="{'left-menu px-2 pt-2': showMenu}">
+        <div :class="{'bg-light left-menu px-2 pt-2': showMenu}">
             <nav :class="showMenu ? 'nav flex-column' : 'dropdown'">
-                <button v-if="!showMenu" class="btn btn-menu btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button v-if="!showMenu" class="btn btn-menu dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Menu
                 </button>
 
-                <div :class="{'dropdown-menu bg-light': !showMenu}">
+                <div :class="{'dropdown-menu bg-light mt-0': !showMenu}">
                     <a class="nav-link text-dark" :class="{'active': type===c.INCOMING}" @click="setType(c.INCOMING)">Incoming</a>
                     <a class="nav-link text-dark name-count-space" :class="{'active': type===c.TODAY}" @click="setType(c.TODAY)">
                         Today
@@ -160,10 +160,18 @@ nav a:hover {
 }
 .btn-menu {
     background-color: #e0eeee;
-    border-radius: 0;
+    border-radius: 5px 5px 0 0;
+}
+.dropdown {
+    height: 0;
+}
+#dropdownMenuButton {
+    margin-top: -62px;
+    width: 80px;
+    margin-left: calc(50% - 40px);
 }
 .dropdown-menu {
-    width: 100%;
+    width: 100vw;
     margin-left: 5px;
     border: none;
     border-radius: 0;
