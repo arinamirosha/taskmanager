@@ -1,12 +1,17 @@
 <template>
     <div>
 
-        <div class="left-menu bg-light px-2 pt-2">
-            <nav class="nav flex-column">
-                <a class="nav-link text-dark" :class="{'active': type===c.INCOMING}" @click="setType(c.INCOMING)">Incoming</a>
-                <a class="nav-link text-dark name-count-space" :class="{'active': type===c.TODAY}" @click="setType(c.TODAY)">
-                    Today
-                    <span class="text-custom-secondary">
+        <div class="bg-light" :class="{'left-menu px-2 pt-2': showMenu}">
+            <nav :class="showMenu ? 'nav flex-column' : 'dropdown'">
+                <button v-if="!showMenu" class="btn btn-menu btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Menu
+                </button>
+
+                <div :class="{'dropdown-menu bg-light': !showMenu}">
+                    <a class="nav-link text-dark" :class="{'active': type===c.INCOMING}" @click="setType(c.INCOMING)">Incoming</a>
+                    <a class="nav-link text-dark name-count-space" :class="{'active': type===c.TODAY}" @click="setType(c.TODAY)">
+                        Today
+                        <span class="text-custom-secondary">
                         {{cToday[c.TOTAL]}}
                         <span v-if="cToday[c.TOTAL]">
                             ({{cToday[c.STATUS_NEW_TEXT]}}/{{cToday[c.STATUS_PROGRESS_TEXT]}}/{{cToday[c.STATUS_FINISHED_TEXT]}})
@@ -15,10 +20,10 @@
                             (0/0/0)
                         </span>
                     </span>
-                </a>
-                <a class="nav-link text-dark name-count-space" :class="{'active': type===c.UPCOMING}" @click="setType(c.UPCOMING)">
-                    Upcoming
-                    <span class="text-custom-secondary">
+                    </a>
+                    <a class="nav-link text-dark name-count-space" :class="{'active': type===c.UPCOMING}" @click="setType(c.UPCOMING)">
+                        Upcoming
+                        <span class="text-custom-secondary">
                         {{cUpcoming[c.TOTAL]}}
                         <span v-if="cUpcoming[c.TOTAL]">
                             ({{cUpcoming[c.STATUS_NEW_TEXT]}}/{{cUpcoming[c.STATUS_PROGRESS_TEXT]}}/{{cUpcoming[c.STATUS_FINISHED_TEXT]}})
@@ -27,10 +32,10 @@
                             (0/0/0)
                         </span>
                     </span>
-                </a>
-                <a class="nav-link text-dark name-count-space" :class="{'active': type===c.NOT_SCHEDULED}" @click="setType(c.NOT_SCHEDULED)">
-                    Not Scheduled
-                    <span class="text-custom-secondary">
+                    </a>
+                    <a class="nav-link text-dark name-count-space" :class="{'active': type===c.NOT_SCHEDULED}" @click="setType(c.NOT_SCHEDULED)">
+                        Not Scheduled
+                        <span class="text-custom-secondary">
                         {{cNotScheduled[c.TOTAL]}}
                         <span v-if="cNotScheduled[c.TOTAL]">
                             ({{cNotScheduled[c.STATUS_NEW_TEXT]}}/{{cNotScheduled[c.STATUS_PROGRESS_TEXT]}}/{{cNotScheduled[c.STATUS_FINISHED_TEXT]}})
@@ -39,57 +44,57 @@
                             (0/0/0)
                         </span>
                     </span>
-                </a>
-                <a class="nav-link text-dark name-count-space" :class="{'active': type===c.ARCHIVE}" @click="setType(c.ARCHIVE)">
-                    Archive
-                </a>
+                    </a>
+                    <a class="nav-link text-dark name-count-space" :class="{'active': type===c.ARCHIVE}" @click="setType(c.ARCHIVE)">
+                        Archive
+                    </a>
 
-                <h6 v-if="favorites.length > 0" @click="isOpenFav = !isOpenFav"
-                    class="cursor-pointer font-weight-bold sidebar-heading name-count-space align-items-center px-3 mt-4 mb-1 text-muted">
-                    <span v-if="isOpenFav">&#8595;</span>
-                    <span v-else>&#8593;</span>
-                    <span class="ml-2">Favorites ({{favorites.length}})</span>
-                    <i class="far fa-star pr-2 text-secondary"></i>
-                </h6>
-                <collapse-transition>
-                    <div v-show="isOpenFav">
-                        <a class="nav-link name-count-space"
-                           v-for="project in favorites"
-                           :key="project.id"
-                           @click="selectProject(project.id)"
-                           :class="{'active': currentComponent==='show-project' && selectedProjectId === project.id }"
-                        >
-                            <span :style="{color: project.color}">{{project.name}}</span>
-                            <span class="text-custom-secondary">{{project.tasks_count}}</span>
-                        </a>
-                    </div>
-                </collapse-transition>
+                    <h6 v-if="favorites.length > 0" @click="isOpenFav = !isOpenFav"
+                        class="cursor-pointer font-weight-bold sidebar-heading name-count-space align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span v-if="isOpenFav">&#8595;</span>
+                        <span v-else>&#8593;</span>
+                        <span class="ml-2">Favorites ({{favorites.length}})</span>
+                        <i class="far fa-star pr-2 text-secondary"></i>
+                    </h6>
+                    <collapse-transition>
+                        <div v-show="isOpenFav">
+                            <a class="nav-link name-count-space"
+                               v-for="project in favorites"
+                               :key="project.id"
+                               @click="selectProject(project.id)"
+                               :class="{'active': currentComponent==='show-project' && selectedProjectId === project.id }"
+                            >
+                                <span :style="{color: project.color}">{{project.name}}</span>
+                                <span class="text-custom-secondary">{{project.tasks_count}}</span>
+                            </a>
+                        </div>
+                    </collapse-transition>
 
-                <h6 @click.self="isOpenProjects = !isOpenProjects"
-                    class="cursor-pointer font-weight-bold sidebar-heading name-count-space align-items-center px-3 mt-4 mb-1 text-muted">
-                    <span v-if="isOpenProjects">&#8595;</span>
-                    <span v-else>&#8593;</span>
-                    <span class="ml-2">Projects ({{projects.length}})</span>
-                    <a class="text-muted h4 pl-2 pr-2 pt-1 pb-1" data-toggle="modal" data-target="#createProjectModal">+</a>
-                </h6>
-                <collapse-transition>
-                    <div v-show="isOpenProjects">
-                        <a class="nav-link name-count-space"
-                           v-for="project in projects"
-                           :key="project.id"
-                           @click="selectProject(project.id)"
-                           :class="{'active': currentComponent==='show-project' && selectedProjectId === project.id }"
-                        >
-                            <span :style="{color: project.color}">{{project.name}}</span>
-                            <span class="text-custom-secondary">{{project.tasks_count}}</span>
-                        </a>
-                    </div>
-                </collapse-transition>
-
+                    <h6 @click.self="isOpenProjects = !isOpenProjects"
+                        class="cursor-pointer font-weight-bold sidebar-heading name-count-space align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span v-if="isOpenProjects">&#8595;</span>
+                        <span v-else>&#8593;</span>
+                        <span class="ml-2">Projects ({{projects.length}})</span>
+                        <a class="text-muted h4 pl-2 pr-2 pt-1 pb-1" data-toggle="modal" data-target="#createProjectModal">+</a>
+                    </h6>
+                    <collapse-transition>
+                        <div v-show="isOpenProjects">
+                            <a class="nav-link name-count-space"
+                               v-for="project in projects"
+                               :key="project.id"
+                               @click="selectProject(project.id)"
+                               :class="{'active': currentComponent==='show-project' && selectedProjectId === project.id }"
+                            >
+                                <span :style="{color: project.color}">{{project.name}}</span>
+                                <span class="text-custom-secondary">{{project.tasks_count}}</span>
+                            </a>
+                        </div>
+                    </collapse-transition>
+                </div>
             </nav>
         </div>
 
-        <div class="main-content pt-3">
+        <div :class="{'main-content': showMenu}" class="pt-3">
             <component
                 v-bind:is="currentComponent"
                 :id="this.selectedProjectId"
@@ -153,6 +158,17 @@ nav a:hover {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px #e1e1e1;
 }
+.btn-menu {
+    background-color: #e0eeee;
+    border-radius: 0;
+}
+.dropdown-menu {
+    width: 100%;
+    margin-left: 5px;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid #e0eeee;
+}
 </style>
 
 <script>
@@ -172,6 +188,8 @@ export default {
             isOpenFav: true,
             isOpenProjects: true,
             type: constants.TODAY,
+            width: 0,
+            widthChangeMenu: 1051,
         }
     },
     computed: {
@@ -182,6 +200,9 @@ export default {
         },
         c: function () {
             return constants;
+        },
+        showMenu: function () {
+            return this.width > this.widthChangeMenu;
         },
     },
     methods: {
@@ -219,9 +240,16 @@ export default {
             this.type = '';
             this.setComponent('show-project');
         },
+        updateWidth() {
+            this.width = window.innerWidth;
+        },
     },
     mounted() {
         this.getProjects();
+        this.updateWidth();
+    },
+    created() {
+        window.addEventListener('resize', this.updateWidth);
     },
     components: {
         CollapseTransition,

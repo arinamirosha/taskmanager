@@ -2016,6 +2016,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2030,7 +2046,9 @@ __webpack_require__.r(__webpack_exports__);
       selectedProjectId: 0,
       isOpenFav: true,
       isOpenProjects: true,
-      type: _constants__WEBPACK_IMPORTED_MODULE_2__.TODAY
+      type: _constants__WEBPACK_IMPORTED_MODULE_2__.TODAY,
+      width: 0,
+      widthChangeMenu: 1051
     };
   },
   computed: {
@@ -2041,6 +2059,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     c: function c() {
       return _constants__WEBPACK_IMPORTED_MODULE_2__;
+    },
+    showMenu: function showMenu() {
+      return this.width > this.widthChangeMenu;
     }
   },
   methods: {
@@ -2076,10 +2097,17 @@ __webpack_require__.r(__webpack_exports__);
       this.selectedProjectId = id;
       this.type = '';
       this.setComponent('show-project');
+    },
+    updateWidth: function updateWidth() {
+      this.width = window.innerWidth;
     }
   },
   mounted: function mounted() {
     this.getProjects();
+    this.updateWidth();
+  },
+  created: function created() {
+    window.addEventListener('resize', this.updateWidth);
   },
   components: {
     CollapseTransition: _ivanv_vue_collapse_transition__WEBPACK_IMPORTED_MODULE_0__.CollapseTransition
@@ -8604,7 +8632,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nnav a[data-v-f2b6376c]:hover,\n.active[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px;\n    cursor: pointer;\n}\nnav a[data-v-f2b6376c]:hover {\n    text-decoration: none;\n}\n.cursor-pointer[data-v-f2b6376c]{\n    cursor: pointer;\n}\n.text-custom-secondary[data-v-f2b6376c] {\n    color: #c8c8c8;\n}\n.left-menu[data-v-f2b6376c] {\n    width: 300px;\n    height: calc(100vh - 55px);\n    position: fixed;\n    left: 0;\n    bottom: 0;\n    overflow-y: scroll;\n}\n.main-content[data-v-f2b6376c] {\n    margin-left: 300px;\n}\n.name-count-space[data-v-f2b6376c] {\n    display: flex;\n    justify-content: space-between;\n}\n[data-v-f2b6376c]::-webkit-scrollbar {\n    width: 12px;\n}\n[data-v-f2b6376c]::-webkit-scrollbar-track {\n    -webkit-box-shadow: inset 0 0 6px #e0eeee;\n}\n[data-v-f2b6376c]::-webkit-scrollbar-thumb {\n    border-radius: 10px;\n    -webkit-box-shadow: inset 0 0 6px #e1e1e1;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nnav a[data-v-f2b6376c]:hover,\n.active[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px;\n    cursor: pointer;\n}\nnav a[data-v-f2b6376c]:hover {\n    text-decoration: none;\n}\n.cursor-pointer[data-v-f2b6376c]{\n    cursor: pointer;\n}\n.text-custom-secondary[data-v-f2b6376c] {\n    color: #c8c8c8;\n}\n.left-menu[data-v-f2b6376c] {\n    width: 300px;\n    height: calc(100vh - 55px);\n    position: fixed;\n    left: 0;\n    bottom: 0;\n    overflow-y: scroll;\n}\n.main-content[data-v-f2b6376c] {\n    margin-left: 300px;\n}\n.name-count-space[data-v-f2b6376c] {\n    display: flex;\n    justify-content: space-between;\n}\n[data-v-f2b6376c]::-webkit-scrollbar {\n    width: 12px;\n}\n[data-v-f2b6376c]::-webkit-scrollbar-track {\n    -webkit-box-shadow: inset 0 0 6px #e0eeee;\n}\n[data-v-f2b6376c]::-webkit-scrollbar-thumb {\n    border-radius: 10px;\n    -webkit-box-shadow: inset 0 0 6px #e1e1e1;\n}\n.btn-menu[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 0;\n}\n.dropdown-menu[data-v-f2b6376c] {\n    width: 100%;\n    margin-left: 5px;\n    border: none;\n    border-radius: 0;\n    border-bottom: 1px solid #e0eeee;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -66630,323 +66658,361 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "left-menu bg-light px-2 pt-2" }, [
-      _c(
-        "nav",
-        { staticClass: "nav flex-column" },
-        [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link text-dark",
-              class: { active: _vm.type === _vm.c.INCOMING },
-              on: {
-                click: function($event) {
-                  return _vm.setType(_vm.c.INCOMING)
-                }
-              }
-            },
-            [_vm._v("Incoming")]
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "nav-link text-dark name-count-space",
-              class: { active: _vm.type === _vm.c.TODAY },
-              on: {
-                click: function($event) {
-                  return _vm.setType(_vm.c.TODAY)
-                }
-              }
-            },
-            [
-              _vm._v("\n                Today\n                "),
-              _c("span", { staticClass: "text-custom-secondary" }, [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.cToday[_vm.c.TOTAL]) +
-                    "\n                    "
-                ),
-                _vm.cToday[_vm.c.TOTAL]
-                  ? _c("span", [
-                      _vm._v(
-                        "\n                        (" +
-                          _vm._s(_vm.cToday[_vm.c.STATUS_NEW_TEXT]) +
-                          "/" +
-                          _vm._s(_vm.cToday[_vm.c.STATUS_PROGRESS_TEXT]) +
-                          "/" +
-                          _vm._s(_vm.cToday[_vm.c.STATUS_FINISHED_TEXT]) +
-                          ")\n                    "
-                      )
-                    ])
-                  : _c("span", [
-                      _vm._v(
-                        "\n                        (0/0/0)\n                    "
-                      )
-                    ])
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "nav-link text-dark name-count-space",
-              class: { active: _vm.type === _vm.c.UPCOMING },
-              on: {
-                click: function($event) {
-                  return _vm.setType(_vm.c.UPCOMING)
-                }
-              }
-            },
-            [
-              _vm._v("\n                Upcoming\n                "),
-              _c("span", { staticClass: "text-custom-secondary" }, [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.cUpcoming[_vm.c.TOTAL]) +
-                    "\n                    "
-                ),
-                _vm.cUpcoming[_vm.c.TOTAL]
-                  ? _c("span", [
-                      _vm._v(
-                        "\n                        (" +
-                          _vm._s(_vm.cUpcoming[_vm.c.STATUS_NEW_TEXT]) +
-                          "/" +
-                          _vm._s(_vm.cUpcoming[_vm.c.STATUS_PROGRESS_TEXT]) +
-                          "/" +
-                          _vm._s(_vm.cUpcoming[_vm.c.STATUS_FINISHED_TEXT]) +
-                          ")\n                    "
-                      )
-                    ])
-                  : _c("span", [
-                      _vm._v(
-                        "\n                        (0/0/0)\n                    "
-                      )
-                    ])
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "nav-link text-dark name-count-space",
-              class: { active: _vm.type === _vm.c.NOT_SCHEDULED },
-              on: {
-                click: function($event) {
-                  return _vm.setType(_vm.c.NOT_SCHEDULED)
-                }
-              }
-            },
-            [
-              _vm._v("\n                Not Scheduled\n                "),
-              _c("span", { staticClass: "text-custom-secondary" }, [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.cNotScheduled[_vm.c.TOTAL]) +
-                    "\n                    "
-                ),
-                _vm.cNotScheduled[_vm.c.TOTAL]
-                  ? _c("span", [
-                      _vm._v(
-                        "\n                        (" +
-                          _vm._s(_vm.cNotScheduled[_vm.c.STATUS_NEW_TEXT]) +
-                          "/" +
-                          _vm._s(
-                            _vm.cNotScheduled[_vm.c.STATUS_PROGRESS_TEXT]
-                          ) +
-                          "/" +
-                          _vm._s(
-                            _vm.cNotScheduled[_vm.c.STATUS_FINISHED_TEXT]
-                          ) +
-                          ")\n                    "
-                      )
-                    ])
-                  : _c("span", [
-                      _vm._v(
-                        "\n                        (0/0/0)\n                    "
-                      )
-                    ])
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "nav-link text-dark name-count-space",
-              class: { active: _vm.type === _vm.c.ARCHIVE },
-              on: {
-                click: function($event) {
-                  return _vm.setType(_vm.c.ARCHIVE)
-                }
-              }
-            },
-            [_vm._v("\n                Archive\n            ")]
-          ),
-          _vm._v(" "),
-          _vm.favorites.length > 0
+    _c(
+      "div",
+      {
+        staticClass: "bg-light",
+        class: { "left-menu px-2 pt-2": _vm.showMenu }
+      },
+      [
+        _c("nav", { class: _vm.showMenu ? "nav flex-column" : "dropdown" }, [
+          !_vm.showMenu
             ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-menu btn-block dropdown-toggle",
+                  attrs: {
+                    type: "button",
+                    id: "dropdownMenuButton",
+                    "data-toggle": "dropdown",
+                    "aria-haspopup": "true",
+                    "aria-expanded": "false"
+                  }
+                },
+                [_vm._v("\n                Menu\n            ")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "div",
+            { class: { "dropdown-menu bg-light": !_vm.showMenu } },
+            [
+              _c(
+                "a",
+                {
+                  staticClass: "nav-link text-dark",
+                  class: { active: _vm.type === _vm.c.INCOMING },
+                  on: {
+                    click: function($event) {
+                      return _vm.setType(_vm.c.INCOMING)
+                    }
+                  }
+                },
+                [_vm._v("Incoming")]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "nav-link text-dark name-count-space",
+                  class: { active: _vm.type === _vm.c.TODAY },
+                  on: {
+                    click: function($event) {
+                      return _vm.setType(_vm.c.TODAY)
+                    }
+                  }
+                },
+                [
+                  _vm._v("\n                    Today\n                    "),
+                  _c("span", { staticClass: "text-custom-secondary" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.cToday[_vm.c.TOTAL]) +
+                        "\n                    "
+                    ),
+                    _vm.cToday[_vm.c.TOTAL]
+                      ? _c("span", [
+                          _vm._v(
+                            "\n                        (" +
+                              _vm._s(_vm.cToday[_vm.c.STATUS_NEW_TEXT]) +
+                              "/" +
+                              _vm._s(_vm.cToday[_vm.c.STATUS_PROGRESS_TEXT]) +
+                              "/" +
+                              _vm._s(_vm.cToday[_vm.c.STATUS_FINISHED_TEXT]) +
+                              ")\n                    "
+                          )
+                        ])
+                      : _c("span", [
+                          _vm._v(
+                            "\n                        (0/0/0)\n                    "
+                          )
+                        ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "nav-link text-dark name-count-space",
+                  class: { active: _vm.type === _vm.c.UPCOMING },
+                  on: {
+                    click: function($event) {
+                      return _vm.setType(_vm.c.UPCOMING)
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                    Upcoming\n                    "
+                  ),
+                  _c("span", { staticClass: "text-custom-secondary" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.cUpcoming[_vm.c.TOTAL]) +
+                        "\n                    "
+                    ),
+                    _vm.cUpcoming[_vm.c.TOTAL]
+                      ? _c("span", [
+                          _vm._v(
+                            "\n                        (" +
+                              _vm._s(_vm.cUpcoming[_vm.c.STATUS_NEW_TEXT]) +
+                              "/" +
+                              _vm._s(
+                                _vm.cUpcoming[_vm.c.STATUS_PROGRESS_TEXT]
+                              ) +
+                              "/" +
+                              _vm._s(
+                                _vm.cUpcoming[_vm.c.STATUS_FINISHED_TEXT]
+                              ) +
+                              ")\n                    "
+                          )
+                        ])
+                      : _c("span", [
+                          _vm._v(
+                            "\n                        (0/0/0)\n                    "
+                          )
+                        ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "nav-link text-dark name-count-space",
+                  class: { active: _vm.type === _vm.c.NOT_SCHEDULED },
+                  on: {
+                    click: function($event) {
+                      return _vm.setType(_vm.c.NOT_SCHEDULED)
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                    Not Scheduled\n                    "
+                  ),
+                  _c("span", { staticClass: "text-custom-secondary" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.cNotScheduled[_vm.c.TOTAL]) +
+                        "\n                    "
+                    ),
+                    _vm.cNotScheduled[_vm.c.TOTAL]
+                      ? _c("span", [
+                          _vm._v(
+                            "\n                        (" +
+                              _vm._s(_vm.cNotScheduled[_vm.c.STATUS_NEW_TEXT]) +
+                              "/" +
+                              _vm._s(
+                                _vm.cNotScheduled[_vm.c.STATUS_PROGRESS_TEXT]
+                              ) +
+                              "/" +
+                              _vm._s(
+                                _vm.cNotScheduled[_vm.c.STATUS_FINISHED_TEXT]
+                              ) +
+                              ")\n                    "
+                          )
+                        ])
+                      : _c("span", [
+                          _vm._v(
+                            "\n                        (0/0/0)\n                    "
+                          )
+                        ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "nav-link text-dark name-count-space",
+                  class: { active: _vm.type === _vm.c.ARCHIVE },
+                  on: {
+                    click: function($event) {
+                      return _vm.setType(_vm.c.ARCHIVE)
+                    }
+                  }
+                },
+                [_vm._v("\n                    Archive\n                ")]
+              ),
+              _vm._v(" "),
+              _vm.favorites.length > 0
+                ? _c(
+                    "h6",
+                    {
+                      staticClass:
+                        "cursor-pointer font-weight-bold sidebar-heading name-count-space align-items-center px-3 mt-4 mb-1 text-muted",
+                      on: {
+                        click: function($event) {
+                          _vm.isOpenFav = !_vm.isOpenFav
+                        }
+                      }
+                    },
+                    [
+                      _vm.isOpenFav
+                        ? _c("span", [_vm._v("↓")])
+                        : _c("span", [_vm._v("↑")]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "ml-2" }, [
+                        _vm._v(
+                          "Favorites (" + _vm._s(_vm.favorites.length) + ")"
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("i", {
+                        staticClass: "far fa-star pr-2 text-secondary"
+                      })
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c("collapse-transition", [
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.isOpenFav,
+                        expression: "isOpenFav"
+                      }
+                    ]
+                  },
+                  _vm._l(_vm.favorites, function(project) {
+                    return _c(
+                      "a",
+                      {
+                        key: project.id,
+                        staticClass: "nav-link name-count-space",
+                        class: {
+                          active:
+                            _vm.currentComponent === "show-project" &&
+                            _vm.selectedProjectId === project.id
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.selectProject(project.id)
+                          }
+                        }
+                      },
+                      [
+                        _c("span", { style: { color: project.color } }, [
+                          _vm._v(_vm._s(project.name))
+                        ]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "text-custom-secondary" }, [
+                          _vm._v(_vm._s(project.tasks_count))
+                        ])
+                      ]
+                    )
+                  }),
+                  0
+                )
+              ]),
+              _vm._v(" "),
+              _c(
                 "h6",
                 {
                   staticClass:
                     "cursor-pointer font-weight-bold sidebar-heading name-count-space align-items-center px-3 mt-4 mb-1 text-muted",
                   on: {
                     click: function($event) {
-                      _vm.isOpenFav = !_vm.isOpenFav
+                      if ($event.target !== $event.currentTarget) {
+                        return null
+                      }
+                      _vm.isOpenProjects = !_vm.isOpenProjects
                     }
                   }
                 },
                 [
-                  _vm.isOpenFav
+                  _vm.isOpenProjects
                     ? _c("span", [_vm._v("↓")])
                     : _c("span", [_vm._v("↑")]),
                   _vm._v(" "),
                   _c("span", { staticClass: "ml-2" }, [
-                    _vm._v("Favorites (" + _vm._s(_vm.favorites.length) + ")")
+                    _vm._v("Projects (" + _vm._s(_vm.projects.length) + ")")
                   ]),
                   _vm._v(" "),
-                  _c("i", { staticClass: "far fa-star pr-2 text-secondary" })
-                ]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _c("collapse-transition", [
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.isOpenFav,
-                    expression: "isOpenFav"
-                  }
-                ]
-              },
-              _vm._l(_vm.favorites, function(project) {
-                return _c(
-                  "a",
-                  {
-                    key: project.id,
-                    staticClass: "nav-link name-count-space",
-                    class: {
-                      active:
-                        _vm.currentComponent === "show-project" &&
-                        _vm.selectedProjectId === project.id
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.selectProject(project.id)
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-muted h4 pl-2 pr-2 pt-1 pb-1",
+                      attrs: {
+                        "data-toggle": "modal",
+                        "data-target": "#createProjectModal"
                       }
-                    }
-                  },
-                  [
-                    _c("span", { style: { color: project.color } }, [
-                      _vm._v(_vm._s(project.name))
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "text-custom-secondary" }, [
-                      _vm._v(_vm._s(project.tasks_count))
-                    ])
-                  ]
-                )
-              }),
-              0
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "h6",
-            {
-              staticClass:
-                "cursor-pointer font-weight-bold sidebar-heading name-count-space align-items-center px-3 mt-4 mb-1 text-muted",
-              on: {
-                click: function($event) {
-                  if ($event.target !== $event.currentTarget) {
-                    return null
-                  }
-                  _vm.isOpenProjects = !_vm.isOpenProjects
-                }
-              }
-            },
-            [
-              _vm.isOpenProjects
-                ? _c("span", [_vm._v("↓")])
-                : _c("span", [_vm._v("↑")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "ml-2" }, [
-                _vm._v("Projects (" + _vm._s(_vm.projects.length) + ")")
-              ]),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "text-muted h4 pl-2 pr-2 pt-1 pb-1",
-                  attrs: {
-                    "data-toggle": "modal",
-                    "data-target": "#createProjectModal"
-                  }
-                },
-                [_vm._v("+")]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c("collapse-transition", [
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.isOpenProjects,
-                    expression: "isOpenProjects"
-                  }
-                ]
-              },
-              _vm._l(_vm.projects, function(project) {
-                return _c(
-                  "a",
-                  {
-                    key: project.id,
-                    staticClass: "nav-link name-count-space",
-                    class: {
-                      active:
-                        _vm.currentComponent === "show-project" &&
-                        _vm.selectedProjectId === project.id
                     },
-                    on: {
-                      click: function($event) {
-                        return _vm.selectProject(project.id)
+                    [_vm._v("+")]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("collapse-transition", [
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.isOpenProjects,
+                        expression: "isOpenProjects"
                       }
-                    }
+                    ]
                   },
-                  [
-                    _c("span", { style: { color: project.color } }, [
-                      _vm._v(_vm._s(project.name))
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "text-custom-secondary" }, [
-                      _vm._v(_vm._s(project.tasks_count))
-                    ])
-                  ]
+                  _vm._l(_vm.projects, function(project) {
+                    return _c(
+                      "a",
+                      {
+                        key: project.id,
+                        staticClass: "nav-link name-count-space",
+                        class: {
+                          active:
+                            _vm.currentComponent === "show-project" &&
+                            _vm.selectedProjectId === project.id
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.selectProject(project.id)
+                          }
+                        }
+                      },
+                      [
+                        _c("span", { style: { color: project.color } }, [
+                          _vm._v(_vm._s(project.name))
+                        ]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "text-custom-secondary" }, [
+                          _vm._v(_vm._s(project.tasks_count))
+                        ])
+                      ]
+                    )
+                  }),
+                  0
                 )
-              }),
-              0
-            )
-          ])
-        ],
-        1
-      )
-    ]),
+              ])
+            ],
+            1
+          )
+        ])
+      ]
+    ),
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "main-content pt-3" },
+      { staticClass: "pt-3", class: { "main-content": _vm.showMenu } },
       [
         _c(_vm.currentComponent, {
           tag: "component",
@@ -68635,9 +68701,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row h5 font-weight-bold" }, [
       _c("div", { staticClass: "col-md-3" }, [_vm._v("Project")]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [
-        _vm._v("Count Tasks To Restore")
-      ]),
+      _c("div", { staticClass: "col-md-3" }, [_vm._v("Tasks To Restore")]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-2" }, [_vm._v("Archived")])
     ])

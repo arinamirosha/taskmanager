@@ -20,7 +20,7 @@
             <div class="col-md-12">
                 <div class="row h5 font-weight-bold">
                     <div class="col-md-3">Project</div>
-                    <div class="col-md-3">Count Tasks To Restore</div>
+                    <div class="col-md-3">Tasks To Restore</div>
                     <div class="col-md-2">Archived</div>
                 </div>
 
