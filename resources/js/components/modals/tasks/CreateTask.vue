@@ -65,7 +65,7 @@ export default {
             maxLength: maxLength(1500),
         },
         schedule: {
-            minValue (value) { return (value === null) || (value >= this.today) },
+            minValue (value) { return (value === null) || (value >= this.today) || (value === '') },
         },
         importance: {
             importance (value) { return this.statuses.includes(parseInt(value)) },

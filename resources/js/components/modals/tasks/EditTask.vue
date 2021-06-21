@@ -31,7 +31,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="cancel" @click="reset">Cancel</button>
-                    <button type="submit" class="btn btn-primary" data-dismiss="modal"  @click="updateTask">Update</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>
         </div>
@@ -74,7 +74,7 @@ export default {
             maxLength: maxLength(1500),
         },
         schedule: {
-            minValue (value) { return (value === null) || (value >= this.today) },
+            minValue (value) { return (value === null) || (value >= this.today) || (value === '') },
         },
         importance: {
             importance (value) { return this.statuses.includes(parseInt(value)) },
@@ -92,6 +92,7 @@ export default {
                         'importance': this.importance,
                     })
                     .then(response => {
+                        this.$refs.cancel.click();
                         this.$emit('updated', response.data);
                     })
                     .catch(error => {

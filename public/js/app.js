@@ -2030,7 +2030,7 @@ __webpack_require__.r(__webpack_exports__);
       selectedProjectId: 0,
       isOpenFav: true,
       isOpenProjects: true,
-      type: _constants__WEBPACK_IMPORTED_MODULE_2__.NOT_SCHEDULED
+      type: _constants__WEBPACK_IMPORTED_MODULE_2__.TODAY
     };
   },
   computed: {
@@ -2624,7 +2624,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     schedule: {
       minValue: function minValue(value) {
-        return value === null || value >= this.today;
+        return value === null || value >= this.today || value === '';
       }
     },
     importance: {
@@ -2834,7 +2834,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     schedule: {
       minValue: function minValue(value) {
-        return value === null || value >= this.today;
+        return value === null || value >= this.today || value === '';
       }
     },
     importance: {
@@ -2856,6 +2856,8 @@ __webpack_require__.r(__webpack_exports__);
           'schedule': this.schedule,
           'importance': this.importance
         }).then(function (response) {
+          _this.$refs.cancel.click();
+
           _this.$emit('updated', response.data);
         })["catch"](function (error) {
           console.log(error);
@@ -3367,6 +3369,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3478,6 +3486,15 @@ __webpack_require__.r(__webpack_exports__);
       this.getProject();
       this.currentTask = {};
       this.$emit('taskDeleted');
+    },
+    taskUpdated: function taskUpdated(task) {
+      this.getProject();
+      this.$emit('taskUpdated');
+
+      if (typeof task !== 'number') {
+        this.currentTask = task;
+        this.$refs.showTaskModalButton.click();
+      }
     },
     taskStored: function taskStored() {
       this.getProject();
@@ -68078,11 +68095,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: { type: "submit", "data-dismiss": "modal" },
-                on: { click: _vm.updateTask }
-              },
+              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
               [_vm._v("Update")]
             )
           ])
@@ -68904,6 +68917,9 @@ var render = function() {
                           deleteTaskModal: function($event) {
                             return _vm.$refs.deleteTaskModalButton.click()
                           },
+                          editTaskModal: function($event) {
+                            return _vm.$refs.editTaskModalButton.click()
+                          },
                           archived: _vm.taskArchived,
                           statusUpdated: _vm.taskStatusUpdated
                         }
@@ -68939,6 +68955,42 @@ var render = function() {
                         attrs: { task: _vm.currentTask },
                         on: {
                           deleted: _vm.taskDeleted,
+                          cancel: function($event) {
+                            return _vm.$refs.showTaskModalButton.click()
+                          }
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("button", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: false,
+                        expression: "false"
+                      }
+                    ],
+                    ref: "editTaskModalButton",
+                    attrs: {
+                      "data-toggle": "modal",
+                      "data-target": "#editTaskModal"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "modal fade show mt-5",
+                      attrs: { id: "editTaskModal", tabindex: "-1" }
+                    },
+                    [
+                      _c("edit-task-modal", {
+                        attrs: { task: _vm.currentTask },
+                        on: {
+                          updated: _vm.taskUpdated,
                           cancel: function($event) {
                             return _vm.$refs.showTaskModalButton.click()
                           }
