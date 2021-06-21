@@ -192,7 +192,10 @@ export default {
                 if (status) {
                     axios
                         .post(route('tasks.update', taskId), {'status': status})
-                        .then(response => { this.getProject(); })
+                        .then(response => {
+                            this.getProject();
+                            this.$emit('taskUpdated');
+                        })
                         .catch(error => { console.log(error); });
                 }
             }

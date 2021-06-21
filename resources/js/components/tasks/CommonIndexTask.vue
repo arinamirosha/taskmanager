@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" :class="{'mh-half': type === c.ARCHIVE}">
             <div class="col-md-12">
                 <div class="row h5 font-weight-bold">
                     <div class="col-md-1">Status</div>
@@ -49,7 +49,7 @@
             </div>
         </div>
 
-        <archived-projects v-if="type === c.ARCHIVE" @showProject="showProject"></archived-projects>
+        <archived-projects v-if="type === c.ARCHIVE" class="mh-half" @showProject="showProject"></archived-projects>
 
         <!-- Toast -->
         <toast :body="infoBody" />
@@ -250,5 +250,8 @@ export default {
 }
 .text-custom-secondary {
     color: #c8c8c8;
+}
+.mh-half {
+    min-height: calc(50vh - 60px);
 }
 </style>

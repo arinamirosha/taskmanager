@@ -3232,6 +3232,8 @@ __webpack_require__.r(__webpack_exports__);
             'status': status
           }).then(function (response) {
             _this2.getProject();
+
+            _this2.$emit('taskUpdated');
           })["catch"](function (error) {
             console.log(error);
           });
@@ -8383,7 +8385,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n.cursor-pointer {\n    cursor: pointer;\n}\n.task:hover {\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished {\n    color: #dedede;\n}\n.text-custom-secondary {\n    color: #c8c8c8;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n.cursor-pointer {\n    cursor: pointer;\n}\n.task:hover {\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished {\n    color: #dedede;\n}\n.text-custom-secondary {\n    color: #c8c8c8;\n}\n.mh-half {\n    min-height: calc(50vh - 60px);\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -67780,7 +67782,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "row mt-5" }, [
+    _c("div", { staticClass: "row" }, [
       _c(
         "div",
         { staticClass: "col-md-6 font-weight-bold h3" },
@@ -68410,114 +68412,128 @@ var render = function() {
           : _vm._e()
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c(
-          "div",
-          { staticClass: "col-md-12" },
-          [
-            _c("div", { staticClass: "row h5 font-weight-bold" }, [
-              _c("div", { staticClass: "col-md-1" }, [_vm._v("Status")]),
+      _c(
+        "div",
+        {
+          staticClass: "row",
+          class: { "mh-half": _vm.type === _vm.c.ARCHIVE }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "col-md-12" },
+            [
+              _c("div", { staticClass: "row h5 font-weight-bold" }, [
+                _c("div", { staticClass: "col-md-1" }, [_vm._v("Status")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [_vm._v("Task")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [_vm._v("Project")]),
+                _vm._v(" "),
+                _vm.type !== _vm.c.NOT_SCHEDULED
+                  ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Schedule")])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.type === _vm.c.ARCHIVE
+                  ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Archived")])
+                  : _vm._e()
+              ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-3" }, [_vm._v("Task")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3" }, [_vm._v("Project")]),
-              _vm._v(" "),
-              _vm.type !== _vm.c.NOT_SCHEDULED
-                ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Schedule")])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.type === _vm.c.ARCHIVE
-                ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Archived")])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.tasks, function(task) {
-              return _vm.isDataLoaded && _vm.tasks.length !== 0
-                ? _c(
-                    "div",
-                    {
-                      key: task.id,
-                      staticClass: "row cursor-pointer task pt-1 pb-1",
-                      class: { "task-finished": _vm.isNeedStyleFinished(task) },
-                      on: {
-                        click: function($event) {
-                          return _vm.showTask(task)
-                        }
-                      }
-                    },
-                    [
-                      _c("div", { staticClass: "col-md-1" }, [
-                        _c("i", { class: _vm.statusIconClass(task.status) })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-3" }, [
-                        _c(
-                          "span",
-                          {
-                            class: _vm.isNeedStyleFinished(task)
-                              ? "task-finished"
-                              : _vm.importanceCss(task.importance)
-                          },
-                          [_vm._v("•")]
-                        ),
-                        _vm._v(" " + _vm._s(task.name) + "\n                ")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "col-md-3",
-                          class: {
-                            "text-custom-secondary": task.project.deleted_at
-                          }
+              _vm._l(_vm.tasks, function(task) {
+                return _vm.isDataLoaded && _vm.tasks.length !== 0
+                  ? _c(
+                      "div",
+                      {
+                        key: task.id,
+                        staticClass: "row cursor-pointer task pt-1 pb-1",
+                        class: {
+                          "task-finished": _vm.isNeedStyleFinished(task)
                         },
-                        [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(task.project.name) +
-                              "\n                "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm.type !== _vm.c.NOT_SCHEDULED
-                        ? _c(
-                            "div",
+                        on: {
+                          click: function($event) {
+                            return _vm.showTask(task)
+                          }
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "col-md-1" }, [
+                          _c("i", { class: _vm.statusIconClass(task.status) })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-3" }, [
+                          _c(
+                            "span",
                             {
-                              staticClass: "col-md-2",
-                              class: {
-                                "text-danger": _vm.isNeedStyleOverdue(task)
-                              }
+                              class: _vm.isNeedStyleFinished(task)
+                                ? "task-finished"
+                                : _vm.importanceCss(task.importance)
                             },
-                            [
-                              _vm._v(
-                                "\n                    " +
-                                  _vm._s(_vm.formatDate(task.schedule)) +
-                                  " "
-                              ),
-                              _vm.isNeedStyleOverdue(task)
-                                ? _c("i", { staticClass: "fas fa-exclamation" })
-                                : _vm._e()
-                            ]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.type === _vm.c.ARCHIVE
-                        ? _c("div", { staticClass: "col-md-2" }, [
-                            _vm._v(_vm._s(_vm.formatDate(task.deleted_at)))
-                          ])
-                        : _vm._e()
-                    ]
-                  )
-                : _vm._e()
-            })
-          ],
-          2
-        )
-      ]),
+                            [_vm._v("•")]
+                          ),
+                          _vm._v(" " + _vm._s(task.name) + "\n                ")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "col-md-3",
+                            class: {
+                              "text-custom-secondary": task.project.deleted_at
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                    " +
+                                _vm._s(task.project.name) +
+                                "\n                "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _vm.type !== _vm.c.NOT_SCHEDULED
+                          ? _c(
+                              "div",
+                              {
+                                staticClass: "col-md-2",
+                                class: {
+                                  "text-danger": _vm.isNeedStyleOverdue(task)
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                    " +
+                                    _vm._s(_vm.formatDate(task.schedule)) +
+                                    " "
+                                ),
+                                _vm.isNeedStyleOverdue(task)
+                                  ? _c("i", {
+                                      staticClass: "fas fa-exclamation"
+                                    })
+                                  : _vm._e()
+                              ]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.type === _vm.c.ARCHIVE
+                          ? _c("div", { staticClass: "col-md-2" }, [
+                              _vm._v(_vm._s(_vm.formatDate(task.deleted_at)))
+                            ])
+                          : _vm._e()
+                      ]
+                    )
+                  : _vm._e()
+              })
+            ],
+            2
+          )
+        ]
+      ),
       _vm._v(" "),
       _vm.type === _vm.c.ARCHIVE
-        ? _c("archived-projects", { on: { showProject: _vm.showProject } })
+        ? _c("archived-projects", {
+            staticClass: "mh-half",
+            on: { showProject: _vm.showProject }
+          })
         : _vm._e(),
       _vm._v(" "),
       _c("toast", { attrs: { body: _vm.infoBody } }),
