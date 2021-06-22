@@ -13,7 +13,7 @@ class TaskManager
     {
         $tasks->where('schedule', '<=', Carbon::today()->format('Y-m-d'));
         if ($order) {
-            $tasks->orderBy('schedule', 'desc');
+            $tasks->orderBy('schedule')->orderBy('importance', 'desc');
         }
 
         return $tasks;
@@ -23,7 +23,7 @@ class TaskManager
     {
         $tasks->where('schedule', '<>', Carbon::today()->format('Y-m-d'));
         if ($order) {
-            $tasks->orderBy('schedule', 'desc');
+            $tasks->orderBy('schedule')->orderBy('importance', 'desc');
         }
 
         return $tasks;
@@ -33,7 +33,7 @@ class TaskManager
     {
         $tasks->whereNull('schedule');
         if ($order) {
-            $tasks->orderBy('created_at', 'desc');
+            $tasks->orderBy('importance', 'desc');
         }
 
         return $tasks;

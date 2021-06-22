@@ -41,7 +41,7 @@ class ProjectsController extends Controller
                 $projects->havingRaw('tasks_count > 0');
             }
 
-            $data['projects'] = $projects->paginate(25);
+            $data['projects'] = $projects->orderBy('deleted_at', 'desc')->paginate(25);
         } else {
             $data['projects'] = $projects->withCount('tasks')->get();
         }

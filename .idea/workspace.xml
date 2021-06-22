@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Libraries/TaskManager/TaskManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Libraries/TaskManager/TaskManager.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -224,7 +224,8 @@
       <workItem from="1623769697728" duration="17000" />
       <workItem from="1623943552486" duration="509000" />
       <workItem from="1624016657668" duration="11660000" />
-      <workItem from="1624264653785" duration="29011000" />
+      <workItem from="1624264653785" duration="29044000" />
+      <workItem from="1624340853500" duration="1496000" />
     </task>
     <task id="LOCAL-00001" summary="archive/today/not scheduled/upcoming">
       <created>1621849545675</created>
@@ -471,7 +472,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624291686871</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="correct dropdown menu">
+      <created>1624294617937</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1624294617937</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -493,7 +501,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="common index component for incoming, upcoming, today, not scheduled, archive" />
     <MESSAGE value="policies for working with tasks" />
     <MESSAGE value="policies for working with projects" />
     <MESSAGE value="update task policy" />
@@ -518,6 +525,7 @@
     <MESSAGE value="filter archived tasks" />
     <MESSAGE value="show task project" />
     <MESSAGE value="dropdown menu on width 1051" />
-    <option name="LAST_COMMIT_MESSAGE" value="dropdown menu on width 1051" />
+    <MESSAGE value="correct dropdown menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="correct dropdown menu" />
   </component>
 </project>
