@@ -144,7 +144,7 @@ export default {
             this.$emit('showProject', id)
         },
         isOverdue() {
-            if (this.task.deleted_at) {
+            if (this.task.deleted_at || this.task.status === constants.STATUS_FINISHED) {
                 return false;
             }
             return moment(this.task.schedule).isBefore(new Date, 'day');

@@ -148,16 +148,6 @@ nav a:hover {
     display: flex;
     justify-content: space-between;
 }
-::-webkit-scrollbar {
-    width: 12px;
-}
-::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px #e0eeee;
-}
-::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px #e1e1e1;
-}
 .btn-menu {
     background-color: #e0eeee;
     border-radius: 5px 5px 0 0;

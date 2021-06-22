@@ -25,8 +25,8 @@
             <div class="col-md-12">
                 <div class="row h5 font-weight-bold">
                     <div class="col-md-1">Status</div>
-                    <div class="col-md-3">Task</div>
-                    <div class="col-md-3">Project</div>
+                    <div :class="colTask">Task</div>
+                    <div :class="colProject">Project</div>
                     <div class="col-md-2" v-if="type !== c.NOT_SCHEDULED">Schedule</div>
                     <div class="col-md-2" v-if="type === c.ARCHIVE">Archived</div>
                 </div>
@@ -40,11 +40,11 @@
                     >
                         <div class="col-md-1"><i :class="statusIconClass(task.status)"></i></div>
 
-                        <div class="col-md-3">
+                        <div :class="colTask">
                             <span :class="isNeedStyleFinished(task) ? 'task-finished' : importanceCss(task.importance)">&bull;</span> {{task.name}}
                         </div>
 
-                        <div class="col-md-3" :class="{'text-custom-secondary': task.project.deleted_at}">
+                        <div :class="colProjectFunc(task.project.deleted_at ? 'text-custom-secondary' : '')">
                             {{task.project.name}}
                         </div>
 
@@ -131,6 +131,24 @@ export default {
             }
             return title;
         },
+        colTask: function () {
+            switch (this.type) {
+                case constants.TODAY:
+                case constants.UPCOMING: return 'col-md-4';
+                case constants.NOT_SCHEDULED: return 'col-md-5';
+                case constants.ARCHIVE: return 'col-md-3';
+            }
+            return '';
+        },
+        colProject: function () {
+            switch (this.type) {
+                case constants.TODAY:
+                case constants.UPCOMING: return 'col-md-5';
+                case constants.NOT_SCHEDULED: return 'col-md-6';
+                case constants.ARCHIVE: return 'col-md-4';
+            }
+            return '';
+        },
     },
     watch: {
         type: function() {
@@ -150,6 +168,9 @@ export default {
         this.debouncedGetUsers = _.debounce(this.getTasks, 500);
     },
     methods: {
+        colProjectFunc: function (result = '') {
+            return result + ' ' + this.colProject;
+        },
         getTasks() {
             axios
                 .get(route('tasks.index'), {
@@ -328,15 +349,5 @@ export default {
     height: calc(100vh - 165px);
     overflow-y: scroll;
     overflow-x: hidden;
-}
-::-webkit-scrollbar {
-    width: 12px;
-}
-::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px #edf3f3;
-}
-::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px #e9e9e9;
 }
 </style>

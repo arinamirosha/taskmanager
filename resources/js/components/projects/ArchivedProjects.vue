@@ -19,8 +19,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="row h5 font-weight-bold">
-                    <div class="col-md-3">Project</div>
-                    <div class="col-md-3">Tasks To Restore</div>
+                    <div class="col-md-8">Project</div>
+                    <div class="col-md-2">Tasks To Restore</div>
                     <div class="col-md-2">Archived</div>
                 </div>
 
@@ -30,8 +30,8 @@
                          class="row cursor-pointer task pt-1 pb-1"
                          @click="showProject(project.id)"
                     >
-                        <div class="col-md-3">{{project.name}}</div>
-                        <div class="col-md-3">{{project.tasks_count}}</div>
+                        <div class="col-md-8">{{project.name}}</div>
+                        <div class="col-md-2">{{project.tasks_count}}</div>
                         <div class="col-md-2">{{formatDate(project.deleted_at)}}</div>
                     </div>
                     <div class="m-0 pr-2 row justify-content-between pb-1" v-if="!isLastPage">
@@ -157,15 +157,5 @@ export default {
     height: calc(50vh - 120px);
     overflow-y: scroll;
     overflow-x:hidden;
-}
-::-webkit-scrollbar {
-    width: 12px;
-}
-::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px #e0eeee;
-}
-::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px #e1e1e1;
 }
 </style>

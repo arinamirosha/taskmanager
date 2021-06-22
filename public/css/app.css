@@ -10982,4 +10982,17 @@ a.text-dark:focus {
   color: #ffffff;
 }
 
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px #e3e3e3;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px #cbcbcb;
+}
+
 

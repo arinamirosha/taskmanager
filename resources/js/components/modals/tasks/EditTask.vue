@@ -16,7 +16,7 @@
                     </div>
                     <div class="form-group">
                         <label for="schedule">Schedule</label>
-                        <input type="date" :min="today" class="form-control" id="schedule" v-model="schedule" :class="{'is-invalid': this.$v.schedule.$error}">
+                        <input type="date" :min="task.schedule" class="form-control" id="schedule" v-model="schedule" :class="{'is-invalid': this.$v.schedule.$error}">
                     </div>
                     <div class="form-group">
                         <label for="importance">Importance</label>
@@ -47,7 +47,6 @@
 <script>
 import { required, maxLength, minValue } from 'vuelidate/lib/validators';
 import route from "../../../route";
-import moment from "moment";
 import * as c from '../../../constants';
 import * as constants from "../../../constants";
 
@@ -58,7 +57,6 @@ export default {
             name: '',
             details: '',
             schedule: null,
-            today: moment().format("YYYY-MM-DD"),
             importance: c.STATUS_NORMAL,
             statuses: [c.STATUS_NORMAL, c.STATUS_MEDIUM, c.STATUS_STRONG],
             projectId: 0,
@@ -80,7 +78,7 @@ export default {
             maxLength: maxLength(1500),
         },
         schedule: {
-            minValue (value) { return (value === null) || (value >= this.today) || (value === '') },
+            minValue (value) { return (value === null) || (value >= this.task.schedule) || (value === '') },
         },
         importance: {
             importance (value) { return this.statuses.includes(parseInt(value)) },

@@ -2030,16 +2030,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2790,11 +2780,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../route */ "./resources/js/route.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../constants */ "./resources/js/constants.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../constants */ "./resources/js/constants.js");
 //
 //
 //
@@ -2841,7 +2829,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 
 
 
@@ -2853,9 +2840,8 @@ __webpack_require__.r(__webpack_exports__);
       name: '',
       details: '',
       schedule: null,
-      today: moment__WEBPACK_IMPORTED_MODULE_1___default()().format("YYYY-MM-DD"),
-      importance: _constants__WEBPACK_IMPORTED_MODULE_2__.STATUS_NORMAL,
-      statuses: [_constants__WEBPACK_IMPORTED_MODULE_2__.STATUS_NORMAL, _constants__WEBPACK_IMPORTED_MODULE_2__.STATUS_MEDIUM, _constants__WEBPACK_IMPORTED_MODULE_2__.STATUS_STRONG],
+      importance: _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_NORMAL,
+      statuses: [_constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_NORMAL, _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_MEDIUM, _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_STRONG],
       projectId: 0,
       projects: []
     };
@@ -2868,15 +2854,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   validations: {
     name: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.required,
-      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.maxLength)(50)
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.required,
+      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.maxLength)(50)
     },
     details: {
-      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.maxLength)(1500)
+      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.maxLength)(1500)
     },
     schedule: {
       minValue: function minValue(value) {
-        return value === null || value >= this.today || value === '';
+        return value === null || value >= this.task.schedule || value === '';
       }
     },
     importance: {
@@ -2918,25 +2904,25 @@ __webpack_require__.r(__webpack_exports__);
     },
     importanceText: function importanceText(importance) {
       switch (importance) {
-        case _constants__WEBPACK_IMPORTED_MODULE_2__.STATUS_NORMAL:
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_NORMAL:
           return 'Normal';
 
-        case _constants__WEBPACK_IMPORTED_MODULE_2__.STATUS_MEDIUM:
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_MEDIUM:
           return 'Medium';
 
-        case _constants__WEBPACK_IMPORTED_MODULE_2__.STATUS_STRONG:
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_STRONG:
           return 'Strong';
       }
     },
     importanceCss: function importanceCss(importance) {
       switch (importance) {
-        case _constants__WEBPACK_IMPORTED_MODULE_2__.STATUS_NORMAL:
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_NORMAL:
           return 'text-secondary';
 
-        case _constants__WEBPACK_IMPORTED_MODULE_2__.STATUS_MEDIUM:
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_MEDIUM:
           return 'text-primary';
 
-        case _constants__WEBPACK_IMPORTED_MODULE_2__.STATUS_STRONG:
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_STRONG:
           return 'text-danger';
       }
 
@@ -3134,7 +3120,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('showProject', id);
     },
     isOverdue: function isOverdue() {
-      if (this.task.deleted_at) {
+      if (this.task.deleted_at || this.task.status === _constants__WEBPACK_IMPORTED_MODULE_0__.STATUS_FINISHED) {
         return false;
       }
 
@@ -3777,6 +3763,36 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return title;
+    },
+    colTask: function colTask() {
+      switch (this.type) {
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.TODAY:
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.UPCOMING:
+          return 'col-md-4';
+
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.NOT_SCHEDULED:
+          return 'col-md-5';
+
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.ARCHIVE:
+          return 'col-md-3';
+      }
+
+      return '';
+    },
+    colProject: function colProject() {
+      switch (this.type) {
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.TODAY:
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.UPCOMING:
+          return 'col-md-5';
+
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.NOT_SCHEDULED:
+          return 'col-md-6';
+
+        case _constants__WEBPACK_IMPORTED_MODULE_1__.ARCHIVE:
+          return 'col-md-4';
+      }
+
+      return '';
     }
   },
   watch: {
@@ -3797,6 +3813,10 @@ __webpack_require__.r(__webpack_exports__);
     this.debouncedGetUsers = _.debounce(this.getTasks, 500);
   },
   methods: {
+    colProjectFunc: function colProjectFunc() {
+      var result = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+      return result + ' ' + this.colProject;
+    },
     getTasks: function getTasks() {
       var _this = this;
 
@@ -8640,7 +8660,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nnav a[data-v-f2b6376c]:hover,\n.active[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px;\n    cursor: pointer;\n}\nnav a[data-v-f2b6376c]:hover {\n    text-decoration: none;\n}\n.cursor-pointer[data-v-f2b6376c]{\n    cursor: pointer;\n}\n.text-custom-secondary[data-v-f2b6376c] {\n    color: #c8c8c8;\n}\n.left-menu[data-v-f2b6376c] {\n    width: 300px;\n    height: calc(100vh - 55px);\n    position: fixed;\n    left: 0;\n    bottom: 0;\n    overflow-y: scroll;\n}\n.main-content[data-v-f2b6376c] {\n    margin-left: 300px;\n}\n.name-count-space[data-v-f2b6376c] {\n    display: flex;\n    justify-content: space-between;\n}\n[data-v-f2b6376c]::-webkit-scrollbar {\n    width: 12px;\n}\n[data-v-f2b6376c]::-webkit-scrollbar-track {\n    -webkit-box-shadow: inset 0 0 6px #e0eeee;\n}\n[data-v-f2b6376c]::-webkit-scrollbar-thumb {\n    border-radius: 10px;\n    -webkit-box-shadow: inset 0 0 6px #e1e1e1;\n}\n.btn-menu[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px 5px 0 0;\n}\n.dropdown[data-v-f2b6376c] {\n    height: 0;\n}\n#dropdownMenuButton[data-v-f2b6376c] {\n    margin-top: -62px;\n    width: 80px;\n    margin-left: calc(50% - 40px);\n}\n.dropdown-menu[data-v-f2b6376c] {\n    width: 100vw;\n    margin-left: 5px;\n    border: none;\n    border-radius: 0;\n    border-bottom: 1px solid #e0eeee;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nnav a[data-v-f2b6376c]:hover,\n.active[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px;\n    cursor: pointer;\n}\nnav a[data-v-f2b6376c]:hover {\n    text-decoration: none;\n}\n.cursor-pointer[data-v-f2b6376c]{\n    cursor: pointer;\n}\n.text-custom-secondary[data-v-f2b6376c] {\n    color: #c8c8c8;\n}\n.left-menu[data-v-f2b6376c] {\n    width: 300px;\n    height: calc(100vh - 55px);\n    position: fixed;\n    left: 0;\n    bottom: 0;\n    overflow-y: scroll;\n}\n.main-content[data-v-f2b6376c] {\n    margin-left: 300px;\n}\n.name-count-space[data-v-f2b6376c] {\n    display: flex;\n    justify-content: space-between;\n}\n.btn-menu[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px 5px 0 0;\n}\n.dropdown[data-v-f2b6376c] {\n    height: 0;\n}\n#dropdownMenuButton[data-v-f2b6376c] {\n    margin-top: -62px;\n    width: 80px;\n    margin-left: calc(50% - 40px);\n}\n.dropdown-menu[data-v-f2b6376c] {\n    width: 100vw;\n    margin-left: 5px;\n    border: none;\n    border-radius: 0;\n    border-bottom: 1px solid #e0eeee;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8712,7 +8732,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n.cursor-pointer {\n    cursor: pointer;\n}\n.task:hover {\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished {\n    color: #dedede;\n}\n.half {\n    height: calc(50vh - 120px);\n    overflow-y: scroll;\n    overflow-x:hidden;\n}\n::-webkit-scrollbar {\n    width: 12px;\n}\n::-webkit-scrollbar-track {\n    -webkit-box-shadow: inset 0 0 6px #e0eeee;\n}\n::-webkit-scrollbar-thumb {\n    border-radius: 10px;\n    -webkit-box-shadow: inset 0 0 6px #e1e1e1;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n.cursor-pointer {\n    cursor: pointer;\n}\n.task:hover {\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished {\n    color: #dedede;\n}\n.half {\n    height: calc(50vh - 120px);\n    overflow-y: scroll;\n    overflow-x:hidden;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8760,7 +8780,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n.cursor-pointer {\n    cursor: pointer;\n}\n.task:hover {\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished {\n    color: #dedede;\n}\n.text-custom-secondary {\n    color: #c8c8c8;\n}\n.half {\n    height: calc(50vh - 135px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n.full {\n    height: calc(100vh - 165px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n::-webkit-scrollbar {\n    width: 12px;\n}\n::-webkit-scrollbar-track {\n    -webkit-box-shadow: inset 0 0 6px #edf3f3;\n}\n::-webkit-scrollbar-thumb {\n    border-radius: 10px;\n    -webkit-box-shadow: inset 0 0 6px #e9e9e9;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n.cursor-pointer {\n    cursor: pointer;\n}\n.task:hover {\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished {\n    color: #dedede;\n}\n.text-custom-secondary {\n    color: #c8c8c8;\n}\n.half {\n    height: calc(50vh - 135px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n.full {\n    height: calc(100vh - 165px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -68113,7 +68133,7 @@ var render = function() {
                 ],
                 staticClass: "form-control",
                 class: { "is-invalid": this.$v.schedule.$error },
-                attrs: { type: "date", min: _vm.today, id: "schedule" },
+                attrs: { type: "date", min: _vm.task.schedule, id: "schedule" },
                 domProps: { value: _vm.schedule },
                 on: {
                   input: function($event) {
@@ -68636,11 +68656,11 @@ var render = function() {
                       }
                     },
                     [
-                      _c("div", { staticClass: "col-md-3" }, [
+                      _c("div", { staticClass: "col-md-8" }, [
                         _vm._v(_vm._s(project.name))
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-3" }, [
+                      _c("div", { staticClass: "col-md-2" }, [
                         _vm._v(_vm._s(project.tasks_count))
                       ]),
                       _vm._v(" "),
@@ -68690,9 +68710,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row h5 font-weight-bold" }, [
-      _c("div", { staticClass: "col-md-3" }, [_vm._v("Project")]),
+      _c("div", { staticClass: "col-md-8" }, [_vm._v("Project")]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [_vm._v("Tasks To Restore")]),
+      _c("div", { staticClass: "col-md-2" }, [_vm._v("Tasks To Restore")]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-2" }, [_vm._v("Archived")])
     ])
@@ -69367,9 +69387,9 @@ var render = function() {
           _c("div", { staticClass: "row h5 font-weight-bold" }, [
             _c("div", { staticClass: "col-md-1" }, [_vm._v("Status")]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [_vm._v("Task")]),
+            _c("div", { class: _vm.colTask }, [_vm._v("Task")]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [_vm._v("Project")]),
+            _c("div", { class: _vm.colProject }, [_vm._v("Project")]),
             _vm._v(" "),
             _vm.type !== _vm.c.NOT_SCHEDULED
               ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Schedule")])
@@ -69405,7 +69425,7 @@ var render = function() {
                           _c("i", { class: _vm.statusIconClass(task.status) })
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-md-3" }, [
+                        _c("div", { class: _vm.colTask }, [
                           _c(
                             "span",
                             {
@@ -69423,10 +69443,11 @@ var render = function() {
                         _c(
                           "div",
                           {
-                            staticClass: "col-md-3",
-                            class: {
-                              "text-custom-secondary": task.project.deleted_at
-                            }
+                            class: _vm.colProjectFunc(
+                              task.project.deleted_at
+                                ? "text-custom-secondary"
+                                : ""
+                            )
                           },
                           [
                             _vm._v(
