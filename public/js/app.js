@@ -2780,9 +2780,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../route */ "./resources/js/route.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../constants */ "./resources/js/constants.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -2829,6 +2831,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -2840,6 +2843,7 @@ __webpack_require__.r(__webpack_exports__);
       name: '',
       details: '',
       schedule: null,
+      today: moment__WEBPACK_IMPORTED_MODULE_2___default()().format("YYYY-MM-DD"),
       importance: _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_NORMAL,
       statuses: [_constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_NORMAL, _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_MEDIUM, _constants__WEBPACK_IMPORTED_MODULE_1__.STATUS_STRONG],
       projectId: 0,
@@ -2852,17 +2856,22 @@ __webpack_require__.r(__webpack_exports__);
       this.getProjects();
     }
   },
+  computed: {
+    minSchedule: function minSchedule() {
+      return this.task.schedule > this.today ? this.today : this.task.schedule;
+    }
+  },
   validations: {
     name: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.required,
-      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.maxLength)(50)
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.required,
+      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.maxLength)(50)
     },
     details: {
-      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.maxLength)(1500)
+      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.maxLength)(1500)
     },
     schedule: {
       minValue: function minValue(value) {
-        return value === null || value >= this.task.schedule || value === '';
+        return value === null || value >= this.minSchedule || value === '';
       }
     },
     importance: {
@@ -68133,7 +68142,7 @@ var render = function() {
                 ],
                 staticClass: "form-control",
                 class: { "is-invalid": this.$v.schedule.$error },
-                attrs: { type: "date", min: _vm.task.schedule, id: "schedule" },
+                attrs: { type: "date", min: _vm.minSchedule, id: "schedule" },
                 domProps: { value: _vm.schedule },
                 on: {
                   input: function($event) {
