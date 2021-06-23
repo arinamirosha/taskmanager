@@ -49,7 +49,7 @@
                     <div class="col-md-4">Finished</div>
                 </div>
 
-                <div class="row">
+                <div class="row full">
                     <div class="col-md-4 border-left">
                         <draggable :list="tasksNew" group="tasks" @change="update" :move="isMove">
                             <div v-for="task in tasksNew" :key="task.id">
@@ -305,5 +305,10 @@ export default {
 }
 .fa-edit:hover, .fa-archive:hover {
     color: #212529;
+}
+.full {
+    height: calc(100vh - 165px);
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 </style>

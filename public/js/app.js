@@ -8765,7 +8765,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.cursor-pointer[data-v-fe328f1c]{\n    cursor: pointer;\n}\n.fav-star-full[data-v-fe328f1c] {\n    color: #f7c948;\n}\n.text-custom-secondary[data-v-fe328f1c] {\n    color: #c8c8c8;\n}\n#fav[data-v-fe328f1c]:hover {\n    color: #c8c8c8;\n}\n#not-fav[data-v-fe328f1c]:hover {\n    color: #f7c948;\n}\n.fa-edit[data-v-fe328f1c]:hover, .fa-archive[data-v-fe328f1c]:hover {\n    color: #212529;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.cursor-pointer[data-v-fe328f1c]{\n    cursor: pointer;\n}\n.fav-star-full[data-v-fe328f1c] {\n    color: #f7c948;\n}\n.text-custom-secondary[data-v-fe328f1c] {\n    color: #c8c8c8;\n}\n#fav[data-v-fe328f1c]:hover {\n    color: #c8c8c8;\n}\n#not-fav[data-v-fe328f1c]:hover {\n    color: #f7c948;\n}\n.fa-edit[data-v-fe328f1c]:hover, .fa-archive[data-v-fe328f1c]:hover {\n    color: #212529;\n}\n.full[data-v-fe328f1c] {\n    height: calc(100vh - 165px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -68888,7 +68888,7 @@ var render = function() {
                   _vm._v(" "),
                   _vm._m(1),
                   _vm._v(" "),
-                  _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "row full" }, [
                     _c(
                       "div",
                       { staticClass: "col-md-4 border-left" },
