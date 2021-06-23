@@ -188,7 +188,7 @@ export default {
             isOpenProjects: true,
             type: constants.TODAY,
             width: 0,
-            widthChangeMenu: 1051,
+            widthChangeMenu: 1199,
         }
     },
     computed: {

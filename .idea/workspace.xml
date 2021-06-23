@@ -230,7 +230,7 @@
       <workItem from="1624016657668" duration="11660000" />
       <workItem from="1624264653785" duration="29044000" />
       <workItem from="1624340853500" duration="11002000" />
-      <workItem from="1624428100638" duration="6146000" />
+      <workItem from="1624428100638" duration="9624000" />
     </task>
     <task id="LOCAL-00001" summary="archive/today/not scheduled/upcoming">
       <created>1621849545675</created>
@@ -512,7 +512,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624434746607</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="no scroll when menu hidden">
+      <created>1624437644802</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1624437644802</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -534,7 +541,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="show archived projects" />
     <MESSAGE value="show archived project" />
     <MESSAGE value="archive tasks for existed project" />
     <MESSAGE value="goto project from task even if archived" />
@@ -559,6 +565,7 @@
     <MESSAGE value="correct" />
     <MESSAGE value="correct min schedule when update" />
     <MESSAGE value="scroll in show project" />
-    <option name="LAST_COMMIT_MESSAGE" value="scroll in show project" />
+    <MESSAGE value="no scroll when menu hidden" />
+    <option name="LAST_COMMIT_MESSAGE" value="no scroll when menu hidden" />
   </component>
 </project>

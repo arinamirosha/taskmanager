@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container-xl">
 
         <div class="row">
             <div class="col-md-6 font-weight-bold h3">{{pageTitle}}
@@ -115,7 +115,7 @@ export default {
             s: '',
             notTrashed: false,
             width: 0,
-            widthNoScroll: 1051,
+            widthNoScroll: 1199,
         }
     },
     computed: {
@@ -363,10 +363,12 @@ export default {
     height: calc(50vh - 135px);
     overflow-y: scroll;
     overflow-x: hidden;
+    margin-right: -12px;
 }
 .full {
     height: calc(100vh - 165px);
     overflow-y: scroll;
     overflow-x: hidden;
+    margin-right: -12px;
 }
 </style>

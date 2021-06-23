@@ -61,7 +61,7 @@ export default {
             s: '',
             hasNotFinished: false,
             width: 0,
-            widthNoScroll: 1051,
+            widthNoScroll: 1199,
         }
     },
     computed: {

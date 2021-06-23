@@ -2047,7 +2047,7 @@ __webpack_require__.r(__webpack_exports__);
       isOpenProjects: true,
       type: _constants__WEBPACK_IMPORTED_MODULE_2__.TODAY,
       width: 0,
-      widthChangeMenu: 1051
+      widthChangeMenu: 1199
     };
   },
   computed: {
@@ -3217,7 +3217,7 @@ __webpack_require__.r(__webpack_exports__);
       s: '',
       hasNotFinished: false,
       width: 0,
-      widthNoScroll: 1051
+      widthNoScroll: 1199
     };
   },
   computed: {
@@ -3458,7 +3458,7 @@ __webpack_require__.r(__webpack_exports__);
       currentTask: {},
       infoBody: '',
       width: 0,
-      widthNoScroll: 1051
+      widthNoScroll: 1199
     };
   },
   watch: {
@@ -3758,7 +3758,7 @@ __webpack_require__.r(__webpack_exports__);
       s: '',
       notTrashed: false,
       width: 0,
-      widthNoScroll: 1051
+      widthNoScroll: 1199
     };
   },
   computed: {
@@ -8827,7 +8827,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n.cursor-pointer {\n    cursor: pointer;\n}\n.task:hover {\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished {\n    color: #dedede;\n}\n.text-custom-secondary {\n    color: #c8c8c8;\n}\n.half {\n    height: calc(50vh - 135px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n.full {\n    height: calc(100vh - 165px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n.cursor-pointer {\n    cursor: pointer;\n}\n.task:hover {\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished {\n    color: #dedede;\n}\n.text-custom-secondary {\n    color: #c8c8c8;\n}\n.half {\n    height: calc(50vh - 135px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n    margin-right: -12px;\n}\n.full {\n    height: calc(100vh - 165px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n    margin-right: -12px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -68787,7 +68787,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "container-xl" }, [
     _vm.project
       ? _c("div", [
           _vm.isProjectLoaded
@@ -69292,7 +69292,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container" },
+    { staticClass: "container-xl" },
     [
       _c("div", { staticClass: "row" }, [
         _c(

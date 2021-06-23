@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container-xl">
 
         <div v-if="project">
             <div v-if="isProjectLoaded">
@@ -145,7 +145,7 @@ export default {
             currentTask: {},
             infoBody: '',
             width: 0,
-            widthNoScroll: 1051,
+            widthNoScroll: 1199,
         }
     },
     watch: {
