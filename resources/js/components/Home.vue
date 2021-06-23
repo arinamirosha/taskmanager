@@ -7,7 +7,7 @@
                     Menu
                 </button>
 
-                <div :class="{'dropdown-menu bg-light mt-0': !showMenu}">
+                <div :class="{'dropdown-menu bg-light': !showMenu}">
                     <a class="nav-link text-dark" :class="{'active': type===c.INCOMING}" @click="setType(c.INCOMING)">Incoming</a>
                     <a class="nav-link text-dark name-count-space" :class="{'active': type===c.TODAY}" @click="setType(c.TODAY)">
                         Today
@@ -163,6 +163,7 @@ nav a:hover {
 .dropdown-menu {
     width: 100vw;
     margin-left: 5px;
+    top: 49px !important;
     border: none;
     border-radius: 0;
     border-bottom: 1px solid #e0eeee;

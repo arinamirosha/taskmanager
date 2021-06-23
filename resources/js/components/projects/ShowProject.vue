@@ -49,7 +49,7 @@
                     <div class="col-md-4">Finished</div>
                 </div>
 
-                <div class="row full">
+                <div class="row" :class="{'full': width > widthNoScroll}">
                     <div class="col-md-4 border-left">
                         <draggable :list="tasksNew" group="tasks" @change="update" :move="isMove">
                             <div v-for="task in tasksNew" :key="task.id">
@@ -144,6 +144,8 @@ export default {
             isProjectLoaded: false,
             currentTask: {},
             infoBody: '',
+            width: 0,
+            widthNoScroll: 1051,
         }
     },
     watch: {
@@ -277,9 +279,16 @@ export default {
                     console.log(error);
                 });
         },
+        updateWidth() {
+            this.width = window.innerWidth;
+        },
+    },
+    created() {
+        window.addEventListener('resize', this.updateWidth);
     },
     mounted() {
         this.getProject();
+        this.updateWidth();
     },
     components: {
         draggable,

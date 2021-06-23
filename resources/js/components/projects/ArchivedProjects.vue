@@ -24,7 +24,7 @@
                     <div class="col-md-2">Archived</div>
                 </div>
 
-                <div class="half">
+                <div :class="{'half': width > widthNoScroll}">
                     <div v-if="isDataLoaded && projects.length !== 0" v-for="project in projects"
                          :key="project.id"
                          class="row cursor-pointer task pt-1 pb-1"
@@ -60,6 +60,8 @@ export default {
             isLastPage: false,
             s: '',
             hasNotFinished: false,
+            width: 0,
+            widthNoScroll: 1051,
         }
     },
     computed: {
@@ -79,6 +81,7 @@ export default {
     },
     created() {
         this.debouncedGetUsers = _.debounce(this.getProjects, 500);
+        window.addEventListener('resize', this.updateWidth);
     },
     methods: {
         getProjects() {
@@ -129,9 +132,13 @@ export default {
         showProject(id) {
             this.$emit('showProject', id);
         },
+        updateWidth() {
+            this.width = window.innerWidth;
+        },
     },
     mounted() {
         this.getProjects();
+        this.updateWidth();
     }
 }
 </script>

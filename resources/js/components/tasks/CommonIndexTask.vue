@@ -31,7 +31,7 @@
                     <div class="col-md-2" v-if="type === c.ARCHIVE">Archived</div>
                 </div>
 
-                <div :class="type === c.ARCHIVE ? 'half mb-1' : 'full mb-4'">
+                <div :class="halfFullScroll">
                     <div v-if="isDataLoaded && tasks.length !== 0" v-for="task in tasks"
                          :key="task.id"
                          class="row cursor-pointer task pt-1 pb-1"
@@ -114,6 +114,8 @@ export default {
             lastPage: 0,
             s: '',
             notTrashed: false,
+            width: 0,
+            widthNoScroll: 1051,
         }
     },
     computed: {
@@ -149,6 +151,18 @@ export default {
             }
             return '';
         },
+        halfFullScroll: function () {
+            let result = '';
+            let scroll = '';
+            if (this.type === constants.ARCHIVE) {
+                result = 'mb-1';
+                scroll = 'half';
+            } else {
+                result = 'mb-4';
+                scroll = 'full';
+            }
+            return result + (this.width > this.widthNoScroll ? ' ' + scroll : '');
+        }
     },
     watch: {
         type: function() {
@@ -166,6 +180,7 @@ export default {
     },
     created() {
         this.debouncedGetUsers = _.debounce(this.getTasks, 500);
+        window.addEventListener('resize', this.updateWidth);
     },
     methods: {
         colProjectFunc: function (result = '') {
@@ -312,10 +327,14 @@ export default {
             }
             return '';
         },
+        updateWidth() {
+            this.width = window.innerWidth;
+        },
     },
     mounted() {
         this.getTasks();
         this.getHideFinished();
+        this.updateWidth();
     }
 }
 </script>
