@@ -13,7 +13,7 @@
                     </div>
                     <div class="col-md-6">
 
-                        <div class="row h5 justify-content-between">
+                        <div class="row h5 justify-content-between px-2 pt-2 pt-md-0">
 
                             <button v-if="!project.deleted_at" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createTaskModal">Add New Task</button>
 
@@ -99,7 +99,7 @@
                         @deleteTaskModal="$refs.deleteTaskModalButton.click()"
                         @editTaskModal="$refs.editTaskModalButton.click()"
                         @archived="taskArchived"
-                        @statusUpdated="taskStatusUpdated"
+                        @taskUpdated="taskUpdated"
                         @showProject="showProject"
                     ></show-task-modal>
                 </div>
@@ -251,9 +251,6 @@ export default {
                 .catch(error => {
                     console.log(error)
                 });
-        },
-        taskStatusUpdated(id) {
-            this.getProject();
         },
         archiveAllForProject() {
             axios

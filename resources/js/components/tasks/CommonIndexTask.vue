@@ -2,22 +2,16 @@
     <div class="container-xl">
 
         <div class="row">
-            <div class="col-md-6 font-weight-bold h3">{{pageTitle}}
+            <div class="col-md-6 col-12 font-weight-bold h3">{{pageTitle}}
                 <transition name="fade" appear><i v-if="!isDataLoaded || dataLoading" class="fas fa-spinner fa-spin h3"></i></transition>
             </div>
-            <div class="col-md-6">
-                <div class="row justify-content-between h5" v-if="type !== c.ARCHIVE">
-                    <label><input type="checkbox" :checked="hideFinished" v-model="hideFinished" @click="switchHideFinished"> Hide Finished</label>
-                    <button class="btn btn-sm btn-outline-secondary" @click="archiveAllTasks">Archive Finished</button>
-                </div>
-                <div v-else class="row justify-content-end pr-2">
-                    <label>
-                        <input type="checkbox" v-model="notTrashed"> Not trashed projects
-                    </label>
-                    <label>
-                        <input class="form-control form-control-sm ml-2" v-model="s" type="text" placeholder="Search task or project...">
-                    </label>
-                </div>
+            <div class="col-md-3 col-6">
+                <label v-if="type !== c.ARCHIVE" class="h5"><input type="checkbox" :checked="hideFinished" v-model="hideFinished" @click="switchHideFinished"> Hide Finished</label>
+                <label v-else><input type="checkbox" v-model="notTrashed"> Not trashed projects</label>
+            </div>
+            <div class="col-md-3 col-6 text-right">
+                <button v-if="type !== c.ARCHIVE" class="h5 btn btn-sm btn-outline-secondary" @click="archiveAllTasks">Archive Finished</button>
+                <label v-else><input class="form-control form-control-sm" v-model="s" type="text" placeholder="Search task or project..."></label>
             </div>
         </div>
 
@@ -49,12 +43,12 @@
                         </div>
 
                         <div class="col-md-2" v-if="type !== c.NOT_SCHEDULED" :class="{'text-danger': isNeedStyleOverdue(task)}">
-                            {{formatDate(task.schedule)}} <i v-if="isNeedStyleOverdue(task)" class="fas fa-exclamation"></i>
+                            {{formatDate(task.schedule)}} <i v-if="isNeedStyleOverdue(task) && width > 781" class="fas fa-exclamation"></i>
                         </div>
 
                         <div class="col-md-2" v-if="type === c.ARCHIVE">{{formatDate(task.deleted_at)}}</div>
                     </div>
-                    <div class="m-0 pr-2 row justify-content-between pb-1" v-if="!isLastPage">
+                    <div class="m-0 pr-2 row justify-content-between pb-1" v-if="isDataLoaded && !isLastPage">
                         <span>Page {{page}} of {{lastPage}}</span>
                         <button class="btn btn-outline-secondary btn-sm" @click="loadMore">Load More...</button>
                     </div>

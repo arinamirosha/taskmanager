@@ -3198,10 +3198,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -3582,9 +3578,6 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    taskStatusUpdated: function taskStatusUpdated(id) {
-      this.getProject();
-    },
     archiveAllForProject: function archiveAllForProject() {
       var _this4 = this;
 
@@ -3643,12 +3636,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -68599,7 +68586,7 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c(
         "div",
-        { staticClass: "col-md-6 font-weight-bold h3" },
+        { staticClass: "col-md-6 col-12 font-weight-bold h3" },
         [
           _vm._v("Archived Projects\n            "),
           _c("transition", { attrs: { name: "fade", appear: "" } }, [
@@ -68611,72 +68598,72 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "row justify-content-end pr-2" }, [
-          _c("label", [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.hasNotFinished,
-                  expression: "hasNotFinished"
-                }
-              ],
-              attrs: { type: "checkbox" },
-              domProps: {
-                checked: Array.isArray(_vm.hasNotFinished)
-                  ? _vm._i(_vm.hasNotFinished, null) > -1
-                  : _vm.hasNotFinished
-              },
-              on: {
-                change: function($event) {
-                  var $$a = _vm.hasNotFinished,
-                    $$el = $event.target,
-                    $$c = $$el.checked ? true : false
-                  if (Array.isArray($$a)) {
-                    var $$v = null,
-                      $$i = _vm._i($$a, $$v)
-                    if ($$el.checked) {
-                      $$i < 0 && (_vm.hasNotFinished = $$a.concat([$$v]))
-                    } else {
-                      $$i > -1 &&
-                        (_vm.hasNotFinished = $$a
-                          .slice(0, $$i)
-                          .concat($$a.slice($$i + 1)))
-                    }
+      _c("div", { staticClass: "col-md-3 col-6" }, [
+        _c("label", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.hasNotFinished,
+                expression: "hasNotFinished"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.hasNotFinished)
+                ? _vm._i(_vm.hasNotFinished, null) > -1
+                : _vm.hasNotFinished
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.hasNotFinished,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && (_vm.hasNotFinished = $$a.concat([$$v]))
                   } else {
-                    _vm.hasNotFinished = $$c
+                    $$i > -1 &&
+                      (_vm.hasNotFinished = $$a
+                        .slice(0, $$i)
+                        .concat($$a.slice($$i + 1)))
                   }
+                } else {
+                  _vm.hasNotFinished = $$c
                 }
               }
-            }),
-            _vm._v(" Has not finished\n                ")
-          ]),
-          _vm._v(" "),
-          _c("label", [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.s,
-                  expression: "s"
-                }
-              ],
-              staticClass: "form-control form-control-sm ml-2",
-              attrs: { type: "text", placeholder: "Search project..." },
-              domProps: { value: _vm.s },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.s = $event.target.value
-                }
+            }
+          }),
+          _vm._v(" Has not finished")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3 col-6 text-right" }, [
+        _c("label", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.s,
+                expression: "s"
               }
-            })
-          ])
+            ],
+            staticClass: "form-control form-control-sm",
+            attrs: { type: "text", placeholder: "Search project..." },
+            domProps: { value: _vm.s },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.s = $event.target.value
+              }
+            }
+          })
         ])
       ])
     ]),
@@ -68719,7 +68706,7 @@ var render = function() {
                 : _vm._e()
             }),
             _vm._v(" "),
-            !_vm.isLastPage
+            _vm.isDataLoaded && !_vm.isLastPage
               ? _c(
                   "div",
                   { staticClass: "m-0 pr-2 row justify-content-between pb-1" },
@@ -68813,7 +68800,10 @@ var render = function() {
                     _c("div", { staticClass: "col-md-6" }, [
                       _c(
                         "div",
-                        { staticClass: "row h5 justify-content-between" },
+                        {
+                          staticClass:
+                            "row h5 justify-content-between px-2 pt-2 pt-md-0"
+                        },
                         [
                           !_vm.project.deleted_at
                             ? _c(
@@ -69152,7 +69142,7 @@ var render = function() {
                             return _vm.$refs.editTaskModalButton.click()
                           },
                           archived: _vm.taskArchived,
-                          statusUpdated: _vm.taskStatusUpdated,
+                          taskUpdated: _vm.taskUpdated,
                           showProject: _vm.showProject
                         }
                       })
@@ -69297,7 +69287,7 @@ var render = function() {
       _c("div", { staticClass: "row" }, [
         _c(
           "div",
-          { staticClass: "col-md-6 font-weight-bold h3" },
+          { staticClass: "col-md-6 col-12 font-weight-bold h3" },
           [
             _vm._v(_vm._s(_vm.pageTitle) + "\n            "),
             _c("transition", { attrs: { name: "fade", appear: "" } }, [
@@ -69309,129 +69299,127 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "col-md-3 col-6" }, [
           _vm.type !== _vm.c.ARCHIVE
-            ? _c("div", { staticClass: "row justify-content-between h5" }, [
-                _c("label", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.hideFinished,
-                        expression: "hideFinished"
-                      }
-                    ],
-                    attrs: { type: "checkbox" },
-                    domProps: {
-                      checked: _vm.hideFinished,
-                      checked: Array.isArray(_vm.hideFinished)
-                        ? _vm._i(_vm.hideFinished, null) > -1
-                        : _vm.hideFinished
-                    },
-                    on: {
-                      click: _vm.switchHideFinished,
-                      change: function($event) {
-                        var $$a = _vm.hideFinished,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = null,
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 && (_vm.hideFinished = $$a.concat([$$v]))
-                          } else {
-                            $$i > -1 &&
-                              (_vm.hideFinished = $$a
-                                .slice(0, $$i)
-                                .concat($$a.slice($$i + 1)))
-                          }
-                        } else {
-                          _vm.hideFinished = $$c
-                        }
-                      }
+            ? _c("label", { staticClass: "h5" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.hideFinished,
+                      expression: "hideFinished"
                     }
-                  }),
-                  _vm._v(" Hide Finished")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-sm btn-outline-secondary",
-                    on: { click: _vm.archiveAllTasks }
+                  ],
+                  attrs: { type: "checkbox" },
+                  domProps: {
+                    checked: _vm.hideFinished,
+                    checked: Array.isArray(_vm.hideFinished)
+                      ? _vm._i(_vm.hideFinished, null) > -1
+                      : _vm.hideFinished
                   },
-                  [_vm._v("Archive Finished")]
-                )
-              ])
-            : _c("div", { staticClass: "row justify-content-end pr-2" }, [
-                _c("label", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.notTrashed,
-                        expression: "notTrashed"
-                      }
-                    ],
-                    attrs: { type: "checkbox" },
-                    domProps: {
-                      checked: Array.isArray(_vm.notTrashed)
-                        ? _vm._i(_vm.notTrashed, null) > -1
-                        : _vm.notTrashed
-                    },
-                    on: {
-                      change: function($event) {
-                        var $$a = _vm.notTrashed,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = null,
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 && (_vm.notTrashed = $$a.concat([$$v]))
-                          } else {
-                            $$i > -1 &&
-                              (_vm.notTrashed = $$a
-                                .slice(0, $$i)
-                                .concat($$a.slice($$i + 1)))
-                          }
+                  on: {
+                    click: _vm.switchHideFinished,
+                    change: function($event) {
+                      var $$a = _vm.hideFinished,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.hideFinished = $$a.concat([$$v]))
                         } else {
-                          _vm.notTrashed = $$c
+                          $$i > -1 &&
+                            (_vm.hideFinished = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
                         }
+                      } else {
+                        _vm.hideFinished = $$c
                       }
                     }
-                  }),
-                  _vm._v(" Not trashed projects\n                ")
-                ]),
-                _vm._v(" "),
-                _c("label", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.s,
-                        expression: "s"
-                      }
-                    ],
-                    staticClass: "form-control form-control-sm ml-2",
-                    attrs: {
-                      type: "text",
-                      placeholder: "Search task or project..."
-                    },
-                    domProps: { value: _vm.s },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                  }
+                }),
+                _vm._v(" Hide Finished")
+              ])
+            : _c("label", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.notTrashed,
+                      expression: "notTrashed"
+                    }
+                  ],
+                  attrs: { type: "checkbox" },
+                  domProps: {
+                    checked: Array.isArray(_vm.notTrashed)
+                      ? _vm._i(_vm.notTrashed, null) > -1
+                      : _vm.notTrashed
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.notTrashed,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.notTrashed = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.notTrashed = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
                         }
-                        _vm.s = $event.target.value
+                      } else {
+                        _vm.notTrashed = $$c
                       }
                     }
-                  })
-                ])
+                  }
+                }),
+                _vm._v(" Not trashed projects")
+              ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3 col-6 text-right" }, [
+          _vm.type !== _vm.c.ARCHIVE
+            ? _c(
+                "button",
+                {
+                  staticClass: "h5 btn btn-sm btn-outline-secondary",
+                  on: { click: _vm.archiveAllTasks }
+                },
+                [_vm._v("Archive Finished")]
+              )
+            : _c("label", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.s,
+                      expression: "s"
+                    }
+                  ],
+                  staticClass: "form-control form-control-sm",
+                  attrs: {
+                    type: "text",
+                    placeholder: "Search task or project..."
+                  },
+                  domProps: { value: _vm.s },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.s = $event.target.value
+                    }
+                  }
+                })
               ])
         ])
       ]),
@@ -69527,7 +69515,7 @@ var render = function() {
                                     _vm._s(_vm.formatDate(task.schedule)) +
                                     " "
                                 ),
-                                _vm.isNeedStyleOverdue(task)
+                                _vm.isNeedStyleOverdue(task) && _vm.width > 781
                                   ? _c("i", {
                                       staticClass: "fas fa-exclamation"
                                     })
@@ -69546,7 +69534,7 @@ var render = function() {
                   : _vm._e()
               }),
               _vm._v(" "),
-              !_vm.isLastPage
+              _vm.isDataLoaded && !_vm.isLastPage
                 ? _c(
                     "div",
                     {

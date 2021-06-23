@@ -1,18 +1,14 @@
 <template>
     <div class="pb-4">
         <div class="row">
-            <div class="col-md-6 font-weight-bold h3">Archived Projects
+            <div class="col-md-6 col-12 font-weight-bold h3">Archived Projects
                 <transition name="fade" appear><i v-if="!isDataLoaded || dataLoading" class="fas fa-spinner fa-spin h3"></i></transition>
             </div>
-            <div class="col-md-6">
-                <div class="row justify-content-end pr-2">
-                    <label>
-                        <input type="checkbox" v-model="hasNotFinished"> Has not finished
-                    </label>
-                    <label>
-                        <input class="form-control form-control-sm ml-2" v-model="s" type="text" placeholder="Search project...">
-                    </label>
-                </div>
+            <div class="col-md-3 col-6">
+                <label><input type="checkbox" v-model="hasNotFinished"> Has not finished</label>
+            </div>
+            <div class="col-md-3 col-6 text-right">
+                <label><input class="form-control form-control-sm" v-model="s" type="text" placeholder="Search project..."></label>
             </div>
         </div>
 
@@ -34,7 +30,7 @@
                         <div class="col-md-2">{{project.tasks_count}}</div>
                         <div class="col-md-2">{{formatDate(project.deleted_at)}}</div>
                     </div>
-                    <div class="m-0 pr-2 row justify-content-between pb-1" v-if="!isLastPage">
+                    <div class="m-0 pr-2 row justify-content-between pb-1" v-if="isDataLoaded && !isLastPage">
                         <span>Page {{page}} of {{lastPage}}</span>
                         <button class="btn btn-outline-secondary btn-sm" @click="loadMore">Load More...</button>
                     </div>
