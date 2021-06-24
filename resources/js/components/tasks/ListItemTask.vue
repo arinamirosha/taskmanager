@@ -13,22 +13,20 @@
 
 <script>
 import route from "../../route";
-import * as constants from '../../constants';
+import constantsMixin from "../mixins/constants.js";
 import moment from "moment";
 
 export default {
+    mixins: [
+        constantsMixin,
+    ],
     props: ['task'],
-    computed: {
-        c: function () {
-            return constants;
-        },
-    },
     methods: {
         importanceCss(importance) {
             switch (importance) {
-                case constants.STATUS_NORMAL: return 'text-secondary';
-                case constants.STATUS_MEDIUM: return 'text-primary';
-                case constants.STATUS_STRONG: return 'text-danger';
+                case this.c.STATUS_NORMAL: return 'text-secondary';
+                case this.c.STATUS_MEDIUM: return 'text-primary';
+                case this.c.STATUS_STRONG: return 'text-danger';
             }
             return '';
         },

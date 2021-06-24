@@ -65,38 +65,36 @@
 </template>
 
 <script>
-import * as constants from '../../../constants';
+import constantsMixin from "../../mixins/constants.js";
 import route from "../../../route";
 import moment from "moment";
 
 export default {
+    mixins: [
+        constantsMixin,
+    ],
     props: ['task', 'project'],
-    computed: {
-        c: function () {
-            return constants;
-        },
-    },
     methods: {
         importanceText(importance) {
             switch (importance) {
-                case constants.STATUS_NORMAL: return 'Normal';
-                case constants.STATUS_MEDIUM: return 'Medium';
-                case constants.STATUS_STRONG: return 'Strong';
+                case this.c.STATUS_NORMAL: return 'Normal';
+                case this.c.STATUS_MEDIUM: return 'Medium';
+                case this.c.STATUS_STRONG: return 'Strong';
             }
         },
         importanceCss(importance) {
             switch (importance) {
-                case constants.STATUS_NORMAL: return 'text-secondary';
-                case constants.STATUS_MEDIUM: return 'text-primary';
-                case constants.STATUS_STRONG: return 'text-danger';
+                case this.c.STATUS_NORMAL: return 'text-secondary';
+                case this.c.STATUS_MEDIUM: return 'text-primary';
+                case this.c.STATUS_STRONG: return 'text-danger';
             }
             return '';
         },
         statusText(status) {
             switch (status) {
-                case constants.STATUS_NEW: return 'New';
-                case constants.STATUS_PROGRESS: return 'Progress';
-                case constants.STATUS_FINISHED: return 'Finished';
+                case this.c.STATUS_NEW: return 'New';
+                case this.c.STATUS_PROGRESS: return 'Progress';
+                case this.c.STATUS_FINISHED: return 'Finished';
             }
             return '';
         },
@@ -144,7 +142,7 @@ export default {
             this.$emit('showProject', id)
         },
         isOverdue() {
-            if (this.task.deleted_at || this.task.status === constants.STATUS_FINISHED) {
+            if (this.task.deleted_at || this.task.status === this.c.STATUS_FINISHED) {
                 return false;
             }
             return moment(this.task.schedule).isBefore(new Date, 'day');

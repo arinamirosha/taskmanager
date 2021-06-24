@@ -42,9 +42,12 @@
 import { required, maxLength, minValue } from 'vuelidate/lib/validators';
 import route from "../../../route";
 import moment from "moment";
-import * as c from '../../../constants';
+import constantsMixin from "../../mixins/constants";
 
 export default {
+    mixins: [
+        constantsMixin,
+    ],
     props: ['id'],
     data() {
         return {
@@ -52,8 +55,8 @@ export default {
             details: '',
             schedule: null,
             today: moment().format("YYYY-MM-DD"),
-            importance: c.STATUS_NORMAL,
-            statuses: [c.STATUS_NORMAL, c.STATUS_MEDIUM, c.STATUS_STRONG],
+            importance: 0,
+            statuses: [],
         }
     },
     validations: {
@@ -94,16 +97,16 @@ export default {
         },
         importanceText(importance) {
             switch (importance) {
-                case c.STATUS_NORMAL: return 'Normal';
-                case c.STATUS_MEDIUM: return 'Medium';
-                case c.STATUS_STRONG: return 'Strong';
+                case this.c.STATUS_NORMAL: return 'Normal';
+                case this.c.STATUS_MEDIUM: return 'Medium';
+                case this.c.STATUS_STRONG: return 'Strong';
             }
         },
         importanceCss(importance) {
             switch (importance) {
-                case c.STATUS_NORMAL: return 'text-secondary';
-                case c.STATUS_MEDIUM: return 'text-primary';
-                case c.STATUS_STRONG: return 'text-danger';
+                case this.c.STATUS_NORMAL: return 'text-secondary';
+                case this.c.STATUS_MEDIUM: return 'text-primary';
+                case this.c.STATUS_STRONG: return 'text-danger';
             }
             return '';
         },
@@ -111,9 +114,13 @@ export default {
             this.name = '';
             this.details = '';
             this.schedule = null;
-            this.importance = c.STATUS_NORMAL;
+            this.importance = this.c.STATUS_NORMAL;
             this.$v.$reset();
         },
+    },
+    mounted() {
+        this.importance = this.c.STATUS_NORMAL;
+        this.statuses = [this.c.STATUS_NORMAL, this.c.STATUS_MEDIUM, this.c.STATUS_STRONG];
     },
 }
 </script>

@@ -43,32 +43,32 @@
                     </div>
                 </div>
 
-                <div v-if="width > widthMobile" class="row font-weight-bold h6">
+                <div v-if="mediumStyle" class="row font-weight-bold h6">
                     <div class="col-md-4">New</div>
                     <div class="col-md-4">In progress</div>
                     <div class="col-md-4">Finished</div>
                 </div>
 
-                <div class="row" :class="{'full': width > widthNoScroll}">
+                <div class="row" :class="{'full': largeStyle}">
                     <div class="col-md-4 border-left">
-                        <div v-if="width <= widthMobile" class="font-weight-bold h6">New</div>
-                        <draggable :handle="width <= widthMobile" :list="tasksNew" group="tasks" @change="update" :move="isMove">
+                        <div v-if="compactStyle" class="font-weight-bold h6">New</div>
+                        <draggable :handle="compactStyle" :list="tasksNew" group="tasks" @change="update" :move="isMove">
                             <div v-for="task in tasksNew" :key="task.id">
                                 <list-item-task :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
                             </div>
                         </draggable>
                     </div>
                     <div class="col-md-4 border-left">
-                        <div v-if="width <= widthMobile" class="font-weight-bold h6">In progress</div>
-                        <draggable :handle="width <= widthMobile" :list="tasksProgress" group="tasks" @change="update" :move="isMove">
+                        <div v-if="compactStyle" class="font-weight-bold h6">In progress</div>
+                        <draggable :handle="compactStyle" :list="tasksProgress" group="tasks" @change="update" :move="isMove">
                             <div v-for="task in tasksProgress" :key="task.id">
                                 <list-item-task :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
                             </div>
                         </draggable>
                     </div>
                     <div class="col-md-4 border-left">
-                        <div v-if="width <= widthMobile" class="font-weight-bold h6">Finished</div>
-                        <draggable :handle="width <= widthMobile" :list="tasksFinished" group="tasks" @change="update" :move="isMove">
+                        <div v-if="compactStyle" class="font-weight-bold h6">Finished</div>
+                        <draggable :handle="compactStyle" :list="tasksFinished" group="tasks" @change="update" :move="isMove">
                             <div v-for="task in tasksFinished" :key="task.id">
                                 <list-item-task :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
                             </div>
@@ -129,10 +129,15 @@
 
 <script>
 import route from "../../route";
-import * as c from '../../constants';
 import draggable from 'vuedraggable';
+import constantsMixin from "../mixins/constants.js";
+import customWidthMixin from "../mixins/custom-width.js";
 
 export default {
+    mixins: [
+        constantsMixin,
+        customWidthMixin,
+    ],
     props: ['id'],
     data() {
         return {
@@ -147,9 +152,6 @@ export default {
             isProjectLoaded: false,
             currentTask: {},
             infoBody: '',
-            width: 0,
-            widthNoScroll: 1199,
-            widthMobile: 767,
         }
     },
     watch: {
@@ -166,9 +168,9 @@ export default {
                 .then(response => {
                     this.project = response.data;
                     this.tasks = response.data.tasks;
-                    this.tasksNew = this.tasks.filter(task => { return task.status === c.STATUS_NEW; }).sort((a, b) => b.importance - a.importance);
-                    this.tasksProgress = this.tasks.filter(task => { return task.status === c.STATUS_PROGRESS; }).sort((a, b) => b.importance - a.importance);
-                    this.tasksFinished = this.tasks.filter(task => { return task.status === c.STATUS_FINISHED; }).sort((a, b) => b.importance - a.importance);
+                    this.tasksNew = this.tasks.filter(task => { return task.status === this.c.STATUS_NEW; }).sort((a, b) => b.importance - a.importance);
+                    this.tasksProgress = this.tasks.filter(task => { return task.status === this.c.STATUS_PROGRESS; }).sort((a, b) => b.importance - a.importance);
+                    this.tasksFinished = this.tasks.filter(task => { return task.status === this.c.STATUS_FINISHED; }).sort((a, b) => b.importance - a.importance);
                     this.tasksNewLength = this.tasksNew.length;
                     this.tasksProgressLength = this.tasksProgress.length;
                     this.tasksFinishedLength = this.tasksFinished.length;
@@ -199,11 +201,11 @@ export default {
                 let taskId = e.added.element.id;
                 let status = 0;
                 if (this.tasksNewLength < this.tasksNew.length) {
-                    status = c.STATUS_NEW;
+                    status = this.c.STATUS_NEW;
                 } else if (this.tasksProgressLength < this.tasksProgress.length) {
-                    status = c.STATUS_PROGRESS;
+                    status = this.c.STATUS_PROGRESS;
                 } else if (this.tasksFinishedLength < this.tasksFinished.length) {
-                    status = c.STATUS_FINISHED;
+                    status = this.c.STATUS_FINISHED;
                 }
 
                 if (status) {
@@ -280,16 +282,9 @@ export default {
                     console.log(error);
                 });
         },
-        updateWidth() {
-            this.width = window.innerWidth;
-        },
-    },
-    created() {
-        window.addEventListener('resize', this.updateWidth);
     },
     mounted() {
         this.getProject();
-        this.updateWidth();
     },
     components: {
         draggable,

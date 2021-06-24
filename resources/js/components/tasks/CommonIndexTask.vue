@@ -17,7 +17,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="row h5 font-weight-bold" v-if="width > widthMobile">
+                <div class="row h5 font-weight-bold" v-if="mediumStyle">
                     <div class="col-md-1">Status</div>
                     <div :class="colTask">Task</div>
                     <div :class="colProject">Project</div>
@@ -33,7 +33,7 @@
                          :key="task.id"
                          class="row cursor-pointer task pt-1 pb-1"
                          @click="showTask(task)"
-                         :class="{'task-finished': isNeedStyleFinished(task), 'bg-light': width <= widthMobile && index % 2 === 0}"
+                         :class="{'task-finished': isNeedStyleFinished(task), 'bg-light': compactStyle && index % 2 === 0}"
                     >
                         <div class="col-md-1 col-1"><i :class="statusIconClass(task.status)"></i></div>
 
@@ -93,10 +93,15 @@
 
 <script>
 import route from "../../route";
-import * as constants from "../../constants";
 import moment from "moment";
+import constantsMixin from "../mixins/constants.js";
+import customWidthMixin from "../mixins/custom-width.js";
 
 export default {
+    mixins: [
+        constantsMixin,
+        customWidthMixin,
+    ],
     props: ['type'],
     data() {
         return {
@@ -111,55 +116,49 @@ export default {
             lastPage: 0,
             s: '',
             notTrashed: false,
-            width: 0,
-            widthNoScroll: 1199,
-            widthMobile: 767,
         }
     },
     computed: {
-        c: function () {
-            return constants;
-        },
         pageTitle: function () {
             let title = '';
             switch (this.type) {
-                case constants.INCOMING: title = 'Incoming tasks'; break;
-                case constants.TODAY: title = 'Today tasks'; break;
-                case constants.UPCOMING: title = 'Upcoming tasks'; break;
-                case constants.NOT_SCHEDULED: title = 'Not Scheduled tasks'; break;
-                case constants.ARCHIVE: title = 'Archived Tasks'; break;
+                case this.c.INCOMING: title = 'Incoming tasks'; break;
+                case this.c.TODAY: title = 'Today tasks'; break;
+                case this.c.UPCOMING: title = 'Upcoming tasks'; break;
+                case this.c.NOT_SCHEDULED: title = 'Not Scheduled tasks'; break;
+                case this.c.ARCHIVE: title = 'Archived Tasks'; break;
             }
             return title;
         },
         colTask: function () {
             switch (this.type) {
-                case constants.TODAY:
-                case constants.UPCOMING: return 'col-md-4 col-11';
-                case constants.NOT_SCHEDULED: return 'col-md-5 col-11';
-                case constants.ARCHIVE: return 'col-md-3 col-11';
+                case this.c.TODAY:
+                case this.c.UPCOMING: return 'col-md-4 col-11';
+                case this.c.NOT_SCHEDULED: return 'col-md-5 col-11';
+                case this.c.ARCHIVE: return 'col-md-3 col-11';
             }
             return '';
         },
         colProject: function () {
             switch (this.type) {
-                case constants.TODAY:
-                case constants.UPCOMING: return 'col-md-5';
-                case constants.NOT_SCHEDULED: return 'col-md-6';
-                case constants.ARCHIVE: return 'col-md-4';
+                case this.c.TODAY:
+                case this.c.UPCOMING: return 'col-md-5';
+                case this.c.NOT_SCHEDULED: return 'col-md-6';
+                case this.c.ARCHIVE: return 'col-md-4';
             }
             return '';
         },
         halfFullScroll: function () {
             let result = '';
             let scroll = '';
-            if (this.type === constants.ARCHIVE) {
+            if (this.type === this.c.ARCHIVE) {
                 result = 'mb-1';
                 scroll = 'half';
             } else {
                 result = 'mb-4';
                 scroll = 'full';
             }
-            return result + (this.width > this.widthNoScroll ? ' ' + scroll : '');
+            return result + (this.largeStyle ? ' ' + scroll : '');
         }
     },
     watch: {
@@ -178,7 +177,6 @@ export default {
     },
     created() {
         this.debouncedGetUsers = _.debounce(this.getTasks, 500);
-        window.addEventListener('resize', this.updateWidth);
     },
     methods: {
         colProjectFunc: function (result = '') {
@@ -302,37 +300,33 @@ export default {
             return moment(schedule).isBefore(new Date, 'day');
         },
         isNeedStyleOverdue(task) {
-            return this.type !== constants.ARCHIVE
-                && task.status !== constants.STATUS_FINISHED
+            return this.type !== this.c.ARCHIVE
+                && task.status !== this.c.STATUS_FINISHED
                 && this.isOverdue(task.schedule);
         },
         isNeedStyleFinished(task) {
-            return this.type !== constants.ARCHIVE && task.status === constants.STATUS_FINISHED;
+            return this.type !== this.c.ARCHIVE && task.status === this.c.STATUS_FINISHED;
         },
         statusIconClass(status) {
             switch (status) {
-                case constants.STATUS_NEW: return 'fas fa-external-link-alt';
-                case constants.STATUS_PROGRESS: return 'fas fa-spinner';
-                case constants.STATUS_FINISHED: return 'fas fa-check';
+                case this.c.STATUS_NEW: return 'fas fa-external-link-alt';
+                case this.c.STATUS_PROGRESS: return 'fas fa-spinner';
+                case this.c.STATUS_FINISHED: return 'fas fa-check';
             }
             return '';
         },
         importanceCss(importance) {
             switch (importance) {
-                case constants.STATUS_NORMAL: return 'text-secondary';
-                case constants.STATUS_MEDIUM: return 'text-primary';
-                case constants.STATUS_STRONG: return 'text-danger';
+                case this.c.STATUS_NORMAL: return 'text-secondary';
+                case this.c.STATUS_MEDIUM: return 'text-primary';
+                case this.c.STATUS_STRONG: return 'text-danger';
             }
             return '';
-        },
-        updateWidth() {
-            this.width = window.innerWidth;
         },
     },
     mounted() {
         this.getTasks();
         this.getHideFinished();
-        this.updateWidth();
     }
 }
 </script>

@@ -14,21 +14,21 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="row h5 font-weight-bold" v-if="width > widthMobile">
+                <div v-if="mediumStyle" class="row h5 font-weight-bold">
                     <div class="col-md-8">Project</div>
                     <div class="col-md-2">Tasks To Restore</div>
                     <div class="col-md-2">Archived</div>
                 </div>
-                <div class="h5 font-weight-bold">
+                <div v-else class="h5 font-weight-bold">
                     Project-Tasks To Restore-Archived
                 </div>
 
-                <div :class="{'half': width > widthNoScroll}">
+                <div :class="{'half': largeStyle}">
                     <div v-if="isDataLoaded && projects.length !== 0" v-for="(project, index) in projects"
                          :key="project.id"
                          class="row cursor-pointer task pt-1 pb-1"
                          @click="showProject(project.id)"
-                         :class="{'bg-light': width <= widthMobile && index % 2 === 0}"
+                         :class="{'bg-light': compactStyle && index % 2 === 0}"
                     >
                         <div class="col-md-8">{{project.name}}</div>
                         <div class="col-md-2 col-6">{{project.tasks_count}}</div>
@@ -46,10 +46,15 @@
 
 <script>
 import route from "../../route";
-import * as constants from "../../constants";
 import moment from "moment";
+import constantsMixin from "../mixins/constants.js";
+import customWidthMixin from "../mixins/custom-width.js";
 
 export default {
+    mixins: [
+        constantsMixin,
+        customWidthMixin,
+    ],
     data() {
         return {
             projects: [],
@@ -60,15 +65,7 @@ export default {
             isLastPage: false,
             s: '',
             hasNotFinished: false,
-            width: 0,
-            widthNoScroll: 1199,
-            widthMobile: 767,
         }
-    },
-    computed: {
-        c: function () {
-            return constants;
-        },
     },
     watch: {
         s: function () {
@@ -82,14 +79,13 @@ export default {
     },
     created() {
         this.debouncedGetUsers = _.debounce(this.getProjects, 500);
-        window.addEventListener('resize', this.updateWidth);
     },
     methods: {
         getProjects() {
             axios
                 .get(route('projects.index'), {
                     params: {
-                        'type': constants.ARCHIVE,
+                        'type': this.c.ARCHIVE,
                         's': this.s,
                         'hasNotFinished': this.hasNotFinished ? this.hasNotFinished : '',
                     }
@@ -111,7 +107,7 @@ export default {
             axios
                 .get(route('projects.index'), {
                     params: {
-                        'type': constants.ARCHIVE,
+                        'type': this.c.ARCHIVE,
                         's': this.s,
                         'hasNotFinished': this.hasNotFinished ? this.hasNotFinished : '',
                         'page': ++this.page,
@@ -133,13 +129,9 @@ export default {
         showProject(id) {
             this.$emit('showProject', id);
         },
-        updateWidth() {
-            this.width = window.innerWidth;
-        },
     },
     mounted() {
         this.getProjects();
-        this.updateWidth();
     }
 }
 </script>

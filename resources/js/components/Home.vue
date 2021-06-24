@@ -1,13 +1,13 @@
 <template>
     <div>
 
-        <div :class="{'bg-light left-menu px-2 pt-2': showMenu}">
-            <nav :class="showMenu ? 'nav flex-column' : 'dropdown'">
-                <button v-if="!showMenu" class="btn btn-menu dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div :class="{'bg-light left-menu px-2 pt-2': largeStyle}">
+            <nav :class="largeStyle ? 'nav flex-column' : 'dropdown'">
+                <button v-if="!largeStyle" class="btn btn-menu dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Menu
                 </button>
 
-                <div :class="{'dropdown-menu bg-light': !showMenu}">
+                <div :class="{'dropdown-menu bg-light': !largeStyle}">
                     <a class="nav-link text-dark" :class="{'active': type===c.INCOMING}" @click="setType(c.INCOMING)">Incoming</a>
                     <a class="nav-link text-dark name-count-space" :class="{'active': type===c.TODAY}" @click="setType(c.TODAY)">
                         Today
@@ -94,7 +94,7 @@
             </nav>
         </div>
 
-        <div :class="{'main-content': showMenu}" class="pt-3">
+        <div :class="{'main-content': largeStyle}" class="pt-3">
             <component
                 v-bind:is="currentComponent"
                 :id="this.selectedProjectId"
@@ -173,9 +173,14 @@ nav a:hover {
 <script>
 import { CollapseTransition } from "@ivanv/vue-collapse-transition";
 import route from "../route";
-import * as constants from "../constants";
+import constantsMixin from "./mixins/constants.js";
+import customWidthMixin from "./mixins/custom-width.js";
 
 export default {
+    mixins: [
+        constantsMixin,
+        customWidthMixin,
+    ],
     data() {
         return {
             currentComponent: 'common-index-task',
@@ -186,9 +191,7 @@ export default {
             selectedProjectId: 0,
             isOpenFav: true,
             isOpenProjects: true,
-            type: constants.TODAY,
-            width: 0,
-            widthChangeMenu: 1199,
+            type: '',
         }
     },
     computed: {
@@ -196,12 +199,6 @@ export default {
             return this.projects.filter(project => {
                 return project.favorite;
             });
-        },
-        c: function () {
-            return constants;
-        },
-        showMenu: function () {
-            return this.width > this.widthChangeMenu;
         },
     },
     methods: {
@@ -222,9 +219,9 @@ export default {
                 .then(response => {
                     this.projects = response.data.projects;
                     let counts = response.data.counts;
-                    this.cToday = counts[constants.TODAY];
-                    this.cUpcoming = counts[constants.UPCOMING];
-                    this.cNotScheduled = counts[constants.NOT_SCHEDULED];
+                    this.cToday = counts[this.c.TODAY];
+                    this.cUpcoming = counts[this.c.UPCOMING];
+                    this.cNotScheduled = counts[this.c.NOT_SCHEDULED];
                 })
                 .catch(error => {
                     console.log(error);
@@ -239,16 +236,10 @@ export default {
             this.type = '';
             this.setComponent('show-project');
         },
-        updateWidth() {
-            this.width = window.innerWidth;
-        },
     },
     mounted() {
         this.getProjects();
-        this.updateWidth();
-    },
-    created() {
-        window.addEventListener('resize', this.updateWidth);
+        this.type = this.c.TODAY;
     },
     components: {
         CollapseTransition,
