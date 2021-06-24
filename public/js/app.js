@@ -3435,6 +3435,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -3454,7 +3457,8 @@ __webpack_require__.r(__webpack_exports__);
       currentTask: {},
       infoBody: '',
       width: 0,
-      widthNoScroll: 1199
+      widthNoScroll: 1199,
+      widthNoDrug: 767
     };
   },
   watch: {
@@ -68914,7 +68918,19 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._m(1),
+                  _vm.width > _vm.widthNoDrug
+                    ? _c("div", { staticClass: "row font-weight-bold h6" }, [
+                        _c("div", { staticClass: "col-md-4" }, [_vm._v("New")]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-4" }, [
+                          _vm._v("In progress")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-4" }, [
+                          _vm._v("Finished")
+                        ])
+                      ])
+                    : _vm._e(),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -68927,10 +68943,19 @@ var render = function() {
                         "div",
                         { staticClass: "col-md-4 border-left" },
                         [
+                          _vm.width <= _vm.widthNoDrug
+                            ? _c(
+                                "div",
+                                { staticClass: "font-weight-bold h6" },
+                                [_vm._v("New")]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
                           _c(
                             "draggable",
                             {
                               attrs: {
+                                handle: _vm.width <= _vm.widthNoDrug,
                                 list: _vm.tasksNew,
                                 group: "tasks",
                                 move: _vm.isMove
@@ -68963,10 +68988,19 @@ var render = function() {
                         "div",
                         { staticClass: "col-md-4 border-left" },
                         [
+                          _vm.width <= _vm.widthNoDrug
+                            ? _c(
+                                "div",
+                                { staticClass: "font-weight-bold h6" },
+                                [_vm._v("In progress")]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
                           _c(
                             "draggable",
                             {
                               attrs: {
+                                handle: _vm.width <= _vm.widthNoDrug,
                                 list: _vm.tasksProgress,
                                 group: "tasks",
                                 move: _vm.isMove
@@ -68999,10 +69033,19 @@ var render = function() {
                         "div",
                         { staticClass: "col-md-4 border-left" },
                         [
+                          _vm.width <= _vm.widthNoDrug
+                            ? _c(
+                                "div",
+                                { staticClass: "font-weight-bold h6" },
+                                [_vm._v("Finished")]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
                           _c(
                             "draggable",
                             {
                               attrs: {
+                                handle: _vm.width <= _vm.widthNoDrug,
                                 list: _vm.tasksFinished,
                                 group: "tasks",
                                 move: _vm.isMove
@@ -69244,18 +69287,6 @@ var staticRenderFns = [
       },
       [_c("i", { staticClass: "far fa-trash-alt" })]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row font-weight-bold h6" }, [
-      _c("div", { staticClass: "col-md-4" }, [_vm._v("New")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }, [_vm._v("In progress")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }, [_vm._v("Finished")])
-    ])
   }
 ]
 render._withStripped = true
