@@ -43,7 +43,7 @@
                     </div>
                 </div>
 
-                <div v-if="width > widthNoDrug" class="row font-weight-bold h6">
+                <div v-if="width > widthMobile" class="row font-weight-bold h6">
                     <div class="col-md-4">New</div>
                     <div class="col-md-4">In progress</div>
                     <div class="col-md-4">Finished</div>
@@ -51,24 +51,24 @@
 
                 <div class="row" :class="{'full': width > widthNoScroll}">
                     <div class="col-md-4 border-left">
-                        <div v-if="width <= widthNoDrug" class="font-weight-bold h6">New</div>
-                        <draggable :handle="width <= widthNoDrug" :list="tasksNew" group="tasks" @change="update" :move="isMove">
+                        <div v-if="width <= widthMobile" class="font-weight-bold h6">New</div>
+                        <draggable :handle="width <= widthMobile" :list="tasksNew" group="tasks" @change="update" :move="isMove">
                             <div v-for="task in tasksNew" :key="task.id">
                                 <list-item-task :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
                             </div>
                         </draggable>
                     </div>
                     <div class="col-md-4 border-left">
-                        <div v-if="width <= widthNoDrug" class="font-weight-bold h6">In progress</div>
-                        <draggable :handle="width <= widthNoDrug" :list="tasksProgress" group="tasks" @change="update" :move="isMove">
+                        <div v-if="width <= widthMobile" class="font-weight-bold h6">In progress</div>
+                        <draggable :handle="width <= widthMobile" :list="tasksProgress" group="tasks" @change="update" :move="isMove">
                             <div v-for="task in tasksProgress" :key="task.id">
                                 <list-item-task :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
                             </div>
                         </draggable>
                     </div>
                     <div class="col-md-4 border-left">
-                        <div v-if="width <= widthNoDrug" class="font-weight-bold h6">Finished</div>
-                        <draggable :handle="width <= widthNoDrug" :list="tasksFinished" group="tasks" @change="update" :move="isMove">
+                        <div v-if="width <= widthMobile" class="font-weight-bold h6">Finished</div>
+                        <draggable :handle="width <= widthMobile" :list="tasksFinished" group="tasks" @change="update" :move="isMove">
                             <div v-for="task in tasksFinished" :key="task.id">
                                 <list-item-task :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
                             </div>
@@ -149,7 +149,7 @@ export default {
             infoBody: '',
             width: 0,
             widthNoScroll: 1199,
-            widthNoDrug: 767,
+            widthMobile: 767,
         }
     },
     watch: {

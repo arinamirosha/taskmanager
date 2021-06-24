@@ -3198,6 +3198,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -3213,7 +3217,8 @@ __webpack_require__.r(__webpack_exports__);
       s: '',
       hasNotFinished: false,
       width: 0,
-      widthNoScroll: 1199
+      widthNoScroll: 1199,
+      widthMobile: 767
     };
   },
   computed: {
@@ -3458,7 +3463,7 @@ __webpack_require__.r(__webpack_exports__);
       infoBody: '',
       width: 0,
       widthNoScroll: 1199,
-      widthNoDrug: 767
+      widthMobile: 767
     };
   },
   watch: {
@@ -3730,6 +3735,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -3749,7 +3757,8 @@ __webpack_require__.r(__webpack_exports__);
       s: '',
       notTrashed: false,
       width: 0,
-      widthNoScroll: 1199
+      widthNoScroll: 1199,
+      widthMobile: 767
     };
   },
   computed: {
@@ -3787,13 +3796,13 @@ __webpack_require__.r(__webpack_exports__);
       switch (this.type) {
         case _constants__WEBPACK_IMPORTED_MODULE_1__.TODAY:
         case _constants__WEBPACK_IMPORTED_MODULE_1__.UPCOMING:
-          return 'col-md-4';
+          return 'col-md-4 col-11';
 
         case _constants__WEBPACK_IMPORTED_MODULE_1__.NOT_SCHEDULED:
-          return 'col-md-5';
+          return 'col-md-5 col-11';
 
         case _constants__WEBPACK_IMPORTED_MODULE_1__.ARCHIVE:
-          return 'col-md-3';
+          return 'col-md-3 col-11';
       }
 
       return '';
@@ -68674,19 +68683,39 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12" }, [
-        _vm._m(0),
+        _vm.width > _vm.widthMobile
+          ? _c("div", { staticClass: "row h5 font-weight-bold" }, [
+              _c("div", { staticClass: "col-md-8" }, [_vm._v("Project")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _vm._v("Tasks To Restore")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [_vm._v("Archived")])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "h5 font-weight-bold" }, [
+          _vm._v(
+            "\n                Project-Tasks To Restore-Archived\n            "
+          )
+        ]),
         _vm._v(" "),
         _c(
           "div",
           { class: { half: _vm.width > _vm.widthNoScroll } },
           [
-            _vm._l(_vm.projects, function(project) {
+            _vm._l(_vm.projects, function(project, index) {
               return _vm.isDataLoaded && _vm.projects.length !== 0
                 ? _c(
                     "div",
                     {
                       key: project.id,
                       staticClass: "row cursor-pointer task pt-1 pb-1",
+                      class: {
+                        "bg-light":
+                          _vm.width <= _vm.widthMobile && index % 2 === 0
+                      },
                       on: {
                         click: function($event) {
                           return _vm.showProject(project.id)
@@ -68698,13 +68727,17 @@ var render = function() {
                         _vm._v(_vm._s(project.name))
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-2" }, [
+                      _c("div", { staticClass: "col-md-2 col-6" }, [
                         _vm._v(_vm._s(project.tasks_count))
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _vm._v(_vm._s(_vm.formatDate(project.deleted_at)))
-                      ])
+                      _c(
+                        "div",
+                        {
+                          staticClass: "col-md-2 col-6 text-right text-md-left"
+                        },
+                        [_vm._v(_vm._s(_vm.formatDate(project.deleted_at)))]
+                      )
                     ]
                   )
                 : _vm._e()
@@ -68742,20 +68775,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row h5 font-weight-bold" }, [
-      _c("div", { staticClass: "col-md-8" }, [_vm._v("Project")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-2" }, [_vm._v("Tasks To Restore")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-2" }, [_vm._v("Archived")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -68918,7 +68938,7 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm.width > _vm.widthNoDrug
+                  _vm.width > _vm.widthMobile
                     ? _c("div", { staticClass: "row font-weight-bold h6" }, [
                         _c("div", { staticClass: "col-md-4" }, [_vm._v("New")]),
                         _vm._v(" "),
@@ -68943,7 +68963,7 @@ var render = function() {
                         "div",
                         { staticClass: "col-md-4 border-left" },
                         [
-                          _vm.width <= _vm.widthNoDrug
+                          _vm.width <= _vm.widthMobile
                             ? _c(
                                 "div",
                                 { staticClass: "font-weight-bold h6" },
@@ -68955,7 +68975,7 @@ var render = function() {
                             "draggable",
                             {
                               attrs: {
-                                handle: _vm.width <= _vm.widthNoDrug,
+                                handle: _vm.width <= _vm.widthMobile,
                                 list: _vm.tasksNew,
                                 group: "tasks",
                                 move: _vm.isMove
@@ -68988,7 +69008,7 @@ var render = function() {
                         "div",
                         { staticClass: "col-md-4 border-left" },
                         [
-                          _vm.width <= _vm.widthNoDrug
+                          _vm.width <= _vm.widthMobile
                             ? _c(
                                 "div",
                                 { staticClass: "font-weight-bold h6" },
@@ -69000,7 +69020,7 @@ var render = function() {
                             "draggable",
                             {
                               attrs: {
-                                handle: _vm.width <= _vm.widthNoDrug,
+                                handle: _vm.width <= _vm.widthMobile,
                                 list: _vm.tasksProgress,
                                 group: "tasks",
                                 move: _vm.isMove
@@ -69033,7 +69053,7 @@ var render = function() {
                         "div",
                         { staticClass: "col-md-4 border-left" },
                         [
-                          _vm.width <= _vm.widthNoDrug
+                          _vm.width <= _vm.widthMobile
                             ? _c(
                                 "div",
                                 { staticClass: "font-weight-bold h6" },
@@ -69045,7 +69065,7 @@ var render = function() {
                             "draggable",
                             {
                               attrs: {
-                                handle: _vm.width <= _vm.widthNoDrug,
+                                handle: _vm.width <= _vm.widthMobile,
                                 list: _vm.tasksFinished,
                                 group: "tasks",
                                 move: _vm.isMove
@@ -69457,27 +69477,37 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-md-12" }, [
-          _c("div", { staticClass: "row h5 font-weight-bold" }, [
-            _c("div", { staticClass: "col-md-1" }, [_vm._v("Status")]),
-            _vm._v(" "),
-            _c("div", { class: _vm.colTask }, [_vm._v("Task")]),
-            _vm._v(" "),
-            _c("div", { class: _vm.colProject }, [_vm._v("Project")]),
-            _vm._v(" "),
-            _vm.type !== _vm.c.NOT_SCHEDULED
-              ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Schedule")])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.type === _vm.c.ARCHIVE
-              ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Archived")])
-              : _vm._e()
-          ]),
+          _vm.width > _vm.widthMobile
+            ? _c("div", { staticClass: "row h5 font-weight-bold" }, [
+                _c("div", { staticClass: "col-md-1" }, [_vm._v("Status")]),
+                _vm._v(" "),
+                _c("div", { class: _vm.colTask }, [_vm._v("Task")]),
+                _vm._v(" "),
+                _c("div", { class: _vm.colProject }, [_vm._v("Project")]),
+                _vm._v(" "),
+                _vm.type !== _vm.c.NOT_SCHEDULED
+                  ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Schedule")])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.type === _vm.c.ARCHIVE
+                  ? _c("div", { staticClass: "col-md-2" }, [_vm._v("Archived")])
+                  : _vm._e()
+              ])
+            : _c("div", { staticClass: "h5 font-weight-bold" }, [
+                _vm._v("\n                Status-Task-Project"),
+                _vm.type !== _vm.c.NOT_SCHEDULED
+                  ? _c("span", [_vm._v("-Schedule")])
+                  : _vm._e(),
+                _vm.type === _vm.c.ARCHIVE
+                  ? _c("span", [_vm._v("-Archived")])
+                  : _vm._e()
+              ]),
           _vm._v(" "),
           _c(
             "div",
             { class: _vm.halfFullScroll },
             [
-              _vm._l(_vm.tasks, function(task) {
+              _vm._l(_vm.tasks, function(task, index) {
                 return _vm.isDataLoaded && _vm.tasks.length !== 0
                   ? _c(
                       "div",
@@ -69485,7 +69515,9 @@ var render = function() {
                         key: task.id,
                         staticClass: "row cursor-pointer task pt-1 pb-1",
                         class: {
-                          "task-finished": _vm.isNeedStyleFinished(task)
+                          "task-finished": _vm.isNeedStyleFinished(task),
+                          "bg-light":
+                            _vm.width <= _vm.widthMobile && index % 2 === 0
                         },
                         on: {
                           click: function($event) {
@@ -69494,7 +69526,7 @@ var render = function() {
                         }
                       },
                       [
-                        _c("div", { staticClass: "col-md-1" }, [
+                        _c("div", { staticClass: "col-md-1 col-1" }, [
                           _c("i", { class: _vm.statusIconClass(task.status) })
                         ]),
                         _vm._v(" "),
@@ -69535,7 +69567,7 @@ var render = function() {
                           ? _c(
                               "div",
                               {
-                                staticClass: "col-md-2",
+                                staticClass: "col-md-2 col-6",
                                 class: {
                                   "text-danger": _vm.isNeedStyleOverdue(task)
                                 }
@@ -69556,9 +69588,14 @@ var render = function() {
                           : _vm._e(),
                         _vm._v(" "),
                         _vm.type === _vm.c.ARCHIVE
-                          ? _c("div", { staticClass: "col-md-2" }, [
-                              _vm._v(_vm._s(_vm.formatDate(task.deleted_at)))
-                            ])
+                          ? _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "col-md-2 col-6 text-right text-md-left"
+                              },
+                              [_vm._v(_vm._s(_vm.formatDate(task.deleted_at)))]
+                            )
                           : _vm._e()
                       ]
                     )

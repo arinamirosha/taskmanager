@@ -14,21 +14,25 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="row h5 font-weight-bold">
+                <div class="row h5 font-weight-bold" v-if="width > widthMobile">
                     <div class="col-md-8">Project</div>
                     <div class="col-md-2">Tasks To Restore</div>
                     <div class="col-md-2">Archived</div>
                 </div>
+                <div class="h5 font-weight-bold">
+                    Project-Tasks To Restore-Archived
+                </div>
 
                 <div :class="{'half': width > widthNoScroll}">
-                    <div v-if="isDataLoaded && projects.length !== 0" v-for="project in projects"
+                    <div v-if="isDataLoaded && projects.length !== 0" v-for="(project, index) in projects"
                          :key="project.id"
                          class="row cursor-pointer task pt-1 pb-1"
                          @click="showProject(project.id)"
+                         :class="{'bg-light': width <= widthMobile && index % 2 === 0}"
                     >
                         <div class="col-md-8">{{project.name}}</div>
-                        <div class="col-md-2">{{project.tasks_count}}</div>
-                        <div class="col-md-2">{{formatDate(project.deleted_at)}}</div>
+                        <div class="col-md-2 col-6">{{project.tasks_count}}</div>
+                        <div class="col-md-2 col-6 text-right text-md-left">{{formatDate(project.deleted_at)}}</div>
                     </div>
                     <div class="m-0 pr-2 row justify-content-between pb-1" v-if="isDataLoaded && !isLastPage">
                         <span>Page {{page}} of {{lastPage}}</span>
@@ -58,6 +62,7 @@ export default {
             hasNotFinished: false,
             width: 0,
             widthNoScroll: 1199,
+            widthMobile: 767,
         }
     },
     computed: {

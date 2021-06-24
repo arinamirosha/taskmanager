@@ -17,22 +17,25 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="row h5 font-weight-bold">
+                <div class="row h5 font-weight-bold" v-if="width > widthMobile">
                     <div class="col-md-1">Status</div>
                     <div :class="colTask">Task</div>
                     <div :class="colProject">Project</div>
                     <div class="col-md-2" v-if="type !== c.NOT_SCHEDULED">Schedule</div>
                     <div class="col-md-2" v-if="type === c.ARCHIVE">Archived</div>
                 </div>
+                <div v-else class="h5 font-weight-bold">
+                    Status-Task-Project<span v-if="type !== c.NOT_SCHEDULED">-Schedule</span><span v-if="type === c.ARCHIVE">-Archived</span>
+                </div>
 
                 <div :class="halfFullScroll">
-                    <div v-if="isDataLoaded && tasks.length !== 0" v-for="task in tasks"
+                    <div v-if="isDataLoaded && tasks.length !== 0" v-for="(task, index) in tasks"
                          :key="task.id"
                          class="row cursor-pointer task pt-1 pb-1"
                          @click="showTask(task)"
-                         :class="{'task-finished': isNeedStyleFinished(task)}"
+                         :class="{'task-finished': isNeedStyleFinished(task), 'bg-light': width <= widthMobile && index % 2 === 0}"
                     >
-                        <div class="col-md-1"><i :class="statusIconClass(task.status)"></i></div>
+                        <div class="col-md-1 col-1"><i :class="statusIconClass(task.status)"></i></div>
 
                         <div :class="colTask">
                             <span :class="isNeedStyleFinished(task) ? 'task-finished' : importanceCss(task.importance)">&bull;</span> {{task.name}}
@@ -42,11 +45,11 @@
                             {{task.project.name}}
                         </div>
 
-                        <div class="col-md-2" v-if="type !== c.NOT_SCHEDULED" :class="{'text-danger': isNeedStyleOverdue(task)}">
+                        <div class="col-md-2 col-6" v-if="type !== c.NOT_SCHEDULED" :class="{'text-danger': isNeedStyleOverdue(task)}">
                             {{formatDate(task.schedule)}} <i v-if="isNeedStyleOverdue(task) && width > 781" class="fas fa-exclamation"></i>
                         </div>
 
-                        <div class="col-md-2" v-if="type === c.ARCHIVE">{{formatDate(task.deleted_at)}}</div>
+                        <div class="col-md-2 col-6 text-right text-md-left" v-if="type === c.ARCHIVE">{{formatDate(task.deleted_at)}}</div>
                     </div>
                     <div class="m-0 pr-2 row justify-content-between pb-1" v-if="isDataLoaded && !isLastPage">
                         <span>Page {{page}} of {{lastPage}}</span>
@@ -110,6 +113,7 @@ export default {
             notTrashed: false,
             width: 0,
             widthNoScroll: 1199,
+            widthMobile: 767,
         }
     },
     computed: {
@@ -130,9 +134,9 @@ export default {
         colTask: function () {
             switch (this.type) {
                 case constants.TODAY:
-                case constants.UPCOMING: return 'col-md-4';
-                case constants.NOT_SCHEDULED: return 'col-md-5';
-                case constants.ARCHIVE: return 'col-md-3';
+                case constants.UPCOMING: return 'col-md-4 col-11';
+                case constants.NOT_SCHEDULED: return 'col-md-5 col-11';
+                case constants.ARCHIVE: return 'col-md-3 col-11';
             }
             return '';
         },
