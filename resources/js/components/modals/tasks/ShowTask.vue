@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="profile-tab">
-                        <comments :taskId="task.id" @newComment="++task.comments_count"></comments>
+                        <comments :taskId="task.id" :isArchive="task.deleted_at !== null" @newComment="++task.comments_count"></comments>
                     </div>
                 </div>
             </div>

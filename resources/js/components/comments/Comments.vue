@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="px-1">
+        <div v-if="!isArchive" class="px-1">
             <div>
                 <textarea
                     class="form-control w-100 mb-2"
@@ -13,7 +13,7 @@
             <div class="text-right"><button class="btn btn-primary" @click="sendComment">Send</button></div>
         </div>
 
-        <hr>
+        <hr v-if="!isArchive">
 
         <div v-if="comments.length === 0" class="h-500 text-center">No comments</div>
         <div v-else class="comments h-500 pr-1">
@@ -35,7 +35,7 @@ import route from "../../route";
 import moment from "moment";
 
 export default {
-    props: ['taskId'],
+    props: ['taskId', 'isArchive'],
     data() {
         return {
             comments: [],
@@ -61,7 +61,6 @@ export default {
         sendComment() {
             this.$v.$touch();
             if (!this.$v.$invalid) {
-                console.log(this.text.length);
                 axios
                     .post(route('comments.store'), {
                         'task_id': this.taskId,

@@ -2230,7 +2230,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['taskId'],
+  props: ['taskId', 'isArchive'],
   data: function data() {
     return {
       comments: [],
@@ -2259,7 +2259,6 @@ __webpack_require__.r(__webpack_exports__);
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
-        console.log(this.text.length);
         axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('comments.store'), {
           'task_id': this.taskId,
           'text': this.text
@@ -67449,46 +67448,53 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "px-1" }, [
-      _c("div", [
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.text,
-              expression: "text"
-            }
-          ],
-          staticClass: "form-control w-100 mb-2",
-          class: { "is-invalid": this.$v.text.$error },
-          attrs: { placeholder: "Comment..." },
-          domProps: { value: _vm.text },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+    !_vm.isArchive
+      ? _c("div", { staticClass: "px-1" }, [
+          _c("div", [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.text,
+                  expression: "text"
+                }
+              ],
+              staticClass: "form-control w-100 mb-2",
+              class: { "is-invalid": this.$v.text.$error },
+              attrs: { placeholder: "Comment..." },
+              domProps: { value: _vm.text },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.text = $event.target.value
+                }
               }
-              _vm.text = $event.target.value
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      this.$v.text.$error
-        ? _c("div", { staticClass: "text-danger" }, [_vm._v("1-1500 symbols")])
-        : _vm._e(),
-      _vm._v(" "),
-      _c("div", { staticClass: "text-right" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", on: { click: _vm.sendComment } },
-          [_vm._v("Send")]
-        )
-      ])
-    ]),
+            })
+          ]),
+          _vm._v(" "),
+          this.$v.text.$error
+            ? _c("div", { staticClass: "text-danger" }, [
+                _vm._v("1-1500 symbols")
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "text-right" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                on: { click: _vm.sendComment }
+              },
+              [_vm._v("Send")]
+            )
+          ])
+        ])
+      : _vm._e(),
     _vm._v(" "),
-    _c("hr"),
+    !_vm.isArchive ? _c("hr") : _vm._e(),
     _vm._v(" "),
     _vm.comments.length === 0
       ? _c("div", { staticClass: "h-500 text-center" }, [_vm._v("No comments")])
@@ -68981,7 +68987,10 @@ var render = function() {
               },
               [
                 _c("comments", {
-                  attrs: { taskId: _vm.task.id },
+                  attrs: {
+                    taskId: _vm.task.id,
+                    isArchive: _vm.task.deleted_at !== null
+                  },
                   on: {
                     newComment: function($event) {
                       ++_vm.task.comments_count
