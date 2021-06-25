@@ -20,57 +20,34 @@
             <div class="modal-body">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">
-                        <form @submit.prevent="updateTask">
-                            <div v-if="task.details" class="mb-2">
-                                <div class="font-weight-bold">Details</div>
-                                <div>{{task.details}}</div>
+                        <div v-if="task.details" class="mb-2">
+                            <div class="font-weight-bold">Details</div>
+                            <div>{{task.details}}</div>
+                        </div>
+                        <div class="mb-2">
+                            <div class="font-weight-bold">Project</div>
+                            <div v-if="task.project" class="cursor-pointer project-name" @click="showProject(task.project.id)">
+                                {{task.project.name}}
+                                <span v-if="task.project.deleted_at" class="text-info">ARCHIVED</span>
                             </div>
-                            <div class="mb-2">
-                                <div class="font-weight-bold">Project</div>
-                                <div v-if="task.project" class="cursor-pointer project-name" @click="showProject(task.project.id)">
-                                    {{task.project.name}}
-                                    <span v-if="task.project.deleted_at" class="text-info">ARCHIVED</span>
-                                </div>
-                                <div v-else-if="project" class="cursor-pointer project-name" @click="showProject(project.id)">
-                                    {{project.name}}
-                                </div>
+                            <div v-else-if="project" class="cursor-pointer project-name" @click="showProject(project.id)">
+                                {{project.name}}
                             </div>
-                            <div v-if="task.schedule" class="mb-2">
-                                <div class="font-weight-bold">Schedule</div>
-                                <div :class="{'text-danger': isOverdue()}">
-                                    {{task.schedule}} <i v-if="isOverdue()" class="fas fa-exclamation"></i>
-                                </div>
+                        </div>
+                        <div v-if="task.schedule" class="mb-2">
+                            <div class="font-weight-bold">Schedule</div>
+                            <div :class="{'text-danger': isOverdue()}">
+                                {{task.schedule}} <i v-if="isOverdue()" class="fas fa-exclamation"></i>
                             </div>
-                            <div class="mb-2">
-                                <div class="font-weight-bold">Importance</div>
-                                <div><span :class="importanceCss(task.importance)">&bull;</span> {{importanceText(task.importance)}}</div>
-                            </div>
-                            <div class="mb-2">
-                                <div class="font-weight-bold">Status</div>
-                                <div>{{statusText(task.status)}}</div>
-                            </div>
-
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-outline-danger" @click="deleteTaskModal">Delete</button>
-
-                                <button type="button" class="btn btn-primary" v-if="!task.deleted_at && task.status !== c.STATUS_FINISHED">
-                                    <span v-if="task.status === c.STATUS_NEW" @click="changeStatus(c.STATUS_PROGRESS)">Start</span>
-                                    <span v-else-if="task.status === c.STATUS_PROGRESS" @click="changeStatus(c.STATUS_FINISHED)">Finish</span>
-                                </button>
-
-                                <button type="button" class="btn btn-primary"
-                                        v-if="!task.deleted_at && (task.status === c.STATUS_FINISHED || (task.project && task.project.deleted_at) )"
-                                >
-                                    <span @click="archive" data-dismiss="modal">Archive</span>
-                                </button>
-
-                                <button type="button" class="btn btn-primary" v-if="task.deleted_at && !task.project.deleted_at">
-                                    <span @click="restore" data-dismiss="modal">Restore</span>
-                                </button>
-
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="closeShowTask">Close</button>
-                            </div>
-                        </form>
+                        </div>
+                        <div class="mb-2">
+                            <div class="font-weight-bold">Importance</div>
+                            <div><span :class="importanceCss(task.importance)">&bull;</span> {{importanceText(task.importance)}}</div>
+                        </div>
+                        <div class="mb-2">
+                            <div class="font-weight-bold">Status</div>
+                            <div>{{statusText(task.status)}}</div>
+                        </div>
                     </div>
 
                     <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="profile-tab">
@@ -80,6 +57,27 @@
                             @newComment="++task.comments_count"
                             @commentDeleted="--task.comments_count"
                         ></comments>
+                    </div>
+
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-outline-danger" @click="deleteTaskModal">Delete</button>
+
+                        <button type="button" class="btn btn-primary" v-if="!task.deleted_at && task.status !== c.STATUS_FINISHED">
+                            <span v-if="task.status === c.STATUS_NEW" @click="changeStatus(c.STATUS_PROGRESS)">Start</span>
+                            <span v-else-if="task.status === c.STATUS_PROGRESS" @click="changeStatus(c.STATUS_FINISHED)">Finish</span>
+                        </button>
+
+                        <button type="button" class="btn btn-primary"
+                                v-if="!task.deleted_at && (task.status === c.STATUS_FINISHED || (task.project && task.project.deleted_at) )"
+                        >
+                            <span @click="archive" data-dismiss="modal">Archive</span>
+                        </button>
+
+                        <button type="button" class="btn btn-primary" v-if="task.deleted_at && !task.project.deleted_at">
+                            <span @click="restore" data-dismiss="modal">Restore</span>
+                        </button>
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="closeShowTask">Close</button>
                     </div>
                 </div>
             </div>

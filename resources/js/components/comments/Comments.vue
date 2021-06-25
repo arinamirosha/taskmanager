@@ -114,7 +114,7 @@ export default {
 
 <style scoped>
 .h-500 {
-    height: 500px;
+    height: 400px;
 }
 .comments {
     overflow-y: scroll;

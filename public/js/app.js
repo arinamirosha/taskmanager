@@ -3134,8 +3134,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -3981,6 +3979,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('taskUpdated');
 
       if (typeof task !== 'number') {
+        console.log(task);
         this.currentTask = task;
         this.$refs.showTaskModalButton.click();
       }
@@ -8874,7 +8873,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.h-500[data-v-0a9f94d8] {\n    height: 500px;\n}\n.comments[data-v-0a9f94d8] {\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n.text-sm[data-v-0a9f94d8] {\n    font-size: 12px;\n}\n.fa-times[data-v-0a9f94d8] {\n    cursor: pointer;\n    color: #eaeaea;\n}\n.comment:hover .fa-times[data-v-0a9f94d8] {\n    color: #d7d7d7;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.h-500[data-v-0a9f94d8] {\n    height: 400px;\n}\n.comments[data-v-0a9f94d8] {\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n.text-sm[data-v-0a9f94d8] {\n    font-size: 12px;\n}\n.fa-times[data-v-0a9f94d8] {\n    cursor: pointer;\n    color: #eaeaea;\n}\n.comment:hover .fa-times[data-v-0a9f94d8] {\n    color: #d7d7d7;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -68796,239 +68795,110 @@ var render = function() {
                 }
               },
               [
-                _c(
-                  "form",
-                  {
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.updateTask($event)
-                      }
-                    }
-                  },
-                  [
-                    _vm.task.details
-                      ? _c("div", { staticClass: "mb-2" }, [
-                          _c("div", { staticClass: "font-weight-bold" }, [
-                            _vm._v("Details")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", [_vm._v(_vm._s(_vm.task.details))])
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "mb-2" }, [
+                _vm.task.details
+                  ? _c("div", { staticClass: "mb-2" }, [
                       _c("div", { staticClass: "font-weight-bold" }, [
-                        _vm._v("Project")
+                        _vm._v("Details")
                       ]),
                       _vm._v(" "),
-                      _vm.task.project
-                        ? _c(
-                            "div",
-                            {
-                              staticClass: "cursor-pointer project-name",
-                              on: {
-                                click: function($event) {
-                                  return _vm.showProject(_vm.task.project.id)
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                " +
-                                  _vm._s(_vm.task.project.name) +
-                                  "\n                                "
-                              ),
-                              _vm.task.project.deleted_at
-                                ? _c("span", { staticClass: "text-info" }, [
-                                    _vm._v("ARCHIVED")
-                                  ])
-                                : _vm._e()
-                            ]
+                      _c("div", [_vm._v(_vm._s(_vm.task.details))])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bold" }, [
+                    _vm._v("Project")
+                  ]),
+                  _vm._v(" "),
+                  _vm.task.project
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "cursor-pointer project-name",
+                          on: {
+                            click: function($event) {
+                              return _vm.showProject(_vm.task.project.id)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.task.project.name) +
+                              "\n                            "
+                          ),
+                          _vm.task.project.deleted_at
+                            ? _c("span", { staticClass: "text-info" }, [
+                                _vm._v("ARCHIVED")
+                              ])
+                            : _vm._e()
+                        ]
+                      )
+                    : _vm.project
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "cursor-pointer project-name",
+                          on: {
+                            click: function($event) {
+                              return _vm.showProject(_vm.project.id)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.project.name) +
+                              "\n                        "
                           )
-                        : _vm.project
-                        ? _c(
-                            "div",
-                            {
-                              staticClass: "cursor-pointer project-name",
-                              on: {
-                                click: function($event) {
-                                  return _vm.showProject(_vm.project.id)
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                " +
-                                  _vm._s(_vm.project.name) +
-                                  "\n                            "
-                              )
-                            ]
-                          )
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _vm.task.schedule
-                      ? _c("div", { staticClass: "mb-2" }, [
-                          _c("div", { staticClass: "font-weight-bold" }, [
-                            _vm._v("Schedule")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { class: { "text-danger": _vm.isOverdue() } },
-                            [
-                              _vm._v(
-                                "\n                                " +
-                                  _vm._s(_vm.task.schedule) +
-                                  " "
-                              ),
-                              _vm.isOverdue()
-                                ? _c("i", { staticClass: "fas fa-exclamation" })
-                                : _vm._e()
-                            ]
-                          )
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "mb-2" }, [
+                        ]
+                      )
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _vm.task.schedule
+                  ? _c("div", { staticClass: "mb-2" }, [
                       _c("div", { staticClass: "font-weight-bold" }, [
-                        _vm._v("Importance")
+                        _vm._v("Schedule")
                       ]),
                       _vm._v(" "),
-                      _c("div", [
-                        _c(
-                          "span",
-                          { class: _vm.importanceCss(_vm.task.importance) },
-                          [_vm._v("•")]
-                        ),
+                      _c("div", { class: { "text-danger": _vm.isOverdue() } }, [
                         _vm._v(
-                          " " + _vm._s(_vm.importanceText(_vm.task.importance))
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "mb-2" }, [
-                      _c("div", { staticClass: "font-weight-bold" }, [
-                        _vm._v("Status")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [
-                        _vm._v(_vm._s(_vm.statusText(_vm.task.status)))
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "modal-footer justify-content-between" },
-                      [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-outline-danger",
-                            attrs: { type: "button" },
-                            on: { click: _vm.deleteTaskModal }
-                          },
-                          [_vm._v("Delete")]
+                          "\n                            " +
+                            _vm._s(_vm.task.schedule) +
+                            " "
                         ),
-                        _vm._v(" "),
-                        !_vm.task.deleted_at &&
-                        _vm.task.status !== _vm.c.STATUS_FINISHED
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "button" }
-                              },
-                              [
-                                _vm.task.status === _vm.c.STATUS_NEW
-                                  ? _c(
-                                      "span",
-                                      {
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.changeStatus(
-                                              _vm.c.STATUS_PROGRESS
-                                            )
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("Start")]
-                                    )
-                                  : _vm.task.status === _vm.c.STATUS_PROGRESS
-                                  ? _c(
-                                      "span",
-                                      {
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.changeStatus(
-                                              _vm.c.STATUS_FINISHED
-                                            )
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("Finish")]
-                                    )
-                                  : _vm._e()
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        !_vm.task.deleted_at &&
-                        (_vm.task.status === _vm.c.STATUS_FINISHED ||
-                          (_vm.task.project && _vm.task.project.deleted_at))
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "button" }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  {
-                                    attrs: { "data-dismiss": "modal" },
-                                    on: { click: _vm.archive }
-                                  },
-                                  [_vm._v("Archive")]
-                                )
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.task.deleted_at && !_vm.task.project.deleted_at
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "button" }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  {
-                                    attrs: { "data-dismiss": "modal" },
-                                    on: { click: _vm.restore }
-                                  },
-                                  [_vm._v("Restore")]
-                                )
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            ref: "closeShowTask",
-                            staticClass: "btn btn-secondary",
-                            attrs: { type: "button", "data-dismiss": "modal" }
-                          },
-                          [_vm._v("Close")]
-                        )
-                      ]
+                        _vm.isOverdue()
+                          ? _c("i", { staticClass: "fas fa-exclamation" })
+                          : _vm._e()
+                      ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bold" }, [
+                    _vm._v("Importance")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c(
+                      "span",
+                      { class: _vm.importanceCss(_vm.task.importance) },
+                      [_vm._v("•")]
+                    ),
+                    _vm._v(
+                      " " + _vm._s(_vm.importanceText(_vm.task.importance))
                     )
-                  ]
-                )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bold" }, [
+                    _vm._v("Status")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [_vm._v(_vm._s(_vm.statusText(_vm.task.status)))])
+                ])
               ]
             ),
             _vm._v(" "),
@@ -69059,7 +68929,108 @@ var render = function() {
                 })
               ],
               1
-            )
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer justify-content-between" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-danger",
+                  attrs: { type: "button" },
+                  on: { click: _vm.deleteTaskModal }
+                },
+                [_vm._v("Delete")]
+              ),
+              _vm._v(" "),
+              !_vm.task.deleted_at && _vm.task.status !== _vm.c.STATUS_FINISHED
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" }
+                    },
+                    [
+                      _vm.task.status === _vm.c.STATUS_NEW
+                        ? _c(
+                            "span",
+                            {
+                              on: {
+                                click: function($event) {
+                                  return _vm.changeStatus(_vm.c.STATUS_PROGRESS)
+                                }
+                              }
+                            },
+                            [_vm._v("Start")]
+                          )
+                        : _vm.task.status === _vm.c.STATUS_PROGRESS
+                        ? _c(
+                            "span",
+                            {
+                              on: {
+                                click: function($event) {
+                                  return _vm.changeStatus(_vm.c.STATUS_FINISHED)
+                                }
+                              }
+                            },
+                            [_vm._v("Finish")]
+                          )
+                        : _vm._e()
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.task.deleted_at &&
+              (_vm.task.status === _vm.c.STATUS_FINISHED ||
+                (_vm.task.project && _vm.task.project.deleted_at))
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" }
+                    },
+                    [
+                      _c(
+                        "span",
+                        {
+                          attrs: { "data-dismiss": "modal" },
+                          on: { click: _vm.archive }
+                        },
+                        [_vm._v("Archive")]
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.task.deleted_at && !_vm.task.project.deleted_at
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" }
+                    },
+                    [
+                      _c(
+                        "span",
+                        {
+                          attrs: { "data-dismiss": "modal" },
+                          on: { click: _vm.restore }
+                        },
+                        [_vm._v("Restore")]
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  ref: "closeShowTask",
+                  staticClass: "btn btn-secondary",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("Close")]
+              )
+            ])
           ]
         )
       ])
