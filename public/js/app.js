@@ -68206,7 +68206,7 @@ var render = function() {
         [
           _c("div", { staticClass: "modal-body" }, [
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
+              _c("label", { attrs: { for: "name-task" } }, [_vm._v("Name")]),
               _vm._v(" "),
               _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
               _vm._v(" "),
@@ -68221,7 +68221,7 @@ var render = function() {
                 ],
                 staticClass: "form-control",
                 class: { "is-invalid": this.$v.name.$error },
-                attrs: { id: "name" },
+                attrs: { id: "name-task" },
                 domProps: { value: _vm.name },
                 on: {
                   input: function($event) {
@@ -68483,7 +68483,7 @@ var render = function() {
         [
           _c("div", { staticClass: "modal-body" }, [
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "name1" } }, [_vm._v("Name")]),
+              _c("label", { attrs: { for: "name-edit" } }, [_vm._v("Name")]),
               _vm._v(" "),
               _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
               _vm._v(" "),
@@ -68498,7 +68498,7 @@ var render = function() {
                 ],
                 staticClass: "form-control",
                 class: { "is-invalid": this.$v.name.$error },
-                attrs: { id: "name1" },
+                attrs: { id: "name-edit" },
                 domProps: { value: _vm.name },
                 on: {
                   input: function($event) {
@@ -68512,7 +68512,9 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "details" } }, [_vm._v("Details")]),
+              _c("label", { attrs: { for: "details-edit" } }, [
+                _vm._v("Details")
+              ]),
               _vm._v(" "),
               _c("textarea", {
                 directives: [
@@ -68525,7 +68527,7 @@ var render = function() {
                 ],
                 staticClass: "form-control",
                 class: { "is-invalid": this.$v.details.$error },
-                attrs: { id: "details" },
+                attrs: { id: "details-edit" },
                 domProps: { value: _vm.details },
                 on: {
                   input: function($event) {
@@ -68539,7 +68541,9 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "schedule" } }, [_vm._v("Schedule")]),
+              _c("label", { attrs: { for: "schedule-edit" } }, [
+                _vm._v("Schedule")
+              ]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -68552,7 +68556,11 @@ var render = function() {
                 ],
                 staticClass: "form-control",
                 class: { "is-invalid": this.$v.schedule.$error },
-                attrs: { type: "date", min: _vm.minSchedule, id: "schedule" },
+                attrs: {
+                  type: "date",
+                  min: _vm.minSchedule,
+                  id: "schedule-edit"
+                },
                 domProps: { value: _vm.schedule },
                 on: {
                   input: function($event) {
@@ -68566,38 +68574,52 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "importance" } }, [
+              _c("label", { attrs: { for: "importance-edit" } }, [
                 _vm._v("Importance")
               ]),
               _vm._v(" "),
-              _c("select", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.importance,
-                    expression: "importance"
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.importance,
+                      expression: "importance"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": this.$v.importance.$error },
+                  attrs: { id: "importance-edit" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.importance = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
                   }
-                ],
-                staticClass: "form-control",
-                class: { "is-invalid": this.$v.importance.$error },
-                attrs: { id: "importance" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.importance = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              })
+                },
+                _vm._l(_vm.statuses, function(importance) {
+                  return _c(
+                    "option",
+                    {
+                      class: _vm.importanceCss(importance),
+                      domProps: { value: importance }
+                    },
+                    [_vm._v(_vm._s(_vm.importanceText(importance)))]
+                  )
+                }),
+                0
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [

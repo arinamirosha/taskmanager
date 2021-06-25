@@ -7,8 +7,8 @@
             <form @submit.prevent="storeTask">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name">Name</label> <span class="text-danger">*</span>
-                        <input class="form-control" id="name" v-model="name" :class="{'is-invalid': this.$v.name.$error}">
+                        <label for="name-task">Name</label> <span class="text-danger">*</span>
+                        <input class="form-control" id="name-task" v-model="name" :class="{'is-invalid': this.$v.name.$error}">
                     </div>
                     <div class="form-group">
                         <label for="details">Details</label>

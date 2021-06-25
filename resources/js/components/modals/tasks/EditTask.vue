@@ -7,24 +7,24 @@
             <form @submit.prevent="updateTask">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name1">Name</label> <span class="text-danger">*</span>
-                        <input class="form-control" id="name1" v-model="name" :class="{'is-invalid': this.$v.name.$error}">
+                        <label for="name-edit">Name</label> <span class="text-danger">*</span>
+                        <input class="form-control" id="name-edit" v-model="name" :class="{'is-invalid': this.$v.name.$error}">
                     </div>
                     <div class="form-group">
-                        <label for="details">Details</label>
-                        <textarea class="form-control" id="details" v-model="details" :class="{'is-invalid': this.$v.details.$error}"></textarea>
+                        <label for="details-edit">Details</label>
+                        <textarea class="form-control" id="details-edit" v-model="details" :class="{'is-invalid': this.$v.details.$error}"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="schedule">Schedule</label>
-                        <input type="date" :min="minSchedule" class="form-control" id="schedule" v-model="schedule" :class="{'is-invalid': this.$v.schedule.$error}">
+                        <label for="schedule-edit">Schedule</label>
+                        <input type="date" :min="minSchedule" class="form-control" id="schedule-edit" v-model="schedule" :class="{'is-invalid': this.$v.schedule.$error}">
                     </div>
                     <div class="form-group">
-                        <label for="importance">Importance</label>
-                        <select class="form-control" id="importance" v-model="importance" :class="{'is-invalid': this.$v.importance.$error}">
-<!--                            <option v-for="importance in statuses"-->
-<!--                                    :value="importance"-->
-<!--                                    :class="importanceCss(importance)"-->
-<!--                            >{{importanceText(importance)}}</option>-->
+                        <label for="importance-edit">Importance</label>
+                        <select class="form-control" id="importance-edit" v-model="importance" :class="{'is-invalid': this.$v.importance.$error}">
+                            <option v-for="importance in statuses"
+                                    :value="importance"
+                                    :class="importanceCss(importance)"
+                            >{{importanceText(importance)}}</option>
                         </select>
                     </div>
                     <div class="form-group">
