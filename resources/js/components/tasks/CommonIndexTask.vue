@@ -307,22 +307,6 @@ export default {
         isNeedStyleFinished(task) {
             return this.type !== this.c.ARCHIVE && task.status === this.c.STATUS_FINISHED;
         },
-        statusIconClass(status) {
-            switch (status) {
-                case this.c.STATUS_NEW: return 'fas fa-external-link-alt';
-                case this.c.STATUS_PROGRESS: return 'fas fa-spinner';
-                case this.c.STATUS_FINISHED: return 'fas fa-check';
-            }
-            return '';
-        },
-        importanceCss(importance) {
-            switch (importance) {
-                case this.c.STATUS_NORMAL: return 'text-secondary';
-                case this.c.STATUS_MEDIUM: return 'text-primary';
-                case this.c.STATUS_STRONG: return 'text-danger';
-            }
-            return '';
-        },
     },
     mounted() {
         this.getTasks();

@@ -22,14 +22,6 @@ export default {
     ],
     props: ['task'],
     methods: {
-        importanceCss(importance) {
-            switch (importance) {
-                case this.c.STATUS_NORMAL: return 'text-secondary';
-                case this.c.STATUS_MEDIUM: return 'text-primary';
-                case this.c.STATUS_STRONG: return 'text-danger';
-            }
-            return '';
-        },
         titleSchedule(schedule) {
             return moment(new Date(schedule)).format('MMMM DD, YYYY');
         },

@@ -2672,32 +2672,6 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    importanceText: function importanceText(importance) {
-      switch (importance) {
-        case this.c.STATUS_NORMAL:
-          return 'Normal';
-
-        case this.c.STATUS_MEDIUM:
-          return 'Medium';
-
-        case this.c.STATUS_STRONG:
-          return 'Strong';
-      }
-    },
-    importanceCss: function importanceCss(importance) {
-      switch (importance) {
-        case this.c.STATUS_NORMAL:
-          return 'text-secondary';
-
-        case this.c.STATUS_MEDIUM:
-          return 'text-primary';
-
-        case this.c.STATUS_STRONG:
-          return 'text-danger';
-      }
-
-      return '';
-    },
     reset: function reset() {
       this.name = '';
       this.details = '';
@@ -2906,32 +2880,6 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    importanceText: function importanceText(importance) {
-      switch (importance) {
-        case this.c.STATUS_NORMAL:
-          return 'Normal';
-
-        case this.c.STATUS_MEDIUM:
-          return 'Medium';
-
-        case this.c.STATUS_STRONG:
-          return 'Strong';
-      }
-    },
-    importanceCss: function importanceCss(importance) {
-      switch (importance) {
-        case this.c.STATUS_NORMAL:
-          return 'text-secondary';
-
-        case this.c.STATUS_MEDIUM:
-          return 'text-primary';
-
-        case this.c.STATUS_STRONG:
-          return 'text-danger';
-      }
-
-      return '';
-    },
     reset: function reset() {
       this.setOriginValues();
       this.$v.$reset();
@@ -3041,46 +2989,6 @@ __webpack_require__.r(__webpack_exports__);
   mixins: [_mixins_constants_js__WEBPACK_IMPORTED_MODULE_0__.default],
   props: ['task', 'project'],
   methods: {
-    importanceText: function importanceText(importance) {
-      switch (importance) {
-        case this.c.STATUS_NORMAL:
-          return 'Normal';
-
-        case this.c.STATUS_MEDIUM:
-          return 'Medium';
-
-        case this.c.STATUS_STRONG:
-          return 'Strong';
-      }
-    },
-    importanceCss: function importanceCss(importance) {
-      switch (importance) {
-        case this.c.STATUS_NORMAL:
-          return 'text-secondary';
-
-        case this.c.STATUS_MEDIUM:
-          return 'text-primary';
-
-        case this.c.STATUS_STRONG:
-          return 'text-danger';
-      }
-
-      return '';
-    },
-    statusText: function statusText(status) {
-      switch (status) {
-        case this.c.STATUS_NEW:
-          return 'New';
-
-        case this.c.STATUS_PROGRESS:
-          return 'Progress';
-
-        case this.c.STATUS_FINISHED:
-          return 'Finished';
-      }
-
-      return '';
-    },
     deleteTaskModal: function deleteTaskModal() {
       this.$refs.closeShowTask.click();
       this.$emit('deleteTaskModal');
@@ -3952,34 +3860,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     isNeedStyleFinished: function isNeedStyleFinished(task) {
       return this.type !== this.c.ARCHIVE && task.status === this.c.STATUS_FINISHED;
-    },
-    statusIconClass: function statusIconClass(status) {
-      switch (status) {
-        case this.c.STATUS_NEW:
-          return 'fas fa-external-link-alt';
-
-        case this.c.STATUS_PROGRESS:
-          return 'fas fa-spinner';
-
-        case this.c.STATUS_FINISHED:
-          return 'fas fa-check';
-      }
-
-      return '';
-    },
-    importanceCss: function importanceCss(importance) {
-      switch (importance) {
-        case this.c.STATUS_NORMAL:
-          return 'text-secondary';
-
-        case this.c.STATUS_MEDIUM:
-          return 'text-primary';
-
-        case this.c.STATUS_STRONG:
-          return 'text-danger';
-      }
-
-      return '';
     }
   },
   mounted: function mounted() {
@@ -4025,20 +3905,6 @@ __webpack_require__.r(__webpack_exports__);
   mixins: [_mixins_constants_js__WEBPACK_IMPORTED_MODULE_1__.default],
   props: ['task'],
   methods: {
-    importanceCss: function importanceCss(importance) {
-      switch (importance) {
-        case this.c.STATUS_NORMAL:
-          return 'text-secondary';
-
-        case this.c.STATUS_MEDIUM:
-          return 'text-primary';
-
-        case this.c.STATUS_STRONG:
-          return 'text-danger';
-      }
-
-      return '';
-    },
     titleSchedule: function titleSchedule(schedule) {
       return moment__WEBPACK_IMPORTED_MODULE_2___default()(new Date(schedule)).format('MMMM DD, YYYY');
     },
@@ -4154,11 +4020,72 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../route */ "./resources/js/route.js");
+
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: {
     c: function c() {
       return _constants__WEBPACK_IMPORTED_MODULE_0__;
+    }
+  },
+  methods: {
+    importanceCss: function importanceCss(importance) {
+      switch (importance) {
+        case this.c.STATUS_NORMAL:
+          return 'text-secondary';
+
+        case this.c.STATUS_MEDIUM:
+          return 'text-primary';
+
+        case this.c.STATUS_STRONG:
+          return 'text-danger';
+      }
+
+      return '';
+    },
+    importanceText: function importanceText(importance) {
+      switch (importance) {
+        case this.c.STATUS_NORMAL:
+          return 'Normal';
+
+        case this.c.STATUS_MEDIUM:
+          return 'Medium';
+
+        case this.c.STATUS_STRONG:
+          return 'Strong';
+      }
+    },
+    statusText: function statusText(status) {
+      switch (status) {
+        case this.c.STATUS_NEW:
+          return 'New';
+
+        case this.c.STATUS_PROGRESS:
+          return 'Progress';
+
+        case this.c.STATUS_FINISHED:
+          return 'Finished';
+      }
+
+      return '';
+    },
+    statusIconClass: function statusIconClass(status) {
+      switch (status) {
+        case this.c.STATUS_NEW:
+          return 'fas fa-external-link-alt';
+
+        case this.c.STATUS_PROGRESS:
+          return 'fas fa-spinner';
+
+        case this.c.STATUS_FINISHED:
+          return 'fas fa-check';
+      }
+
+      return '';
     }
   }
 });

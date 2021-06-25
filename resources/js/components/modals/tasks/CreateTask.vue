@@ -95,21 +95,6 @@ export default {
                     });
             }
         },
-        importanceText(importance) {
-            switch (importance) {
-                case this.c.STATUS_NORMAL: return 'Normal';
-                case this.c.STATUS_MEDIUM: return 'Medium';
-                case this.c.STATUS_STRONG: return 'Strong';
-            }
-        },
-        importanceCss(importance) {
-            switch (importance) {
-                case this.c.STATUS_NORMAL: return 'text-secondary';
-                case this.c.STATUS_MEDIUM: return 'text-primary';
-                case this.c.STATUS_STRONG: return 'text-danger';
-            }
-            return '';
-        },
         reset() {
             this.name = '';
             this.details = '';
