@@ -27,5 +27,6 @@
     "tasks.archive": "tasks\/archive\/all",
     "tasks.destroy-force": "tasks\/{task}\/force",
     "comments.index": "comments",
-    "comments.store": "comments"
+    "comments.store": "comments",
+    "comments.destroy": "comments\/{comment}"
 }

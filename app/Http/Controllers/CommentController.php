@@ -21,4 +21,11 @@ class CommentController extends Controller
         $comment = Auth::user()->comments()->create($request->all());
         return $comment->load('user');
     }
+
+    public function destroy(Comment $comment)
+    {
+        $comment->delete();
+
+        return true;
+    }
 }

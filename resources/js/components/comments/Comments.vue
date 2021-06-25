@@ -17,10 +17,13 @@
 
         <div v-if="comments.length === 0" class="h-500 text-center">No comments</div>
         <div v-else class="comments h-500 pr-1">
-            <div v-for="comment in comments">
+            <div v-for="comment in comments" class="comment">
                 <div class="justify-content-between d-flex">
                     <div class="font-weight-bold">{{comment.user.email}}</div>
-                    <div class="text-secondary text-sm">{{formatDate(comment.created_at)}}</div>
+                    <div class="text-secondary text-sm">
+                        {{formatDate(comment.created_at)}}
+                        <i v-if="!isArchive" class="fas fa-times ml-1 p-1" @click="deleteComment(comment.id)"></i>
+                    </div>
                 </div>
                 <div>{{comment.text}}</div>
                 <hr>
@@ -90,6 +93,17 @@ export default {
                     console.log(error);
                 });
         },
+        deleteComment(id) {
+            axios
+                .delete(route('comments.destroy', id))
+                .then(response => {
+                    this.comments = this.comments.filter(comment => comment.id !== id);
+                    this.$emit('commentDeleted');
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
         reset() {
             this.text = '';
             this.$v.$reset();
@@ -108,5 +122,12 @@ export default {
 }
 .text-sm {
     font-size: 12px;
+}
+.fa-times {
+    cursor: pointer;
+    color: #eaeaea;
+}
+.comment:hover .fa-times {
+    color: #d7d7d7;
 }
 </style>

@@ -2226,6 +2226,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2282,6 +2285,19 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this2.comments = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    deleteComment: function deleteComment(id) {
+      var _this3 = this;
+
+      axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('comments.destroy', id)).then(function (response) {
+        _this3.comments = _this3.comments.filter(function (comment) {
+          return comment.id !== id;
+        });
+
+        _this3.$emit('commentDeleted');
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3031,6 +3047,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../route */ "./resources/js/route.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -8853,7 +8874,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.h-500[data-v-0a9f94d8] {\n    height: 500px;\n}\n.comments[data-v-0a9f94d8] {\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n.text-sm[data-v-0a9f94d8] {\n    font-size: 12px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.h-500[data-v-0a9f94d8] {\n    height: 500px;\n}\n.comments[data-v-0a9f94d8] {\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n.text-sm[data-v-0a9f94d8] {\n    font-size: 12px;\n}\n.fa-times[data-v-0a9f94d8] {\n    cursor: pointer;\n    color: #eaeaea;\n}\n.comment:hover .fa-times[data-v-0a9f94d8] {\n    color: #d7d7d7;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -67502,14 +67523,28 @@ var render = function() {
           "div",
           { staticClass: "comments h-500 pr-1" },
           _vm._l(_vm.comments, function(comment) {
-            return _c("div", [
+            return _c("div", { staticClass: "comment" }, [
               _c("div", { staticClass: "justify-content-between d-flex" }, [
                 _c("div", { staticClass: "font-weight-bold" }, [
                   _vm._v(_vm._s(comment.user.email))
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "text-secondary text-sm" }, [
-                  _vm._v(_vm._s(_vm.formatDate(comment.created_at)))
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.formatDate(comment.created_at)) +
+                      "\n                    "
+                  ),
+                  !_vm.isArchive
+                    ? _c("i", {
+                        staticClass: "fas fa-times ml-1 p-1",
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteComment(comment.id)
+                          }
+                        }
+                      })
+                    : _vm._e()
                 ])
               ]),
               _vm._v(" "),
@@ -68994,6 +69029,9 @@ var render = function() {
                   on: {
                     newComment: function($event) {
                       ++_vm.task.comments_count
+                    },
+                    commentDeleted: function($event) {
+                      --_vm.task.comments_count
                     }
                   }
                 })
@@ -86762,7 +86800,7 @@ exports.withParams = withParams;
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"\":\"password/confirm\",\"login\":\"login\",\"logout\":\"logout\",\"register\":\"register\",\"password.request\":\"password/reset\",\"password.email\":\"password/email\",\"password.reset\":\"password/reset/{token}\",\"password.update\":\"password/reset\",\"password.confirm\":\"password/confirm\",\"welcome\":\"/\",\"home\":\"home\",\"users.show\":\"users\",\"users.update\":\"users\",\"projects.index\":\"projects\",\"projects.store\":\"projects\",\"projects.show\":\"projects/{project}\",\"projects.restore\":\"projects/{project}/restore\",\"projects.update\":\"projects/{project}\",\"projects.archive\":\"projects/{project}/archive\",\"projects.destroy-force\":\"projects/{project}/force\",\"tasks.index\":\"tasks\",\"tasks.store\":\"tasks\",\"tasks.restore\":\"tasks/{task}/restore\",\"tasks.update\":\"tasks/{task}\",\"tasks.destroy\":\"tasks/{task}\",\"tasks.archive\":\"tasks/archive/all\",\"tasks.destroy-force\":\"tasks/{task}/force\",\"comments.index\":\"comments\",\"comments.store\":\"comments\"}");
+module.exports = JSON.parse("{\"\":\"password/confirm\",\"login\":\"login\",\"logout\":\"logout\",\"register\":\"register\",\"password.request\":\"password/reset\",\"password.email\":\"password/email\",\"password.reset\":\"password/reset/{token}\",\"password.update\":\"password/reset\",\"password.confirm\":\"password/confirm\",\"welcome\":\"/\",\"home\":\"home\",\"users.show\":\"users\",\"users.update\":\"users\",\"projects.index\":\"projects\",\"projects.store\":\"projects\",\"projects.show\":\"projects/{project}\",\"projects.restore\":\"projects/{project}/restore\",\"projects.update\":\"projects/{project}\",\"projects.archive\":\"projects/{project}/archive\",\"projects.destroy-force\":\"projects/{project}/force\",\"tasks.index\":\"tasks\",\"tasks.store\":\"tasks\",\"tasks.restore\":\"tasks/{task}/restore\",\"tasks.update\":\"tasks/{task}\",\"tasks.destroy\":\"tasks/{task}\",\"tasks.archive\":\"tasks/archive/all\",\"tasks.destroy-force\":\"tasks/{task}/force\",\"comments.index\":\"comments\",\"comments.store\":\"comments\",\"comments.destroy\":\"comments/{comment}\"}");
 
 /***/ })
 
