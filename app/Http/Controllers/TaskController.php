@@ -15,8 +15,10 @@ class TaskController extends Controller
     {
         $project = Project::findOrFail($request->get('project_id', 0));
         $this->authorize('update', $project);
+        $data = $request->all();
+        $data['user_id'] = Auth::id();
 
-        return $project->tasks()->create($request->all());
+        return $project->tasks()->create($data);
     }
 
     public function update(Task $task, Request $request)
@@ -135,6 +137,6 @@ class TaskController extends Controller
             }
         }
 
-        return $tasks->with(['project'])->paginate(25);
+        return $tasks->with(['project'])->withCount('comments')->paginate(25);
     }
 }

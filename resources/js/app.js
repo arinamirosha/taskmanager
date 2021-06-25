@@ -36,6 +36,10 @@ Vue.component('delete-task-modal', require('./components/modals/tasks/DeleteTask
 Vue.component('edit-task-modal', require('./components/modals/tasks/EditTask.vue').default);
 
 
+// COMMENTS
+Vue.component('comments', require('./components/comments/Comments.vue').default);
+
+
 const app = new Vue({
     el: '#app',
 });

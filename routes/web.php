@@ -39,4 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/tasks/{task}', [App\Http\Controllers\TaskController::class, 'destroy'])->name('tasks.destroy')->middleware('can:delete,task');
     Route::delete('/tasks/archive/all', [App\Http\Controllers\TaskController::class, 'archive'])->name('tasks.archive');
     Route::delete('/tasks/{task}/force', [App\Http\Controllers\TaskController::class, 'destroyForce'])->name('tasks.destroy-force');
+
+    Route::get('/comments', [App\Http\Controllers\CommentController::class, 'index'])->name('comments.index');
+    Route::post('/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
 });

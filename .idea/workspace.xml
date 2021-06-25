@@ -5,14 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/CommentController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Requests/CommentRequest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/Comment.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2021_06_25_074600_create_comments_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2021_06_25_075858_add_user_to_tasks.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/comments/Comments.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Project.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Project.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Task.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Task.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Policies/TaskPolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Policies/TaskPolicy.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/mixins/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/mixins/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/CreateTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/CreateTask.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/EditTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/EditTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/tasks/CommonIndexTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tasks/CommonIndexTask.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tasks/ListItemTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tasks/ListItemTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/routes.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,8 +36,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Vue Single File Component" />
         <option value="JavaScript File" />
+        <option value="Vue Single File Component" />
       </list>
     </option>
   </component>
@@ -235,7 +245,7 @@
       <workItem from="1624428100638" duration="17051000" />
       <workItem from="1624514877892" duration="7938000" />
       <workItem from="1624539771070" duration="900000" />
-      <workItem from="1624602887525" duration="1997000" />
+      <workItem from="1624602887525" duration="14224000" />
     </task>
     <task id="LOCAL-00001" summary="archive/today/not scheduled/upcoming">
       <created>1621849545675</created>
@@ -559,7 +569,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624540656670</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="text/css/iconCss in mixin">
+      <created>1624606709094</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1624606709096</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -581,7 +598,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="use TaskManager" />
     <MESSAGE value="restore task" />
     <MESSAGE value="diff in archive" />
     <MESSAGE value="restore project" />
@@ -606,6 +622,7 @@
     <MESSAGE value="project page mobile" />
     <MESSAGE value="task pages mobile" />
     <MESSAGE value="mixins width and constants" />
-    <option name="LAST_COMMIT_MESSAGE" value="mixins width and constants" />
+    <MESSAGE value="text/css/iconCss in mixin" />
+    <option name="LAST_COMMIT_MESSAGE" value="text/css/iconCss in mixin" />
   </component>
 </project>

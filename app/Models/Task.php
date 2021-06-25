@@ -30,6 +30,7 @@ class Task extends Model
     const UPCOMING      = 'upcoming';
 
     protected $fillable = [
+        'user_id',
         'project_id',
         'name',
         'details',
@@ -46,5 +47,38 @@ class Task extends Model
     public function project()
     {
         return $this->belongsTo(Project::class)->withTrashed();
+    }
+
+    /**
+     * Many tasks to one user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * One task to many comments
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany( Comment::class);
+    }
+
+    /**
+     * On force delete cascade delete comments
+     */
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function ($task) {
+            if ($task->forceDeleting) {
+                $task->comments()->delete();
+            }
+        });
     }
 }

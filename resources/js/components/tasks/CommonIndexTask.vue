@@ -309,7 +309,9 @@ export default {
         },
     },
     mounted() {
-        this.getTasks();
+        if (this.type) {
+            this.getTasks();
+        }
         this.getHideFinished();
     }
 }

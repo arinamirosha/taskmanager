@@ -25,5 +25,7 @@
     "tasks.update": "tasks\/{task}",
     "tasks.destroy": "tasks\/{task}",
     "tasks.archive": "tasks\/archive\/all",
-    "tasks.destroy-force": "tasks\/{task}\/force"
+    "tasks.destroy-force": "tasks\/{task}\/force",
+    "comments.index": "comments",
+    "comments.store": "comments"
 }

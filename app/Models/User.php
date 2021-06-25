@@ -53,15 +53,23 @@ class User extends Authenticatable
     }
 
     /**
-     * User tasks
+     * One user to many comments
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * One user to many tasks
      *
      * @return mixed
      *
      */
     public function tasks()
     {
-        $project_ids = $this->projects()->withTrashed()->pluck('id');
-
-        return Task::whereIn('project_id', $project_ids);
+        return $this->hasMany(Task::class);
     }
 }
