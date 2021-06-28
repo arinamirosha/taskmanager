@@ -2229,6 +2229,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -2292,19 +2296,36 @@ __webpack_require__.r(__webpack_exports__);
     deleteComment: function deleteComment(id) {
       var _this3 = this;
 
-      axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('comments.destroy', id)).then(function (response) {
-        _this3.comments = _this3.comments.filter(function (comment) {
-          return comment.id !== id;
-        });
+      if (confirm('Are you shure want to delete this comment?')) {
+        axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('comments.destroy', id)).then(function (response) {
+          _this3.comments = _this3.comments.filter(function (comment) {
+            return comment.id !== id;
+          });
 
-        _this3.$emit('commentDeleted');
-      })["catch"](function (error) {
-        console.log(error);
-      });
+          _this3.$emit('commentDeleted');
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
     },
     reset: function reset() {
       this.text = '';
       this.$v.$reset();
+    },
+    triggerMore: function triggerMore(index) {
+      var dots = this.$refs['dots' + index][0];
+      var moreText = this.$refs['moreText' + index][0];
+      var moreTrigger = this.$refs['moreTrigger' + index][0];
+
+      if (dots.style.display === "none") {
+        dots.style.display = "inline";
+        moreTrigger.innerHTML = "Read more";
+        moreText.classList.add('d-none');
+      } else {
+        dots.style.display = "none";
+        moreTrigger.innerHTML = "Read less";
+        moreText.classList.remove('d-none');
+      }
     }
   }
 });
@@ -8961,7 +8982,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.h-500[data-v-0a9f94d8] {\n    height: 400px;\n}\n.comments[data-v-0a9f94d8] {\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n.text-sm[data-v-0a9f94d8] {\n    font-size: 12px;\n}\n.fa-times[data-v-0a9f94d8] {\n    cursor: pointer;\n    color: #eaeaea;\n}\n.comment:hover .fa-times[data-v-0a9f94d8] {\n    color: #d7d7d7;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.h-500[data-v-0a9f94d8] {\n    height: 400px;\n}\n.comments[data-v-0a9f94d8] {\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n.text-sm[data-v-0a9f94d8] {\n    font-size: 12px;\n}\n.fa-times[data-v-0a9f94d8] {\n    cursor: pointer;\n    color: #eaeaea;\n}\n.comment:hover .fa-times[data-v-0a9f94d8] {\n    color: #d7d7d7;\n}\n.link[data-v-0a9f94d8]:hover {\n    cursor: pointer;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -67681,7 +67702,7 @@ var render = function() {
       : _c(
           "div",
           { staticClass: "comments h-500 pr-1" },
-          _vm._l(_vm.comments, function(comment) {
+          _vm._l(_vm.comments, function(comment, index) {
             return _c("div", { staticClass: "comment" }, [
               _c("div", { staticClass: "justify-content-between d-flex" }, [
                 _c("div", { staticClass: "font-weight-bold" }, [
@@ -67711,7 +67732,41 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", [_vm._v(_vm._s(comment.text))]),
+              comment.text.length <= 200
+                ? _c("div", [_vm._v(_vm._s(comment.text))])
+                : _c("div", [
+                    _vm._v(
+                      "\n                " + _vm._s(comment.text.slice(0, 200))
+                    ),
+                    _c("span", { ref: "dots" + index, refInFor: true }, [
+                      _vm._v("...")
+                    ]),
+                    _c(
+                      "span",
+                      {
+                        ref: "moreText" + index,
+                        refInFor: true,
+                        staticClass: "d-none"
+                      },
+                      [_vm._v(_vm._s(comment.text.slice(200)))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        ref: "moreTrigger" + index,
+                        refInFor: true,
+                        staticClass: "text-secondary text-sm link",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.triggerMore(index)
+                          }
+                        }
+                      },
+                      [_vm._v("Read more")]
+                    )
+                  ]),
               _vm._v(" "),
               _c("hr")
             ])

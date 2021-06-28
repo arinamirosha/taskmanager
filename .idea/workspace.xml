@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tasks/CommonIndexTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tasks/CommonIndexTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/comments/Comments.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/comments/Comments.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -235,14 +234,7 @@
       <workItem from="1624514877892" duration="7938000" />
       <workItem from="1624539771070" duration="900000" />
       <workItem from="1624602887525" duration="21066000" />
-      <workItem from="1624859639891" duration="3482000" />
-    </task>
-    <task id="LOCAL-00005" summary="archive on task pages">
-      <created>1621935304457</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1621935304457</updated>
+      <workItem from="1624859639891" duration="7845000" />
     </task>
     <task id="LOCAL-00006" summary="archive toast info">
       <created>1621949579726</created>
@@ -580,7 +572,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624862755944</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="load count comments">
+      <created>1624863186634</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1624863186635</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -603,7 +602,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="counts by statuses" />
     <MESSAGE value="update counts when move task" />
     <MESSAGE value="pagination" />
     <MESSAGE value="search and filter" />
@@ -628,6 +626,7 @@
     <MESSAGE value="unique ids" />
     <MESSAGE value="correct" />
     <MESSAGE value="user profile" />
-    <option name="LAST_COMMIT_MESSAGE" value="user profile" />
+    <MESSAGE value="load count comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="load count comments" />
   </component>
 </project>

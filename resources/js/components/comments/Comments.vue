@@ -17,7 +17,7 @@
 
         <div v-if="comments.length === 0" class="h-500 text-center">No comments</div>
         <div v-else class="comments h-500 pr-1">
-            <div v-for="comment in comments" class="comment">
+            <div v-for="(comment, index) in comments" class="comment">
                 <div class="justify-content-between d-flex">
                     <div class="font-weight-bold">{{comment.user.name}} {{comment.user.surname}}</div>
                     <div class="text-secondary text-sm">
@@ -25,7 +25,11 @@
                         <i v-if="!isArchive" class="fas fa-times ml-1 p-1" @click="deleteComment(comment.id)"></i>
                     </div>
                 </div>
-                <div>{{comment.text}}</div>
+                <div v-if="comment.text.length <= 200">{{comment.text}}</div>
+                <div v-else>
+                    {{comment.text.slice(0,200)}}<span :ref="'dots'+index">...</span><span :ref="'moreText'+index" class="d-none">{{comment.text.slice(200)}}</span>
+                    <a @click.prevent="triggerMore(index)" class="text-secondary text-sm link" :ref="'moreTrigger'+index">Read more</a>
+                </div>
                 <hr>
             </div>
         </div>
@@ -94,19 +98,36 @@ export default {
                 });
         },
         deleteComment(id) {
-            axios
-                .delete(route('comments.destroy', id))
-                .then(response => {
-                    this.comments = this.comments.filter(comment => comment.id !== id);
-                    this.$emit('commentDeleted');
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+            if (confirm('Are you shure want to delete this comment?')) {
+                axios
+                    .delete(route('comments.destroy', id))
+                    .then(response => {
+                        this.comments = this.comments.filter(comment => comment.id !== id);
+                        this.$emit('commentDeleted');
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
         },
         reset() {
             this.text = '';
             this.$v.$reset();
+        },
+        triggerMore(index) {
+            let dots = this.$refs['dots'+index][0];
+            let moreText = this.$refs['moreText'+index][0];
+            let moreTrigger = this.$refs['moreTrigger'+index][0];
+
+            if (dots.style.display === "none") {
+                dots.style.display = "inline";
+                moreTrigger.innerHTML = "Read more";
+                moreText.classList.add('d-none');
+            } else {
+                dots.style.display = "none";
+                moreTrigger.innerHTML = "Read less";
+                moreText.classList.remove('d-none');
+            }
         },
     },
 }
@@ -129,5 +150,8 @@ export default {
 }
 .comment:hover .fa-times {
     color: #d7d7d7;
+}
+.link:hover {
+    cursor: pointer;
 }
 </style>
