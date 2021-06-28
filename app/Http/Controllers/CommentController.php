@@ -13,7 +13,7 @@ class CommentController extends Controller
 {
     public function index(CommentRequest $request)
     {
-        return Comment::where('task_id', $request->get('task_id'))->orderBy('created_at', 'desc')->with('user')->get();
+        return Comment::where('task_id', $request->get('task_id'))->orderBy('created_at', 'desc')->with('user')->paginate(30);
     }
 
     public function store(CommentRequestStore $request)

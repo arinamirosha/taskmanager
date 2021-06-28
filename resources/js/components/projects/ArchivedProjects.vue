@@ -49,20 +49,19 @@ import route from "../../route";
 import moment from "moment";
 import constantsMixin from "../mixins/constants.js";
 import customWidthMixin from "../mixins/custom-width.js";
+import paginationMixin from "../mixins/pagination";
 
 export default {
     mixins: [
         constantsMixin,
         customWidthMixin,
+        paginationMixin,
     ],
     data() {
         return {
             projects: [],
             isDataLoaded: false,
             dataLoading: false,
-            page: 0,
-            lastPage: 0,
-            isLastPage: false,
             s: '',
             hasNotFinished: false,
         }
@@ -91,9 +90,7 @@ export default {
                     }
                 })
                 .then(response => {
-                    this.isLastPage = response.data.projects.current_page === response.data.projects.last_page;
-                    this.page = 1;
-                    this.lastPage = response.data.projects.last_page;
+                    this.firstLoad(response.data.projects);
                     this.projects = response.data.projects.data;
                     this.isDataLoaded = true;
                     this.dataLoading = false;
@@ -114,13 +111,12 @@ export default {
                     }
                 })
                 .then(response => {
-                    this.isLastPage = response.data.projects.current_page === response.data.projects.last_page;
+                    this.loadedMore(response.data.projects);
                     this.projects = this.projects.concat(response.data.projects.data);
                     this.dataLoading = false;
                 })
                 .catch(error => {
                     console.log(error);
-                    this.dataLoading = false;
                 });
         },
         formatDate(date) {

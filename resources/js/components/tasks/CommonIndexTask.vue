@@ -96,11 +96,13 @@ import route from "../../route";
 import moment from "moment";
 import constantsMixin from "../mixins/constants.js";
 import customWidthMixin from "../mixins/custom-width.js";
+import paginationMixin from "../mixins/pagination";
 
 export default {
     mixins: [
         constantsMixin,
         customWidthMixin,
+        paginationMixin,
     ],
     props: ['type'],
     data() {
@@ -111,9 +113,6 @@ export default {
             infoBody: '',
             hideFinished: false,
             currentTask: {},
-            page: 0,
-            isLastPage: false,
-            lastPage: 0,
             s: '',
             notTrashed: false,
         }
@@ -192,9 +191,7 @@ export default {
                     }
                 })
                 .then(response => {
-                    this.isLastPage = response.data.current_page === response.data.last_page;
-                    this.page = 1;
-                    this.lastPage = response.data.last_page;
+                    this.firstLoad(response.data);
                     this.tasks = response.data.data;
                     this.isDataLoaded = true;
                     this.dataLoading = false;
@@ -215,13 +212,12 @@ export default {
                     }
                 })
                 .then(response => {
-                    this.isLastPage = response.data.current_page === response.data.last_page;
+                    this.loadedMore(response.data);
                     this.tasks = this.tasks.concat(response.data.data);
                     this.dataLoading = false;
                 })
                 .catch(error => {
                     console.log(error);
-                    this.dataLoading = false;
                 });
         },
         switchHideFinished() {

@@ -2191,10 +2191,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../route */ "./resources/js/route.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/pagination */ "./resources/js/components/mixins/pagination.js");
 //
 //
 //
@@ -2233,27 +2234,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mixins: [_mixins_pagination__WEBPACK_IMPORTED_MODULE_2__.default],
   props: ['taskId', 'isArchive'],
   data: function data() {
     return {
       comments: [],
-      text: ''
+      text: '',
+      isDataLoaded: false,
+      dataLoading: false
     };
   },
   watch: {
     taskId: function taskId() {
-      this.getComments();
       this.reset();
+      this.getComments();
     }
   },
   validations: {
     text: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.required,
-      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.maxLength)(1500)
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.required,
+      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.maxLength)(1500)
     }
   },
   methods: {
@@ -2288,21 +2303,42 @@ __webpack_require__.r(__webpack_exports__);
           'task_id': this.taskId
         }
       }).then(function (response) {
-        _this2.comments = response.data;
+        _this2.firstLoad(response.data);
+
+        _this2.comments = response.data.data;
+        _this2.isDataLoaded = true;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    loadMore: function loadMore() {
+      var _this3 = this;
+
+      this.dataLoading = true;
+      axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('comments.index'), {
+        params: {
+          'task_id': this.taskId,
+          'page': ++this.page
+        }
+      }).then(function (response) {
+        _this3.loadedMore(response.data);
+
+        _this3.comments = _this3.comments.concat(response.data.data);
+        _this3.dataLoading = false;
       })["catch"](function (error) {
         console.log(error);
       });
     },
     deleteComment: function deleteComment(id) {
-      var _this3 = this;
+      var _this4 = this;
 
       if (confirm('Are you shure want to delete this comment?')) {
         axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('comments.destroy', id)).then(function (response) {
-          _this3.comments = _this3.comments.filter(function (comment) {
+          _this4.comments = _this4.comments.filter(function (comment) {
             return comment.id !== id;
           });
 
-          _this3.$emit('commentDeleted');
+          _this4.$emit('commentDeleted');
         })["catch"](function (error) {
           console.log(error);
         });
@@ -2310,6 +2346,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     reset: function reset() {
       this.text = '';
+      this.isDataLoaded = false;
+      this.dataLoading = false;
       this.$v.$reset();
     },
     triggerMore: function triggerMore(index) {
@@ -3232,6 +3270,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _mixins_constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/constants.js */ "./resources/js/components/mixins/constants.js");
 /* harmony import */ var _mixins_custom_width_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../mixins/custom-width.js */ "./resources/js/components/mixins/custom-width.js");
+/* harmony import */ var _mixins_pagination__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../mixins/pagination */ "./resources/js/components/mixins/pagination.js");
 //
 //
 //
@@ -3278,20 +3317,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mixins: [_mixins_constants_js__WEBPACK_IMPORTED_MODULE_2__.default, _mixins_custom_width_js__WEBPACK_IMPORTED_MODULE_3__.default],
+  mixins: [_mixins_constants_js__WEBPACK_IMPORTED_MODULE_2__.default, _mixins_custom_width_js__WEBPACK_IMPORTED_MODULE_3__.default, _mixins_pagination__WEBPACK_IMPORTED_MODULE_4__.default],
   data: function data() {
     return {
       projects: [],
       isDataLoaded: false,
       dataLoading: false,
-      page: 0,
-      lastPage: 0,
-      isLastPage: false,
       s: '',
       hasNotFinished: false
     };
@@ -3320,9 +3357,8 @@ __webpack_require__.r(__webpack_exports__);
           'hasNotFinished': this.hasNotFinished ? this.hasNotFinished : ''
         }
       }).then(function (response) {
-        _this.isLastPage = response.data.projects.current_page === response.data.projects.last_page;
-        _this.page = 1;
-        _this.lastPage = response.data.projects.last_page;
+        _this.firstLoad(response.data.projects);
+
         _this.projects = response.data.projects.data;
         _this.isDataLoaded = true;
         _this.dataLoading = false;
@@ -3342,12 +3378,12 @@ __webpack_require__.r(__webpack_exports__);
           'page': ++this.page
         }
       }).then(function (response) {
-        _this2.isLastPage = response.data.projects.current_page === response.data.projects.last_page;
+        _this2.loadedMore(response.data.projects);
+
         _this2.projects = _this2.projects.concat(response.data.projects.data);
         _this2.dataLoading = false;
       })["catch"](function (error) {
         console.log(error);
-        _this2.dataLoading = false;
       });
     },
     formatDate: function formatDate(date) {
@@ -3704,6 +3740,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _mixins_constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/constants.js */ "./resources/js/components/mixins/constants.js");
 /* harmony import */ var _mixins_custom_width_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../mixins/custom-width.js */ "./resources/js/components/mixins/custom-width.js");
+/* harmony import */ var _mixins_pagination__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../mixins/pagination */ "./resources/js/components/mixins/pagination.js");
 //
 //
 //
@@ -3797,12 +3834,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mixins: [_mixins_constants_js__WEBPACK_IMPORTED_MODULE_2__.default, _mixins_custom_width_js__WEBPACK_IMPORTED_MODULE_3__.default],
+  mixins: [_mixins_constants_js__WEBPACK_IMPORTED_MODULE_2__.default, _mixins_custom_width_js__WEBPACK_IMPORTED_MODULE_3__.default, _mixins_pagination__WEBPACK_IMPORTED_MODULE_4__.default],
   props: ['type'],
   data: function data() {
     return {
@@ -3812,9 +3850,6 @@ __webpack_require__.r(__webpack_exports__);
       infoBody: '',
       hideFinished: false,
       currentTask: {},
-      page: 0,
-      isLastPage: false,
-      lastPage: 0,
       s: '',
       notTrashed: false
     };
@@ -3924,9 +3959,8 @@ __webpack_require__.r(__webpack_exports__);
           'notTrashed': this.notTrashed ? this.notTrashed : ''
         }
       }).then(function (response) {
-        _this.isLastPage = response.data.current_page === response.data.last_page;
-        _this.page = 1;
-        _this.lastPage = response.data.last_page;
+        _this.firstLoad(response.data);
+
         _this.tasks = response.data.data;
         _this.isDataLoaded = true;
         _this.dataLoading = false;
@@ -3946,12 +3980,12 @@ __webpack_require__.r(__webpack_exports__);
           'page': ++this.page
         }
       }).then(function (response) {
-        _this2.isLastPage = response.data.current_page === response.data.last_page;
+        _this2.loadedMore(response.data);
+
         _this2.tasks = _this2.tasks.concat(response.data.data);
         _this2.dataLoading = false;
       })["catch"](function (error) {
         console.log(error);
-        _this2.dataLoading = false;
       });
     },
     switchHideFinished: function switchHideFinished() {
@@ -4399,6 +4433,39 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.updateWidth();
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/components/mixins/pagination.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/mixins/pagination.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      page: 0,
+      lastPage: 0,
+      isLastPage: false
+    };
+  },
+  methods: {
+    firstLoad: function firstLoad(data) {
+      this.isLastPage = data.current_page === data.last_page;
+      this.page = 1;
+      this.lastPage = data.last_page;
+    },
+    loadedMore: function loadedMore(data) {
+      this.isLastPage = data.current_page === data.last_page;
+    }
   }
 });
 
@@ -67697,82 +67764,148 @@ var render = function() {
     _vm._v(" "),
     !_vm.isArchive ? _c("hr") : _vm._e(),
     _vm._v(" "),
-    _vm.comments.length === 0
-      ? _c("div", { staticClass: "h-500 text-center" }, [_vm._v("No comments")])
-      : _c(
+    !_vm.isDataLoaded
+      ? _c(
           "div",
-          { staticClass: "comments h-500 pr-1" },
-          _vm._l(_vm.comments, function(comment, index) {
-            return _c("div", { staticClass: "comment" }, [
-              _c("div", { staticClass: "justify-content-between d-flex" }, [
-                _c("div", { staticClass: "font-weight-bold" }, [
-                  _vm._v(
-                    _vm._s(comment.user.name) +
-                      " " +
-                      _vm._s(comment.user.surname)
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "text-secondary text-sm" }, [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(_vm.formatDate(comment.created_at)) +
-                      "\n                    "
-                  ),
-                  !_vm.isArchive
-                    ? _c("i", {
-                        staticClass: "fas fa-times ml-1 p-1",
-                        on: {
-                          click: function($event) {
-                            return _vm.deleteComment(comment.id)
-                          }
-                        }
-                      })
-                    : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              comment.text.length <= 200
-                ? _c("div", [_vm._v(_vm._s(comment.text))])
-                : _c("div", [
-                    _vm._v(
-                      "\n                " + _vm._s(comment.text.slice(0, 200))
-                    ),
-                    _c("span", { ref: "dots" + index, refInFor: true }, [
-                      _vm._v("...")
-                    ]),
-                    _c(
-                      "span",
-                      {
-                        ref: "moreText" + index,
-                        refInFor: true,
-                        staticClass: "d-none"
-                      },
-                      [_vm._v(_vm._s(comment.text.slice(200)))]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        ref: "moreTrigger" + index,
-                        refInFor: true,
-                        staticClass: "text-secondary text-sm link",
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.triggerMore(index)
-                          }
-                        }
-                      },
-                      [_vm._v("Read more")]
-                    )
-                  ]),
-              _vm._v(" "),
-              _c("hr")
+          { staticClass: "h-500 text-center" },
+          [
+            _c("transition", { attrs: { name: "fade", appear: "" } }, [
+              _c("i", { staticClass: "fas fa-spinner fa-spin h3" })
             ])
-          }),
-          0
+          ],
+          1
         )
+      : _c("div", [
+          _vm.comments.length === 0
+            ? _c("div", { staticClass: "h-500 text-center" }, [
+                _vm._v("No comments")
+              ])
+            : _c(
+                "div",
+                { staticClass: "comments h-500 pr-1" },
+                [
+                  _vm._l(_vm.comments, function(comment, index) {
+                    return _c("div", { staticClass: "comment" }, [
+                      _c(
+                        "div",
+                        { staticClass: "justify-content-between d-flex" },
+                        [
+                          _c("div", { staticClass: "font-weight-bold" }, [
+                            _vm._v(
+                              _vm._s(comment.user.name) +
+                                " " +
+                                _vm._s(comment.user.surname)
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "text-secondary text-sm" }, [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(_vm.formatDate(comment.created_at)) +
+                                "\n                        "
+                            ),
+                            !_vm.isArchive
+                              ? _c("i", {
+                                  staticClass: "fas fa-times ml-1 p-1",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.deleteComment(comment.id)
+                                    }
+                                  }
+                                })
+                              : _vm._e()
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      comment.text.length <= 200
+                        ? _c("div", [_vm._v(_vm._s(comment.text))])
+                        : _c("div", [
+                            _vm._v(
+                              "\n                    " +
+                                _vm._s(comment.text.slice(0, 200))
+                            ),
+                            _c(
+                              "span",
+                              { ref: "dots" + index, refInFor: true },
+                              [_vm._v("...")]
+                            ),
+                            _c(
+                              "span",
+                              {
+                                ref: "moreText" + index,
+                                refInFor: true,
+                                staticClass: "d-none"
+                              },
+                              [_vm._v(_vm._s(comment.text.slice(200)))]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                ref: "moreTrigger" + index,
+                                refInFor: true,
+                                staticClass: "text-secondary text-sm link",
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.triggerMore(index)
+                                  }
+                                }
+                              },
+                              [_vm._v("Read more")]
+                            )
+                          ]),
+                      _vm._v(" "),
+                      _c("hr")
+                    ])
+                  }),
+                  _vm._v(" "),
+                  !_vm.isLastPage
+                    ? _c(
+                        "div",
+                        {
+                          staticClass:
+                            "m-0 pr-2 row justify-content-between pb-1"
+                        },
+                        [
+                          _c("span", [
+                            _vm._v(
+                              "Page " +
+                                _vm._s(_vm.page) +
+                                " of " +
+                                _vm._s(_vm.lastPage)
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "transition",
+                            { attrs: { name: "fade", appear: "" } },
+                            [
+                              _vm.dataLoading
+                                ? _c("i", {
+                                    staticClass: "fas fa-spinner fa-spin h3"
+                                  })
+                                : _vm._e()
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-outline-secondary btn-sm",
+                              on: { click: _vm.loadMore }
+                            },
+                            [_vm._v("Load More...")]
+                          )
+                        ],
+                        1
+                      )
+                    : _vm._e()
+                ],
+                2
+              )
+        ])
   ])
 }
 var staticRenderFns = []
