@@ -110,7 +110,7 @@
         </div>
 
         <!-- Modal-->
-        <div class="modal fade show mt-5" id="createProjectModal" tabindex="-1">
+        <div class="modal fade show mt-5 pb-5" id="createProjectModal" tabindex="-1">
             <create-project-modal @stored="storedProject"></create-project-modal>
         </div>
 

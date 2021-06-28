@@ -77,25 +77,25 @@
                 </div>
 
                 <!-- Modals-->
-                <div class="modal fade show mt-5" id="editProjectModal" tabindex="-1">
+                <div class="modal fade show mt-5 pb-5" id="editProjectModal" tabindex="-1">
                     <edit-project-modal :project="project" @updated="projectUpdated"></edit-project-modal>
                 </div>
-                <div class="modal fade show mt-5" id="deleteProjectModal" tabindex="-1">
+                <div class="modal fade show mt-5 pb-5" id="deleteProjectModal" tabindex="-1">
                     <delete-project-modal :project="project" @deleted="projectDeleted"></delete-project-modal>
                 </div>
-                <div class="modal fade show mt-5" id="archiveProjectModal" tabindex="-1">
+                <div class="modal fade show mt-5 pb-5" id="archiveProjectModal" tabindex="-1">
                     <archive-project-modal :project="project" @deleted="projectDeleted"></archive-project-modal>
                 </div>
-                <div class="modal fade show mt-5" id="restoreProjectModal" tabindex="-1">
+                <div class="modal fade show mt-5 pb-5" id="restoreProjectModal" tabindex="-1">
                     <restore-project-modal :project="project" @updated="projectUpdated"></restore-project-modal>
                 </div>
 
-                <div class="modal fade show mt-5" id="createTaskModal" tabindex="-1">
+                <div class="modal fade show mt-5 pb-5" id="createTaskModal" tabindex="-1">
                     <create-task-modal :id="project.id" @stored="taskStored"></create-task-modal>
                 </div>
 
                 <button v-show="false" data-toggle="modal" data-target="#showTaskModal" ref="showTaskModalButton"></button>
-                <div class="modal fade show mt-5 pb-5" id="showTaskModal" tabindex="-1" ref="showTaskModal">
+                <div class="modal fade show mt-5 pb-5 pb-5" id="showTaskModal" tabindex="-1" ref="showTaskModal">
                     <show-task-modal
                         :task="currentTask"
                         :project="project"
@@ -108,12 +108,12 @@
                 </div>
 
                 <button v-show="false" data-toggle="modal" data-target="#deleteTaskModal" ref="deleteTaskModalButton"></button>
-                <div class="modal fade show mt-5" id="deleteTaskModal" tabindex="-1">
+                <div class="modal fade show mt-5 pb-5" id="deleteTaskModal" tabindex="-1">
                     <delete-task-modal :task="currentTask" @deleted="taskDeleted" @cancel="$refs.showTaskModalButton.click();"></delete-task-modal>
                 </div>
 
                 <button v-show="false" data-toggle="modal" data-target="#editTaskModal" ref="editTaskModalButton"></button>
-                <div class="modal fade show mt-5" id="editTaskModal" tabindex="-1">
+                <div class="modal fade show mt-5 pb-5" id="editTaskModal" tabindex="-1">
                     <edit-task-modal :task="currentTask" @updated="taskUpdated" @cancel="$refs.showTaskModalButton.click()"></edit-task-modal>
                 </div>
 

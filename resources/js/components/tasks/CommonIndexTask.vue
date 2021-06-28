@@ -80,12 +80,12 @@
         </div>
 
         <button v-show="false" data-toggle="modal" data-target="#deleteTaskModal" ref="deleteTaskModalButton"></button>
-        <div class="modal fade show mt-5" id="deleteTaskModal" tabindex="-1">
+        <div class="modal fade show mt-5 pb-5" id="deleteTaskModal" tabindex="-1">
             <delete-task-modal :task="currentTask" @deleted="taskDeleted" @cancel="$refs.showTaskModalButton.click()"></delete-task-modal>
         </div>
 
         <button v-show="false" data-toggle="modal" data-target="#editTaskModal" ref="editTaskModalButton"></button>
-        <div class="modal fade show mt-5" id="editTaskModal" tabindex="-1">
+        <div class="modal fade show mt-5 pb-5" id="editTaskModal" tabindex="-1">
             <edit-task-modal :task="currentTask" @updated="taskUpdated" @cancel="$refs.showTaskModalButton.click()"></edit-task-modal>
         </div>
     </div>

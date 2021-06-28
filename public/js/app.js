@@ -67601,7 +67601,7 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "modal fade show mt-5",
+        staticClass: "modal fade show mt-5 pb-5",
         attrs: { id: "createProjectModal", tabindex: "-1" }
       },
       [_c("create-project-modal", { on: { stored: _vm.storedProject } })],
@@ -69940,7 +69940,7 @@ var render = function() {
                   _c(
                     "div",
                     {
-                      staticClass: "modal fade show mt-5",
+                      staticClass: "modal fade show mt-5 pb-5",
                       attrs: { id: "editProjectModal", tabindex: "-1" }
                     },
                     [
@@ -69955,7 +69955,7 @@ var render = function() {
                   _c(
                     "div",
                     {
-                      staticClass: "modal fade show mt-5",
+                      staticClass: "modal fade show mt-5 pb-5",
                       attrs: { id: "deleteProjectModal", tabindex: "-1" }
                     },
                     [
@@ -69970,7 +69970,7 @@ var render = function() {
                   _c(
                     "div",
                     {
-                      staticClass: "modal fade show mt-5",
+                      staticClass: "modal fade show mt-5 pb-5",
                       attrs: { id: "archiveProjectModal", tabindex: "-1" }
                     },
                     [
@@ -69985,7 +69985,7 @@ var render = function() {
                   _c(
                     "div",
                     {
-                      staticClass: "modal fade show mt-5",
+                      staticClass: "modal fade show mt-5 pb-5",
                       attrs: { id: "restoreProjectModal", tabindex: "-1" }
                     },
                     [
@@ -70000,7 +70000,7 @@ var render = function() {
                   _c(
                     "div",
                     {
-                      staticClass: "modal fade show mt-5",
+                      staticClass: "modal fade show mt-5 pb-5",
                       attrs: { id: "createTaskModal", tabindex: "-1" }
                     },
                     [
@@ -70032,7 +70032,7 @@ var render = function() {
                     "div",
                     {
                       ref: "showTaskModal",
-                      staticClass: "modal fade show mt-5 pb-5",
+                      staticClass: "modal fade show mt-5 pb-5 pb-5",
                       attrs: { id: "showTaskModal", tabindex: "-1" }
                     },
                     [
@@ -70073,7 +70073,7 @@ var render = function() {
                   _c(
                     "div",
                     {
-                      staticClass: "modal fade show mt-5",
+                      staticClass: "modal fade show mt-5 pb-5",
                       attrs: { id: "deleteTaskModal", tabindex: "-1" }
                     },
                     [
@@ -70109,7 +70109,7 @@ var render = function() {
                   _c(
                     "div",
                     {
-                      staticClass: "modal fade show mt-5",
+                      staticClass: "modal fade show mt-5 pb-5",
                       attrs: { id: "editTaskModal", tabindex: "-1" }
                     },
                     [
@@ -70528,7 +70528,7 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "modal fade show mt-5",
+          staticClass: "modal fade show mt-5 pb-5",
           attrs: { id: "deleteTaskModal", tabindex: "-1" }
         },
         [
@@ -70556,7 +70556,7 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "modal fade show mt-5",
+          staticClass: "modal fade show mt-5 pb-5",
           attrs: { id: "editTaskModal", tabindex: "-1" }
         },
         [

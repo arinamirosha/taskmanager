@@ -6,8 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/comments/Comments.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/comments/Comments.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/tasks/CommonIndexTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tasks/CommonIndexTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/myStyles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/myStyles.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -234,14 +238,7 @@
       <workItem from="1624514877892" duration="7938000" />
       <workItem from="1624539771070" duration="900000" />
       <workItem from="1624602887525" duration="21066000" />
-      <workItem from="1624859639891" duration="12461000" />
-    </task>
-    <task id="LOCAL-00008" summary="go to project from show task">
-      <created>1622036727366</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1622036727366</updated>
+      <workItem from="1624859639891" duration="14118000" />
     </task>
     <task id="LOCAL-00009" summary="archive project">
       <created>1622043058227</created>
@@ -579,7 +576,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624872447332</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="comments mobile">
+      <created>1624873207663</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1624873207663</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -602,7 +606,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="search and filter" />
     <MESSAGE value="edit task" />
     <MESSAGE value="correct edit task" />
     <MESSAGE value="filter archived tasks" />
@@ -627,6 +630,7 @@
     <MESSAGE value="load count comments" />
     <MESSAGE value="read comment more/less" />
     <MESSAGE value="load more comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="load more comments" />
+    <MESSAGE value="comments mobile" />
+    <option name="LAST_COMMIT_MESSAGE" value="comments mobile" />
   </component>
 </project>
