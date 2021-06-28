@@ -3979,7 +3979,6 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('taskUpdated');
 
       if (typeof task !== 'number') {
-        console.log(task);
         this.currentTask = task;
         this.$refs.showTaskModalButton.click();
       }

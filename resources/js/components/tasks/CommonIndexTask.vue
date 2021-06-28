@@ -270,7 +270,6 @@ export default {
             this.getTasks();
             this.$emit('taskUpdated');
             if (typeof task !== 'number') {
-                console.log(task)
                 this.currentTask = task;
                 this.$refs.showTaskModalButton.click();
             }

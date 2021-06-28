@@ -28,7 +28,7 @@ class TaskController extends Controller
         }
         $task->update($request->all());
 
-        return $task->load(['project']);
+        return $task->load(['project'])->loadCount('comments');
     }
 
     public function restore($id)
