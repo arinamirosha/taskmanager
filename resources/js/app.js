@@ -16,6 +16,7 @@ Vue.component('toast', require('./components/Toast.vue').default);
 // PROJECTS
 Vue.component('show-project', require('./components/projects/ShowProject.vue').default);
 Vue.component('archived-projects', require('./components/projects/ArchivedProjects').default);
+Vue.component('new-shared-projects', require('./components/projects/NewSharedProject').default);
 
 // modals
 Vue.component('create-project-modal', require('./components/modals/projects/CreateProject.vue').default);

@@ -17,4 +17,5 @@ export const TODAY         = 'today';
 export const NOT_SCHEDULED = 'notScheduled';
 export const UPCOMING      = 'upcoming';
 
-export const INCOMING = 'incoming';
+export const INCOMING   = 'incoming';
+export const NEW_SHARED = 'new_shared';

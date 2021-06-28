@@ -5,13 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/js/components/projects/NewSharedProject.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Project.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Project.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/mixins/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/mixins/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/projects/ShareProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/projects/ShareProject.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/routes.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,8 +27,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Vue Single File Component" />
         <option value="JavaScript File" />
+        <option value="Vue Single File Component" />
       </list>
     </option>
   </component>
@@ -238,14 +240,7 @@
       <workItem from="1624514877892" duration="7938000" />
       <workItem from="1624539771070" duration="900000" />
       <workItem from="1624602887525" duration="21066000" />
-      <workItem from="1624859639891" duration="23242000" />
-    </task>
-    <task id="LOCAL-00011" summary="common index component for incoming, upcoming, today, not scheduled, archive">
-      <created>1622101506154</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1622101506154</updated>
+      <workItem from="1624859639891" duration="29246000" />
     </task>
     <task id="LOCAL-00012" summary="policies for working with tasks">
       <created>1622552565311</created>
@@ -583,7 +578,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624881935088</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="status show">
+      <created>1624884525402</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1624884525403</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -606,7 +608,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="filter archived tasks" />
     <MESSAGE value="show task project" />
     <MESSAGE value="dropdown menu on width 1051" />
     <MESSAGE value="correct dropdown menu" />
@@ -631,6 +632,7 @@
     <MESSAGE value="comments mobile" />
     <MESSAGE value="scroll modals" />
     <MESSAGE value="send share" />
-    <option name="LAST_COMMIT_MESSAGE" value="send share" />
+    <MESSAGE value="status show" />
+    <option name="LAST_COMMIT_MESSAGE" value="status show" />
   </component>
 </project>

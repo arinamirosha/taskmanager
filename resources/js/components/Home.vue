@@ -8,7 +8,11 @@
                 </button>
 
                 <div :class="{'dropdown-menu bg-light': !largeStyle}">
-                    <a class="nav-link text-dark" :class="{'active': type===c.INCOMING}" @click="setType(c.INCOMING)">Incoming</a>
+<!--                    <a class="nav-link text-dark" :class="{'active': type===c.INCOMING}" @click="setType(c.INCOMING)">Incoming</a>-->
+                    <a class="nav-link text-dark name-count-space"  :class="{'active': type===c.NEW_SHARED}" @click="setType(c.NEW_SHARED)">
+                        New shared
+                        <span class="text-custom-secondary">{{newShared.length}}</span>
+                    </a>
                     <a class="nav-link text-dark name-count-space" :class="{'active': type===c.TODAY}" @click="setType(c.TODAY)">
                         Today
                         <span class="text-custom-secondary">
@@ -49,7 +53,7 @@
                         Archive
                     </a>
 
-                    <h6 v-if="favorites.length > 0" @click="isOpenFav = !isOpenFav"
+                    <h6 v-if="favorites.length" @click="isOpenFav = !isOpenFav"
                         class="cursor-pointer font-weight-bold sidebar-heading name-count-space align-items-center px-3 mt-4 mb-1 text-muted">
                         <span v-if="isOpenFav">&#8595;</span>
                         <span v-else>&#8593;</span>
@@ -99,6 +103,7 @@
                 v-bind:is="currentComponent"
                 :id="this.selectedProjectId"
                 :type="type"
+                :newShared="newShared"
                 @updated="getProjects"
                 @deleted="getProjects"
                 @taskArchived="getProjects"
@@ -185,6 +190,7 @@ export default {
         return {
             currentComponent: 'common-index-task',
             projects: [],
+            newShared: [],
             cToday: [],
             cUpcoming: [],
             cNotScheduled: [],
@@ -207,7 +213,11 @@ export default {
         },
         setType(type) {
             this.type = type;
-            this.setComponent('common-index-task');
+            if (type === this.c.NEW_SHARED) {
+                this.setComponent('new-shared-projects');
+            } else {
+                this.setComponent('common-index-task');
+            }
         },
         getProjects() {
             axios
@@ -218,6 +228,7 @@ export default {
                 })
                 .then(response => {
                     this.projects = response.data.projects;
+                    this.newShared = response.data.newShared;
                     let counts = response.data.counts;
                     this.cToday = counts[this.c.TODAY];
                     this.cUpcoming = counts[this.c.UPCOMING];

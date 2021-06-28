@@ -46,6 +46,7 @@ class ProjectsController extends Controller
             $data['projects'] = $projects->orderBy('deleted_at', 'desc')->paginate(25);
         } else {
             $data['projects'] = $projects->withCount('tasks')->get();
+            $data['newShared'] = Auth::user()->shared_projects()->whereNull('accepted')->get();
         }
 
         if ($getCounts) {
@@ -96,6 +97,19 @@ class ProjectsController extends Controller
         }
 
         $project->shared_users()->attach($userId);
+
+        return $project;
+    }
+
+    public function accepted(Project $project, Request $request)
+    {
+        $shared_users = $project->shared_users()->where('id', Auth::id())->first();
+
+        if (!$shared_users) {
+            return response('No new shared projects', 400);
+        }
+
+        $shared_users->pivot->update(['accepted' => $request->get('accepted')]);
 
         return $project;
     }

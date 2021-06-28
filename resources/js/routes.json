@@ -19,6 +19,7 @@
     "projects.restore": "projects\/{project}\/restore",
     "projects.update": "projects\/{project}",
     "projects.share": "projects\/{project}\/share",
+    "projects.accepted": "projects\/{project}\/accepted",
     "projects.archive": "projects\/{project}\/archive",
     "projects.destroy-force": "projects\/{project}\/force",
     "tasks.index": "tasks",
