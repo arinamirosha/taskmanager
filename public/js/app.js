@@ -2191,11 +2191,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../route */ "./resources/js/route.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _mixins_pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/pagination */ "./resources/js/components/mixins/pagination.js");
+/* harmony import */ var _mixins_custom_width__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../mixins/custom-width */ "./resources/js/components/mixins/custom-width.js");
 //
 //
 //
@@ -2244,12 +2245,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mixins: [_mixins_pagination__WEBPACK_IMPORTED_MODULE_2__.default],
+  mixins: [_mixins_custom_width__WEBPACK_IMPORTED_MODULE_3__.default, _mixins_pagination__WEBPACK_IMPORTED_MODULE_2__.default],
   props: ['taskId', 'isArchive'],
   data: function data() {
     return {
@@ -2267,8 +2269,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   validations: {
     text: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.required,
-      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.maxLength)(1500)
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__.required,
+      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__.maxLength)(1500)
     }
   },
   methods: {
@@ -67782,7 +67784,7 @@ var render = function() {
               ])
             : _c(
                 "div",
-                { staticClass: "comments h-500 pr-1" },
+                { class: { "comments h-500 pr-1": _vm.mediumStyle } },
                 [
                   _vm._l(_vm.comments, function(comment, index) {
                     return _c("div", { staticClass: "comment" }, [

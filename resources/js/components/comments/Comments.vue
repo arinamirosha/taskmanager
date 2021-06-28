@@ -20,7 +20,7 @@
         </div>
         <div v-else>
             <div v-if="comments.length === 0" class="h-500 text-center">No comments</div>
-            <div v-else class="comments h-500 pr-1">
+            <div v-else :class="{'comments h-500 pr-1': mediumStyle}">
                 <div v-for="(comment, index) in comments" class="comment">
                     <div class="justify-content-between d-flex">
                         <div class="font-weight-bold">{{comment.user.name}} {{comment.user.surname}}</div>
@@ -51,9 +51,11 @@ import { required, maxLength } from 'vuelidate/lib/validators';
 import route from "../../route";
 import moment from "moment";
 import paginationMixin from "../mixins/pagination";
+import customWidthMixin from "../mixins/custom-width";
 
 export default {
     mixins: [
+        customWidthMixin,
         paginationMixin,
     ],
     props: ['taskId', 'isArchive'],
