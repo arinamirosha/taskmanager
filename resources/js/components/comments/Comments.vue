@@ -19,7 +19,7 @@
         <div v-else class="comments h-500 pr-1">
             <div v-for="comment in comments" class="comment">
                 <div class="justify-content-between d-flex">
-                    <div class="font-weight-bold">{{comment.user.email}}</div>
+                    <div class="font-weight-bold">{{comment.user.name}} {{comment.user.surname}}</div>
                     <div class="text-secondary text-sm">
                         {{formatDate(comment.created_at)}}
                         <i v-if="!isArchive" class="fas fa-times ml-1 p-1" @click="deleteComment(comment.id)"></i>

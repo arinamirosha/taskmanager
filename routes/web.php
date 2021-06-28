@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::get('/users', [App\Http\Controllers\UserController::class, 'show'])->name('users.show');
+    Route::get('/users/profile', [App\Http\Controllers\UserController::class, 'profile'])->name('users.profile');
     Route::post('/users', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
 
     Route::get('/projects', [App\Http\Controllers\ProjectsController::class, 'index'])->name('projects.index');

@@ -40,6 +40,10 @@ Vue.component('edit-task-modal', require('./components/modals/tasks/EditTask.vue
 Vue.component('comments', require('./components/comments/Comments.vue').default);
 
 
+// USERS
+Vue.component('user-profile', require('./components/users/UserProfile.vue').default);
+
+
 const app = new Vue({
     el: '#app',
 });
