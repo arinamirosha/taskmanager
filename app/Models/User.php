@@ -73,4 +73,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Task::class);
     }
+
+    /**
+     * Many users has many shared projects
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function shared_projects()
+    {
+        return $this->belongsToMany(Project::class, 'shared_projects', 'user_id', 'project_id');
+    }
 }

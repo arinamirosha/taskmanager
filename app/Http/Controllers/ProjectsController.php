@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Libraries\TaskManager\Facade\TaskManager;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProjectsController extends Controller
 {
@@ -65,13 +67,35 @@ class ProjectsController extends Controller
                 },
             ]);
         } else {
-            return $project->load('tasks');
+            return $project->load('tasks')->load('shared_users');
         }
     }
 
     public function update(Project $project, Request $request)
     {
         $project->update($request->all());
+
+        return $project;
+    }
+
+    public function share(Project $project, Request $request)
+    {
+        $user   = User::where('email', $request->get('email'))->firstOrFail();
+        $userId = $user->id;
+
+        if ($userId === $project->user_id) {
+            return response('You cannot share with yourself', 400);
+        }
+
+        if (DB::table('shared_projects')
+              ->where('user_id', $userId)
+              ->where('project_id', $project->id)
+              ->exists()
+        ) {
+            return response('Already shared', 400);
+        }
+
+        $project->shared_users()->attach($userId);
 
         return $project;
     }

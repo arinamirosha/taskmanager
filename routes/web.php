@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/projects/{project}', [App\Http\Controllers\ProjectsController::class, 'show'])->name('projects.show');
     Route::post('/projects/{project}/restore', [App\Http\Controllers\ProjectsController::class, 'restore'])->name('projects.restore');
     Route::post('/projects/{project}', [App\Http\Controllers\ProjectsController::class, 'update'])->name('projects.update')->middleware('can:update,project');
+    Route::post('/projects/{project}/share', [App\Http\Controllers\ProjectsController::class, 'share'])->name('projects.share')->middleware('can:update,project');
     Route::delete('/projects/{project}/archive', [App\Http\Controllers\ProjectsController::class, 'archive'])->name('projects.archive')->middleware('can:delete,project');
     Route::delete('/projects/{project}/force', [App\Http\Controllers\ProjectsController::class, 'destroyForce'])->name('projects.destroy-force');
 

@@ -28,6 +28,10 @@
                                 <i class="far fa-edit"></i>
                             </a>
 
+                            <a v-if="!project.deleted_at" class="cursor-pointer text-muted" data-toggle="modal" data-target="#shareProjectModal">
+                                <i class="far fa-share-square"></i>
+                            </a>
+
                             <a v-if="!project.deleted_at" class="cursor-pointer" data-toggle="modal" data-target="#archiveProjectModal">
                                 <i class="fas fa-archive text-secondary"></i>
                             </a>
@@ -41,6 +45,10 @@
 
                         </div>
                     </div>
+                </div>
+
+                <div v-if="project.shared_users.length > 0" class="my-2">
+                    <span class="font-weight-bold">Shared with:</span> {{sharedNames}}
                 </div>
 
                 <div v-if="mediumStyle" class="row font-weight-bold h6">
@@ -79,6 +87,10 @@
                 <!-- Modals-->
                 <div class="modal fade show mt-5 pb-5" id="editProjectModal" tabindex="-1">
                     <edit-project-modal :project="project" @updated="projectUpdated"></edit-project-modal>
+                </div>
+
+                <div class="modal fade show mt-5 pb-5" id="shareProjectModal" tabindex="-1">
+                    <share-project-modal :project="project" @updated="projectUpdated"></share-project-modal>
                 </div>
                 <div class="modal fade show mt-5 pb-5" id="deleteProjectModal" tabindex="-1">
                     <delete-project-modal :project="project" @deleted="projectDeleted"></delete-project-modal>
@@ -159,6 +171,12 @@ export default {
             this.editProject = false;
             this.getProject();
         }
+    },
+    computed: {
+        sharedNames: function () {
+            let names = this.project.shared_users.map(a => a.name);
+            return names.join(', ');
+        },
     },
     methods: {
         getProject(projectId) {
@@ -308,7 +326,7 @@ export default {
 #not-fav:hover {
     color: #f7c948;
 }
-.fa-edit:hover, .fa-archive:hover {
+.fa-edit:hover, .fa-archive:hover, .fa-share-square:hover {
     color: #212529;
 }
 .full {

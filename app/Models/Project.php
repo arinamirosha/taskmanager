@@ -37,6 +37,16 @@ class Project extends Model
     }
 
     /**
+     * Many projects has many shared users
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function shared_users()
+    {
+        return $this->belongsToMany(User::class, 'shared_projects', 'project_id', 'user_id');
+    }
+
+    /**
      * On force delete cascade force delete tasks
      */
     public static function boot() {

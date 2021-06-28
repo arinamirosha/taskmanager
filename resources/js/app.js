@@ -20,6 +20,7 @@ Vue.component('archived-projects', require('./components/projects/ArchivedProjec
 // modals
 Vue.component('create-project-modal', require('./components/modals/projects/CreateProject.vue').default);
 Vue.component('edit-project-modal', require('./components/modals/projects/EditProject.vue').default);
+Vue.component('share-project-modal', require('./components/modals/projects/ShareProject.vue').default);
 Vue.component('delete-project-modal', require('./components/modals/projects/DeleteProject.vue').default);
 Vue.component('archive-project-modal', require('./components/modals/projects/ArchiveProject.vue').default);
 Vue.component('restore-project-modal', require('./components/modals/projects/RestoreProject.vue').default);
