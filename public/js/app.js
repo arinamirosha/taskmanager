@@ -2761,8 +2761,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../route */ "./resources/js/route.js");
+/* harmony import */ var _mixins_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/constants */ "./resources/js/components/mixins/constants.js");
 //
 //
 //
@@ -2793,9 +2794,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mixins: [_mixins_constants__WEBPACK_IMPORTED_MODULE_1__.default],
   props: ['project'],
   data: function data() {
     return {
@@ -2809,9 +2812,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   validations: {
     email: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.required,
-      email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.email,
-      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.maxLength)(100)
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.required,
+      email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.email,
+      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.maxLength)(100)
     }
   },
   methods: {
@@ -4502,6 +4505,34 @@ __webpack_require__.r(__webpack_exports__);
 
         case this.c.STATUS_FINISHED:
           return 'fas fa-check';
+      }
+
+      return '';
+    },
+    statusSharedCss: function statusSharedCss(status) {
+      switch (status) {
+        case null:
+          return 'text-secondary';
+
+        case true:
+          return 'text-success';
+
+        case false:
+          return 'text-danger';
+      }
+
+      return '';
+    },
+    statusSharedText: function statusSharedText(status) {
+      switch (status) {
+        case null:
+          return 'Wait';
+
+        case true:
+          return 'Accepted';
+
+        case false:
+          return 'Declined';
       }
 
       return '';
@@ -9239,7 +9270,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.cursor-pointer[data-v-fe328f1c]{\n    cursor: pointer;\n}\n.fav-star-full[data-v-fe328f1c] {\n    color: #f7c948;\n}\n.text-custom-secondary[data-v-fe328f1c] {\n    color: #c8c8c8;\n}\n#fav[data-v-fe328f1c]:hover {\n    color: #c8c8c8;\n}\n#not-fav[data-v-fe328f1c]:hover {\n    color: #f7c948;\n}\n.fa-edit[data-v-fe328f1c]:hover, .fa-archive[data-v-fe328f1c]:hover, .fa-share-square[data-v-fe328f1c]:hover {\n    color: #212529;\n}\n.full[data-v-fe328f1c] {\n    height: calc(100vh - 165px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.cursor-pointer[data-v-fe328f1c]{\n    cursor: pointer;\n}\n.fav-star-full[data-v-fe328f1c] {\n    color: #f7c948;\n}\n.text-custom-secondary[data-v-fe328f1c] {\n    color: #c8c8c8;\n}\n#fav[data-v-fe328f1c]:hover {\n    color: #c8c8c8;\n}\n#not-fav[data-v-fe328f1c]:hover {\n    color: #f7c948;\n}\n.fa-edit[data-v-fe328f1c]:hover, .fa-archive[data-v-fe328f1c]:hover, .fa-share-square[data-v-fe328f1c]:hover {\n    color: #212529;\n}\n.full[data-v-fe328f1c] {\n    height: calc(100vh - 190px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -68741,6 +68772,7 @@ var render = function() {
           _c(
             "form",
             {
+              staticClass: "mb-2",
               on: {
                 submit: function($event) {
                   $event.preventDefault()
@@ -68785,14 +68817,23 @@ var render = function() {
           ),
           _vm._v(" "),
           _vm._l(this.project.shared_users, function(sharedUser) {
-            return _c("div", [
-              _c("hr"),
-              _vm._v(
-                "\n                " +
-                  _vm._s(sharedUser.email) +
-                  "\n            "
-              )
-            ])
+            return _c(
+              "div",
+              { staticClass: "justify-content-between d-flex" },
+              [
+                _c("div", [_vm._v(_vm._s(sharedUser.email))]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { class: _vm.statusSharedCss(sharedUser.pivot.accepted) },
+                  [
+                    _vm._v(
+                      _vm._s(_vm.statusSharedText(sharedUser.pivot.accepted))
+                    )
+                  ]
+                )
+              ]
+            )
           })
         ],
         2

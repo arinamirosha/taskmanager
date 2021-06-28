@@ -5,18 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/database/migrations/2021_06_28_104449_create_shared_projects_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/modals/projects/ShareProject.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/4e3fac6d-6c29-44b0-8f0f-7bf2c4a1e81c.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/4e3fac6d-6c29-44b0-8f0f-7bf2c4a1e81c.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Project.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Project.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/mixins/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/mixins/constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/projects/ShareProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/projects/ShareProject.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/routes.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -243,14 +238,7 @@
       <workItem from="1624514877892" duration="7938000" />
       <workItem from="1624539771070" duration="900000" />
       <workItem from="1624602887525" duration="21066000" />
-      <workItem from="1624859639891" duration="21234000" />
-    </task>
-    <task id="LOCAL-00010" summary="fixed menu">
-      <created>1622096100667</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1622096100667</updated>
+      <workItem from="1624859639891" duration="23242000" />
     </task>
     <task id="LOCAL-00011" summary="common index component for incoming, upcoming, today, not scheduled, archive">
       <created>1622101506154</created>
@@ -588,7 +576,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624874707796</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="send share">
+      <created>1624881935088</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1624881935088</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -611,7 +606,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="correct edit task" />
     <MESSAGE value="filter archived tasks" />
     <MESSAGE value="show task project" />
     <MESSAGE value="dropdown menu on width 1051" />
@@ -636,6 +630,7 @@
     <MESSAGE value="load more comments" />
     <MESSAGE value="comments mobile" />
     <MESSAGE value="scroll modals" />
-    <option name="LAST_COMMIT_MESSAGE" value="scroll modals" />
+    <MESSAGE value="send share" />
+    <option name="LAST_COMMIT_MESSAGE" value="send share" />
   </component>
 </project>

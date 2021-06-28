@@ -6,7 +6,7 @@
             </div>
 
             <div class="modal-body">
-                <form @submit.prevent="shareProject">
+                <form @submit.prevent="shareProject" class="mb-2">
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input class="form-control" id="email" v-model="email" :class="{'is-invalid': this.$v.email.$error}">
@@ -14,9 +14,9 @@
                     <button type="submit" class="btn btn-primary">Share</button>
                 </form>
 
-                <div v-for="sharedUser in this.project.shared_users">
-                    <hr>
-                    {{sharedUser.email}}
+                <div v-for="sharedUser in this.project.shared_users" class="justify-content-between d-flex">
+                    <div>{{sharedUser.email}}</div>
+                    <div :class="statusSharedCss(sharedUser.pivot.accepted)">{{statusSharedText(sharedUser.pivot.accepted)}}</div>
                 </div>
 
             </div>
@@ -31,8 +31,12 @@
 <script>
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import route from "../../../route";
+import constantsMixin from "../../mixins/constants";
 
 export default {
+    mixins: [
+        constantsMixin,
+    ],
     props: ['project'],
     data() {
         return {

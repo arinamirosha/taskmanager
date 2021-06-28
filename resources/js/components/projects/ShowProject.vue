@@ -330,7 +330,7 @@ export default {
     color: #212529;
 }
 .full {
-    height: calc(100vh - 165px);
+    height: calc(100vh - 190px);
     overflow-y: scroll;
     overflow-x: hidden;
 }

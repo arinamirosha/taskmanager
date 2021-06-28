@@ -40,5 +40,21 @@ export default {
             }
             return '';
         },
+        statusSharedCss(status) {
+            switch (status) {
+                case null: return 'text-secondary';
+                case true: return 'text-success';
+                case false: return 'text-danger';
+            }
+            return '';
+        },
+        statusSharedText(status) {
+            switch (status) {
+                case null: return 'Wait';
+                case true: return 'Accepted';
+                case false: return 'Declined';
+            }
+            return '';
+        },
     },
 }
