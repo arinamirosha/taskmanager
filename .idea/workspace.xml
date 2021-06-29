@@ -7,8 +7,7 @@
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Policies/ProjectPolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Policies/ProjectPolicy.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -236,14 +235,7 @@
       <workItem from="1624539771070" duration="900000" />
       <workItem from="1624602887525" duration="21066000" />
       <workItem from="1624859639891" duration="29454000" />
-      <workItem from="1624949020743" duration="15956000" />
-    </task>
-    <task id="LOCAL-00018" summary="archive tasks for existed project">
-      <created>1622646271847</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1622646271847</updated>
+      <workItem from="1624949020743" duration="18023000" />
     </task>
     <task id="LOCAL-00019" summary="goto project from task even if archived">
       <created>1622646732187</created>
@@ -581,7 +573,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624972230931</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="show shared projects in menu and archive">
+      <created>1624980044165</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1624980044165</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -604,7 +603,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="no scroll when menu hidden" />
     <MESSAGE value="adapt filter" />
     <MESSAGE value="project page mobile" />
     <MESSAGE value="task pages mobile" />
@@ -629,6 +627,7 @@
     <MESSAGE value="on del/force del project clear shared" />
     <MESSAGE value="project task dates" />
     <MESSAGE value="correct front" />
-    <option name="LAST_COMMIT_MESSAGE" value="correct front" />
+    <MESSAGE value="show shared projects in menu and archive" />
+    <option name="LAST_COMMIT_MESSAGE" value="show shared projects in menu and archive" />
   </component>
 </project>

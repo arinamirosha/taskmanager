@@ -46,9 +46,6 @@ class ProjectsController extends Controller
             $ids = Auth::user()->shared_projects()->where('accepted', true)->onlyTrashed()->pluck('id');
 
             $data['projects'] = $projects->orWhereIn('id', $ids)->orderBy('deleted_at', 'desc')->paginate(25);
-
-
-            $data['projects'] = $projects->orderBy('deleted_at', 'desc')->paginate(25);
         } else {
             $data['newShared'] = Auth::user()->shared_projects()->whereNull('accepted')->get();
 
@@ -106,11 +103,7 @@ class ProjectsController extends Controller
             return response('You cannot share with yourself', 400);
         }
 
-        if (DB::table('shared_projects')
-              ->where('user_id', $userId)
-              ->where('project_id', $project->id)
-              ->exists()
-        ) {
+        if ($project->shared_users()->wherePivot('user_id', $userId)->exists()) {
             return response('Already shared', 400);
         }
 
@@ -129,7 +122,7 @@ class ProjectsController extends Controller
 
     public function accepted(Project $project, Request $request)
     {
-        $shared_users = $project->shared_users()->where('id', Auth::id())->first();
+        $shared_users = $project->shared_users()->wherePivot('user_id', Auth::id())->whereNull('accepted')->first();
 
         if (!$shared_users) {
             return response('No new shared projects', 400);
