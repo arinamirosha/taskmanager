@@ -43,16 +43,16 @@ export default {
         statusSharedCss(status) {
             switch (status) {
                 case null: return 'text-secondary';
-                case true: return 'text-success';
-                case false: return 'text-danger';
+                case 1: return 'text-success';
+                case 0: return 'text-danger';
             }
             return '';
         },
         statusSharedText(status) {
             switch (status) {
                 case null: return 'Wait';
-                case true: return 'Accepted';
-                case false: return 'Declined';
+                case 1: return 'Accepted';
+                case 0: return 'Declined';
             }
             return '';
         },

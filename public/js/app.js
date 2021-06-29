@@ -2037,6 +2037,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4579,10 +4588,10 @@ __webpack_require__.r(__webpack_exports__);
         case null:
           return 'text-secondary';
 
-        case true:
+        case 1:
           return 'text-success';
 
-        case false:
+        case 0:
           return 'text-danger';
       }
 
@@ -4593,10 +4602,10 @@ __webpack_require__.r(__webpack_exports__);
         case null:
           return 'Wait';
 
-        case true:
+        case 1:
           return 'Accepted';
 
-        case false:
+        case 0:
           return 'Declined';
       }
 
@@ -9217,7 +9226,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nnav a[data-v-f2b6376c]:hover,\n.active[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px;\n    cursor: pointer;\n}\nnav a[data-v-f2b6376c]:hover {\n    text-decoration: none;\n}\n.cursor-pointer[data-v-f2b6376c]{\n    cursor: pointer;\n}\n.text-custom-secondary[data-v-f2b6376c] {\n    color: #c8c8c8;\n}\n.left-menu[data-v-f2b6376c] {\n    width: 300px;\n    height: calc(100vh - 55px);\n    position: fixed;\n    left: 0;\n    bottom: 0;\n    overflow-y: scroll;\n}\n.main-content[data-v-f2b6376c] {\n    margin-left: 300px;\n}\n.name-count-space[data-v-f2b6376c] {\n    display: flex;\n    justify-content: space-between;\n}\n.btn-menu[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px 5px 0 0;\n}\n.dropdown[data-v-f2b6376c] {\n    height: 0;\n}\n#dropdownMenuButton[data-v-f2b6376c] {\n    margin-top: -62px;\n    width: 80px;\n    margin-left: calc(50% - 40px);\n}\n.dropdown-menu[data-v-f2b6376c] {\n    width: 100vw;\n    margin-left: 5px;\n    top: 49px !important;\n    border: none;\n    border-radius: 0;\n    border-bottom: 1px solid #e0eeee;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nnav a[data-v-f2b6376c]:hover,\n.active[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px;\n    cursor: pointer;\n}\nnav a[data-v-f2b6376c]:hover {\n    text-decoration: none;\n}\n.cursor-pointer[data-v-f2b6376c]{\n    cursor: pointer;\n}\n.text-custom-secondary[data-v-f2b6376c] {\n    color: #c8c8c8;\n}\n.left-menu[data-v-f2b6376c] {\n    width: 300px;\n    height: calc(100vh - 55px);\n    position: fixed;\n    left: 0;\n    bottom: 0;\n    overflow-y: scroll;\n}\n.main-content[data-v-f2b6376c] {\n    margin-left: 300px;\n}\n.name-count-space[data-v-f2b6376c] {\n    display: flex;\n    justify-content: space-between;\n}\n.btn-menu[data-v-f2b6376c] {\n    background-color: #e0eeee;\n    border-radius: 5px 5px 0 0;\n}\n.dropdown[data-v-f2b6376c] {\n    height: 0;\n}\n#dropdownMenuButton[data-v-f2b6376c] {\n    margin-top: -62px;\n    width: 80px;\n    margin-left: calc(50% - 40px);\n}\n.dropdown-menu[data-v-f2b6376c] {\n    width: 100vw;\n    margin-left: 5px;\n    top: 49px !important;\n    border: none;\n    border-radius: 0;\n    border-bottom: 1px solid #e0eeee;\n}\n.tiny[data-v-f2b6376c] {\n    font-size: 10px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -67854,7 +67863,16 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("span", { staticClass: "text-custom-secondary" }, [
-                        _vm._v(_vm._s(project.tasks_count))
+                        _vm._v(
+                          "\n                                    " +
+                            _vm._s(project.tasks_count) +
+                            "\n                                    "
+                        ),
+                        project.shared_users_count
+                          ? _c("span", [
+                              _c("i", { staticClass: "fas fa-share tiny" })
+                            ])
+                          : _vm._e()
                       ])
                     ]
                   )
@@ -67936,7 +67954,16 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("span", { staticClass: "text-custom-secondary" }, [
-                        _vm._v(_vm._s(project.tasks_count))
+                        _vm._v(
+                          "\n                                    " +
+                            _vm._s(project.tasks_count) +
+                            "\n                                    "
+                        ),
+                        project.shared_users_count
+                          ? _c("span", [
+                              _c("i", { staticClass: "fas fa-share tiny" })
+                            ])
+                          : _vm._e()
                       ])
                     ]
                   )

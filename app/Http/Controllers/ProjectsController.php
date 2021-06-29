@@ -45,7 +45,7 @@ class ProjectsController extends Controller
 
             $data['projects'] = $projects->orderBy('deleted_at', 'desc')->paginate(25);
         } else {
-            $data['projects'] = $projects->withCount('tasks')->get();
+            $data['projects'] = $projects->withCount('tasks')->withCount('shared_users')->get();
             $data['newShared'] = Auth::user()->shared_projects()->whereNull('accepted')->get();
         }
 
