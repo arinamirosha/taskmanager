@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Home.vue" afterDir="false" />
     </list>
@@ -235,14 +236,7 @@
       <workItem from="1624539771070" duration="900000" />
       <workItem from="1624602887525" duration="21066000" />
       <workItem from="1624859639891" duration="29454000" />
-      <workItem from="1624949020743" duration="8959000" />
-    </task>
-    <task id="LOCAL-00017" summary="show archived project">
-      <created>1622565930213</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1622565930214</updated>
+      <workItem from="1624949020743" duration="15956000" />
     </task>
     <task id="LOCAL-00018" summary="archive tasks for existed project">
       <created>1622646271847</created>
@@ -580,7 +574,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624970817673</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="correct front">
+      <created>1624972230931</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1624972230931</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -603,7 +604,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="scroll in show project" />
     <MESSAGE value="no scroll when menu hidden" />
     <MESSAGE value="adapt filter" />
     <MESSAGE value="project page mobile" />
@@ -628,6 +628,7 @@
     <MESSAGE value="unshare" />
     <MESSAGE value="on del/force del project clear shared" />
     <MESSAGE value="project task dates" />
-    <option name="LAST_COMMIT_MESSAGE" value="project task dates" />
+    <MESSAGE value="correct front" />
+    <option name="LAST_COMMIT_MESSAGE" value="correct front" />
   </component>
 </project>

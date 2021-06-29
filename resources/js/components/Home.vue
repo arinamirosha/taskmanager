@@ -93,7 +93,9 @@
                             >
                                 <span :style="{color: project.color}">{{project.name}}</span>
                                 <span class="text-custom-secondary counts">{{project.tasks_count}}
-                                    <span v-if="project.shared_users_count"><i class="fas fa-share"></i></span>
+                                    <span v-if="project.shared_users_count">
+                                        <i class="fas fa-share" :class="{'fa-flip-horizontal': project.shared}"></i>
+                                    </span>
                                 </span>
                             </a>
                         </div>
@@ -187,9 +189,6 @@ nav a:hover {
 .nav-link {
     padding: 3px 5px;
 }
-.shared {
-    min-width: 10px;
-}
 </style>
 
 <script>
@@ -222,6 +221,14 @@ export default {
             return this.projects.filter(project => {
                 return project.favorite;
             });
+        },
+    },
+    watch: {
+        selectedProjectId: function () {
+            this.getProjects();
+        },
+        type: function () {
+            this.getProjects();
         },
     },
     methods: {

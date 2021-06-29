@@ -43,10 +43,26 @@ class ProjectsController extends Controller
                 $projects->havingRaw('tasks_count > 0');
             }
 
+            $ids = Auth::user()->shared_projects()->where('accepted', true)->onlyTrashed()->pluck('id');
+
+            $data['projects'] = $projects->orWhereIn('id', $ids)->orderBy('deleted_at', 'desc')->paginate(25);
+
+
             $data['projects'] = $projects->orderBy('deleted_at', 'desc')->paginate(25);
         } else {
-            $data['projects'] = $projects->withCount('tasks')->withCount('shared_users')->get();
             $data['newShared'] = Auth::user()->shared_projects()->whereNull('accepted')->get();
+
+            $projects = $projects->select(DB::raw('projects.*, 0 as shared'))
+                                 ->withCount('tasks')
+                                 ->withCount('shared_users');
+
+            $sharedProjects = Auth::user()->shared_projects()
+                                  ->where('accepted', true)
+                                  ->select(DB::raw('projects.*, 1 as shared'))
+                                  ->withCount('tasks')
+                                  ->withCount('shared_users');
+
+            $data['projects'] = $projects->union($sharedProjects)->orderBy('name')->get();
         }
 
         if ($getCounts) {
