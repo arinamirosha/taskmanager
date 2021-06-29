@@ -11,6 +11,7 @@
                         All tasks will be archived too.
                         If you decide to restore project later, tasks only with status "NEW" and "IN PROGRESS" will be restored.
                         Tasks with status "FINISHED" you will be able to restore manually.
+                        Invitations to join project will be deleted.
                     </div>
                 </div>
 

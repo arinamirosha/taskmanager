@@ -7,11 +7,9 @@
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Project.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Project.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/comments/Comments.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/comments/Comments.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/projects/ShareProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/projects/ShareProject.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/routes.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/projects/ArchiveProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/projects/ArchiveProject.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -239,14 +237,7 @@
       <workItem from="1624539771070" duration="900000" />
       <workItem from="1624602887525" duration="21066000" />
       <workItem from="1624859639891" duration="29454000" />
-      <workItem from="1624949020743" duration="4906000" />
-    </task>
-    <task id="LOCAL-00014" summary="update task policy">
-      <created>1622554783428</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1622554783428</updated>
+      <workItem from="1624949020743" duration="6478000" />
     </task>
     <task id="LOCAL-00015" summary="update task policy correct">
       <created>1622554880980</created>
@@ -584,7 +575,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624964166422</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="unshare">
+      <created>1624966598858</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1624966598858</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -607,7 +605,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="correct dropdown menu" />
     <MESSAGE value="order" />
     <MESSAGE value="correct min schedule when update" />
     <MESSAGE value="scroll in show project" />
@@ -632,6 +629,7 @@
     <MESSAGE value="status show" />
     <MESSAGE value="accept or decline" />
     <MESSAGE value="arrow and correct constants" />
-    <option name="LAST_COMMIT_MESSAGE" value="arrow and correct constants" />
+    <MESSAGE value="unshare" />
+    <option name="LAST_COMMIT_MESSAGE" value="unshare" />
   </component>
 </project>

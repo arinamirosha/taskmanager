@@ -2430,6 +2430,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['project'],
@@ -68443,7 +68444,7 @@ var render = function() {
               _vm._v('\n                    Are you sure want to archive "'),
               _c("strong", [_vm._v(_vm._s(_vm.project.name))]),
               _vm._v(
-                '"?\n                    All tasks will be archived too.\n                    If you decide to restore project later, tasks only with status "NEW" and "IN PROGRESS" will be restored.\n                    Tasks with status "FINISHED" you will be able to restore manually.\n                '
+                '"?\n                    All tasks will be archived too.\n                    If you decide to restore project later, tasks only with status "NEW" and "IN PROGRESS" will be restored.\n                    Tasks with status "FINISHED" you will be able to restore manually.\n                    Invitations to join project will be deleted.\n                '
               )
             ])
           ]),

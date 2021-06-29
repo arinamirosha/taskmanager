@@ -55,6 +55,10 @@ class Project extends Model
         static::deleting(function ($project) {
             if ($project->forceDeleting) {
                 $project->tasks()->forceDelete();
+                $project->shared_users()->detach();
+            } else {
+                $project->tasks()->delete();
+                $project->shared_users()->wherePivot('accepted', null)->detach();
             }
         });
     }

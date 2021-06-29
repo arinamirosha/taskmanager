@@ -126,7 +126,6 @@ class ProjectsController extends Controller
 
     public function archive(Project $project)
     {
-        $project->tasks()->delete();
         $project->delete();
 
         return true;
