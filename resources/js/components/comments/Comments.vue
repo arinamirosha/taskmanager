@@ -136,7 +136,7 @@ export default {
                 });
         },
         deleteComment(id) {
-            if (confirm('Are you shure want to delete this comment?')) {
+            if (confirm('Are you sure want to delete this comment?')) {
                 axios
                     .delete(route('comments.destroy', id))
                     .then(response => {

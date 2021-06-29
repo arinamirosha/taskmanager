@@ -62,14 +62,16 @@ class ProjectsController extends Controller
         $this->authorize('view', $project);
 
         if ($project->trashed()) {
-            return $project->load([
+            $project->load([
                 'tasks'=> function ($query) {
                     $query->whereIn('status', [Task::STATUS_NEW, Task::STATUS_PROGRESS])->withTrashed();
                 },
             ]);
         } else {
-            return $project->load('tasks')->load('shared_users');
+            $project->load('tasks');
         }
+
+        return $project->load('shared_users');
     }
 
     public function update(Project $project, Request $request)
@@ -97,6 +99,14 @@ class ProjectsController extends Controller
         }
 
         $project->shared_users()->attach($userId);
+
+        return $project;
+    }
+
+    public function unshare(Project $project, Request $request)
+    {
+        $user = User::where('email', $request->get('email'))->firstOrFail();
+        $project->shared_users()->wherePivot('user_id', $user->id)->detach();
 
         return $project;
     }

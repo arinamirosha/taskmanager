@@ -17,6 +17,7 @@
                 <div v-for="sharedUser in this.project.shared_users" class="justify-content-between d-flex">
                     <div>{{sharedUser.email}}</div>
                     <div :class="statusSharedCss(sharedUser.pivot.accepted)">{{statusSharedText(sharedUser.pivot.accepted)}}</div>
+                    <i v-if="!project.deleted_at" class="fas fa-times text-secondary text-sm" @click="unshare(sharedUser.email)"></i>
                 </div>
 
             </div>
@@ -76,6 +77,23 @@ export default {
                     });
             }
         },
+        unshare(email) {
+            if (confirm('Are you sure do not want share this project with user ' + email +'?')) {
+                axios
+                    .delete(route('projects.unshare', this.project.id), {
+                        params: {
+                            'email': email,
+                        },
+                    })
+                    .then(response => {
+                        // this.comments = this.comments.filter(comment => comment.id !== id);
+                        this.$emit('updated');
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+        },
         reset() {
             this.email = '';
             this.$v.$reset();
@@ -83,3 +101,16 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.text-sm {
+    font-size: 12px;
+}
+.fa-times {
+    cursor: pointer;
+    color: #eaeaea;
+}
+.fa-times:hover {
+    color: #d7d7d7;
+}
+</style>
