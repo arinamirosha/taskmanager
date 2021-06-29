@@ -69,9 +69,8 @@
                                :class="{'active': currentComponent==='show-project' && selectedProjectId === project.id }"
                             >
                                 <span :style="{color: project.color}">{{project.name}}</span>
-                                <span class="text-custom-secondary">
-                                    {{project.tasks_count}}
-                                    <span v-if="project.shared_users_count"><i class="fas fa-share tiny"></i></span>
+                                <span class="text-custom-secondary counts">{{project.tasks_count}}
+                                    <span class="shared"><i v-if="project.shared_users_count" class="fas fa-share"></i></span>
                                 </span>
                             </a>
                         </div>
@@ -93,9 +92,8 @@
                                :class="{'active': currentComponent==='show-project' && selectedProjectId === project.id }"
                             >
                                 <span :style="{color: project.color}">{{project.name}}</span>
-                                <span class="text-custom-secondary">
-                                    {{project.tasks_count}}
-                                    <span v-if="project.shared_users_count"><i class="fas fa-share tiny"></i></span>
+                                <span class="text-custom-secondary counts">{{project.tasks_count}}
+                                    <span v-if="project.shared_users_count"><i class="fas fa-share"></i></span>
                                 </span>
                             </a>
                         </div>
@@ -179,8 +177,18 @@ nav a:hover {
     border-radius: 0;
     border-bottom: 1px solid #e0eeee;
 }
-.tiny {
+.fa-share {
     font-size: 10px;
+}
+.counts {
+    min-width: 40px;
+    text-align: right;
+}
+.nav-link {
+    padding: 3px 5px;
+}
+.shared {
+    min-width: 10px;
 }
 </style>
 
