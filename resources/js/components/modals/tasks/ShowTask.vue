@@ -15,6 +15,7 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#comments" type="button" role="tab" aria-controls="profile" aria-selected="false">Comments ({{task.comments_count}})</button>
                 </li>
+                <li class="p-2">{{tDate}}</li>
             </ul>
 
             <div class="modal-body">
@@ -95,6 +96,11 @@ export default {
         constantsMixin,
     ],
     props: ['task', 'project'],
+    computed: {
+        tDate: function () {
+            return moment(new Date(this.task.created_at)).format('DD.MM.YY HH:mm');
+        },
+    },
     methods: {
         deleteTaskModal() {
             this.$refs.closeShowTask.click();

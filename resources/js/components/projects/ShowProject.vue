@@ -4,7 +4,7 @@
         <div v-if="project">
             <div v-if="isProjectLoaded">
 
-                <div class="row mb-3">
+                <div class="row">
                     <div class="col-md-6">
                         <span class="font-weight-bold h4">
                             {{project.name}}
@@ -47,8 +47,13 @@
                     </div>
                 </div>
 
-                <div v-if="project.shared_users.length > 0" class="my-2">
-                    <span class="font-weight-bold">Shared with:</span> {{sharedNames}}
+                <div class="row my-1">
+                    <div class="col-8">
+                        <span v-if="project.shared_users.length > 0">
+                            <span class="font-weight-bold">Shared with:</span> {{sharedNames}}
+                        </span>
+                    </div>
+                    <div class="col-4 text-right">{{pDate}}</div>
                 </div>
 
                 <div v-if="mediumStyle" class="row font-weight-bold h6">
@@ -144,6 +149,7 @@ import route from "../../route";
 import draggable from 'vuedraggable';
 import constantsMixin from "../mixins/constants.js";
 import customWidthMixin from "../mixins/custom-width.js";
+import moment from "moment";
 
 export default {
     mixins: [
@@ -176,6 +182,9 @@ export default {
         sharedNames: function () {
             let names = this.project.shared_users.map(a => a.name);
             return names.join(', ');
+        },
+        pDate: function () {
+            return moment(new Date(this.project.created_at)).format('DD.MM.YY HH:mm');
         },
     },
     methods: {

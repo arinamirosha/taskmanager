@@ -3332,12 +3332,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mixins: [_mixins_constants_js__WEBPACK_IMPORTED_MODULE_0__.default],
   props: ['task', 'project'],
+  computed: {
+    tDate: function tDate() {
+      return moment__WEBPACK_IMPORTED_MODULE_2___default()(new Date(this.task.created_at)).format('DD.MM.YY HH:mm');
+    }
+  },
   methods: {
     deleteTaskModal: function deleteTaskModal() {
       this.$refs.closeShowTask.click();
@@ -3607,6 +3613,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _mixins_constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/constants.js */ "./resources/js/components/mixins/constants.js");
 /* harmony import */ var _mixins_custom_width_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../mixins/custom-width.js */ "./resources/js/components/mixins/custom-width.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_4__);
 //
 //
 //
@@ -3748,6 +3756,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
@@ -3782,6 +3796,9 @@ __webpack_require__.r(__webpack_exports__);
         return a.name;
       });
       return names.join(', ');
+    },
+    pDate: function pDate() {
+      return moment__WEBPACK_IMPORTED_MODULE_4___default()(new Date(this.project.created_at)).format('DD.MM.YY HH:mm');
     }
   },
   methods: {
@@ -69756,7 +69773,9 @@ var render = function() {
                 [_vm._v("Comments (" + _vm._s(_vm.task.comments_count) + ")")]
               )
             ]
-          )
+          ),
+          _vm._v(" "),
+          _c("li", { staticClass: "p-2" }, [_vm._v(_vm._s(_vm.tDate))])
         ]
       ),
       _vm._v(" "),
@@ -70363,7 +70382,7 @@ var render = function() {
             ? _c(
                 "div",
                 [
-                  _c("div", { staticClass: "row mb-3" }, [
+                  _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("span", { staticClass: "font-weight-bold h4" }, [
                         _vm._v(
@@ -70514,14 +70533,26 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm.project.shared_users.length > 0
-                    ? _c("div", { staticClass: "my-2" }, [
-                        _c("span", { staticClass: "font-weight-bold" }, [
-                          _vm._v("Shared with:")
-                        ]),
-                        _vm._v(" " + _vm._s(_vm.sharedNames) + "\n            ")
-                      ])
-                    : _vm._e(),
+                  _c("div", { staticClass: "row my-1" }, [
+                    _c("div", { staticClass: "col-8" }, [
+                      _vm.project.shared_users.length > 0
+                        ? _c("span", [
+                            _c("span", { staticClass: "font-weight-bold" }, [
+                              _vm._v("Shared with:")
+                            ]),
+                            _vm._v(
+                              " " +
+                                _vm._s(_vm.sharedNames) +
+                                "\n                    "
+                            )
+                          ])
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-4 text-right" }, [
+                      _vm._v(_vm._s(_vm.pDate))
+                    ])
+                  ]),
                   _vm._v(" "),
                   _vm.mediumStyle
                     ? _c("div", { staticClass: "row font-weight-bold h6" }, [
