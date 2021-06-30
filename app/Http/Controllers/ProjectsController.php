@@ -106,6 +106,17 @@ class ProjectsController extends Controller
         return $project;
     }
 
+    public function favorite(Project $project, Request $request)
+    {
+        if ($project->user_id === Auth::id()) {
+            $project->update($request->all());
+        } else {
+            $project->shared_users()->wherePivot('user_id', Auth::id())->update($request->all());
+        }
+
+        return $project;
+    }
+
     public function share(Project $project, Request $request)
     {
         $user   = User::where('email', $request->get('email'))->firstOrFail();

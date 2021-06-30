@@ -3922,7 +3922,7 @@ __webpack_require__.r(__webpack_exports__);
     changeFav: function changeFav(projectId, favorite) {
       var _this3 = this;
 
-      axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.update', projectId), {
+      axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.favorite', projectId), {
         'favorite': favorite
       }).then(function (response) {
         _this3.getProject();
@@ -88087,7 +88087,7 @@ exports.withParams = withParams;
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"\":\"password/confirm\",\"login\":\"login\",\"logout\":\"logout\",\"register\":\"register\",\"password.request\":\"password/reset\",\"password.email\":\"password/email\",\"password.reset\":\"password/reset/{token}\",\"password.update\":\"password/reset\",\"password.confirm\":\"password/confirm\",\"welcome\":\"/\",\"home\":\"home\",\"users.show\":\"users\",\"users.profile\":\"users/profile\",\"users.update\":\"users\",\"projects.index\":\"projects\",\"projects.store\":\"projects\",\"projects.show\":\"projects/{project}\",\"projects.restore\":\"projects/{project}/restore\",\"projects.update\":\"projects/{project}\",\"projects.share\":\"projects/{project}/share\",\"projects.unshare\":\"projects/{project}/unshare\",\"projects.accepted\":\"projects/{project}/accepted\",\"projects.archive\":\"projects/{project}/archive\",\"projects.destroy-force\":\"projects/{project}/force\",\"tasks.index\":\"tasks\",\"tasks.store\":\"tasks\",\"tasks.restore\":\"tasks/{task}/restore\",\"tasks.update\":\"tasks/{task}\",\"tasks.destroy\":\"tasks/{task}\",\"tasks.archive\":\"tasks/archive/all\",\"tasks.destroy-force\":\"tasks/{task}/force\",\"comments.index\":\"comments\",\"comments.store\":\"comments\",\"comments.destroy\":\"comments/{comment}\"}");
+module.exports = JSON.parse("{\"\":\"password/confirm\",\"login\":\"login\",\"logout\":\"logout\",\"register\":\"register\",\"password.request\":\"password/reset\",\"password.email\":\"password/email\",\"password.reset\":\"password/reset/{token}\",\"password.update\":\"password/reset\",\"password.confirm\":\"password/confirm\",\"welcome\":\"/\",\"home\":\"home\",\"users.show\":\"users\",\"users.profile\":\"users/profile\",\"users.update\":\"users\",\"projects.index\":\"projects\",\"projects.store\":\"projects\",\"projects.show\":\"projects/{project}\",\"projects.restore\":\"projects/{project}/restore\",\"projects.update\":\"projects/{project}\",\"projects.favorite\":\"projects/{project}/favorite\",\"projects.share\":\"projects/{project}/share\",\"projects.unshare\":\"projects/{project}/unshare\",\"projects.accepted\":\"projects/{project}/accepted\",\"projects.archive\":\"projects/{project}/archive\",\"projects.destroy-force\":\"projects/{project}/force\",\"tasks.index\":\"tasks\",\"tasks.store\":\"tasks\",\"tasks.restore\":\"tasks/{task}/restore\",\"tasks.update\":\"tasks/{task}\",\"tasks.destroy\":\"tasks/{task}\",\"tasks.archive\":\"tasks/archive/all\",\"tasks.destroy-force\":\"tasks/{task}/force\",\"comments.index\":\"comments\",\"comments.store\":\"comments\",\"comments.destroy\":\"comments/{comment}\"}");
 
 /***/ })
 

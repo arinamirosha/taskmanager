@@ -18,6 +18,7 @@
     "projects.show": "projects\/{project}",
     "projects.restore": "projects\/{project}\/restore",
     "projects.update": "projects\/{project}",
+    "projects.favorite": "projects\/{project}\/favorite",
     "projects.share": "projects\/{project}\/share",
     "projects.unshare": "projects\/{project}\/unshare",
     "projects.accepted": "projects\/{project}\/accepted",

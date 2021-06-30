@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/projects/{project}', [App\Http\Controllers\ProjectsController::class, 'show'])->name('projects.show');
     Route::post('/projects/{project}/restore', [App\Http\Controllers\ProjectsController::class, 'restore'])->name('projects.restore');
     Route::post('/projects/{project}', [App\Http\Controllers\ProjectsController::class, 'update'])->name('projects.update')->middleware('can:update,project');
+    Route::post('/projects/{project}/favorite', [App\Http\Controllers\ProjectsController::class, 'favorite'])->name('projects.favorite')->middleware('can:view,project');
     Route::post('/projects/{project}/share', [App\Http\Controllers\ProjectsController::class, 'share'])->name('projects.share')->middleware('can:update,project');
     Route::delete('/projects/{project}/unshare', [App\Http\Controllers\ProjectsController::class, 'unshare'])->name('projects.unshare')->middleware('can:delete,project');
     Route::post('/projects/{project}/accepted', [App\Http\Controllers\ProjectsController::class, 'accepted'])->name('projects.accepted');

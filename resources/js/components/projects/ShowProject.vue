@@ -274,7 +274,7 @@ export default {
         },
         changeFav(projectId, favorite) {
             axios
-                .post(route('projects.update', projectId), {
+                .post(route('projects.favorite', projectId), {
                     'favorite': favorite,
                 })
                 .then(response => {
