@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -236,14 +237,7 @@
       <workItem from="1624602887525" duration="21066000" />
       <workItem from="1624859639891" duration="29454000" />
       <workItem from="1624949020743" duration="18559000" />
-      <workItem from="1625031922768" duration="14771000" />
-    </task>
-    <task id="LOCAL-00027" summary="counts by statuses">
-      <created>1624028711406</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1624028711406</updated>
+      <workItem from="1625031922768" duration="16472000" />
     </task>
     <task id="LOCAL-00028" summary="update counts when move task">
       <created>1624266936173</created>
@@ -581,7 +575,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625047840454</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="show only accepted shared users">
+      <created>1625049552969</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1625049552969</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -604,7 +605,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="unique ids" />
     <MESSAGE value="correct" />
     <MESSAGE value="user profile" />
     <MESSAGE value="load count comments" />
@@ -629,6 +629,7 @@
     <MESSAGE value="show project owner" />
     <MESSAGE value="show task owner" />
     <MESSAGE value="unshare project only owner and move not trashed tasks" />
-    <option name="LAST_COMMIT_MESSAGE" value="unshare project only owner and move not trashed tasks" />
+    <MESSAGE value="show only accepted shared users" />
+    <option name="LAST_COMMIT_MESSAGE" value="show only accepted shared users" />
   </component>
 </project>

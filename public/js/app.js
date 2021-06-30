@@ -3353,6 +3353,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -70057,7 +70060,9 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              _vm.task.deleted_at && !_vm.task.project.deleted_at
+              _vm.task.deleted_at &&
+              ((_vm.project && !_vm.project.deleted_at) ||
+                (_vm.task.project && !_vm.task.project.deleted_at))
                 ? _c(
                     "button",
                     {

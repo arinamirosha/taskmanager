@@ -85,15 +85,16 @@ class ProjectsController extends Controller
         if ($project->trashed()) {
             $project->load([
                 'tasks'=> function ($query) {
-                    $query->whereIn('status', [Task::STATUS_NEW, Task::STATUS_PROGRESS])->withTrashed();
+                    $query->whereIn('status', [Task::STATUS_NEW, Task::STATUS_PROGRESS])->withTrashed()->with('user');
                 },
             ]);
         } else {
             $project->load('tasks')->load('tasks.user');
-            $project->shared = $project->user_id != Auth::id();
-            if ($project->shared) {
-                $project->favorite = $project->shared_users()->wherePivot('user_id', Auth::id())->pluck('favorite')[0];
-            }
+        }
+
+        $project->shared = $project->user_id != Auth::id();
+        if ($project->shared) {
+            $project->favorite = $project->shared_users()->wherePivot('user_id', Auth::id())->pluck('favorite')[0];
         }
 
         return $project;

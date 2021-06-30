@@ -78,7 +78,10 @@
                             <span @click="archive" data-dismiss="modal">Archive</span>
                         </button>
 
-                        <button type="button" class="btn btn-primary" v-if="task.deleted_at && !task.project.deleted_at">
+                        <button type="button"
+                                class="btn btn-primary"
+                                v-if="task.deleted_at && (project && !project.deleted_at || task.project && !task.project.deleted_at)"
+                        >
                             <span @click="restore" data-dismiss="modal">Restore</span>
                         </button>
 
