@@ -137,6 +137,6 @@ class TaskController extends Controller
             }
         }
 
-        return $tasks->with(['project'])->withCount('comments')->paginate(25);
+        return $tasks->with(['project'])->withCount('comments')->with('user')->paginate(25);
     }
 }

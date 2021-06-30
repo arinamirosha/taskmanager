@@ -89,7 +89,7 @@ class ProjectsController extends Controller
                 },
             ]);
         } else {
-            $project->load('tasks');
+            $project->load('tasks')->load('tasks.user');
             $project->shared = $project->user_id != Auth::id();
             if ($project->shared) {
                 $project->favorite = $project->shared_users()->wherePivot('user_id', Auth::id())->pluck('favorite')[0];

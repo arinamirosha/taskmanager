@@ -21,6 +21,10 @@
             <div class="modal-body">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">
+                        <div v-if="task.user" class="mb-2">
+                            <div class="font-weight-bold">Owner</div>
+                            <div>{{task.user.name}} {{task.user.surname}}</div>
+                        </div>
                         <div v-if="task.details" class="mb-2">
                             <div class="font-weight-bold">Details</div>
                             <div>{{task.details}}</div>

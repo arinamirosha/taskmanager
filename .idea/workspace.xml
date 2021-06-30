@@ -7,8 +7,9 @@
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,14 +238,7 @@
       <workItem from="1624602887525" duration="21066000" />
       <workItem from="1624859639891" duration="29454000" />
       <workItem from="1624949020743" duration="18559000" />
-      <workItem from="1625031922768" duration="10082000" />
-    </task>
-    <task id="LOCAL-00024" summary="restore project">
-      <created>1622746064592</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1622746064592</updated>
+      <workItem from="1625031922768" duration="11487000" />
     </task>
     <task id="LOCAL-00025" summary="add scroll and style">
       <created>1622747428203</created>
@@ -582,7 +576,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625042892633</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="show project owner">
+      <created>1625044096293</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1625044096293</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -605,7 +606,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="comments" />
     <MESSAGE value="count comments" />
     <MESSAGE value="del comments" />
     <MESSAGE value="unique ids" />
@@ -630,6 +630,7 @@
     <MESSAGE value="edit migrs" />
     <MESSAGE value="change fav of shared" />
     <MESSAGE value="allow add task and if shared on force del project decline shared" />
-    <option name="LAST_COMMIT_MESSAGE" value="allow add task and if shared on force del project decline shared" />
+    <MESSAGE value="show project owner" />
+    <option name="LAST_COMMIT_MESSAGE" value="show project owner" />
   </component>
 </project>

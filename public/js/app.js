@@ -3349,6 +3349,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -69828,6 +69832,22 @@ var render = function() {
                 }
               },
               [
+                _vm.task.user
+                  ? _c("div", { staticClass: "mb-2" }, [
+                      _c("div", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Owner")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", [
+                        _vm._v(
+                          _vm._s(_vm.task.user.name) +
+                            " " +
+                            _vm._s(_vm.task.user.surname)
+                        )
+                      ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _vm.task.details
                   ? _c("div", { staticClass: "mb-2" }, [
                       _c("div", { staticClass: "font-weight-bold" }, [
