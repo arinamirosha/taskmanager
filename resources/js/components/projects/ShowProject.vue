@@ -52,7 +52,7 @@
                 <div class="row my-1">
                     <div class="col-8">
                         {{project.user.name}}<span v-if="project.user.surname">
-                        {{project.user.surname}}</span><span v-if="project.shared_users.length > 0">, {{sharedNames}}</span>
+                        {{project.user.surname}}</span><span v-if="project.shared_users.length > 0">{{sharedNames}}</span>
                     </div>
                     <div class="col-4 text-right">{{pDate}}</div>
                 </div>
@@ -181,8 +181,9 @@ export default {
     },
     computed: {
         sharedNames: function () {
-            let names = this.project.shared_users.map(a => a.name + (a.surname ? ' ' + a.surname : ''));
-            return names.join(', ');
+            let users = this.project.shared_users.filter(a => a.pivot.accepted);
+            let names = users.map(a => a.name + (a.surname ? ' ' + a.surname : ''));
+            return names.length ? ', ' + names.join(', ') : '';
         },
         pDate: function () {
             return moment(new Date(this.project.created_at)).format('DD.MM.YY HH:mm');

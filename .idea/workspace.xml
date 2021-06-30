@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Policies/ProjectPolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Policies/ProjectPolicy.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/projects/ShareProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/projects/ShareProject.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -239,14 +236,7 @@
       <workItem from="1624602887525" duration="21066000" />
       <workItem from="1624859639891" duration="29454000" />
       <workItem from="1624949020743" duration="18559000" />
-      <workItem from="1625031922768" duration="13681000" />
-    </task>
-    <task id="LOCAL-00026" summary="style schedule overdue in show task modal and additional info count tasks">
-      <created>1623078412771</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1623078412771</updated>
+      <workItem from="1625031922768" duration="14771000" />
     </task>
     <task id="LOCAL-00027" summary="counts by statuses">
       <created>1624028711406</created>
@@ -584,7 +574,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625045607608</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="unshare project only owner and move not trashed tasks">
+      <created>1625047840454</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1625047840454</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -607,7 +604,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="del comments" />
     <MESSAGE value="unique ids" />
     <MESSAGE value="correct" />
     <MESSAGE value="user profile" />
@@ -632,6 +628,7 @@
     <MESSAGE value="allow add task and if shared on force del project decline shared" />
     <MESSAGE value="show project owner" />
     <MESSAGE value="show task owner" />
-    <option name="LAST_COMMIT_MESSAGE" value="show task owner" />
+    <MESSAGE value="unshare project only owner and move not trashed tasks" />
+    <option name="LAST_COMMIT_MESSAGE" value="unshare project only owner and move not trashed tasks" />
   </component>
 </project>

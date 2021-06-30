@@ -3813,10 +3813,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     sharedNames: function sharedNames() {
-      var names = this.project.shared_users.map(function (a) {
+      var users = this.project.shared_users.filter(function (a) {
+        return a.pivot.accepted;
+      });
+      var names = users.map(function (a) {
         return a.name + (a.surname ? ' ' + a.surname : '');
       });
-      return names.join(', ');
+      return names.length ? ', ' + names.join(', ') : '';
     },
     pDate: function pDate() {
       return moment__WEBPACK_IMPORTED_MODULE_4___default()(new Date(this.project.created_at)).format('DD.MM.YY HH:mm');
@@ -70617,7 +70620,7 @@ var render = function() {
                           ])
                         : _vm._e(),
                       _vm.project.shared_users.length > 0
-                        ? _c("span", [_vm._v(", " + _vm._s(_vm.sharedNames))])
+                        ? _c("span", [_vm._v(_vm._s(_vm.sharedNames))])
                         : _vm._e()
                     ]),
                     _vm._v(" "),
