@@ -78,7 +78,7 @@ export default {
             }
         },
         unshare(email) {
-            if (confirm('Are you sure do not want share this project with user ' + email +'?')) {
+            if (confirm('Are you sure do not want share this project with user ' + email +'? All not trashed tasks of this user will be moved to yours.')) {
                 axios
                     .delete(route('projects.unshare', this.project.id), {
                         params: {

@@ -41,7 +41,7 @@
                                 </a>
                             </span>
 
-                            <a class="cursor-pointer text-danger" data-toggle="modal" data-target="#deleteProjectModal">
+                            <a v-if="!project.shared" class="cursor-pointer text-danger" data-toggle="modal" data-target="#deleteProjectModal">
                                 <i class="far fa-trash-alt"></i>
                             </a>
 

@@ -139,6 +139,7 @@ class ProjectsController extends Controller
     {
         $user = User::where('email', $request->get('email'))->firstOrFail();
         $project->shared_users()->wherePivot('user_id', $user->id)->detach();
+        $project->tasks()->where('user_id', $user->id)->update(['user_id' => Auth::id()]);
 
         return $project;
     }
@@ -177,12 +178,7 @@ class ProjectsController extends Controller
     {
         $project = Project::withTrashed()->findOrFail($id);
         $this->authorize('forceDelete', $project);
-
-        if ($project->user_id === Auth::id()) {
-            $project->forceDelete();
-        } else {
-            $project->shared_users()->wherePivot('user_id', Auth::id())->update(['accepted' => false]);
-        }
+        $project->forceDelete();
 
         return true;
     }

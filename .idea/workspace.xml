@@ -7,9 +7,10 @@
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Policies/ProjectPolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Policies/ProjectPolicy.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/projects/ShareProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/projects/ShareProject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -238,14 +239,7 @@
       <workItem from="1624602887525" duration="21066000" />
       <workItem from="1624859639891" duration="29454000" />
       <workItem from="1624949020743" duration="18559000" />
-      <workItem from="1625031922768" duration="11487000" />
-    </task>
-    <task id="LOCAL-00025" summary="add scroll and style">
-      <created>1622747428203</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1622747428203</updated>
+      <workItem from="1625031922768" duration="13681000" />
     </task>
     <task id="LOCAL-00026" summary="style schedule overdue in show task modal and additional info count tasks">
       <created>1623078412771</created>
@@ -583,7 +577,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625044096293</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="show task owner">
+      <created>1625045607608</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1625045607608</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -606,7 +607,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="count comments" />
     <MESSAGE value="del comments" />
     <MESSAGE value="unique ids" />
     <MESSAGE value="correct" />
@@ -631,6 +631,7 @@
     <MESSAGE value="change fav of shared" />
     <MESSAGE value="allow add task and if shared on force del project decline shared" />
     <MESSAGE value="show project owner" />
-    <option name="LAST_COMMIT_MESSAGE" value="show project owner" />
+    <MESSAGE value="show task owner" />
+    <option name="LAST_COMMIT_MESSAGE" value="show task owner" />
   </component>
 </project>

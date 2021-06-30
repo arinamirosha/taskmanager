@@ -2881,7 +2881,7 @@ __webpack_require__.r(__webpack_exports__);
     unshare: function unshare(email) {
       var _this2 = this;
 
-      if (confirm('Are you sure do not want share this project with user ' + email + '?')) {
+      if (confirm('Are you sure do not want share this project with user ' + email + '? All not trashed tasks of this user will be moved to yours.')) {
         axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.unshare', this.project.id), {
           params: {
             'email': email
@@ -70585,7 +70585,19 @@ var render = function() {
                               ])
                             : _vm._e(),
                           _vm._v(" "),
-                          _vm._m(0)
+                          !_vm.project.shared
+                            ? _c(
+                                "a",
+                                {
+                                  staticClass: "cursor-pointer text-danger",
+                                  attrs: {
+                                    "data-toggle": "modal",
+                                    "data-target": "#deleteProjectModal"
+                                  }
+                                },
+                                [_c("i", { staticClass: "far fa-trash-alt" })]
+                              )
+                            : _vm._e()
                         ]
                       )
                     ])
@@ -70982,21 +70994,7 @@ var render = function() {
       : _c("div", { staticClass: "h4" }, [_vm._v("Select project")])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "cursor-pointer text-danger",
-        attrs: { "data-toggle": "modal", "data-target": "#deleteProjectModal" }
-      },
-      [_c("i", { staticClass: "far fa-trash-alt" })]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

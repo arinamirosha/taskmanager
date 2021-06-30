@@ -90,7 +90,6 @@ class ProjectPolicy
      */
     public function forceDelete(User $user, Project $project)
     {
-        return $user->id === $project->user_id ||
-               $project->shared_users()->where('accepted', true)->wherePivot('user_id', $user->id)->exists();
+        return $user->id === $project->user_id;
     }
 }
