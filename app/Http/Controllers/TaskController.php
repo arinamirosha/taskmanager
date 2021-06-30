@@ -14,7 +14,7 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $project = Project::findOrFail($request->get('project_id', 0));
-        $this->authorize('update', $project);
+        $this->authorize('view', $project);
         $data = $request->all();
         $data['user_id'] = Auth::id();
 

@@ -3777,6 +3777,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -70495,7 +70497,7 @@ var render = function() {
                               ])
                             : _vm._e(),
                           _vm._v(" "),
-                          !_vm.project.deleted_at
+                          !_vm.project.deleted_at && !_vm.project.shared
                             ? _c(
                                 "a",
                                 {
@@ -70509,7 +70511,7 @@ var render = function() {
                               )
                             : _vm._e(),
                           _vm._v(" "),
-                          !_vm.project.deleted_at
+                          !_vm.project.deleted_at && !_vm.project.shared
                             ? _c(
                                 "a",
                                 {
@@ -70527,37 +70529,42 @@ var render = function() {
                               )
                             : _vm._e(),
                           _vm._v(" "),
-                          !_vm.project.deleted_at
-                            ? _c(
-                                "a",
-                                {
-                                  staticClass: "cursor-pointer",
-                                  attrs: {
-                                    "data-toggle": "modal",
-                                    "data-target": "#archiveProjectModal"
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "fas fa-archive text-secondary"
-                                  })
-                                ]
-                              )
-                            : _c(
-                                "a",
-                                {
-                                  staticClass: "cursor-pointer",
-                                  attrs: {
-                                    "data-toggle": "modal",
-                                    "data-target": "#restoreProjectModal"
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "fas fa-trash-restore"
-                                  })
-                                ]
-                              ),
+                          !_vm.project.shared
+                            ? _c("span", [
+                                !_vm.project.deleted_at
+                                  ? _c(
+                                      "a",
+                                      {
+                                        staticClass: "cursor-pointer",
+                                        attrs: {
+                                          "data-toggle": "modal",
+                                          "data-target": "#archiveProjectModal"
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "fas fa-archive text-secondary"
+                                        })
+                                      ]
+                                    )
+                                  : _c(
+                                      "a",
+                                      {
+                                        staticClass: "cursor-pointer",
+                                        attrs: {
+                                          "data-toggle": "modal",
+                                          "data-target": "#restoreProjectModal"
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fas fa-trash-restore"
+                                        })
+                                      ]
+                                    )
+                              ])
+                            : _vm._e(),
                           _vm._v(" "),
                           _vm._m(0)
                         ]

@@ -24,20 +24,22 @@
                                 <i class="far fa-star text-custom-secondary" v-else id="not-fav" @click="changeFav(project.id, true)"></i>
                             </span>
 
-                            <a v-if="!project.deleted_at" class="cursor-pointer text-muted" data-toggle="modal" data-target="#editProjectModal">
+                            <a v-if="!project.deleted_at && !project.shared" class="cursor-pointer text-muted" data-toggle="modal" data-target="#editProjectModal">
                                 <i class="far fa-edit"></i>
                             </a>
 
-                            <a v-if="!project.deleted_at" class="cursor-pointer text-muted" data-toggle="modal" data-target="#shareProjectModal">
+                            <a v-if="!project.deleted_at && !project.shared" class="cursor-pointer text-muted" data-toggle="modal" data-target="#shareProjectModal">
                                 <i class="far fa-share-square"></i>
                             </a>
 
-                            <a v-if="!project.deleted_at" class="cursor-pointer" data-toggle="modal" data-target="#archiveProjectModal">
-                                <i class="fas fa-archive text-secondary"></i>
-                            </a>
-                            <a v-else class="cursor-pointer" data-toggle="modal" data-target="#restoreProjectModal">
-                                <i class="fas fa-trash-restore"></i>
-                            </a>
+                            <span v-if="!project.shared">
+                                <a v-if="!project.deleted_at" class="cursor-pointer" data-toggle="modal" data-target="#archiveProjectModal">
+                                    <i class="fas fa-archive text-secondary"></i>
+                                </a>
+                                <a v-else class="cursor-pointer" data-toggle="modal" data-target="#restoreProjectModal">
+                                    <i class="fas fa-trash-restore"></i>
+                                </a>
+                            </span>
 
                             <a class="cursor-pointer text-danger" data-toggle="modal" data-target="#deleteProjectModal">
                                 <i class="far fa-trash-alt"></i>

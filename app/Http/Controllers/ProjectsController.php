@@ -177,7 +177,12 @@ class ProjectsController extends Controller
     {
         $project = Project::withTrashed()->findOrFail($id);
         $this->authorize('forceDelete', $project);
-        $project->forceDelete();
+
+        if ($project->user_id === Auth::id()) {
+            $project->forceDelete();
+        } else {
+            $project->shared_users()->wherePivot('user_id', Auth::id())->update(['accepted' => false]);
+        }
 
         return true;
     }
