@@ -70,7 +70,9 @@
                             >
                                 <span :style="{color: project.color}">{{project.name}}</span>
                                 <span class="text-custom-secondary counts">{{project.tasks_count}}
-                                    <span class="shared"><i v-if="project.shared_users_count" class="fas fa-share"></i></span>
+                                    <span v-if="project.shared_users_count">
+                                        <i class="fas fa-share" :class="{'fa-flip-horizontal': project.shared}"></i>
+                                    </span>
                                 </span>
                             </a>
                         </div>
@@ -273,7 +275,6 @@ export default {
         },
     },
     mounted() {
-        this.getProjects();
         this.type = this.c.TODAY;
     },
     components: {

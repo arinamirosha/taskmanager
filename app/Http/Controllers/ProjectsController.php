@@ -62,6 +62,12 @@ class ProjectsController extends Controller
             $data['projects'] = $projects->union($sharedProjects)->orderBy('name')->get();
         }
 
+        foreach ($data['projects'] as $project) {
+            if ($project->shared) {
+                $project->favorite = $project->shared_users()->wherePivot('user_id', Auth::id())->pluck('favorite')[0];
+            }
+        }
+
         if ($getCounts) {
             $data['counts'] = TaskManager::getCountsByStatuses();
         }
@@ -74,6 +80,8 @@ class ProjectsController extends Controller
         $project = Project::withTrashed()->findOrFail($id);
         $this->authorize('view', $project);
 
+        $project->load('shared_users');
+
         if ($project->trashed()) {
             $project->load([
                 'tasks'=> function ($query) {
@@ -82,9 +90,13 @@ class ProjectsController extends Controller
             ]);
         } else {
             $project->load('tasks');
+            $project->shared = $project->user_id != Auth::id();
+            if ($project->shared) {
+                $project->favorite = $project->shared_users()->wherePivot('user_id', Auth::id())->pluck('favorite')[0];
+            }
         }
 
-        return $project->load('shared_users');
+        return $project;
     }
 
     public function update(Project $project, Request $request)

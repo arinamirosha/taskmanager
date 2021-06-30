@@ -2053,6 +2053,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -2130,7 +2132,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    this.getProjects();
     this.type = this.c.TODAY;
   },
   components: {
@@ -67989,11 +67990,16 @@ var render = function() {
                             _vm._s(project.tasks_count) +
                               "\n                                    "
                           ),
-                          _c("span", { staticClass: "shared" }, [
-                            project.shared_users_count
-                              ? _c("i", { staticClass: "fas fa-share" })
-                              : _vm._e()
-                          ])
+                          project.shared_users_count
+                            ? _c("span", [
+                                _c("i", {
+                                  staticClass: "fas fa-share",
+                                  class: {
+                                    "fa-flip-horizontal": project.shared
+                                  }
+                                })
+                              ])
+                            : _vm._e()
                         ]
                       )
                     ]

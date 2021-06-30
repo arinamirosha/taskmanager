@@ -17,6 +17,7 @@ class CreateSharedProjectsTable extends Migration
             $table->unsignedBigInteger('project_id');
             $table->unsignedBigInteger('user_id');
             $table->boolean('accepted')->nullable();
+            $table->boolean('favorite')->default(false);
         });
     }
 

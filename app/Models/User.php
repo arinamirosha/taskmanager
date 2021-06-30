@@ -81,6 +81,8 @@ class User extends Authenticatable
      */
     public function shared_projects()
     {
-        return $this->belongsToMany(Project::class, 'shared_projects', 'user_id', 'project_id')->withPivot('accepted');
+        return $this->belongsToMany(Project::class, 'shared_projects', 'user_id', 'project_id')
+                    ->withPivot('accepted')
+                    ->withPivot('favorite');
     }
 }

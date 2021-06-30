@@ -43,7 +43,9 @@ class Project extends Model
      */
     public function shared_users()
     {
-        return $this->belongsToMany(User::class, 'shared_projects', 'project_id', 'user_id')->withPivot('accepted');
+        return $this->belongsToMany(User::class, 'shared_projects', 'project_id', 'user_id')
+                    ->withPivot('accepted')
+                    ->withPivot('favorite');
     }
 
     /**
