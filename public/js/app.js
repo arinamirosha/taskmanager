@@ -3778,7 +3778,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -3811,7 +3810,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     sharedNames: function sharedNames() {
       var names = this.project.shared_users.map(function (a) {
-        return a.name;
+        return a.name + (a.surname ? ' ' + a.surname : '');
       });
       return names.join(', ');
     },
@@ -70574,17 +70573,19 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "row my-1" }, [
                     _c("div", { staticClass: "col-8" }, [
-                      _vm.project.shared_users.length > 0
+                      _vm._v(
+                        "\n                    " + _vm._s(_vm.project.user.name)
+                      ),
+                      _vm.project.user.surname
                         ? _c("span", [
-                            _c("span", { staticClass: "font-weight-bold" }, [
-                              _vm._v("Shared with:")
-                            ]),
                             _vm._v(
-                              " " +
-                                _vm._s(_vm.sharedNames) +
-                                "\n                    "
+                              "\n                    " +
+                                _vm._s(_vm.project.user.surname)
                             )
                           ])
+                        : _vm._e(),
+                      _vm.project.shared_users.length > 0
+                        ? _c("span", [_vm._v(", " + _vm._s(_vm.sharedNames))])
                         : _vm._e()
                     ]),
                     _vm._v(" "),

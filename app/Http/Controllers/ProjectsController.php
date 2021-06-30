@@ -80,7 +80,7 @@ class ProjectsController extends Controller
         $project = Project::withTrashed()->findOrFail($id);
         $this->authorize('view', $project);
 
-        $project->load('shared_users');
+        $project->load('shared_users')->load('user');
 
         if ($project->trashed()) {
             $project->load([

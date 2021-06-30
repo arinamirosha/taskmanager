@@ -51,9 +51,8 @@
 
                 <div class="row my-1">
                     <div class="col-8">
-                        <span v-if="project.shared_users.length > 0">
-                            <span class="font-weight-bold">Shared with:</span> {{sharedNames}}
-                        </span>
+                        {{project.user.name}}<span v-if="project.user.surname">
+                        {{project.user.surname}}</span><span v-if="project.shared_users.length > 0">, {{sharedNames}}</span>
                     </div>
                     <div class="col-4 text-right">{{pDate}}</div>
                 </div>
@@ -182,7 +181,7 @@ export default {
     },
     computed: {
         sharedNames: function () {
-            let names = this.project.shared_users.map(a => a.name);
+            let names = this.project.shared_users.map(a => a.name + (a.surname ? ' ' + a.surname : ''));
             return names.join(', ');
         },
         pDate: function () {
