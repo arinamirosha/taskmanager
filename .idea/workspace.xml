@@ -7,7 +7,6 @@
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Libraries/TaskManager/TaskManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Libraries/TaskManager/TaskManager.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -239,14 +238,7 @@
       <workItem from="1624949020743" duration="18559000" />
       <workItem from="1625031922768" duration="18459000" />
       <workItem from="1625053241860" duration="600000" />
-      <workItem from="1625122057054" duration="11094000" />
-    </task>
-    <task id="LOCAL-00030" summary="search and filter">
-      <created>1624278860047</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1624278860047</updated>
+      <workItem from="1625122057054" duration="12233000" />
     </task>
     <task id="LOCAL-00031" summary="edit task">
       <created>1624282775615</created>
@@ -584,7 +576,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625130023760</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="index tasks show only accepted">
+      <created>1625135052966</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1625135052966</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -607,7 +606,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="load count comments" />
     <MESSAGE value="read comment more/less" />
     <MESSAGE value="load more comments" />
     <MESSAGE value="comments mobile" />
@@ -632,6 +630,7 @@
     <MESSAGE value="show only accepted shared users" />
     <MESSAGE value="correct" />
     <MESSAGE value="in archive all trashed tasks from own projects and shared" />
-    <option name="LAST_COMMIT_MESSAGE" value="in archive all trashed tasks from own projects and shared" />
+    <MESSAGE value="index tasks show only accepted" />
+    <option name="LAST_COMMIT_MESSAGE" value="index tasks show only accepted" />
   </component>
 </project>

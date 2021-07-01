@@ -56,29 +56,32 @@ class TaskController extends Controller
     {
         $type      = $request->get('type', false);
         $projectId = $request->get('project_id', false);
-        $tasks     = Auth::user()->tasks()->where('status', Task::STATUS_FINISHED);
-        $count     = 0;
 
         if ($type) {
             switch ($type) {
                 case Task::TODAY:
-                    TaskManager::filterToday($tasks);
+                    $tasks = TaskManager::getToday();
                     break;
                 case Task::NOT_SCHEDULED:
-                    TaskManager::filterNotScheduled($tasks);
+                    $tasks = TaskManager::getNotScheduled();
                     break;
                 case Task::UPCOMING:
-                    TaskManager::filterUpcoming($tasks);
+                    $tasks = TaskManager::getUpcoming();
                     break;
+                default: return 0;
             }
-            $count = $tasks->count();
-            $tasks->delete();
         } elseif ($projectId) {
-            Project::findOrFail($projectId);
-            $tasks = $tasks->where('project_id', $projectId);
-            $count = $tasks->count();
-            $tasks->delete();
+            $project = Project::findOrFail($projectId);
+            $this->authorize('view', $project);
+            $tasks = Auth::user()->tasks()->where('project_id', $projectId);
+        } else {
+            return 0;
         }
+
+        $tasks->where('status', Task::STATUS_FINISHED);
+
+        $count = $tasks->count();
+        $tasks->delete();
 
         return $count;
     }
