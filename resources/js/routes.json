@@ -31,7 +31,7 @@
     "tasks.destroy": "tasks\/{task}",
     "tasks.archive": "tasks\/archive\/all",
     "tasks.destroy-force": "tasks\/{task}\/force",
-    "comments.index": "comments",
-    "comments.store": "comments",
+    "comments.index": "comments\/{all_task}",
+    "comments.store": "comments\/{task}",
     "comments.destroy": "comments\/{comment}"
 }

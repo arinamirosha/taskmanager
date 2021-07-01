@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,9 +21,13 @@ Route::get('/', [App\Http\Controllers\WelcomeController::class, 'welcome'])->nam
 Route::middleware('auth')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+    //USERS
+
     Route::get('/users', [App\Http\Controllers\UserController::class, 'show'])->name('users.show');
     Route::get('/users/profile', [App\Http\Controllers\UserController::class, 'profile'])->name('users.profile');
     Route::post('/users', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+
+    // PROJECTS
 
     Route::get('/projects', [App\Http\Controllers\ProjectsController::class, 'index'])->name('projects.index');
     Route::post('/projects', [App\Http\Controllers\ProjectsController::class, 'store'])->name('projects.store');
@@ -36,6 +41,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/projects/{project}/archive', [App\Http\Controllers\ProjectsController::class, 'archive'])->name('projects.archive')->middleware('can:delete,project');
     Route::delete('/projects/{project}/force', [App\Http\Controllers\ProjectsController::class, 'destroyForce'])->name('projects.destroy-force');
 
+    // TASKS
+
     Route::get('/tasks', [App\Http\Controllers\TaskController::class, 'index'])->name('tasks.index');
     Route::post('/tasks', [App\Http\Controllers\TaskController::class, 'store'])->name('tasks.store');
 //    Route::get('/tasks/{task}', [App\Http\Controllers\TaskController::class, 'show'])->name('tasks.show');
@@ -45,7 +52,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/tasks/archive/all', [App\Http\Controllers\TaskController::class, 'archive'])->name('tasks.archive');
     Route::delete('/tasks/{task}/force', [App\Http\Controllers\TaskController::class, 'destroyForce'])->name('tasks.destroy-force');
 
-    Route::get('/comments', [App\Http\Controllers\CommentController::class, 'index'])->name('comments.index');
-    Route::post('/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
+    // COMMENTS
+
+    Route::get('/comments/{all_task}', [App\Http\Controllers\CommentController::class, 'index'])->name('comments.index');
+    Route::bind('all_task', function ($id) { return Task::withTrashed()->findOrFail($id); });
+
+    Route::post('/comments/{task}', [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
     Route::delete('/comments/{comment}', [App\Http\Controllers\CommentController::class, 'destroy'])->name('comments.destroy')->middleware('can:delete,comment');
 });

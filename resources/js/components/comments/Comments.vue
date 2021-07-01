@@ -1,16 +1,19 @@
 <template>
     <div>
-        <div v-if="!isArchive" class="px-1">
-            <div>
+        <div v-if="!isArchive" class="mx-3">
+            <div class="row">
                 <textarea
-                    class="form-control w-100 mb-2"
+                    class="form-control mb-2"
                     v-model="text"
                     placeholder="Comment..."
                     :class="{'is-invalid': this.$v.text.$error}"
                 />
             </div>
-            <div v-if="this.$v.text.$error" class="text-danger">1-1500 symbols</div>
-            <div class="text-right"><button class="btn btn-primary" @click="sendComment">Send</button></div>
+            <div v-if="this.$v.text.$error" class="row text-danger">1-1500 symbols</div>
+            <div class="row justify-content-between">
+                <div><transition name="fade" appear><i v-if="commentLoading" class="fas fa-spinner fa-spin h3"></i></transition></div>
+                <button class="btn btn-primary" @click="sendComment">Send</button>
+            </div>
         </div>
 
         <hr v-if="!isArchive">
@@ -65,6 +68,7 @@ export default {
             text: '',
             isDataLoaded: false,
             dataLoading: false,
+            commentLoading: false,
         }
     },
     watch: {
@@ -84,17 +88,18 @@ export default {
             return moment(new Date(date)).format('DD.MM.YY HH:mm');
         },
         sendComment() {
+            this.commentLoading = true;
             this.$v.$touch();
             if (!this.$v.$invalid) {
                 axios
-                    .post(route('comments.store'), {
-                        'task_id': this.taskId,
+                    .post(route('comments.store', this.taskId), {
                         'text': this.text,
                     })
                     .then(response => {
                         this.reset();
                         this.comments.unshift(response.data);
                         this.$emit('newComment');
+                        this.commentLoading = false;
                     })
                     .catch(error => {
                         console.log(error)
@@ -103,11 +108,7 @@ export default {
         },
         getComments() {
             axios
-                .get(route('comments.index'), {
-                    params: {
-                        'task_id': this.taskId,
-                    }
-                })
+                .get(route('comments.index', this.taskId))
                 .then(response => {
                     this.firstLoad(response.data);
                     this.comments = response.data.data;
@@ -120,9 +121,8 @@ export default {
         loadMore() {
             this.dataLoading = true;
             axios
-                .get(route('comments.index'), {
+                .get(route('comments.index', this.taskId), {
                     params: {
-                        'task_id': this.taskId,
                         'page': ++this.page,
                     }
                 })
@@ -150,8 +150,9 @@ export default {
         },
         reset() {
             this.text = '';
-            this.isDataLoaded = false;
+            this.isDataLoaded = true;
             this.dataLoading = false;
+            this.commentLoading = false;
             this.$v.$reset();
         },
         triggerMore(index) {

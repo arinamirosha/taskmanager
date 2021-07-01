@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CommentRequest;
-use App\Http\Requests\CommentRequestStore;
 use App\Models\Comment;
 use App\Models\Task;
 use Illuminate\Http\Request;
@@ -11,14 +9,20 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    public function index(CommentRequest $request)
+    public function index(Task $task)
     {
-        return Comment::where('task_id', $request->get('task_id'))->orderBy('created_at', 'desc')->with('user')->paginate(30);
+        $this->authorize('view', $task->project);
+        return $task->comments()->orderBy('created_at', 'desc')->with('user')->paginate(30);
     }
 
-    public function store(CommentRequestStore $request)
+    public function store(Task $task, Request $request)
     {
-        $comment = Auth::user()->comments()->create($request->all());
+        $this->authorize('view', $task->project);
+        $comment = $task->comments()->create([
+            'user_id' => Auth::id(),
+            'text'    => $request->get('text')
+        ]);
+
         return $comment->load('user');
     }
 

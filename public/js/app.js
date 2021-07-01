@@ -2282,6 +2282,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2295,7 +2298,8 @@ __webpack_require__.r(__webpack_exports__);
       comments: [],
       text: '',
       isDataLoaded: false,
-      dataLoading: false
+      dataLoading: false,
+      commentLoading: false
     };
   },
   watch: {
@@ -2317,11 +2321,11 @@ __webpack_require__.r(__webpack_exports__);
     sendComment: function sendComment() {
       var _this = this;
 
+      this.commentLoading = true;
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
-        axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('comments.store'), {
-          'task_id': this.taskId,
+        axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('comments.store', this.taskId), {
           'text': this.text
         }).then(function (response) {
           _this.reset();
@@ -2329,6 +2333,8 @@ __webpack_require__.r(__webpack_exports__);
           _this.comments.unshift(response.data);
 
           _this.$emit('newComment');
+
+          _this.commentLoading = false;
         })["catch"](function (error) {
           console.log(error);
         });
@@ -2337,11 +2343,7 @@ __webpack_require__.r(__webpack_exports__);
     getComments: function getComments() {
       var _this2 = this;
 
-      axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('comments.index'), {
-        params: {
-          'task_id': this.taskId
-        }
-      }).then(function (response) {
+      axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('comments.index', this.taskId)).then(function (response) {
         _this2.firstLoad(response.data);
 
         _this2.comments = response.data.data;
@@ -2354,9 +2356,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       this.dataLoading = true;
-      axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('comments.index'), {
+      axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('comments.index', this.taskId), {
         params: {
-          'task_id': this.taskId,
           'page': ++this.page
         }
       }).then(function (response) {
@@ -2385,8 +2386,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     reset: function reset() {
       this.text = '';
-      this.isDataLoaded = false;
+      this.isDataLoaded = true;
       this.dataLoading = false;
+      this.commentLoading = false;
       this.$v.$reset();
     },
     triggerMore: function triggerMore(index) {
@@ -68270,8 +68272,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     !_vm.isArchive
-      ? _c("div", { staticClass: "px-1" }, [
-          _c("div", [
+      ? _c("div", { staticClass: "mx-3" }, [
+          _c("div", { staticClass: "row" }, [
             _c("textarea", {
               directives: [
                 {
@@ -68281,7 +68283,7 @@ var render = function() {
                   expression: "text"
                 }
               ],
-              staticClass: "form-control w-100 mb-2",
+              staticClass: "form-control mb-2",
               class: { "is-invalid": this.$v.text.$error },
               attrs: { placeholder: "Comment..." },
               domProps: { value: _vm.text },
@@ -68297,12 +68299,24 @@ var render = function() {
           ]),
           _vm._v(" "),
           this.$v.text.$error
-            ? _c("div", { staticClass: "text-danger" }, [
+            ? _c("div", { staticClass: "row text-danger" }, [
                 _vm._v("1-1500 symbols")
               ])
             : _vm._e(),
           _vm._v(" "),
-          _c("div", { staticClass: "text-right" }, [
+          _c("div", { staticClass: "row justify-content-between" }, [
+            _c(
+              "div",
+              [
+                _c("transition", { attrs: { name: "fade", appear: "" } }, [
+                  _vm.commentLoading
+                    ? _c("i", { staticClass: "fas fa-spinner fa-spin h3" })
+                    : _vm._e()
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
             _c(
               "button",
               {
@@ -88121,7 +88135,7 @@ exports.withParams = withParams;
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"\":\"password/confirm\",\"login\":\"login\",\"logout\":\"logout\",\"register\":\"register\",\"password.request\":\"password/reset\",\"password.email\":\"password/email\",\"password.reset\":\"password/reset/{token}\",\"password.update\":\"password/reset\",\"password.confirm\":\"password/confirm\",\"welcome\":\"/\",\"home\":\"home\",\"users.show\":\"users\",\"users.profile\":\"users/profile\",\"users.update\":\"users\",\"projects.index\":\"projects\",\"projects.store\":\"projects\",\"projects.show\":\"projects/{project}\",\"projects.restore\":\"projects/{project}/restore\",\"projects.update\":\"projects/{project}\",\"projects.favorite\":\"projects/{project}/favorite\",\"projects.share\":\"projects/{project}/share\",\"projects.unshare\":\"projects/{project}/unshare\",\"projects.accepted\":\"projects/{project}/accepted\",\"projects.archive\":\"projects/{project}/archive\",\"projects.destroy-force\":\"projects/{project}/force\",\"tasks.index\":\"tasks\",\"tasks.store\":\"tasks\",\"tasks.restore\":\"tasks/{task}/restore\",\"tasks.update\":\"tasks/{task}\",\"tasks.destroy\":\"tasks/{task}\",\"tasks.archive\":\"tasks/archive/all\",\"tasks.destroy-force\":\"tasks/{task}/force\",\"comments.index\":\"comments\",\"comments.store\":\"comments\",\"comments.destroy\":\"comments/{comment}\"}");
+module.exports = JSON.parse("{\"\":\"password/confirm\",\"login\":\"login\",\"logout\":\"logout\",\"register\":\"register\",\"password.request\":\"password/reset\",\"password.email\":\"password/email\",\"password.reset\":\"password/reset/{token}\",\"password.update\":\"password/reset\",\"password.confirm\":\"password/confirm\",\"welcome\":\"/\",\"home\":\"home\",\"users.show\":\"users\",\"users.profile\":\"users/profile\",\"users.update\":\"users\",\"projects.index\":\"projects\",\"projects.store\":\"projects\",\"projects.show\":\"projects/{project}\",\"projects.restore\":\"projects/{project}/restore\",\"projects.update\":\"projects/{project}\",\"projects.favorite\":\"projects/{project}/favorite\",\"projects.share\":\"projects/{project}/share\",\"projects.unshare\":\"projects/{project}/unshare\",\"projects.accepted\":\"projects/{project}/accepted\",\"projects.archive\":\"projects/{project}/archive\",\"projects.destroy-force\":\"projects/{project}/force\",\"tasks.index\":\"tasks\",\"tasks.store\":\"tasks\",\"tasks.restore\":\"tasks/{task}/restore\",\"tasks.update\":\"tasks/{task}\",\"tasks.destroy\":\"tasks/{task}\",\"tasks.archive\":\"tasks/archive/all\",\"tasks.destroy-force\":\"tasks/{task}/force\",\"comments.index\":\"comments/{all_task}\",\"comments.store\":\"comments/{task}\",\"comments.destroy\":\"comments/{comment}\"}");
 
 /***/ })
 
