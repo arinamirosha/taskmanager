@@ -29,12 +29,11 @@
                         <div class="font-weight-bold">{{comment.user.name}} {{comment.user.surname}}</div>
                         <div class="text-secondary text-sm">
                             {{formatDate(comment.created_at)}}
-                            <i v-if="!isArchive" class="fas fa-times ml-1 p-1" @click="deleteComment(comment.id)"></i>
+                            <i v-if="!isArchive && comment.user_id === currentUserId" class="fas fa-times ml-1 p-1" @click="deleteComment(comment.id)"></i>
                         </div>
                     </div>
-                    <div v-if="comment.text.length <= 200">{{comment.text}}</div>
-                    <div v-else>
-                        {{comment.text.slice(0,200)}}<span :ref="'dots'+index">...</span><span :ref="'moreText'+index" class="d-none">{{comment.text.slice(200)}}</span>
+                    <div v-if="comment.text.length <= 200" class="text-wrap">{{comment.text}}</div>
+                    <div v-else class="text-wrap">{{comment.text.slice(0,200)}}<span :ref="'dots'+index">...</span><span :ref="'moreText'+index" class="d-none">{{comment.text.slice(200)}}</span>
                         <a @click.prevent="triggerMore(index)" class="text-secondary text-sm link" :ref="'moreTrigger'+index">Read more</a>
                     </div>
                     <hr>
@@ -69,6 +68,7 @@ export default {
             isDataLoaded: false,
             dataLoading: false,
             commentLoading: false,
+            currentUserId: 0,
         }
     },
     watch: {
@@ -110,8 +110,9 @@ export default {
             axios
                 .get(route('comments.index', this.taskId))
                 .then(response => {
-                    this.firstLoad(response.data);
-                    this.comments = response.data.data;
+                    this.firstLoad(response.data.comments);
+                    this.comments = response.data.comments.data;
+                    this.currentUserId = response.data.currentUserId;
                     this.isDataLoaded = true;
                 })
                 .catch(error => {
@@ -127,8 +128,8 @@ export default {
                     }
                 })
                 .then(response => {
-                    this.loadedMore(response.data);
-                    this.comments = this.comments.concat(response.data.data);
+                    this.loadedMore(response.data.comments);
+                    this.comments = this.comments.concat(response.data.comments.data);
                     this.dataLoading = false;
                 })
                 .catch(error => {
@@ -194,5 +195,8 @@ export default {
 }
 .link:hover {
     cursor: pointer;
+}
+.text-wrap {
+    word-wrap: break-word;
 }
 </style>

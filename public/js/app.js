@@ -2284,7 +2284,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -2299,7 +2298,8 @@ __webpack_require__.r(__webpack_exports__);
       text: '',
       isDataLoaded: false,
       dataLoading: false,
-      commentLoading: false
+      commentLoading: false,
+      currentUserId: 0
     };
   },
   watch: {
@@ -2344,9 +2344,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('comments.index', this.taskId)).then(function (response) {
-        _this2.firstLoad(response.data);
+        _this2.firstLoad(response.data.comments);
 
-        _this2.comments = response.data.data;
+        _this2.comments = response.data.comments.data;
+        _this2.currentUserId = response.data.currentUserId;
         _this2.isDataLoaded = true;
       })["catch"](function (error) {
         console.log(error);
@@ -2361,9 +2362,9 @@ __webpack_require__.r(__webpack_exports__);
           'page': ++this.page
         }
       }).then(function (response) {
-        _this3.loadedMore(response.data);
+        _this3.loadedMore(response.data.comments);
 
-        _this3.comments = _this3.comments.concat(response.data.data);
+        _this3.comments = _this3.comments.concat(response.data.comments.data);
         _this3.dataLoading = false;
       })["catch"](function (error) {
         console.log(error);
@@ -9338,7 +9339,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.h-500[data-v-0a9f94d8] {\n    height: 400px;\n}\n.comments[data-v-0a9f94d8] {\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n.text-sm[data-v-0a9f94d8] {\n    font-size: 12px;\n}\n.fa-times[data-v-0a9f94d8] {\n    cursor: pointer;\n    color: #eaeaea;\n}\n.comment:hover .fa-times[data-v-0a9f94d8] {\n    color: #d7d7d7;\n}\n.link[data-v-0a9f94d8]:hover {\n    cursor: pointer;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.h-500[data-v-0a9f94d8] {\n    height: 400px;\n}\n.comments[data-v-0a9f94d8] {\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n.text-sm[data-v-0a9f94d8] {\n    font-size: 12px;\n}\n.fa-times[data-v-0a9f94d8] {\n    cursor: pointer;\n    color: #eaeaea;\n}\n.comment:hover .fa-times[data-v-0a9f94d8] {\n    color: #d7d7d7;\n}\n.link[data-v-0a9f94d8]:hover {\n    cursor: pointer;\n}\n.text-wrap[data-v-0a9f94d8] {\n    word-wrap: break-word;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -68371,7 +68372,8 @@ var render = function() {
                                 _vm._s(_vm.formatDate(comment.created_at)) +
                                 "\n                        "
                             ),
-                            !_vm.isArchive
+                            !_vm.isArchive &&
+                            comment.user_id === _vm.currentUserId
                               ? _c("i", {
                                   staticClass: "fas fa-times ml-1 p-1",
                                   on: {
@@ -68386,12 +68388,11 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       comment.text.length <= 200
-                        ? _c("div", [_vm._v(_vm._s(comment.text))])
-                        : _c("div", [
-                            _vm._v(
-                              "\n                    " +
-                                _vm._s(comment.text.slice(0, 200))
-                            ),
+                        ? _c("div", { staticClass: "text-wrap" }, [
+                            _vm._v(_vm._s(comment.text))
+                          ])
+                        : _c("div", { staticClass: "text-wrap" }, [
+                            _vm._v(_vm._s(comment.text.slice(0, 200))),
                             _c(
                               "span",
                               { ref: "dots" + index, refInFor: true },
