@@ -94,29 +94,28 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
-        $user       = Auth::user();
         $type       = $request->get('type', false);
         $s          = $request->get('s', false);
         $notTrashed = $request->get('notTrashed', false);
 
         switch ($type) {
             case Task::ARCHIVE:
-                $tasks = TaskManager::getArchived($user);
+                $tasks = TaskManager::getArchived();
                 break;
             case Task::TODAY:
-                $tasks = TaskManager::filterToday($user->tasks(), true);
+                $tasks = TaskManager::getToday();
                 break;
             case Task::NOT_SCHEDULED:
-                $tasks = TaskManager::filterNotScheduled($user->tasks(), true);
+                $tasks = TaskManager::getNotScheduled();
                 break;
             case Task::UPCOMING:
-                $tasks = TaskManager::filterUpcoming($user->tasks(), true);
+                $tasks = TaskManager::getUpcoming();
                 break;
             default:
                 return [];
         }
 
-        if ($user->hide_finished && $type != Task::ARCHIVE) {
+        if (Auth::user()->hide_finished && $type != Task::ARCHIVE) {
             $tasks->where('status', '<>', Task::STATUS_FINISHED);
         }
 

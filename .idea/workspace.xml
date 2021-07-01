@@ -239,14 +239,7 @@
       <workItem from="1624949020743" duration="18559000" />
       <workItem from="1625031922768" duration="18459000" />
       <workItem from="1625053241860" duration="600000" />
-      <workItem from="1625122057054" duration="7187000" />
-    </task>
-    <task id="LOCAL-00029" summary="pagination">
-      <created>1624273363590</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1624273363590</updated>
+      <workItem from="1625122057054" duration="11094000" />
     </task>
     <task id="LOCAL-00030" summary="search and filter">
       <created>1624278860047</created>
@@ -584,7 +577,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625051140225</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="in archive all trashed tasks from own projects and shared">
+      <created>1625130023759</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1625130023760</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -607,7 +607,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="user profile" />
     <MESSAGE value="load count comments" />
     <MESSAGE value="read comment more/less" />
     <MESSAGE value="load more comments" />
@@ -632,6 +631,7 @@
     <MESSAGE value="unshare project only owner and move not trashed tasks" />
     <MESSAGE value="show only accepted shared users" />
     <MESSAGE value="correct" />
-    <option name="LAST_COMMIT_MESSAGE" value="correct" />
+    <MESSAGE value="in archive all trashed tasks from own projects and shared" />
+    <option name="LAST_COMMIT_MESSAGE" value="in archive all trashed tasks from own projects and shared" />
   </component>
 </project>
