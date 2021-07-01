@@ -39,14 +39,14 @@ class TaskManager
         return $tasks;
     }
 
-    public function filterArchived($tasks, $order = false)
+    public function getArchived($user)
     {
-        $tasks->onlyTrashed();
-        if ($order) {
-            $tasks->orderBy('deleted_at', 'desc');
-        }
+        $ids1 = $user->projects()->withTrashed()->pluck('id');
+        $ids2 = $user->shared_projects()->withTrashed()->wherePivot('accepted', true)->pluck('id');
 
-        return $tasks;
+        return Task::whereIn('project_id', array_merge($ids1->toArray(), $ids2->toArray()))
+                   ->onlyTrashed()
+                   ->orderBy('deleted_at', 'desc');
     }
 
     public function getCountsByStatuses()

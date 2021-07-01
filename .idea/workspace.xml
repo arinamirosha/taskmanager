@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Libraries/TaskManager/TaskManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Libraries/TaskManager/TaskManager.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="PhpDebugGeneral" listening_started="true" />
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/facade/ignition-contracts" />
@@ -237,14 +237,9 @@
       <workItem from="1624602887525" duration="21066000" />
       <workItem from="1624859639891" duration="29454000" />
       <workItem from="1624949020743" duration="18559000" />
-      <workItem from="1625031922768" duration="16472000" />
-    </task>
-    <task id="LOCAL-00028" summary="update counts when move task">
-      <created>1624266936173</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1624266936173</updated>
+      <workItem from="1625031922768" duration="18459000" />
+      <workItem from="1625053241860" duration="600000" />
+      <workItem from="1625122057054" duration="7187000" />
     </task>
     <task id="LOCAL-00029" summary="pagination">
       <created>1624273363590</created>
@@ -582,7 +577,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625049552969</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="correct">
+      <created>1625051140225</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1625051140225</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -605,7 +607,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="correct" />
     <MESSAGE value="user profile" />
     <MESSAGE value="load count comments" />
     <MESSAGE value="read comment more/less" />
@@ -630,6 +631,7 @@
     <MESSAGE value="show task owner" />
     <MESSAGE value="unshare project only owner and move not trashed tasks" />
     <MESSAGE value="show only accepted shared users" />
-    <option name="LAST_COMMIT_MESSAGE" value="show only accepted shared users" />
+    <MESSAGE value="correct" />
+    <option name="LAST_COMMIT_MESSAGE" value="correct" />
   </component>
 </project>

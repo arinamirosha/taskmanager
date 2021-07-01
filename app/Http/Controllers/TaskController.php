@@ -95,10 +95,26 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         $user       = Auth::user();
-        $tasks      = $user->tasks();
         $type       = $request->get('type', false);
         $s          = $request->get('s', false);
         $notTrashed = $request->get('notTrashed', false);
+
+        switch ($type) {
+            case Task::ARCHIVE:
+                $tasks = TaskManager::getArchived($user);
+                break;
+            case Task::TODAY:
+                $tasks = TaskManager::filterToday($user->tasks(), true);
+                break;
+            case Task::NOT_SCHEDULED:
+                $tasks = TaskManager::filterNotScheduled($user->tasks(), true);
+                break;
+            case Task::UPCOMING:
+                $tasks = TaskManager::filterUpcoming($user->tasks(), true);
+                break;
+            default:
+                return [];
+        }
 
         if ($user->hide_finished && $type != Task::ARCHIVE) {
             $tasks->where('status', '<>', Task::STATUS_FINISHED);
@@ -116,25 +132,6 @@ class TaskController extends Controller
                     $q->where('name', 'like', "%$s%");
                 });
             });
-        }
-
-        if ($type) {
-            switch ($type) {
-                case Task::ARCHIVE:
-                    TaskManager::filterArchived($tasks, true);
-                    break;
-                case Task::TODAY:
-                    TaskManager::filterToday($tasks, true);
-                    break;
-                case Task::NOT_SCHEDULED:
-                    TaskManager::filterNotScheduled($tasks, true);
-                    break;
-                case Task::UPCOMING:
-                    TaskManager::filterUpcoming($tasks, true);
-                    break;
-                default:
-                    return [];
-            }
         }
 
         return $tasks->with(['project'])->withCount('comments')->with('user')->paginate(25);
