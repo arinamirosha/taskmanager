@@ -68,7 +68,7 @@
                         <div v-if="compactStyle" class="font-weight-bold h6">New</div>
                         <draggable :handle="compactStyle" :list="tasksNew" group="tasks" @change="update" :move="isMove">
                             <div v-for="task in tasksNew" :key="task.id">
-                                <list-item-task :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
+                                <list-item-task :currentUserId="currentUserId" :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
                             </div>
                         </draggable>
                     </div>
@@ -76,7 +76,7 @@
                         <div v-if="compactStyle" class="font-weight-bold h6">In progress</div>
                         <draggable :handle="compactStyle" :list="tasksProgress" group="tasks" @change="update" :move="isMove">
                             <div v-for="task in tasksProgress" :key="task.id">
-                                <list-item-task :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
+                                <list-item-task :currentUserId="currentUserId" :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
                             </div>
                         </draggable>
                     </div>
@@ -84,7 +84,7 @@
                         <div v-if="compactStyle" class="font-weight-bold h6">Finished</div>
                         <draggable :handle="compactStyle" :list="tasksFinished" group="tasks" @change="update" :move="isMove">
                             <div v-for="task in tasksFinished" :key="task.id">
-                                <list-item-task :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
+                                <list-item-task :currentUserId="currentUserId" :task="task" @showTask="showTask" @archived="taskArchived"></list-item-task>
                             </div>
                         </draggable>
                     </div>
@@ -171,6 +171,7 @@ export default {
             isProjectLoaded: false,
             currentTask: {},
             infoBody: '',
+            currentUserId: 0,
         }
     },
     watch: {
@@ -195,15 +196,19 @@ export default {
             axios
                 .get(route('projects.show', id))
                 .then(response => {
-                    this.project = response.data;
-                    this.tasks = response.data.tasks;
+                    this.project = response.data.project;
+                    this.tasks = response.data.project.tasks;
+                    this.currentUserId = response.data.currentUserId;
+                    this.projectName = this.project.name;
+
                     this.tasksNew = this.tasks.filter(task => { return task.status === this.c.STATUS_NEW; }).sort((a, b) => b.importance - a.importance);
                     this.tasksProgress = this.tasks.filter(task => { return task.status === this.c.STATUS_PROGRESS; }).sort((a, b) => b.importance - a.importance);
                     this.tasksFinished = this.tasks.filter(task => { return task.status === this.c.STATUS_FINISHED; }).sort((a, b) => b.importance - a.importance);
+
                     this.tasksNewLength = this.tasksNew.length;
                     this.tasksProgressLength = this.tasksProgress.length;
                     this.tasksFinishedLength = this.tasksFinished.length;
-                    this.projectName = this.project.name;
+
                     this.isProjectLoaded = true;
                 })
                 .catch(error => {

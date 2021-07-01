@@ -34,7 +34,7 @@
                     </div>
                     <div v-if="comment.text.length <= 200" class="text-wrap">{{comment.text}}</div>
                     <div v-else class="text-wrap">{{comment.text.slice(0,200)}}<span :ref="'dots'+index">...</span><span :ref="'moreText'+index" class="d-none">{{comment.text.slice(200)}}</span>
-                        <a @click.prevent="triggerMore(index)" class="text-secondary text-sm link" :ref="'moreTrigger'+index">Read more</a>
+                        <a @click.prevent="triggerMore(index)" class="text-secondary text-sm link" :ref="'moreTrigger'+index">Read&nbsp;more</a>
                     </div>
                     <hr>
                 </div>
@@ -167,7 +167,7 @@ export default {
                 moreText.classList.add('d-none');
             } else {
                 dots.style.display = "none";
-                moreTrigger.innerHTML = "Read less";
+                moreTrigger.innerHTML = "Read&nbsp;less";
                 moreText.classList.remove('d-none');
             }
         },

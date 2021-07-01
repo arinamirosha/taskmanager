@@ -2,9 +2,9 @@
     <div>
         <a data-toggle="modal" data-target="#showTaskModal" class="stretch-a cursor-pointer p-2" @click.self="$emit('showTask', task)">
             <span :class="importanceCss(task.importance)">&bull;</span>
-            {{task.name}}
+            <span :class="{'text-custom-secondary': task.user_id !== currentUserId}">{{task.name}}</span>
             <span v-if="task.schedule" :data-title="titleSchedule(task.schedule)" class="schedule">
-                <i v-if="task.schedule" class="far fa-clock pl-1 text-secondary"></i>
+                <i v-if="task.schedule" class="far fa-clock pl-1 text-custom-secondary"></i>
             </span>
             <span v-if="task.status === c.STATUS_FINISHED" @click.stop="archive(task.id)" class="mr-2 float-right"><i class="fas fa-archive text-secondary"></i></span>
         </a>
@@ -20,7 +20,7 @@ export default {
     mixins: [
         constantsMixin,
     ],
-    props: ['task'],
+    props: ['task', 'currentUserId'],
     methods: {
         titleSchedule(schedule) {
             return moment(new Date(schedule)).format('MMMM DD, YYYY');
@@ -40,9 +40,6 @@ export default {
 </script>
 
 <style scoped>
-.cursor-pointer{
-    cursor: pointer;
-}
 .schedule:hover::after {
     position: absolute;
     content: attr(data-title);

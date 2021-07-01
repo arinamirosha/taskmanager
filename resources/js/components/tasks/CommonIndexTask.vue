@@ -330,9 +330,6 @@ export default {
 .task-finished {
     color: #dedede;
 }
-.text-custom-secondary {
-    color: #c8c8c8;
-}
 .half {
     height: calc(50vh - 135px);
     overflow-y: scroll;

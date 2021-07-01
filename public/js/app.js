@@ -2403,7 +2403,7 @@ __webpack_require__.r(__webpack_exports__);
         moreText.classList.add('d-none');
       } else {
         dots.style.display = "none";
-        moreTrigger.innerHTML = "Read less";
+        moreTrigger.innerHTML = "Read&nbsp;less";
         moreText.classList.remove('d-none');
       }
     }
@@ -3808,7 +3808,8 @@ __webpack_require__.r(__webpack_exports__);
       tasksFinishedLength: 0,
       isProjectLoaded: false,
       currentTask: {},
-      infoBody: ''
+      infoBody: '',
+      currentUserId: 0
     };
   },
   watch: {
@@ -3837,8 +3838,10 @@ __webpack_require__.r(__webpack_exports__);
 
       var id = projectId ? projectId : this.id;
       axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.show', id)).then(function (response) {
-        _this.project = response.data;
-        _this.tasks = response.data.tasks;
+        _this.project = response.data.project;
+        _this.tasks = response.data.project.tasks;
+        _this.currentUserId = response.data.currentUserId;
+        _this.projectName = _this.project.name;
         _this.tasksNew = _this.tasks.filter(function (task) {
           return task.status === _this.c.STATUS_NEW;
         }).sort(function (a, b) {
@@ -3857,7 +3860,6 @@ __webpack_require__.r(__webpack_exports__);
         _this.tasksNewLength = _this.tasksNew.length;
         _this.tasksProgressLength = _this.tasksProgress.length;
         _this.tasksFinishedLength = _this.tasksFinished.length;
-        _this.projectName = _this.project.name;
         _this.isProjectLoaded = true;
       })["catch"](function (error) {
         console.log(error);
@@ -4371,7 +4373,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mixins: [_mixins_constants_js__WEBPACK_IMPORTED_MODULE_1__.default],
-  props: ['task'],
+  props: ['task', 'currentUserId'],
   methods: {
     titleSchedule: function titleSchedule(schedule) {
       return moment__WEBPACK_IMPORTED_MODULE_2___default()(new Date(schedule)).format('MMMM DD, YYYY');
@@ -9459,7 +9461,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n.cursor-pointer {\n    cursor: pointer;\n}\n.task:hover {\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished {\n    color: #dedede;\n}\n.text-custom-secondary {\n    color: #c8c8c8;\n}\n.half {\n    height: calc(50vh - 135px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n    margin-right: -12px;\n}\n.full {\n    height: calc(100vh - 165px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n    margin-right: -12px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to {\n    opacity: 0;\n}\n.cursor-pointer {\n    cursor: pointer;\n}\n.task:hover {\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.task-finished {\n    color: #dedede;\n}\n.half {\n    height: calc(50vh - 135px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n    margin-right: -12px;\n}\n.full {\n    height: calc(100vh - 165px);\n    overflow-y: scroll;\n    overflow-x: hidden;\n    margin-right: -12px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9483,7 +9485,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.cursor-pointer[data-v-a3c2b5fc]{\n    cursor: pointer;\n}\n.schedule[data-v-a3c2b5fc]:hover::after {\n    position: absolute;\n    content: attr(data-title);\n    margin-left: 5px;\n    z-index: 1;\n    background: #f8f9fa;\n    text-align: center;\n    padding: 5px 10px;\n    border: 1px solid #212529;\n    border-radius: 5px;\n}\n.stretch-a[data-v-a3c2b5fc] {\n    width: 100%;\n    display: block;\n    text-decoration: none;\n    color: #212529;\n}\n.cursor-pointer[data-v-a3c2b5fc]{\n    cursor: pointer;\n}\n.cursor-pointer[data-v-a3c2b5fc]:hover{\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.fa-archive[data-v-a3c2b5fc]:hover {\n    color: #212529;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.schedule[data-v-a3c2b5fc]:hover::after {\n    position: absolute;\n    content: attr(data-title);\n    margin-left: 5px;\n    z-index: 1;\n    background: #f8f9fa;\n    text-align: center;\n    padding: 5px 10px;\n    border: 1px solid #212529;\n    border-radius: 5px;\n}\n.stretch-a[data-v-a3c2b5fc] {\n    width: 100%;\n    display: block;\n    text-decoration: none;\n    color: #212529;\n}\n.cursor-pointer[data-v-a3c2b5fc]{\n    cursor: pointer;\n}\n.cursor-pointer[data-v-a3c2b5fc]:hover{\n    background-color: #e0eeee;\n    border-radius: 5px;\n}\n.fa-archive[data-v-a3c2b5fc]:hover {\n    color: #212529;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -68421,7 +68423,7 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Read more")]
+                              [_vm._v("Read more")]
                             )
                           ]),
                       _vm._v(" "),
@@ -70696,7 +70698,10 @@ var render = function() {
                                 { key: task.id },
                                 [
                                   _c("list-item-task", {
-                                    attrs: { task: task },
+                                    attrs: {
+                                      currentUserId: _vm.currentUserId,
+                                      task: task
+                                    },
                                     on: {
                                       showTask: _vm.showTask,
                                       archived: _vm.taskArchived
@@ -70741,7 +70746,10 @@ var render = function() {
                                 { key: task.id },
                                 [
                                   _c("list-item-task", {
-                                    attrs: { task: task },
+                                    attrs: {
+                                      currentUserId: _vm.currentUserId,
+                                      task: task
+                                    },
                                     on: {
                                       showTask: _vm.showTask,
                                       archived: _vm.taskArchived
@@ -70786,7 +70794,10 @@ var render = function() {
                                 { key: task.id },
                                 [
                                   _c("list-item-task", {
-                                    attrs: { task: task },
+                                    attrs: {
+                                      currentUserId: _vm.currentUserId,
+                                      task: task
+                                    },
                                     on: {
                                       showTask: _vm.showTask,
                                       archived: _vm.taskArchived
@@ -71486,7 +71497,17 @@ var render = function() {
         _c("span", { class: _vm.importanceCss(_vm.task.importance) }, [
           _vm._v("•")
         ]),
-        _vm._v("\n        " + _vm._s(_vm.task.name) + "\n        "),
+        _vm._v(" "),
+        _c(
+          "span",
+          {
+            class: {
+              "text-custom-secondary": _vm.task.user_id !== _vm.currentUserId
+            }
+          },
+          [_vm._v(_vm._s(_vm.task.name))]
+        ),
+        _vm._v(" "),
         _vm.task.schedule
           ? _c(
               "span",
@@ -71496,7 +71517,9 @@ var render = function() {
               },
               [
                 _vm.task.schedule
-                  ? _c("i", { staticClass: "far fa-clock pl-1 text-secondary" })
+                  ? _c("i", {
+                      staticClass: "far fa-clock pl-1 text-custom-secondary"
+                    })
                   : _vm._e()
               ]
             )

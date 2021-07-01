@@ -97,7 +97,10 @@ class ProjectsController extends Controller
             $project->favorite = $project->shared_users()->wherePivot('user_id', Auth::id())->pluck('favorite')[0];
         }
 
-        return $project;
+        $data['project'] = $project;
+        $data['currentUserId'] = Auth::id();
+
+        return $data;
     }
 
     public function update(Project $project, Request $request)
