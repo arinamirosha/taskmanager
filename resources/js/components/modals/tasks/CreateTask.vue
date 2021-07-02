@@ -27,6 +27,15 @@
                             >{{importanceText(importance)}}</option>
                         </select>
                     </div>
+                    <div class="form-group" v-if="acceptedUsers.length">
+                        <label for="owner">Performer</label>
+                        <select class="form-control" id="owner" v-model="performer_id" :class="{'is-invalid': this.$v.performer_id.$error}">
+                            <option :value="project.user.id">{{project.user.name}}<span v-if="project.user.surname">{{project.user.surname}}</span></option>
+                            <option v-for="acceptedUser in acceptedUsers"
+                                    :value="acceptedUser.id"
+                            >{{acceptedUser.name}}<span v-if="acceptedUser.surname"> {{acceptedUser.surname}}</span></option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="modal-footer">
@@ -39,7 +48,7 @@
 </template>
 
 <script>
-import { required, maxLength, minValue } from 'vuelidate/lib/validators';
+import { required, maxLength, minValue, numeric } from 'vuelidate/lib/validators';
 import route from "../../../route";
 import moment from "moment";
 import constantsMixin from "../../mixins/constants";
@@ -48,7 +57,7 @@ export default {
     mixins: [
         constantsMixin,
     ],
-    props: ['id'],
+    props: ['project', 'acceptedUsers', 'currentUserId'],
     data() {
         return {
             name: '',
@@ -57,6 +66,7 @@ export default {
             today: moment().format("YYYY-MM-DD"),
             importance: 0,
             statuses: [],
+            performer_id: this.currentUserId,
         }
     },
     validations: {
@@ -73,6 +83,11 @@ export default {
         importance: {
             importance (value) { return this.statuses.includes(parseInt(value)) },
         },
+        performer_id: {
+            required,
+            numeric,
+            minValue: 1,
+        },
     },
     methods: {
         storeTask(e) {
@@ -80,7 +95,8 @@ export default {
             if (!this.$v.$invalid) {
                 axios
                     .post(route('tasks.store'), {
-                        'project_id': this.id,
+                        'project_id': this.project.id,
+                        'user_id': this.performer_id,
                         'name': this.name,
                         'details': this.details,
                         'schedule': this.schedule,

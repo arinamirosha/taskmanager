@@ -18,6 +18,7 @@ class CreateTasksTable extends Migration
             $table->id();
             $table->unsignedBigInteger('project_id');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('owner_id');
             $table->string('name');
             $table->text('details')->nullable();
             $table->date('schedule')->nullable();

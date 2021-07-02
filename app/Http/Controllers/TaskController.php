@@ -15,8 +15,18 @@ class TaskController extends Controller
     {
         $project = Project::findOrFail($request->get('project_id', 0));
         $this->authorize('view', $project);
+
         $data = $request->all();
-        $data['user_id'] = Auth::id();
+        $id   = Auth::id();
+
+        $data['user_id']  = $id === $data['user_id']
+            ? $id
+            : $project->shared_users()
+                      ->wherePivot('user_id', $data['user_id'])
+                      ->wherePivot('accepted', true)
+                      ->firstOrFail()->id;
+
+        $data['owner_id'] = $id;
 
         return $project->tasks()->create($data);
     }
@@ -136,6 +146,6 @@ class TaskController extends Controller
             });
         }
 
-        return $tasks->with(['project'])->withCount('comments')->with('user')->paginate(25);
+        return $tasks->with(['project'])->withCount('comments')->with(['owner', 'user'])->paginate(25);
     }
 }

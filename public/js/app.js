@@ -2962,13 +2962,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mixins: [_mixins_constants__WEBPACK_IMPORTED_MODULE_2__.default],
-  props: ['id'],
+  props: ['project', 'acceptedUsers', 'currentUserId'],
   data: function data() {
     return {
       name: '',
@@ -2976,7 +2985,8 @@ __webpack_require__.r(__webpack_exports__);
       schedule: null,
       today: moment__WEBPACK_IMPORTED_MODULE_1___default()().format("YYYY-MM-DD"),
       importance: 0,
-      statuses: []
+      statuses: [],
+      performer_id: this.currentUserId
     };
   },
   validations: {
@@ -2996,6 +3006,11 @@ __webpack_require__.r(__webpack_exports__);
       importance: function importance(value) {
         return this.statuses.includes(parseInt(value));
       }
+    },
+    performer_id: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.required,
+      numeric: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.numeric,
+      minValue: 1
     }
   },
   methods: {
@@ -3006,7 +3021,8 @@ __webpack_require__.r(__webpack_exports__);
 
       if (!this.$v.$invalid) {
         axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.store'), {
-          'project_id': this.id,
+          'project_id': this.project.id,
+          'user_id': this.performer_id,
           'name': this.name,
           'details': this.details,
           'schedule': this.schedule,
@@ -3264,6 +3280,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../route */ "./resources/js/route.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
 //
 //
 //
@@ -3819,11 +3839,13 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    sharedNames: function sharedNames() {
-      var users = this.project.shared_users.filter(function (a) {
+    acceptedUsers: function acceptedUsers() {
+      return this.project.shared_users.filter(function (a) {
         return a.pivot.accepted;
       });
-      var names = users.map(function (a) {
+    },
+    sharedNames: function sharedNames() {
+      var names = this.acceptedUsers.map(function (a) {
         return a.name + (a.surname ? ' ' + a.surname : '');
       });
       return names.length ? ', ' + names.join(', ') : '';
@@ -69392,7 +69414,77 @@ var render = function() {
                 }),
                 0
               )
-            ])
+            ]),
+            _vm._v(" "),
+            _vm.acceptedUsers.length
+              ? _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "owner" } }, [
+                    _vm._v("Performer")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.performer_id,
+                          expression: "performer_id"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: { "is-invalid": this.$v.performer_id.$error },
+                      attrs: { id: "owner" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.performer_id = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "option",
+                        { domProps: { value: _vm.project.user.id } },
+                        [
+                          _vm._v(_vm._s(_vm.project.user.name)),
+                          _vm.project.user.surname
+                            ? _c("span", [
+                                _vm._v(_vm._s(_vm.project.user.surname))
+                              ])
+                            : _vm._e()
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.acceptedUsers, function(acceptedUser) {
+                        return _c(
+                          "option",
+                          { domProps: { value: acceptedUser.id } },
+                          [
+                            _vm._v(_vm._s(acceptedUser.name)),
+                            acceptedUser.surname
+                              ? _c("span", [
+                                  _vm._v(" " + _vm._s(acceptedUser.surname))
+                                ])
+                              : _vm._e()
+                          ]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ])
+              : _vm._e()
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "modal-footer" }, [
@@ -69855,10 +69947,26 @@ var render = function() {
                 }
               },
               [
-                _vm.task.user
+                _vm.task.owner
                   ? _c("div", { staticClass: "mb-2" }, [
                       _c("div", { staticClass: "font-weight-bold" }, [
                         _vm._v("Owner")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", [
+                        _vm._v(
+                          _vm._s(_vm.task.owner.name) +
+                            " " +
+                            _vm._s(_vm.task.owner.surname)
+                        )
+                      ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.task.user
+                  ? _c("div", { staticClass: "mb-2" }, [
+                      _c("div", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Performer")
                       ]),
                       _vm._v(" "),
                       _c("div", [
@@ -70898,7 +71006,11 @@ var render = function() {
                     },
                     [
                       _c("create-task-modal", {
-                        attrs: { id: _vm.project.id },
+                        attrs: {
+                          project: _vm.project,
+                          acceptedUsers: _vm.acceptedUsers,
+                          currentUserId: _vm.currentUserId
+                        },
                         on: { stored: _vm.taskStored }
                       })
                     ],

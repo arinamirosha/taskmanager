@@ -75,6 +75,17 @@ class User extends Authenticatable
     }
 
     /**
+     * One user to many own tasks
+     *
+     * @return mixed
+     *
+     */
+    public function own_tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    /**
      * Many users has many shared projects
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

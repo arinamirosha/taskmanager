@@ -109,7 +109,7 @@
                 </div>
 
                 <div class="modal fade show mt-5 pb-5" id="createTaskModal" tabindex="-1">
-                    <create-task-modal :id="project.id" @stored="taskStored"></create-task-modal>
+                    <create-task-modal :project="project" :acceptedUsers="acceptedUsers" :currentUserId="currentUserId" @stored="taskStored"></create-task-modal>
                 </div>
 
                 <button v-show="false" data-toggle="modal" data-target="#showTaskModal" ref="showTaskModalButton"></button>
@@ -181,9 +181,11 @@ export default {
         }
     },
     computed: {
+        acceptedUsers() {
+            return this.project.shared_users.filter(a => a.pivot.accepted);
+        },
         sharedNames: function () {
-            let users = this.project.shared_users.filter(a => a.pivot.accepted);
-            let names = users.map(a => a.name + (a.surname ? ' ' + a.surname : ''));
+            let names = this.acceptedUsers.map(a => a.name + (a.surname ? ' ' + a.surname : ''));
             return names.length ? ', ' + names.join(', ') : '';
         },
         pDate: function () {

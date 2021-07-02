@@ -89,7 +89,7 @@ class ProjectsController extends Controller
                 },
             ]);
         } else {
-            $project->load('tasks')->load('tasks.user');
+            $project->load('tasks')->load(['tasks.owner', 'tasks.user']);
         }
 
         $project->shared = $project->user_id != Auth::id();

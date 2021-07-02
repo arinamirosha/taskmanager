@@ -32,6 +32,7 @@ class Task extends Model
     protected $fillable = [
         'user_id',
         'project_id',
+        'owner_id',
         'name',
         'details',
         'schedule',
@@ -55,6 +56,16 @@ class Task extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Many tasks to one owner
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function owner()
     {
         return $this->belongsTo(User::class);
     }

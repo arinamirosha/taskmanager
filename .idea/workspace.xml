@@ -7,13 +7,14 @@
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Task.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Task.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_04_28_161040_create_tasks_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_04_28_161040_create_tasks_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/comments/Comments.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/comments/Comments.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/CreateTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/CreateTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tasks/CommonIndexTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tasks/CommonIndexTask.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tasks/ListItemTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tasks/ListItemTask.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/myStyles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/myStyles.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,14 +246,8 @@
       <workItem from="1624949020743" duration="18559000" />
       <workItem from="1625031922768" duration="18459000" />
       <workItem from="1625053241860" duration="600000" />
-      <workItem from="1625122057054" duration="24307000" />
-    </task>
-    <task id="LOCAL-00034" summary="show task project">
-      <created>1624288104971</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1624288104971</updated>
+      <workItem from="1625122057054" duration="24441000" />
+      <workItem from="1625211256742" duration="10417000" />
     </task>
     <task id="LOCAL-00035" summary="dropdown menu on width 1051">
       <created>1624291686871</created>
@@ -590,7 +585,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625147686245</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="space no new line, mute not own tasks">
+      <created>1625150285615</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1625150285615</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -613,7 +615,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="scroll modals" />
     <MESSAGE value="send share" />
     <MESSAGE value="status show" />
     <MESSAGE value="accept or decline" />
@@ -638,6 +639,7 @@
     <MESSAGE value="archive own tasks" />
     <MESSAGE value="see and store comment" />
     <MESSAGE value="delete own comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="delete own comments" />
+    <MESSAGE value="space no new line, mute not own tasks" />
+    <option name="LAST_COMMIT_MESSAGE" value="space no new line, mute not own tasks" />
   </component>
 </project>
