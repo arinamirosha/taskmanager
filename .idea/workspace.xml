@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Policies/TaskPolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Policies/TaskPolicy.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Libraries/TaskManager/TaskManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Libraries/TaskManager/TaskManager.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -241,14 +240,7 @@
       <workItem from="1625031922768" duration="18459000" />
       <workItem from="1625053241860" duration="600000" />
       <workItem from="1625122057054" duration="24441000" />
-      <workItem from="1625211256742" duration="14811000" />
-    </task>
-    <task id="LOCAL-00037" summary="order">
-      <created>1624342565245</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1624342565245</updated>
+      <workItem from="1625211256742" duration="15551000" />
     </task>
     <task id="LOCAL-00038" summary="correct">
       <created>1624380981651</created>
@@ -586,7 +578,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625230708762</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="restore and delete policies">
+      <created>1625231708289</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1625231708289</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -609,7 +608,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="accept or decline" />
     <MESSAGE value="arrow and correct constants" />
     <MESSAGE value="unshare" />
     <MESSAGE value="on del/force del project clear shared" />
@@ -634,6 +632,7 @@
     <MESSAGE value="space no new line, mute not own tasks" />
     <MESSAGE value="separate owner and performer of task" />
     <MESSAGE value="owner force del tasks" />
-    <option name="LAST_COMMIT_MESSAGE" value="owner force del tasks" />
+    <MESSAGE value="restore and delete policies" />
+    <option name="LAST_COMMIT_MESSAGE" value="restore and delete policies" />
   </component>
 </project>

@@ -9,16 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class TaskManager
 {
-    public function filterToday($tasks, $order = false)
-    {
-        $tasks->where('schedule', '<=', Carbon::today()->format('Y-m-d'));
-        if ($order) {
-            $tasks->orderBy('schedule')->orderBy('importance', 'desc');
-        }
-
-        return $tasks;
-    }
-
     public function getToday()
     {
         return $this->getTasks()
@@ -27,32 +17,12 @@ class TaskManager
                     ->orderBy('importance', 'desc');
     }
 
-    public function filterUpcoming($tasks, $order = false)
-    {
-        $tasks->where('schedule', '<>', Carbon::today()->format('Y-m-d'));
-        if ($order) {
-            $tasks->orderBy('schedule')->orderBy('importance', 'desc');
-        }
-
-        return $tasks;
-    }
-
     public function getUpcoming()
     {
         return $this->getTasks()
                     ->where('schedule', '<>', Carbon::today()->format('Y-m-d'))
                     ->orderBy('schedule')
                     ->orderBy('importance', 'desc');
-    }
-
-    public function filterNotScheduled($tasks, $order = false)
-    {
-        $tasks->whereNull('schedule');
-        if ($order) {
-            $tasks->orderBy('importance', 'desc');
-        }
-
-        return $tasks;
     }
 
     public function getNotScheduled() {

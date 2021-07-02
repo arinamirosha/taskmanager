@@ -83,7 +83,9 @@ class TaskController extends Controller
         } elseif ($projectId) {
             $project = Project::findOrFail($projectId);
             $this->authorize('view', $project);
-            $tasks = Auth::user()->tasks()->where('project_id', $projectId);
+            $tasks = Task::where(function ($query) {
+                $query->where('user_id', Auth::id())->orWhere('owner_id', Auth::id());
+            })->where('project_id', $projectId);
         } else {
             return 0;
         }
