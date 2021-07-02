@@ -71,25 +71,26 @@
                     <div class="modal-footer justify-content-between">
                         <button v-if="task.owner_id === currentUserId" type="button" class="btn btn-outline-danger" @click="deleteTaskModal">Delete</button>
 
-                        <button type="button" class="btn btn-primary" v-if="!task.deleted_at && task.status !== c.STATUS_FINISHED">
+                        <button type="button" class="btn btn-primary" v-if="(task.owner_id === currentUserId || task.user_id === currentUserId)
+                                    && !task.deleted_at && task.status !== c.STATUS_FINISHED">
                             <span v-if="task.status === c.STATUS_NEW" @click="changeStatus(c.STATUS_PROGRESS)">Start</span>
                             <span v-else-if="task.status === c.STATUS_PROGRESS" @click="changeStatus(c.STATUS_FINISHED)">Finish</span>
                         </button>
 
-                        <div v-if="(task.owner_id === currentUserId || task.user_id === currentUserId)">
-                            <button type="button" class="btn btn-primary"
-                                    v-if="!task.deleted_at && (task.status === c.STATUS_FINISHED || (task.project && task.project.deleted_at) )"
-                            >
-                                <span @click="archive" data-dismiss="modal">Archive</span>
-                            </button>
+                        <button type="button" class="btn btn-primary"
+                                v-if="(task.owner_id === currentUserId || task.user_id === currentUserId)
+                                    && !task.deleted_at && (task.status === c.STATUS_FINISHED || (task.project && task.project.deleted_at) )"
+                        >
+                            <span @click="archive" data-dismiss="modal">Archive</span>
+                        </button>
 
-                            <button type="button"
-                                    class="btn btn-primary"
-                                    v-if="task.deleted_at && (project && !project.deleted_at || task.project && !task.project.deleted_at)"
-                            >
-                                <span @click="restore" data-dismiss="modal">Restore</span>
-                            </button>
-                        </div>
+                        <button type="button"
+                                class="btn btn-primary"
+                                v-if="(task.owner_id === currentUserId || task.user_id === currentUserId)
+                                    && task.deleted_at && (project && !project.deleted_at || task.project && !task.project.deleted_at)"
+                        >
+                            <span @click="restore" data-dismiss="modal">Restore</span>
+                        </button>
 
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="closeShowTask">Close</button>
                     </div>

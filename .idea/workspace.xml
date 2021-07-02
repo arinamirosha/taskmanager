@@ -7,7 +7,8 @@
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Libraries/TaskManager/TaskManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Libraries/TaskManager/TaskManager.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -240,14 +241,7 @@
       <workItem from="1625031922768" duration="18459000" />
       <workItem from="1625053241860" duration="600000" />
       <workItem from="1625122057054" duration="24441000" />
-      <workItem from="1625211256742" duration="15551000" />
-    </task>
-    <task id="LOCAL-00038" summary="correct">
-      <created>1624380981651</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1624380981651</updated>
+      <workItem from="1625211256742" duration="18484000" />
     </task>
     <task id="LOCAL-00039" summary="correct min schedule when update">
       <created>1624434567763</created>
@@ -585,7 +579,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625231708289</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="archive project tasks id owner or performer">
+      <created>1625232466986</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1625232466986</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -608,7 +609,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="arrow and correct constants" />
     <MESSAGE value="unshare" />
     <MESSAGE value="on del/force del project clear shared" />
     <MESSAGE value="project task dates" />
@@ -633,6 +633,7 @@
     <MESSAGE value="separate owner and performer of task" />
     <MESSAGE value="owner force del tasks" />
     <MESSAGE value="restore and delete policies" />
-    <option name="LAST_COMMIT_MESSAGE" value="restore and delete policies" />
+    <MESSAGE value="archive project tasks id owner or performer" />
+    <option name="LAST_COMMIT_MESSAGE" value="archive project tasks id owner or performer" />
   </component>
 </project>
