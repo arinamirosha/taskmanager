@@ -69,7 +69,7 @@
                     </div>
 
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-outline-danger" @click="deleteTaskModal">Delete</button>
+                        <button v-if="task.owner_id === currentUserId" type="button" class="btn btn-outline-danger" @click="deleteTaskModal">Delete</button>
 
                         <button type="button" class="btn btn-primary" v-if="!task.deleted_at && task.status !== c.STATUS_FINISHED">
                             <span v-if="task.status === c.STATUS_NEW" @click="changeStatus(c.STATUS_PROGRESS)">Start</span>
@@ -106,7 +106,7 @@ export default {
     mixins: [
         constantsMixin,
     ],
-    props: ['task', 'project'],
+    props: ['task', 'project', 'currentUserId'],
     computed: {
         tDate: function () {
             return moment(new Date(this.task.created_at)).format('DD.MM.YY HH:mm');

@@ -117,6 +117,7 @@
                     <show-task-modal
                         :task="currentTask"
                         :project="project"
+                        :currentUserId="currentUserId"
                         @deleteTaskModal="$refs.deleteTaskModalButton.click()"
                         @editTaskModal="$refs.editTaskModalButton.click()"
                         @archived="taskArchived"

@@ -2305,7 +2305,10 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     taskId: function taskId() {
       this.reset();
-      this.getComments();
+
+      if (this.taskId) {
+        this.getComments();
+      }
     }
   },
   validations: {
@@ -3384,7 +3387,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mixins: [_mixins_constants_js__WEBPACK_IMPORTED_MODULE_0__.default],
-  props: ['task', 'project'],
+  props: ['task', 'project', 'currentUserId'],
   computed: {
     tDate: function tDate() {
       return moment__WEBPACK_IMPORTED_MODULE_2___default()(new Date(this.task.created_at)).format('DD.MM.YY HH:mm');
@@ -3661,6 +3664,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_custom_width_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../mixins/custom-width.js */ "./resources/js/components/mixins/custom-width.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_4__);
+//
 //
 //
 //
@@ -4116,6 +4120,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -4133,7 +4138,8 @@ __webpack_require__.r(__webpack_exports__);
       hideFinished: false,
       currentTask: {},
       s: '',
-      notTrashed: false
+      notTrashed: false,
+      currentUserId: 0
     };
   },
   computed: {
@@ -4241,11 +4247,12 @@ __webpack_require__.r(__webpack_exports__);
           'notTrashed': this.notTrashed ? this.notTrashed : ''
         }
       }).then(function (response) {
-        _this.firstLoad(response.data);
+        _this.firstLoad(response.data.tasks);
 
-        _this.tasks = response.data.data;
+        _this.tasks = response.data.tasks.data;
         _this.isDataLoaded = true;
         _this.dataLoading = false;
+        _this.currentUserId = response.data.currentUserId;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -4262,9 +4269,9 @@ __webpack_require__.r(__webpack_exports__);
           'page': ++this.page
         }
       }).then(function (response) {
-        _this2.loadedMore(response.data);
+        _this2.loadedMore(response.data.tasks);
 
-        _this2.tasks = _this2.tasks.concat(response.data.data);
+        _this2.tasks = _this2.tasks.concat(response.data.tasks.data);
         _this2.dataLoading = false;
       })["catch"](function (error) {
         console.log(error);
@@ -70116,15 +70123,17 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("div", { staticClass: "modal-footer justify-content-between" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-outline-danger",
-                  attrs: { type: "button" },
-                  on: { click: _vm.deleteTaskModal }
-                },
-                [_vm._v("Delete")]
-              ),
+              _vm.task.owner_id === _vm.currentUserId
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-danger",
+                      attrs: { type: "button" },
+                      on: { click: _vm.deleteTaskModal }
+                    },
+                    [_vm._v("Delete")]
+                  )
+                : _vm._e(),
               _vm._v(" "),
               !_vm.task.deleted_at && _vm.task.status !== _vm.c.STATUS_FINISHED
                 ? _c(
@@ -71042,7 +71051,11 @@ var render = function() {
                     },
                     [
                       _c("show-task-modal", {
-                        attrs: { task: _vm.currentTask, project: _vm.project },
+                        attrs: {
+                          task: _vm.currentTask,
+                          project: _vm.project,
+                          currentUserId: _vm.currentUserId
+                        },
                         on: {
                           deleteTaskModal: function($event) {
                             return _vm.$refs.deleteTaskModalButton.click()
@@ -71491,7 +71504,7 @@ var render = function() {
         },
         [
           _c("show-task-modal", {
-            attrs: { task: _vm.currentTask },
+            attrs: { task: _vm.currentTask, currentUserId: _vm.currentUserId },
             on: {
               archived: _vm.taskArchived,
               taskUpdated: _vm.taskUpdated,

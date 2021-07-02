@@ -19,7 +19,7 @@ class TaskController extends Controller
         $data = $request->all();
         $id   = Auth::id();
 
-        $data['user_id']  = $id === $data['user_id']
+        $data['user_id']  = in_array($data['user_id'], [$id, $project->user_id])
             ? $id
             : $project->shared_users()
                       ->wherePivot('user_id', $data['user_id'])
@@ -146,6 +146,9 @@ class TaskController extends Controller
             });
         }
 
-        return $tasks->with(['project'])->withCount('comments')->with(['owner', 'user'])->paginate(25);
+        $data['tasks'] = $tasks->with(['project'])->withCount('comments')->with(['owner', 'user'])->paginate(25);
+        $data['currentUserId'] = Auth::id();
+
+        return $data;
     }
 }

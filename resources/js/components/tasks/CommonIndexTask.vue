@@ -71,6 +71,7 @@
         <div class="modal fade show mt-5 pb-5" id="showTaskModal" tabindex="-1" ref="showTaskModal">
             <show-task-modal
                 :task="currentTask"
+                :currentUserId="currentUserId"
                 @archived="taskArchived"
                 @taskUpdated="taskUpdated"
                 @deleteTaskModal="$refs.deleteTaskModalButton.click()"
@@ -115,6 +116,7 @@ export default {
             currentTask: {},
             s: '',
             notTrashed: false,
+            currentUserId: 0,
         }
     },
     computed: {
@@ -191,10 +193,11 @@ export default {
                     }
                 })
                 .then(response => {
-                    this.firstLoad(response.data);
-                    this.tasks = response.data.data;
+                    this.firstLoad(response.data.tasks);
+                    this.tasks = response.data.tasks.data;
                     this.isDataLoaded = true;
                     this.dataLoading = false;
+                    this.currentUserId = response.data.currentUserId;
                 })
                 .catch(error => {
                     console.log(error);
@@ -212,8 +215,8 @@ export default {
                     }
                 })
                 .then(response => {
-                    this.loadedMore(response.data);
-                    this.tasks = this.tasks.concat(response.data.data);
+                    this.loadedMore(response.data.tasks);
+                    this.tasks = this.tasks.concat(response.data.tasks.data);
                     this.dataLoading = false;
                 })
                 .catch(error => {

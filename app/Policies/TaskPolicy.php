@@ -54,7 +54,7 @@ class TaskPolicy
      */
     public function update(User $user, Task $task)
     {
-        return $user->id === $task->user_id;
+        return in_array($user->id, [$task->user_id, $task->owner_id]);
     }
 
     /**
@@ -90,6 +90,6 @@ class TaskPolicy
      */
     public function forceDelete(User $user, Task $task)
     {
-        return $user->id === $task->user_id;
+        return $user->id === $task->owner_id;
     }
 }

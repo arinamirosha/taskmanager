@@ -74,7 +74,9 @@ export default {
     watch: {
         taskId: function() {
             this.reset();
-            this.getComments();
+            if (this.taskId) {
+                this.getComments();
+            }
         }
     },
     validations: {
