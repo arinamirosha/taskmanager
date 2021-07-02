@@ -3382,6 +3382,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -70172,48 +70174,53 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              !_vm.task.deleted_at &&
-              (_vm.task.status === _vm.c.STATUS_FINISHED ||
-                (_vm.task.project && _vm.task.project.deleted_at))
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "button" }
-                    },
-                    [
-                      _c(
-                        "span",
-                        {
-                          attrs: { "data-dismiss": "modal" },
-                          on: { click: _vm.archive }
-                        },
-                        [_vm._v("Archive")]
-                      )
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.task.deleted_at &&
-              ((_vm.project && !_vm.project.deleted_at) ||
-                (_vm.task.project && !_vm.task.project.deleted_at))
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "button" }
-                    },
-                    [
-                      _c(
-                        "span",
-                        {
-                          attrs: { "data-dismiss": "modal" },
-                          on: { click: _vm.restore }
-                        },
-                        [_vm._v("Restore")]
-                      )
-                    ]
-                  )
+              _vm.task.owner_id === _vm.currentUserId ||
+              _vm.task.user_id === _vm.currentUserId
+                ? _c("div", [
+                    !_vm.task.deleted_at &&
+                    (_vm.task.status === _vm.c.STATUS_FINISHED ||
+                      (_vm.task.project && _vm.task.project.deleted_at))
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" }
+                          },
+                          [
+                            _c(
+                              "span",
+                              {
+                                attrs: { "data-dismiss": "modal" },
+                                on: { click: _vm.archive }
+                              },
+                              [_vm._v("Archive")]
+                            )
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.task.deleted_at &&
+                    ((_vm.project && !_vm.project.deleted_at) ||
+                      (_vm.task.project && !_vm.task.project.deleted_at))
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" }
+                          },
+                          [
+                            _c(
+                              "span",
+                              {
+                                attrs: { "data-dismiss": "modal" },
+                                on: { click: _vm.restore }
+                              },
+                              [_vm._v("Restore")]
+                            )
+                          ]
+                        )
+                      : _vm._e()
+                  ])
                 : _vm._e(),
               _vm._v(" "),
               _c(

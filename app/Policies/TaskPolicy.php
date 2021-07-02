@@ -66,7 +66,7 @@ class TaskPolicy
      */
     public function delete(User $user, Task $task)
     {
-        return $user->id === $task->user_id;
+        return in_array($user->id, [$task->user_id, $task->owner_id]);
     }
 
     /**
@@ -78,7 +78,7 @@ class TaskPolicy
      */
     public function restore(User $user, Task $task)
     {
-        return $user->id === $task->user_id && !$task->project->trashed();
+        return in_array($user->id, [$task->user_id, $task->owner_id]) && !$task->project->trashed();
     }
 
     /**
