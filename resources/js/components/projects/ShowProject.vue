@@ -231,7 +231,8 @@ export default {
             this.$emit('showProject', id);
         },
         isMove(e) {
-            return e.from !== e.to;
+            let task =  e.draggedContext.element;
+            return (e.from !== e.to) && (task.owner_id === this.currentUserId || task.user_id === this.currentUserId);
         },
         update(e) {
             if (e.added) {

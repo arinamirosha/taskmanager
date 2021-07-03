@@ -3907,7 +3907,8 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('showProject', id);
     },
     isMove: function isMove(e) {
-      return e.from !== e.to;
+      var task = e.draggedContext.element;
+      return e.from !== e.to && (task.owner_id === this.currentUserId || task.user_id === this.currentUserId);
     },
     update: function update(e) {
       var _this2 = this;
@@ -71637,7 +71638,10 @@ var render = function() {
           "span",
           {
             class: {
-              "text-custom-secondary": _vm.task.user_id !== _vm.currentUserId
+              "text-custom-secondary": !(
+                _vm.task.owner_id === _vm.currentUserId ||
+                _vm.task.user_id === _vm.currentUserId
+              )
             }
           },
           [_vm._v(_vm._s(_vm.task.name))]

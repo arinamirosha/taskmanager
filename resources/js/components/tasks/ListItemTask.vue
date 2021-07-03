@@ -2,7 +2,7 @@
     <div>
         <a data-toggle="modal" data-target="#showTaskModal" class="stretch-a cursor-pointer p-2" @click.self="$emit('showTask', task)">
             <span :class="importanceCss(task.importance)">&bull;</span>
-            <span :class="{'text-custom-secondary': task.user_id !== currentUserId}">{{task.name}}</span>
+            <span :class="{'text-custom-secondary': !(task.owner_id === currentUserId || task.user_id === currentUserId)}">{{task.name}}</span>
             <span v-if="task.schedule" :data-title="titleSchedule(task.schedule)" class="schedule">
                 <i v-if="task.schedule" class="far fa-clock pl-1 text-custom-secondary"></i>
             </span>
