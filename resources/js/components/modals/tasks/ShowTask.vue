@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header justify-content-between border-bottom-0">
                 <h5 class="modal-title">{{task.name}}</h5>
-                <a v-if="!task.deleted_at" class="cursor-pointer text-muted" @click="editTaskModal">
+                <a v-if="!task.deleted_at && (task.owner_id === currentUserId || task.user_id === currentUserId)" class="cursor-pointer text-muted" @click="editTaskModal">
                     <i class="far fa-edit"></i>
                 </a>
             </div>

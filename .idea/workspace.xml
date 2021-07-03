@@ -6,9 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tasks/ListItemTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tasks/ListItemTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/CreateTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/CreateTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,14 +243,7 @@
       <workItem from="1625053241860" duration="600000" />
       <workItem from="1625122057054" duration="24441000" />
       <workItem from="1625211256742" duration="18519000" />
-      <workItem from="1625292262659" duration="3345000" />
-    </task>
-    <task id="LOCAL-00040" summary="scroll in show project">
-      <created>1624434746606</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1624434746607</updated>
+      <workItem from="1625292262659" duration="6189000" />
     </task>
     <task id="LOCAL-00041" summary="no scroll when menu hidden">
       <created>1624437644802</created>
@@ -587,7 +581,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625237595230</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="no drug others tasks">
+      <created>1625295661126</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1625295661126</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -610,7 +611,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="on del/force del project clear shared" />
     <MESSAGE value="project task dates" />
     <MESSAGE value="correct front" />
     <MESSAGE value="show shared projects in menu and archive" />
@@ -635,6 +635,7 @@
     <MESSAGE value="restore and delete policies" />
     <MESSAGE value="archive project tasks id owner or performer" />
     <MESSAGE value="dont show change status in cases" />
-    <option name="LAST_COMMIT_MESSAGE" value="dont show change status in cases" />
+    <MESSAGE value="no drug others tasks" />
+    <option name="LAST_COMMIT_MESSAGE" value="no drug others tasks" />
   </component>
 </project>

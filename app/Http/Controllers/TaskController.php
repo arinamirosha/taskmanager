@@ -20,7 +20,7 @@ class TaskController extends Controller
         $id   = Auth::id();
 
         $data['user_id']  = in_array($data['user_id'], [$id, $project->user_id])
-            ? $id
+            ? $data['user_id']
             : $project->shared_users()
                       ->wherePivot('user_id', $data['user_id'])
                       ->wherePivot('accepted', true)

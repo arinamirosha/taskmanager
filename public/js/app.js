@@ -3044,6 +3044,7 @@ __webpack_require__.r(__webpack_exports__);
       this.details = '';
       this.schedule = null;
       this.importance = this.c.STATUS_NORMAL;
+      this.performer_id = this.currentUserId;
       this.$v.$reset();
     }
   },
@@ -69893,7 +69894,9 @@ var render = function() {
             _vm._v(_vm._s(_vm.task.name))
           ]),
           _vm._v(" "),
-          !_vm.task.deleted_at
+          !_vm.task.deleted_at &&
+          (_vm.task.owner_id === _vm.currentUserId ||
+            _vm.task.user_id === _vm.currentUserId)
             ? _c(
                 "a",
                 {

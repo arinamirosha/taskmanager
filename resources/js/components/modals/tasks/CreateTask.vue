@@ -116,6 +116,7 @@ export default {
             this.details = '';
             this.schedule = null;
             this.importance = this.c.STATUS_NORMAL;
+            this.performer_id = this.currentUserId;
             this.$v.$reset();
         },
     },
