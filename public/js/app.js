@@ -3386,6 +3386,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -70129,116 +70135,129 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "modal-footer justify-content-between" }, [
-              _vm.task.owner_id === _vm.currentUserId
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-outline-danger",
-                      attrs: { type: "button" },
-                      on: { click: _vm.deleteTaskModal }
-                    },
-                    [_vm._v("Delete")]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              (_vm.task.owner_id === _vm.currentUserId ||
-                _vm.task.user_id === _vm.currentUserId) &&
-              !_vm.task.deleted_at &&
-              _vm.task.status !== _vm.c.STATUS_FINISHED
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "button" }
-                    },
-                    [
-                      _vm.task.status === _vm.c.STATUS_NEW
+            _c("div", { staticClass: "modal-footer d-block text-center" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-4 text-md-left" }, [
+                  _vm.task.owner_id === _vm.currentUserId
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-outline-danger",
+                          attrs: { type: "button" },
+                          on: { click: _vm.deleteTaskModal }
+                        },
+                        [_vm._v("Delete")]
+                      )
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _vm.task.owner_id === _vm.currentUserId ||
+                _vm.task.user_id === _vm.currentUserId
+                  ? _c("div", { staticClass: "col-md-4 mt-1 mt-md-0" }, [
+                      !_vm.task.deleted_at &&
+                      _vm.task.status !== _vm.c.STATUS_FINISHED
                         ? _c(
-                            "span",
+                            "button",
                             {
-                              on: {
-                                click: function($event) {
-                                  return _vm.changeStatus(_vm.c.STATUS_PROGRESS)
-                                }
-                              }
+                              staticClass: "btn btn-primary",
+                              attrs: { type: "button" }
                             },
-                            [_vm._v("Start")]
+                            [
+                              _vm.task.status === _vm.c.STATUS_NEW
+                                ? _c(
+                                    "span",
+                                    {
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.changeStatus(
+                                            _vm.c.STATUS_PROGRESS
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Start")]
+                                  )
+                                : _vm.task.status === _vm.c.STATUS_PROGRESS
+                                ? _c(
+                                    "span",
+                                    {
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.changeStatus(
+                                            _vm.c.STATUS_FINISHED
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Finish")]
+                                  )
+                                : _vm._e()
+                            ]
                           )
-                        : _vm.task.status === _vm.c.STATUS_PROGRESS
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.task.deleted_at &&
+                      (_vm.task.status === _vm.c.STATUS_FINISHED ||
+                        (_vm.task.project && _vm.task.project.deleted_at))
                         ? _c(
-                            "span",
+                            "button",
                             {
-                              on: {
-                                click: function($event) {
-                                  return _vm.changeStatus(_vm.c.STATUS_FINISHED)
-                                }
-                              }
+                              staticClass: "btn btn-primary",
+                              attrs: { type: "button" }
                             },
-                            [_vm._v("Finish")]
+                            [
+                              _c(
+                                "span",
+                                {
+                                  attrs: { "data-dismiss": "modal" },
+                                  on: { click: _vm.archive }
+                                },
+                                [_vm._v("Archive")]
+                              )
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.task.deleted_at &&
+                      ((_vm.project && !_vm.project.deleted_at) ||
+                        (_vm.task.project && !_vm.task.project.deleted_at))
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: { type: "button" }
+                            },
+                            [
+                              _c(
+                                "span",
+                                {
+                                  attrs: { "data-dismiss": "modal" },
+                                  on: { click: _vm.restore }
+                                },
+                                [_vm._v("Restore")]
+                              )
+                            ]
                           )
                         : _vm._e()
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              (_vm.task.owner_id === _vm.currentUserId ||
-                _vm.task.user_id === _vm.currentUserId) &&
-              !_vm.task.deleted_at &&
-              (_vm.task.status === _vm.c.STATUS_FINISHED ||
-                (_vm.task.project && _vm.task.project.deleted_at))
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "button" }
-                    },
-                    [
-                      _c(
-                        "span",
-                        {
-                          attrs: { "data-dismiss": "modal" },
-                          on: { click: _vm.archive }
-                        },
-                        [_vm._v("Archive")]
-                      )
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              (_vm.task.owner_id === _vm.currentUserId ||
-                _vm.task.user_id === _vm.currentUserId) &&
-              _vm.task.deleted_at &&
-              ((_vm.project && !_vm.project.deleted_at) ||
-                (_vm.task.project && !_vm.task.project.deleted_at))
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "button" }
-                    },
-                    [
-                      _c(
-                        "span",
-                        {
-                          attrs: { "data-dismiss": "modal" },
-                          on: { click: _vm.restore }
-                        },
-                        [_vm._v("Restore")]
-                      )
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  ref: "closeShowTask",
-                  staticClass: "btn btn-secondary",
-                  attrs: { type: "button", "data-dismiss": "modal" }
-                },
-                [_vm._v("Close")]
-              )
+                    ])
+                  : _c("div", { staticClass: "col-md-3" }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-md-4 text-md-right mt-1 mt-md-0" },
+                  [
+                    _c(
+                      "button",
+                      {
+                        ref: "closeShowTask",
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [_vm._v("Close")]
+                    )
+                  ]
+                )
+              ])
             ])
           ]
         )
