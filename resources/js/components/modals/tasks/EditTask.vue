@@ -33,6 +33,13 @@
                             <option v-for="project in projects" :value="project.id">{{project.name}}</option>
                         </select>
                     </div>
+                    <div class="form-group" v-if="acceptedUsers.length">
+                        <label for="performer">Performer</label>
+                        <select class="form-control" id="performer" v-model="performerId">
+                            <option :value="project.user.id">{{project.user.name}}<span v-if="project.user.surname">{{project.user.surname}}</span></option>
+                            <option v-for="acceptedUser in acceptedUsers" :value="acceptedUser.id">{{acceptedUser.name}}<span v-if="acceptedUser.surname"> {{acceptedUser.surname}}</span></option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="modal-footer" v-if="projects.length > 0">
@@ -54,7 +61,7 @@ export default {
     mixins: [
         constantsMixin,
     ],
-    props: ['task'],
+    props: ['task', 'project'],
     data() {
         return {
             name: '',
@@ -64,6 +71,7 @@ export default {
             importance: 0,
             statuses: [],
             projectId: 0,
+            performerId: 0,
             projects: [],
         }
     },
@@ -74,6 +82,9 @@ export default {
         },
     },
     computed: {
+        acceptedUsers() {
+            return this.project ? this.project.shared_users.filter(a => a.pivot.accepted) : [];
+        },
         minSchedule: function () {
             return this.task.schedule > this.today ? this.today : this.task.schedule;
         },
@@ -118,6 +129,7 @@ export default {
                         'schedule': this.schedule,
                         'importance': this.importance,
                         'project_id': this.projectId,
+                        'user_id': this.performerId,
                     })
                     .then(response => {
                         this.$refs.cancel.click();
@@ -139,6 +151,7 @@ export default {
             this.schedule = this.task.schedule;
             this.importance = this.task.importance;
             this.projectId = this.task.project_id;
+            this.performerId = this.task.user_id;
         },
     },
     mounted() {

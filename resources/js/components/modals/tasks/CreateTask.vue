@@ -28,8 +28,8 @@
                         </select>
                     </div>
                     <div class="form-group" v-if="acceptedUsers.length">
-                        <label for="owner">Performer</label>
-                        <select class="form-control" id="owner" v-model="performer_id" :class="{'is-invalid': this.$v.performer_id.$error}">
+                        <label for="performer">Performer</label>
+                        <select class="form-control" id="performer" v-model="performerId">
                             <option :value="project.user.id">{{project.user.name}}<span v-if="project.user.surname">{{project.user.surname}}</span></option>
                             <option v-for="acceptedUser in acceptedUsers"
                                     :value="acceptedUser.id"
@@ -66,7 +66,7 @@ export default {
             today: moment().format("YYYY-MM-DD"),
             importance: 0,
             statuses: [],
-            performer_id: this.currentUserId,
+            performerId: this.currentUserId,
         }
     },
     validations: {
@@ -83,11 +83,6 @@ export default {
         importance: {
             importance (value) { return this.statuses.includes(parseInt(value)) },
         },
-        performer_id: {
-            required,
-            numeric,
-            minValue: 1,
-        },
     },
     methods: {
         storeTask(e) {
@@ -96,7 +91,7 @@ export default {
                 axios
                     .post(route('tasks.store'), {
                         'project_id': this.project.id,
-                        'user_id': this.performer_id,
+                        'user_id': this.performerId,
                         'name': this.name,
                         'details': this.details,
                         'schedule': this.schedule,
@@ -116,7 +111,7 @@ export default {
             this.details = '';
             this.schedule = null;
             this.importance = this.c.STATUS_NORMAL;
-            this.performer_id = this.currentUserId;
+            this.performerId = this.currentUserId;
             this.$v.$reset();
         },
     },

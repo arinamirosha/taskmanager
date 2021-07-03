@@ -2989,7 +2989,7 @@ __webpack_require__.r(__webpack_exports__);
       today: moment__WEBPACK_IMPORTED_MODULE_1___default()().format("YYYY-MM-DD"),
       importance: 0,
       statuses: [],
-      performer_id: this.currentUserId
+      performerId: this.currentUserId
     };
   },
   validations: {
@@ -3009,11 +3009,6 @@ __webpack_require__.r(__webpack_exports__);
       importance: function importance(value) {
         return this.statuses.includes(parseInt(value));
       }
-    },
-    performer_id: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.required,
-      numeric: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.numeric,
-      minValue: 1
     }
   },
   methods: {
@@ -3025,7 +3020,7 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.$v.$invalid) {
         axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.store'), {
           'project_id': this.project.id,
-          'user_id': this.performer_id,
+          'user_id': this.performerId,
           'name': this.name,
           'details': this.details,
           'schedule': this.schedule,
@@ -3044,7 +3039,7 @@ __webpack_require__.r(__webpack_exports__);
       this.details = '';
       this.schedule = null;
       this.importance = this.c.STATUS_NORMAL;
-      this.performer_id = this.currentUserId;
+      this.performerId = this.currentUserId;
       this.$v.$reset();
     }
   },
@@ -3168,13 +3163,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mixins: [_mixins_constants_js__WEBPACK_IMPORTED_MODULE_1__.default],
-  props: ['task'],
+  props: ['task', 'project'],
   data: function data() {
     return {
       name: '',
@@ -3184,6 +3186,7 @@ __webpack_require__.r(__webpack_exports__);
       importance: 0,
       statuses: [],
       projectId: 0,
+      performerId: 0,
       projects: []
     };
   },
@@ -3194,6 +3197,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
+    acceptedUsers: function acceptedUsers() {
+      return this.project ? this.project.shared_users.filter(function (a) {
+        return a.pivot.accepted;
+      }) : [];
+    },
     minSchedule: function minSchedule() {
       return this.task.schedule > this.today ? this.today : this.task.schedule;
     }
@@ -3238,7 +3246,8 @@ __webpack_require__.r(__webpack_exports__);
           'details': this.details,
           'schedule': this.schedule,
           'importance': this.importance,
-          'project_id': this.projectId
+          'project_id': this.projectId,
+          'user_id': this.performerId
         }).then(function (response) {
           _this2.$refs.cancel.click();
 
@@ -3259,6 +3268,7 @@ __webpack_require__.r(__webpack_exports__);
       this.schedule = this.task.schedule;
       this.importance = this.task.importance;
       this.projectId = this.task.project_id;
+      this.performerId = this.task.user_id;
     }
   },
   mounted: function mounted() {
@@ -3401,6 +3411,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     tDate: function tDate() {
       return moment__WEBPACK_IMPORTED_MODULE_2___default()(new Date(this.task.created_at)).format('DD.MM.YY HH:mm');
+    },
+    isInteractWithTask: function isInteractWithTask() {
+      return this.task.owner_id === this.currentUserId || this.task.user_id === this.currentUserId;
     }
   },
   methods: {
@@ -69436,7 +69449,7 @@ var render = function() {
             _vm._v(" "),
             _vm.acceptedUsers.length
               ? _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "owner" } }, [
+                  _c("label", { attrs: { for: "performer" } }, [
                     _vm._v("Performer")
                   ]),
                   _vm._v(" "),
@@ -69447,13 +69460,12 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.performer_id,
-                          expression: "performer_id"
+                          value: _vm.performerId,
+                          expression: "performerId"
                         }
                       ],
                       staticClass: "form-control",
-                      class: { "is-invalid": this.$v.performer_id.$error },
-                      attrs: { id: "owner" },
+                      attrs: { id: "performer" },
                       on: {
                         change: function($event) {
                           var $$selectedVal = Array.prototype.filter
@@ -69464,7 +69476,7 @@ var render = function() {
                               var val = "_value" in o ? o._value : o.value
                               return val
                             })
-                          _vm.performer_id = $event.target.multiple
+                          _vm.performerId = $event.target.multiple
                             ? $$selectedVal
                             : $$selectedVal[0]
                         }
@@ -69830,7 +69842,76 @@ var render = function() {
                 }),
                 0
               )
-            ])
+            ]),
+            _vm._v(" "),
+            _vm.acceptedUsers.length
+              ? _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "performer" } }, [
+                    _vm._v("Performer")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.performerId,
+                          expression: "performerId"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { id: "performer" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.performerId = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "option",
+                        { domProps: { value: _vm.project.user.id } },
+                        [
+                          _vm._v(_vm._s(_vm.project.user.name)),
+                          _vm.project.user.surname
+                            ? _c("span", [
+                                _vm._v(_vm._s(_vm.project.user.surname))
+                              ])
+                            : _vm._e()
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.acceptedUsers, function(acceptedUser) {
+                        return _c(
+                          "option",
+                          { domProps: { value: acceptedUser.id } },
+                          [
+                            _vm._v(_vm._s(acceptedUser.name)),
+                            acceptedUser.surname
+                              ? _c("span", [
+                                  _vm._v(" " + _vm._s(acceptedUser.surname))
+                                ])
+                              : _vm._e()
+                          ]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ])
+              : _vm._e()
           ]),
           _vm._v(" "),
           _vm.projects.length > 0
@@ -69900,9 +69981,7 @@ var render = function() {
             _vm._v(_vm._s(_vm.task.name))
           ]),
           _vm._v(" "),
-          !_vm.task.deleted_at &&
-          (_vm.task.owner_id === _vm.currentUserId ||
-            _vm.task.user_id === _vm.currentUserId)
+          !_vm.task.deleted_at && _vm.isInteractWithTask
             ? _c(
                 "a",
                 {
@@ -70151,8 +70230,7 @@ var render = function() {
                     : _vm._e()
                 ]),
                 _vm._v(" "),
-                _vm.task.owner_id === _vm.currentUserId ||
-                _vm.task.user_id === _vm.currentUserId
+                _vm.isInteractWithTask
                   ? _c("div", { staticClass: "col-md-4 mt-1 mt-md-0" }, [
                       !_vm.task.deleted_at &&
                       _vm.task.status !== _vm.c.STATUS_FINISHED
@@ -71165,7 +71243,7 @@ var render = function() {
                     },
                     [
                       _c("edit-task-modal", {
-                        attrs: { task: _vm.currentTask },
+                        attrs: { task: _vm.currentTask, project: _vm.project },
                         on: {
                           updated: _vm.taskUpdated,
                           cancel: function($event) {
@@ -71598,7 +71676,7 @@ var render = function() {
         },
         [
           _c("edit-task-modal", {
-            attrs: { task: _vm.currentTask },
+            attrs: { task: _vm.currentTask, project: _vm.currentTask.project },
             on: {
               updated: _vm.taskUpdated,
               cancel: function($event) {

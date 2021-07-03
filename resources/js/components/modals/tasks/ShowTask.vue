@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header justify-content-between border-bottom-0">
                 <h5 class="modal-title">{{task.name}}</h5>
-                <a v-if="!task.deleted_at && (task.owner_id === currentUserId || task.user_id === currentUserId)" class="cursor-pointer text-muted" @click="editTaskModal">
+                <a v-if="!task.deleted_at && isInteractWithTask" class="cursor-pointer text-muted" @click="editTaskModal">
                     <i class="far fa-edit"></i>
                 </a>
             </div>
@@ -74,7 +74,7 @@
                                 <button v-if="task.owner_id === currentUserId" type="button" class="btn btn-outline-danger" @click="deleteTaskModal">Delete</button>
                             </div>
 
-                            <div class="col-md-4 mt-1 mt-md-0" v-if="task.owner_id === currentUserId || task.user_id === currentUserId">
+                            <div class="col-md-4 mt-1 mt-md-0" v-if="isInteractWithTask">
                                 <button type="button" class="btn btn-primary" v-if="!task.deleted_at && task.status !== c.STATUS_FINISHED">
                                     <span v-if="task.status === c.STATUS_NEW" @click="changeStatus(c.STATUS_PROGRESS)">Start</span>
                                     <span v-else-if="task.status === c.STATUS_PROGRESS" @click="changeStatus(c.STATUS_FINISHED)">Finish</span>
@@ -119,6 +119,9 @@ export default {
     computed: {
         tDate: function () {
             return moment(new Date(this.task.created_at)).format('DD.MM.YY HH:mm');
+        },
+        isInteractWithTask() {
+            return this.task.owner_id === this.currentUserId || this.task.user_id === this.currentUserId;
         },
     },
     methods: {

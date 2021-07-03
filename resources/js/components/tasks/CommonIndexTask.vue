@@ -87,7 +87,7 @@
 
         <button v-show="false" data-toggle="modal" data-target="#editTaskModal" ref="editTaskModalButton"></button>
         <div class="modal fade show mt-5 pb-5" id="editTaskModal" tabindex="-1">
-            <edit-task-modal :task="currentTask" @updated="taskUpdated" @cancel="$refs.showTaskModalButton.click()"></edit-task-modal>
+            <edit-task-modal :task="currentTask" :project="currentTask.project" @updated="taskUpdated" @cancel="$refs.showTaskModalButton.click()"></edit-task-modal>
         </div>
     </div>
 </template>

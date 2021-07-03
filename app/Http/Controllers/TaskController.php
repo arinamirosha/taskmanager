@@ -33,10 +33,23 @@ class TaskController extends Controller
 
     public function update(Task $task, Request $request)
     {
-        if ($projectId = $request->get('project_id', false)) {
-            Project::findOrFail($projectId);
+        $data = $request->all();
+
+        if ($data['project_id']) {
+            Project::findOrFail($data['project_id']);
+            // todo check projects or no change
         }
-        $task->update($request->all());
+
+        if ($data['user_id']) {
+            $data['user_id'] = in_array($data['user_id'], [Auth::id(), $task->project->user_id])
+                ? $data['user_id']
+                : $task->project->shared_users()
+                          ->wherePivot('user_id', $data['user_id'])
+                          ->wherePivot('accepted', true)
+                          ->firstOrFail()->id;
+        }
+
+        $task->update($data);
 
         return $task->load(['project', 'owner', 'user'])->loadCount('comments');
     }
@@ -148,7 +161,7 @@ class TaskController extends Controller
             });
         }
 
-        $data['tasks'] = $tasks->with(['project'])->withCount('comments')->with(['owner', 'user'])->paginate(25);
+        $data['tasks'] = $tasks->with(['project','owner', 'user', 'project.shared_users', 'project.user'])->withCount('comments')->paginate(25);
         $data['currentUserId'] = Auth::id();
 
         return $data;
