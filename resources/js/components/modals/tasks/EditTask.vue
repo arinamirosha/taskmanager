@@ -27,15 +27,15 @@
                             >{{importanceText(importance)}}</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" v-if="task.owner_id === currentUserId">
                         <label for="project-id">Project</label>
-                        <select class="form-control" id="project-id" v-model="projectId">
+                        <select class="form-control" id="project-id" v-model="projectId" @change="changePerformer">
                             <option v-for="project in projects" :value="project.id">{{project.name}}</option>
                         </select>
                     </div>
                     <div class="form-group" v-if="acceptedUsers.length">
                         <label for="performer">Performer</label>
-                        <select class="form-control" id="performer" v-model="performerId">
+                        <select class="form-control" id="performer" v-model="performerId" :disabled="isDisabled">
                             <option :value="project.user.id">{{project.user.name}}<span v-if="project.user.surname">{{project.user.surname}}</span></option>
                             <option v-for="acceptedUser in acceptedUsers" :value="acceptedUser.id">{{acceptedUser.name}}<span v-if="acceptedUser.surname"> {{acceptedUser.surname}}</span></option>
                         </select>
@@ -61,7 +61,7 @@ export default {
     mixins: [
         constantsMixin,
     ],
-    props: ['task', 'project'],
+    props: ['task', 'project', 'currentUserId'],
     data() {
         return {
             name: '',
@@ -73,6 +73,7 @@ export default {
             projectId: 0,
             performerId: 0,
             projects: [],
+            isDisabled: false,
         }
     },
     watch: {
@@ -152,6 +153,16 @@ export default {
             this.importance = this.task.importance;
             this.projectId = this.task.project_id;
             this.performerId = this.task.user_id;
+            this.isDisabled = false;
+        },
+        changePerformer() {
+            if (this.projectId !== this.task.project_id) {
+                this.performerId = this.currentUserId;
+                this.isDisabled = true;
+            } else {
+                this.performerId = this.task.user_id;
+                this.isDisabled = false;
+            }
         },
     },
     mounted() {

@@ -3176,7 +3176,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mixins: [_mixins_constants_js__WEBPACK_IMPORTED_MODULE_1__.default],
-  props: ['task', 'project'],
+  props: ['task', 'project', 'currentUserId'],
   data: function data() {
     return {
       name: '',
@@ -3187,7 +3187,8 @@ __webpack_require__.r(__webpack_exports__);
       statuses: [],
       projectId: 0,
       performerId: 0,
-      projects: []
+      projects: [],
+      isDisabled: false
     };
   },
   watch: {
@@ -3269,6 +3270,16 @@ __webpack_require__.r(__webpack_exports__);
       this.importance = this.task.importance;
       this.projectId = this.task.project_id;
       this.performerId = this.task.user_id;
+      this.isDisabled = false;
+    },
+    changePerformer: function changePerformer() {
+      if (this.projectId !== this.task.project_id) {
+        this.performerId = this.currentUserId;
+        this.isDisabled = true;
+      } else {
+        this.performerId = this.task.user_id;
+        this.isDisabled = false;
+      }
     }
   },
   mounted: function mounted() {
@@ -69801,48 +69812,53 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "project-id" } }, [
-                _vm._v("Project")
-              ]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
+            _vm.task.owner_id === _vm.currentUserId
+              ? _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "project-id" } }, [
+                    _vm._v("Project")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
                     {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.projectId,
-                      expression: "projectId"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { id: "project-id" },
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.projectId = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    }
-                  }
-                },
-                _vm._l(_vm.projects, function(project) {
-                  return _c("option", { domProps: { value: project.id } }, [
-                    _vm._v(_vm._s(project.name))
-                  ])
-                }),
-                0
-              )
-            ]),
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.projectId,
+                          expression: "projectId"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { id: "project-id" },
+                      on: {
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.projectId = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          },
+                          _vm.changePerformer
+                        ]
+                      }
+                    },
+                    _vm._l(_vm.projects, function(project) {
+                      return _c("option", { domProps: { value: project.id } }, [
+                        _vm._v(_vm._s(project.name))
+                      ])
+                    }),
+                    0
+                  )
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _vm.acceptedUsers.length
               ? _c("div", { staticClass: "form-group" }, [
@@ -69862,7 +69878,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { id: "performer" },
+                      attrs: { id: "performer", disabled: _vm.isDisabled },
                       on: {
                         change: function($event) {
                           var $$selectedVal = Array.prototype.filter
@@ -71243,7 +71259,11 @@ var render = function() {
                     },
                     [
                       _c("edit-task-modal", {
-                        attrs: { task: _vm.currentTask, project: _vm.project },
+                        attrs: {
+                          task: _vm.currentTask,
+                          project: _vm.project,
+                          currentUserId: _vm.currentUserId
+                        },
                         on: {
                           updated: _vm.taskUpdated,
                           cancel: function($event) {
@@ -71676,7 +71696,11 @@ var render = function() {
         },
         [
           _c("edit-task-modal", {
-            attrs: { task: _vm.currentTask, project: _vm.currentTask.project },
+            attrs: {
+              task: _vm.currentTask,
+              project: _vm.currentTask.project,
+              currentUserId: _vm.currentUserId
+            },
             on: {
               updated: _vm.taskUpdated,
               cancel: function($event) {

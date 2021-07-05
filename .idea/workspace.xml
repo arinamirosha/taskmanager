@@ -8,9 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/CreateTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/CreateTask.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/EditTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/EditTask.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/tasks/CommonIndexTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tasks/CommonIndexTask.vue" afterDir="false" />
     </list>
@@ -246,14 +244,8 @@
       <workItem from="1625053241860" duration="600000" />
       <workItem from="1625122057054" duration="24441000" />
       <workItem from="1625211256742" duration="18519000" />
-      <workItem from="1625292262659" duration="12315000" />
-    </task>
-    <task id="LOCAL-00043" summary="adapt filter">
-      <created>1624451601441</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1624451601441</updated>
+      <workItem from="1625292262659" duration="13099000" />
+      <workItem from="1625465523407" duration="4358000" />
     </task>
     <task id="LOCAL-00044" summary="project page mobile">
       <created>1624515892775</created>
@@ -591,7 +583,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625300789637</updated>
     </task>
-    <option name="localTasksCounter" value="92" />
+    <task id="LOCAL-00092" summary="change performer of task">
+      <created>1625306299687</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1625306299687</updated>
+    </task>
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -614,7 +613,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="show shared projects in menu and archive" />
     <MESSAGE value="allow see shared project" />
     <MESSAGE value="show right favorite" />
     <MESSAGE value="edit migrs" />
@@ -639,6 +637,7 @@
     <MESSAGE value="no drug others tasks" />
     <MESSAGE value="hide update task and correct store task" />
     <MESSAGE value="correct show show task modal footer" />
-    <option name="LAST_COMMIT_MESSAGE" value="correct show show task modal footer" />
+    <MESSAGE value="change performer of task" />
+    <option name="LAST_COMMIT_MESSAGE" value="change performer of task" />
   </component>
 </project>

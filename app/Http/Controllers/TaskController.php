@@ -33,17 +33,26 @@ class TaskController extends Controller
 
     public function update(Task $task, Request $request)
     {
-        $data = $request->all();
+        $data      = $request->all();
+        $project   = $task->project;
+        $projectId = $data['project_id'];
 
-        if ($data['project_id']) {
-            Project::findOrFail($data['project_id']);
-            // todo check projects or no change
+        if ($projectId) {
+            if (Auth::id() == $task->owner_id) {
+                if ($projectId != $task->project_id) {
+                    $project         = Project::findOrFail($data['project_id']);
+                    $data['status']  = Task::STATUS_NEW;
+                    $data['user_id'] = Auth::id();
+                }
+            } else {
+                unset($data['project_id']);
+            }
         }
 
         if ($data['user_id']) {
-            $data['user_id'] = in_array($data['user_id'], [Auth::id(), $task->project->user_id])
+            $data['user_id'] = in_array($data['user_id'], [Auth::id(), $project->user_id])
                 ? $data['user_id']
-                : $task->project->shared_users()
+                : $project->shared_users()
                           ->wherePivot('user_id', $data['user_id'])
                           ->wherePivot('accepted', true)
                           ->firstOrFail()->id;
