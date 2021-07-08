@@ -58,5 +58,6 @@ Route::middleware('auth')->group(function () {
     Route::bind('all_task', function ($id) { return Task::withTrashed()->findOrFail($id); });
 
     Route::post('/comments/{task}', [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
+    Route::put('/comments/{comment}', [App\Http\Controllers\CommentController::class, 'update'])->name('comments.update')->middleware('can:update,comment');
     Route::delete('/comments/{comment}', [App\Http\Controllers\CommentController::class, 'destroy'])->name('comments.destroy')->middleware('can:delete,comment');
 });

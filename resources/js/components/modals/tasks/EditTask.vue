@@ -34,8 +34,8 @@
                         </select>
                     </div>
                     <div class="form-group" v-if="acceptedUsers.length">
-                        <label for="performer">Performer</label>
-                        <select class="form-control" id="performer" v-model="performerId" :disabled="isDisabled">
+                        <label for="performer-edit">Performer</label>
+                        <select class="form-control" id="performer-edit" v-model="performerId" :disabled="isDisabled">
                             <option :value="project.user.id">{{project.user.name}}<span v-if="project.user.surname">{{project.user.surname}}</span></option>
                             <option v-for="acceptedUser in acceptedUsers" :value="acceptedUser.id">{{acceptedUser.name}}<span v-if="acceptedUser.surname"> {{acceptedUser.surname}}</span></option>
                         </select>

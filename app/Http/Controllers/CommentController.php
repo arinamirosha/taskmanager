@@ -35,4 +35,11 @@ class CommentController extends Controller
 
         return true;
     }
+
+    public function update(Comment $comment, Request $request)
+    {
+        $comment->update($request->all());
+
+        return $comment;
+    }
 }

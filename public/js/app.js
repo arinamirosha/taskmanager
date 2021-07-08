@@ -2284,6 +2284,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2408,6 +2416,34 @@ __webpack_require__.r(__webpack_exports__);
         dots.style.display = "none";
         moreTrigger.innerHTML = "Read&nbsp;less";
         moreText.classList.remove('d-none');
+      }
+    },
+    editComment: function editComment(index, text) {
+      this.$refs['editedText' + index][0].value = text;
+      this.$refs['cText' + index][0].hidden = true;
+      this.$refs['cEdit' + index][0].hidden = false;
+    },
+    cancelEdit: function cancelEdit(index) {
+      this.$refs['cText' + index][0].hidden = false;
+      this.$refs['cEdit' + index][0].hidden = true;
+    },
+    updateComment: function updateComment(index, commentId) {
+      var _this5 = this;
+
+      var editedText = this.$refs['editedText' + index][0].value;
+
+      if (editedText && editedText.length <= 1500) {
+        axios.put((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('comments.update', commentId), {
+          text: editedText
+        }).then(function (response) {
+          _this5.comments[index].text = response.data.text;
+          _this5.$refs['cText' + index][0].hidden = false;
+          _this5.$refs['cEdit' + index][0].hidden = true;
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      } else {
+        alert('1-1500 symbols');
       }
     }
   }
@@ -9405,7 +9441,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.h-500[data-v-0a9f94d8] {\n    height: 400px;\n}\n.comments[data-v-0a9f94d8] {\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n.text-sm[data-v-0a9f94d8] {\n    font-size: 12px;\n}\n.fa-times[data-v-0a9f94d8] {\n    cursor: pointer;\n    color: #eaeaea;\n}\n.comment:hover .fa-times[data-v-0a9f94d8] {\n    color: #d7d7d7;\n}\n.link[data-v-0a9f94d8]:hover {\n    cursor: pointer;\n}\n.text-wrap[data-v-0a9f94d8] {\n    word-wrap: break-word;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.h-500[data-v-0a9f94d8] {\n    height: 400px;\n}\n.comments[data-v-0a9f94d8] {\n    overflow-y: scroll;\n    overflow-x: hidden;\n}\n.text-sm[data-v-0a9f94d8] {\n    font-size: 12px;\n}\n.fa-times[data-v-0a9f94d8], .fa-edit[data-v-0a9f94d8] {\n    cursor: pointer;\n    color: #eaeaea;\n}\n.fa-times[data-v-0a9f94d8]:hover, .fa-edit[data-v-0a9f94d8]:hover {\n    color: #d7d7d7;\n}\n.link[data-v-0a9f94d8]:hover {\n    cursor: pointer;\n}\n.text-wrap[data-v-0a9f94d8] {\n    word-wrap: break-word;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -68432,16 +68468,30 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "text-secondary text-sm" }, [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(_vm.formatDate(comment.created_at)) +
-                                "\n                        "
-                            ),
+                          _c("div", { staticClass: "text-sm" }, [
+                            _c("span", { staticClass: "text-secondary" }, [
+                              _vm._v(_vm._s(_vm.formatDate(comment.created_at)))
+                            ]),
+                            _vm._v(" "),
                             !_vm.isArchive &&
                             comment.user_id === _vm.currentUserId
                               ? _c("i", {
-                                  staticClass: "fas fa-times ml-1 p-1",
+                                  staticClass: "fas fa-edit p-1",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editComment(
+                                        index,
+                                        comment.text
+                                      )
+                                    }
+                                  }
+                                })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            !_vm.isArchive &&
+                            comment.user_id === _vm.currentUserId
+                              ? _c("i", {
+                                  staticClass: "fas fa-times p-1",
                                   on: {
                                     click: function($event) {
                                       return _vm.deleteComment(comment.id)
@@ -68454,42 +68504,103 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       comment.text.length <= 200
-                        ? _c("div", { staticClass: "text-wrap" }, [
-                            _vm._v(_vm._s(comment.text))
-                          ])
-                        : _c("div", { staticClass: "text-wrap" }, [
-                            _vm._v(_vm._s(comment.text.slice(0, 200))),
+                        ? _c(
+                            "div",
+                            {
+                              ref: "cText" + index,
+                              refInFor: true,
+                              staticClass: "text-wrap"
+                            },
+                            [_vm._v(_vm._s(comment.text))]
+                          )
+                        : _c(
+                            "div",
+                            {
+                              ref: "cText" + index,
+                              refInFor: true,
+                              staticClass: "text-wrap"
+                            },
+                            [
+                              _vm._v(_vm._s(comment.text.slice(0, 200))),
+                              _c(
+                                "span",
+                                { ref: "dots" + index, refInFor: true },
+                                [_vm._v("...")]
+                              ),
+                              _c(
+                                "span",
+                                {
+                                  ref: "moreText" + index,
+                                  refInFor: true,
+                                  staticClass: "d-none"
+                                },
+                                [_vm._v(_vm._s(comment.text.slice(200)))]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  ref: "moreTrigger" + index,
+                                  refInFor: true,
+                                  staticClass: "text-secondary text-sm link",
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.triggerMore(index)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Read more")]
+                              )
+                            ]
+                          ),
+                      _vm._v(" "),
+                      _c(
+                        "form",
+                        {
+                          ref: "cEdit" + index,
+                          refInFor: true,
+                          attrs: { hidden: "" },
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.updateComment(index, comment.id)
+                            }
+                          }
+                        },
+                        [
+                          _c("textarea", {
+                            ref: "editedText" + index,
+                            refInFor: true,
+                            staticClass: "form-control mb-2"
+                          }),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "text-right" }, [
                             _c(
-                              "span",
-                              { ref: "dots" + index, refInFor: true },
-                              [_vm._v("...")]
-                            ),
-                            _c(
-                              "span",
+                              "button",
                               {
-                                ref: "moreText" + index,
-                                refInFor: true,
-                                staticClass: "d-none"
-                              },
-                              [_vm._v(_vm._s(comment.text.slice(200)))]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "a",
-                              {
-                                ref: "moreTrigger" + index,
-                                refInFor: true,
-                                staticClass: "text-secondary text-sm link",
+                                staticClass: "btn btn-outline-secondary btn-sm",
+                                attrs: { type: "button" },
                                 on: {
                                   click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.triggerMore(index)
+                                    return _vm.cancelEdit(index)
                                   }
                                 }
                               },
-                              [_vm._v("Read more")]
+                              [_vm._v("Cancel")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary btn-sm",
+                                attrs: { type: "submit" }
+                              },
+                              [_vm._v("Update")]
                             )
-                          ]),
+                          ])
+                        ]
+                      ),
                       _vm._v(" "),
                       _c("hr")
                     ])
@@ -69862,7 +69973,7 @@ var render = function() {
             _vm._v(" "),
             _vm.acceptedUsers.length
               ? _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "performer" } }, [
+                  _c("label", { attrs: { for: "performer-edit" } }, [
                     _vm._v("Performer")
                   ]),
                   _vm._v(" "),
@@ -69878,7 +69989,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { id: "performer", disabled: _vm.isDisabled },
+                      attrs: { id: "performer-edit", disabled: _vm.isDisabled },
                       on: {
                         change: function($event) {
                           var $$selectedVal = Array.prototype.filter
@@ -88422,7 +88533,7 @@ exports.withParams = withParams;
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"\":\"password/confirm\",\"login\":\"login\",\"logout\":\"logout\",\"register\":\"register\",\"password.request\":\"password/reset\",\"password.email\":\"password/email\",\"password.reset\":\"password/reset/{token}\",\"password.update\":\"password/reset\",\"password.confirm\":\"password/confirm\",\"welcome\":\"/\",\"home\":\"home\",\"users.show\":\"users\",\"users.profile\":\"users/profile\",\"users.update\":\"users\",\"projects.index\":\"projects\",\"projects.store\":\"projects\",\"projects.show\":\"projects/{project}\",\"projects.restore\":\"projects/{project}/restore\",\"projects.update\":\"projects/{project}\",\"projects.favorite\":\"projects/{project}/favorite\",\"projects.share\":\"projects/{project}/share\",\"projects.unshare\":\"projects/{project}/unshare\",\"projects.accepted\":\"projects/{project}/accepted\",\"projects.archive\":\"projects/{project}/archive\",\"projects.destroy-force\":\"projects/{project}/force\",\"tasks.index\":\"tasks\",\"tasks.store\":\"tasks\",\"tasks.restore\":\"tasks/{task}/restore\",\"tasks.update\":\"tasks/{task}\",\"tasks.destroy\":\"tasks/{task}\",\"tasks.archive\":\"tasks/archive/all\",\"tasks.destroy-force\":\"tasks/{task}/force\",\"comments.index\":\"comments/{all_task}\",\"comments.store\":\"comments/{task}\",\"comments.destroy\":\"comments/{comment}\"}");
+module.exports = JSON.parse("{\"\":\"password/confirm\",\"login\":\"login\",\"logout\":\"logout\",\"register\":\"register\",\"password.request\":\"password/reset\",\"password.email\":\"password/email\",\"password.reset\":\"password/reset/{token}\",\"password.update\":\"password/reset\",\"password.confirm\":\"password/confirm\",\"welcome\":\"/\",\"home\":\"home\",\"users.show\":\"users\",\"users.profile\":\"users/profile\",\"users.update\":\"users\",\"projects.index\":\"projects\",\"projects.store\":\"projects\",\"projects.show\":\"projects/{project}\",\"projects.restore\":\"projects/{project}/restore\",\"projects.update\":\"projects/{project}\",\"projects.favorite\":\"projects/{project}/favorite\",\"projects.share\":\"projects/{project}/share\",\"projects.unshare\":\"projects/{project}/unshare\",\"projects.accepted\":\"projects/{project}/accepted\",\"projects.archive\":\"projects/{project}/archive\",\"projects.destroy-force\":\"projects/{project}/force\",\"tasks.index\":\"tasks\",\"tasks.store\":\"tasks\",\"tasks.restore\":\"tasks/{task}/restore\",\"tasks.update\":\"tasks/{task}\",\"tasks.destroy\":\"tasks/{task}\",\"tasks.archive\":\"tasks/archive/all\",\"tasks.destroy-force\":\"tasks/{task}/force\",\"comments.index\":\"comments/{all_task}\",\"comments.store\":\"comments/{task}\",\"comments.update\":\"comments/{comment}\",\"comments.destroy\":\"comments/{comment}\"}");
 
 /***/ })
 

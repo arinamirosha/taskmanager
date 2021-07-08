@@ -33,5 +33,6 @@
     "tasks.destroy-force": "tasks\/{task}\/force",
     "comments.index": "comments\/{all_task}",
     "comments.store": "comments\/{task}",
+    "comments.update": "comments\/{comment}",
     "comments.destroy": "comments\/{comment}"
 }

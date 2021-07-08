@@ -27,15 +27,23 @@
                 <div v-for="(comment, index) in comments" class="comment">
                     <div class="justify-content-between d-flex">
                         <div class="font-weight-bold">{{comment.user.name}} {{comment.user.surname}}</div>
-                        <div class="text-secondary text-sm">
-                            {{formatDate(comment.created_at)}}
-                            <i v-if="!isArchive && comment.user_id === currentUserId" class="fas fa-times ml-1 p-1" @click="deleteComment(comment.id)"></i>
+                        <div class="text-sm">
+                            <span class="text-secondary">{{formatDate(comment.created_at)}}</span>
+                            <i v-if="!isArchive && comment.user_id === currentUserId" class="fas fa-edit p-1" @click="editComment(index, comment.text)"></i>
+                            <i v-if="!isArchive && comment.user_id === currentUserId" class="fas fa-times p-1" @click="deleteComment(comment.id)"></i>
                         </div>
                     </div>
-                    <div v-if="comment.text.length <= 200" class="text-wrap">{{comment.text}}</div>
-                    <div v-else class="text-wrap">{{comment.text.slice(0,200)}}<span :ref="'dots'+index">...</span><span :ref="'moreText'+index" class="d-none">{{comment.text.slice(200)}}</span>
+                    <div v-if="comment.text.length <= 200" class="text-wrap" :ref="'cText'+index">{{comment.text}}</div>
+                    <div v-else class="text-wrap" :ref="'cText'+index">{{comment.text.slice(0,200)}}<span :ref="'dots'+index">...</span><span :ref="'moreText'+index" class="d-none">{{comment.text.slice(200)}}</span>
                         <a @click.prevent="triggerMore(index)" class="text-secondary text-sm link" :ref="'moreTrigger'+index">Read&nbsp;more</a>
                     </div>
+                    <form @submit.prevent="updateComment(index, comment.id)" :ref="'cEdit'+index" hidden>
+                        <textarea class="form-control mb-2" :ref="'editedText'+index"></textarea>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-outline-secondary btn-sm" @click="cancelEdit(index)">Cancel</button>
+                            <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                        </div>
+                    </form>
                     <hr>
                 </div>
                 <div class="m-0 pr-2 row justify-content-between pb-1" v-if="!isLastPage">
@@ -173,6 +181,35 @@ export default {
                 moreText.classList.remove('d-none');
             }
         },
+        editComment(index, text) {
+            this.$refs['editedText'+index][0].value = text;
+            this.$refs['cText'+index][0].hidden = true;
+            this.$refs['cEdit'+index][0].hidden = false;
+        },
+        cancelEdit(index) {
+            this.$refs['cText'+index][0].hidden = false;
+            this.$refs['cEdit'+index][0].hidden = true;
+        },
+        updateComment(index, commentId) {
+            let editedText = this.$refs['editedText'+index][0].value;
+
+            if (editedText && editedText.length <= 1500) {
+                axios
+                    .put(route('comments.update', commentId), {
+                        text: editedText
+                    })
+                    .then(response => {
+                        this.comments[index].text = response.data.text;
+                        this.$refs['cText'+index][0].hidden = false;
+                        this.$refs['cEdit'+index][0].hidden = true;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            } else {
+                alert('1-1500 symbols');
+            }
+        }
     },
 }
 </script>
@@ -188,11 +225,11 @@ export default {
 .text-sm {
     font-size: 12px;
 }
-.fa-times {
+.fa-times, .fa-edit {
     cursor: pointer;
     color: #eaeaea;
 }
-.comment:hover .fa-times {
+.fa-times:hover, .fa-edit:hover {
     color: #d7d7d7;
 }
 .link:hover {
