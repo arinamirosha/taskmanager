@@ -26,7 +26,10 @@
             <div v-else :class="{'comments h-500 pr-1': mediumStyle}">
                 <div v-for="(comment, index) in comments" class="comment">
                     <div class="justify-content-between d-flex">
-                        <div class="font-weight-bold">{{comment.user.name}} {{comment.user.surname}}</div>
+                        <div>
+                            <span class="font-weight-bold">{{comment.user.name}} {{comment.user.surname}}</span>
+                            <span v-if="comment.created_at !== comment.updated_at" class="text-secondary text-sm">Edited</span>
+                        </div>
                         <div class="text-sm">
                             <span class="text-secondary">{{formatDate(comment.created_at)}}</span>
                             <i v-if="!isArchive && comment.user_id === currentUserId" class="fas fa-edit p-1" @click="editComment(index, comment.text)"></i>
@@ -200,6 +203,7 @@ export default {
                     })
                     .then(response => {
                         this.comments[index].text = response.data.text;
+                        this.comments[index].updated_at = response.data.updated_at;
                         this.$refs['cText'+index][0].hidden = false;
                         this.$refs['cEdit'+index][0].hidden = true;
                     })

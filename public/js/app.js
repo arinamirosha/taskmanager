@@ -2292,6 +2292,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2437,6 +2440,7 @@ __webpack_require__.r(__webpack_exports__);
           text: editedText
         }).then(function (response) {
           _this5.comments[index].text = response.data.text;
+          _this5.comments[index].updated_at = response.data.updated_at;
           _this5.$refs['cText' + index][0].hidden = false;
           _this5.$refs['cEdit' + index][0].hidden = true;
         })["catch"](function (error) {
@@ -68460,12 +68464,22 @@ var render = function() {
                         "div",
                         { staticClass: "justify-content-between d-flex" },
                         [
-                          _c("div", { staticClass: "font-weight-bold" }, [
-                            _vm._v(
-                              _vm._s(comment.user.name) +
-                                " " +
-                                _vm._s(comment.user.surname)
-                            )
+                          _c("div", [
+                            _c("span", { staticClass: "font-weight-bold" }, [
+                              _vm._v(
+                                _vm._s(comment.user.name) +
+                                  " " +
+                                  _vm._s(comment.user.surname)
+                              )
+                            ]),
+                            _vm._v(" "),
+                            comment.created_at !== comment.updated_at
+                              ? _c(
+                                  "span",
+                                  { staticClass: "text-secondary text-sm" },
+                                  [_vm._v("Edited")]
+                                )
+                              : _vm._e()
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "text-sm" }, [
