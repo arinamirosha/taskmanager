@@ -35,11 +35,10 @@ class TaskController extends Controller
     {
         $data      = $request->all();
         $project   = $task->project;
-        $projectId = $data['project_id'];
 
-        if ($projectId) {
+        if (isset($data['project_id'])) {
             if (Auth::id() == $task->owner_id) {
-                if ($projectId != $task->project_id) {
+                if ($data['project_id'] != $task->project_id) {
                     $project         = Project::findOrFail($data['project_id']);
                     $data['status']  = Task::STATUS_NEW;
                     $data['user_id'] = Auth::id();
@@ -49,7 +48,7 @@ class TaskController extends Controller
             }
         }
 
-        if ($data['user_id']) {
+        if (isset($data['user_id'])) {
             $data['user_id'] = in_array($data['user_id'], [Auth::id(), $project->user_id])
                 ? $data['user_id']
                 : $project->shared_users()
