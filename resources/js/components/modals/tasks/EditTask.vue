@@ -44,7 +44,7 @@
 
                 <div class="modal-footer" v-if="projects.length > 0">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="cancel" @click="reset">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-primary" ref="updateTask">Update</button>
                 </div>
             </form>
         </div>
@@ -123,6 +123,8 @@ export default {
         updateTask(e) {
             this.$v.$touch();
             if (!this.$v.$invalid) {
+                this.$refs.updateTask.disabled = true;
+                this.$refs.cancel.disabled = true;
                 axios
                     .post(route('tasks.update', this.task.id), {
                         'name': this.name,
@@ -133,8 +135,10 @@ export default {
                         'user_id': this.performerId,
                     })
                     .then(response => {
+                        this.$refs.cancel.disabled = false;
                         this.$refs.cancel.click();
                         this.$emit('updated', response.data);
+                        this.$refs.updateTask.disabled = false;
                     })
                     .catch(error => {
                         console.log(error)

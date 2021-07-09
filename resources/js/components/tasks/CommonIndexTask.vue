@@ -10,7 +10,7 @@
                 <label v-else><input type="checkbox" v-model="notTrashed"> Not trashed projects</label>
             </div>
             <div class="col-md-3 col-6 text-right">
-                <button v-if="type !== c.ARCHIVE" class="h5 btn btn-sm btn-outline-secondary" @click="archiveAllTasks">Archive Finished</button>
+                <button v-if="type !== c.ARCHIVE" ref="archiveFinished" class="h5 btn btn-sm btn-outline-secondary" @click="archiveAllTasks">Archive Finished</button>
                 <label v-else><input class="form-control form-control-sm" v-model="s" type="text" placeholder="Search task or project..."></label>
             </div>
         </div>
@@ -236,6 +236,7 @@ export default {
                 });
         },
         archiveAllTasks() {
+            this.$refs.archiveFinished.disabled = true;
             axios
                 .delete(route('tasks.archive'), {
                     params: {
@@ -253,6 +254,7 @@ export default {
 
                     $('.toast').toast('show');
                     this.taskArchived();
+                    this.$refs.archiveFinished.disabled = false;
                 })
                 .catch(error => {
                     console.log(error);

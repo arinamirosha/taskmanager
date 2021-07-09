@@ -12,7 +12,8 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="cancel" @click="$emit('cancel')">Cancel</button>
-                <button type="submit" class="btn btn-danger" data-dismiss="modal"  @click="deleteTask">Delete</button>
+                <button type="submit" class="btn btn-danger" @click="deleteTask" ref="deleteTask">Delete</button>
+                <button data-dismiss="modal" ref="dismiss" hidden></button>
             </div>
         </div>
     </div>
@@ -25,13 +26,19 @@ export default {
     props: ['task'],
     methods: {
         deleteTask(e) {
+            this.$refs.deleteTask.disabled = true;
+            this.$refs.cancel.disabled = true;
             axios
                 .delete(route('tasks.destroy-force', this.task.id))
                 .then(response => {
+                    this.$refs.cancel.disabled = false;
                     this.$emit('deleted');
+                    this.$refs.deleteTask.disabled = false;
+                    this.$refs.dismiss.click();
                 })
                 .catch(error => {
-                    console.log(error)
+                    console.log(error);
+                    this.$refs.dismiss.click();
                 });
         },
     },

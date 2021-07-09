@@ -6,8 +6,23 @@
   <component name="ChangeListManager">
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/comments/Comments.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/comments/Comments.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/projects/ArchiveProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/projects/ArchiveProject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/projects/CreateProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/projects/CreateProject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/projects/DeleteProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/projects/DeleteProject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/projects/EditProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/projects/EditProject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/projects/RestoreProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/projects/RestoreProject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/projects/ShareProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/projects/ShareProject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/CreateTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/CreateTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/DeleteTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/DeleteTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/EditTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/EditTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/ShowTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/projects/NewSharedProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/projects/NewSharedProject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/tasks/CommonIndexTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tasks/CommonIndexTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/users/UserProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/users/UserProfile.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -246,14 +261,9 @@
       <workItem from="1625563355779" duration="123000" />
       <workItem from="1625583462103" duration="3213000" />
       <workItem from="1625639737734" duration="110000" />
-      <workItem from="1625748583968" duration="3953000" />
-    </task>
-    <task id="LOCAL-00047" summary="text/css/iconCss in mixin">
-      <created>1624606709094</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1624606709096</updated>
+      <workItem from="1625748583968" duration="4032000" />
+      <workItem from="1625816466026" duration="98000" />
+      <workItem from="1625818832051" duration="12752000" />
     </task>
     <task id="LOCAL-00048" summary="comments">
       <created>1624623359084</created>
@@ -591,7 +601,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625752273881</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="mark edited comments">
+      <created>1625753046568</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1625753046568</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -614,7 +631,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="change fav of shared" />
     <MESSAGE value="allow add task and if shared on force del project decline shared" />
     <MESSAGE value="show project owner" />
     <MESSAGE value="show task owner" />
@@ -639,6 +655,7 @@
     <MESSAGE value="correct change project/task performer" />
     <MESSAGE value="edit comments" />
     <MESSAGE value="correct update task" />
-    <option name="LAST_COMMIT_MESSAGE" value="correct update task" />
+    <MESSAGE value="mark edited comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="mark edited comments" />
   </component>
 </project>

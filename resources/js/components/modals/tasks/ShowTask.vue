@@ -75,18 +75,18 @@
                             </div>
 
                             <div class="col-md-4 mt-1 mt-md-0" v-if="isInteractWithTask">
-                                <button type="button" class="btn btn-primary" v-if="!task.deleted_at && task.status !== c.STATUS_FINISHED">
+                                <button ref="taskAction" type="button" class="btn btn-primary" v-if="!task.deleted_at && task.status !== c.STATUS_FINISHED">
                                     <span v-if="task.status === c.STATUS_NEW" @click="changeStatus(c.STATUS_PROGRESS)">Start</span>
                                     <span v-else-if="task.status === c.STATUS_PROGRESS" @click="changeStatus(c.STATUS_FINISHED)">Finish</span>
                                 </button>
 
-                                <button type="button" class="btn btn-primary"
+                                <button ref="taskAction" type="button" class="btn btn-primary"
                                         v-if="!task.deleted_at && (task.status === c.STATUS_FINISHED || (task.project && task.project.deleted_at) )"
                                 >
                                     <span @click="archive" data-dismiss="modal">Archive</span>
                                 </button>
 
-                                <button type="button"
+                                <button ref="taskAction" type="button"
                                         class="btn btn-primary"
                                         v-if="task.deleted_at && (project && !project.deleted_at || task.project && !task.project.deleted_at)"
                                 >
@@ -135,30 +135,36 @@ export default {
         },
         changeStatus(newStatus) {
             this.task.status = newStatus;
+            this.$refs.taskAction.disabled = true;
             axios
                 .post(route('tasks.update', this.task.id), {'status': newStatus})
                 .then(response => {
                     this.$emit('taskUpdated', this.task.id);
+                    this.$refs.taskAction.disabled = false;
                 })
                 .catch(error => {
                     console.log(error);
                 });
         },
         archive() {
+            this.$refs.taskAction.disabled = true;
             axios
                 .delete(route('tasks.destroy', this.task.id))
                 .then(response => {
                     this.$emit('archived', this.task.id);
+                    this.$refs.taskAction.disabled = false;
                 })
                 .catch(error => {
                     console.log(error);
                 });
         },
         restore() {
+            this.$refs.taskAction.disabled = true;
             axios
                 .post(route('tasks.restore', this.task.id))
                 .then(response => {
                     this.$emit('taskUpdated', this.task.id);
+                    this.$refs.taskAction.disabled = false;
                 })
                 .catch(error => {
                     console.log(error);

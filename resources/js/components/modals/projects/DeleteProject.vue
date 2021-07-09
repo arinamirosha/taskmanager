@@ -14,7 +14,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="cancel">Cancel</button>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-danger" ref="deleteProject">Delete</button>
                 </div>
             </form>
         </div>
@@ -28,11 +28,15 @@ export default {
     props: ['project'],
     methods: {
         deleteProject(e) {
+            this.$refs.deleteProject.disabled = true;
+            this.$refs.cancel.disabled = true;
             axios
                 .delete(route('projects.destroy-force', this.project.id))
                 .then(response => {
+                    this.$refs.cancel.disabled = false;
                     this.$refs.cancel.click();
                     this.$emit('deleted');
+                    this.$refs.deleteProject.disabled = false;
                 })
                 .catch(error => {
                     console.log(error)

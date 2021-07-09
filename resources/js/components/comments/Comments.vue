@@ -10,9 +10,8 @@
                 />
             </div>
             <div v-if="this.$v.text.$error" class="row text-danger">1-1500 symbols</div>
-            <div class="row justify-content-between">
-                <div><transition name="fade" appear><i v-if="commentLoading" class="fas fa-spinner fa-spin h3"></i></transition></div>
-                <button class="btn btn-primary" @click="sendComment">Send</button>
+            <div class="row justify-content-end">
+                <button class="btn btn-primary" @click="sendComment" ref="sendComment">Send</button>
             </div>
         </div>
 
@@ -43,8 +42,8 @@
                     <form @submit.prevent="updateComment(index, comment.id)" :ref="'cEdit'+index" hidden>
                         <textarea class="form-control mb-2" :ref="'editedText'+index"></textarea>
                         <div class="text-right">
-                            <button type="button" class="btn btn-outline-secondary btn-sm" @click="cancelEdit(index)">Cancel</button>
-                            <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" @click="cancelEdit(index)" :ref="'commentCancel'+index">Cancel</button>
+                            <button type="submit" class="btn btn-primary btn-sm" :ref="'commentUpdate'+index">Update</button>
                         </div>
                     </form>
                     <hr>
@@ -78,7 +77,6 @@ export default {
             text: '',
             isDataLoaded: false,
             dataLoading: false,
-            commentLoading: false,
             currentUserId: 0,
         }
     },
@@ -101,9 +99,9 @@ export default {
             return moment(new Date(date)).format('DD.MM.YY HH:mm');
         },
         sendComment() {
-            this.commentLoading = true;
             this.$v.$touch();
             if (!this.$v.$invalid) {
+                this.$refs.sendComment.disabled = true;
                 axios
                     .post(route('comments.store', this.taskId), {
                         'text': this.text,
@@ -112,7 +110,7 @@ export default {
                         this.reset();
                         this.comments.unshift(response.data);
                         this.$emit('newComment');
-                        this.commentLoading = false;
+                        this.$refs.sendComment.disabled = false;
                     })
                     .catch(error => {
                         console.log(error)
@@ -151,10 +149,10 @@ export default {
         },
         deleteComment(id) {
             if (confirm('Are you sure want to delete this comment?')) {
+                this.comments = this.comments.filter(comment => comment.id !== id);
                 axios
                     .delete(route('comments.destroy', id))
                     .then(response => {
-                        this.comments = this.comments.filter(comment => comment.id !== id);
                         this.$emit('commentDeleted');
                     })
                     .catch(error => {
@@ -166,7 +164,6 @@ export default {
             this.text = '';
             this.isDataLoaded = true;
             this.dataLoading = false;
-            this.commentLoading = false;
             this.$v.$reset();
         },
         triggerMore(index) {
@@ -197,6 +194,8 @@ export default {
             let editedText = this.$refs['editedText'+index][0].value;
 
             if (editedText && editedText.length <= 1500) {
+                this.$refs['commentUpdate'+index][0].disabled = true;
+                this.$refs['commentCancel'+index][0].disabled = true;
                 axios
                     .put(route('comments.update', commentId), {
                         text: editedText
@@ -206,6 +205,8 @@ export default {
                         this.comments[index].updated_at = response.data.updated_at;
                         this.$refs['cText'+index][0].hidden = false;
                         this.$refs['cEdit'+index][0].hidden = true;
+                        this.$refs['commentUpdate'+index][0].disabled = false;
+                        this.$refs['commentCancel'+index][0].disabled = false;
                     })
                     .catch(error => {
                         console.log(error);

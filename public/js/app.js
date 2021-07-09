@@ -2294,7 +2294,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -2309,7 +2308,6 @@ __webpack_require__.r(__webpack_exports__);
       text: '',
       isDataLoaded: false,
       dataLoading: false,
-      commentLoading: false,
       currentUserId: 0
     };
   },
@@ -2335,10 +2333,10 @@ __webpack_require__.r(__webpack_exports__);
     sendComment: function sendComment() {
       var _this = this;
 
-      this.commentLoading = true;
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
+        this.$refs.sendComment.disabled = true;
         axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('comments.store', this.taskId), {
           'text': this.text
         }).then(function (response) {
@@ -2348,7 +2346,7 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.$emit('newComment');
 
-          _this.commentLoading = false;
+          _this.$refs.sendComment.disabled = false;
         })["catch"](function (error) {
           console.log(error);
         });
@@ -2388,11 +2386,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       if (confirm('Are you sure want to delete this comment?')) {
+        this.comments = this.comments.filter(function (comment) {
+          return comment.id !== id;
+        });
         axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('comments.destroy', id)).then(function (response) {
-          _this4.comments = _this4.comments.filter(function (comment) {
-            return comment.id !== id;
-          });
-
           _this4.$emit('commentDeleted');
         })["catch"](function (error) {
           console.log(error);
@@ -2403,7 +2400,6 @@ __webpack_require__.r(__webpack_exports__);
       this.text = '';
       this.isDataLoaded = true;
       this.dataLoading = false;
-      this.commentLoading = false;
       this.$v.$reset();
     },
     triggerMore: function triggerMore(index) {
@@ -2436,6 +2432,8 @@ __webpack_require__.r(__webpack_exports__);
       var editedText = this.$refs['editedText' + index][0].value;
 
       if (editedText && editedText.length <= 1500) {
+        this.$refs['commentUpdate' + index][0].disabled = true;
+        this.$refs['commentCancel' + index][0].disabled = true;
         axios.put((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('comments.update', commentId), {
           text: editedText
         }).then(function (response) {
@@ -2443,6 +2441,8 @@ __webpack_require__.r(__webpack_exports__);
           _this5.comments[index].updated_at = response.data.updated_at;
           _this5.$refs['cText' + index][0].hidden = false;
           _this5.$refs['cEdit' + index][0].hidden = true;
+          _this5.$refs['commentUpdate' + index][0].disabled = false;
+          _this5.$refs['commentCancel' + index][0].disabled = false;
         })["catch"](function (error) {
           console.log(error);
         });
@@ -2500,10 +2500,16 @@ __webpack_require__.r(__webpack_exports__);
     archiveProject: function archiveProject(e) {
       var _this = this;
 
+      this.$refs.archiveProject.disabled = true;
+      this.$refs.cancel.disabled = true;
       axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.archive', this.project.id)).then(function (response) {
+        _this.$refs.cancel.disabled = false;
+
         _this.$refs.cancel.click();
 
         _this.$emit('deleted');
+
+        _this.$refs.archiveProject.disabled = false;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2590,14 +2596,20 @@ __webpack_require__.r(__webpack_exports__);
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
+        this.$refs.addProject.disabled = true;
+        this.$refs.cancel.disabled = true;
         axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.store'), {
           'name': this.name,
           'favorite': this.fav,
           'color': this.color
         }).then(function (response) {
+          _this.$refs.cancel.disabled = false;
+
           _this.$refs.cancel.click();
 
           _this.$emit('stored', response.data.id);
+
+          _this.$refs.addProject.disabled = false;
         })["catch"](function (error) {
           console.log(error);
         });
@@ -2656,10 +2668,16 @@ __webpack_require__.r(__webpack_exports__);
     deleteProject: function deleteProject(e) {
       var _this = this;
 
+      this.$refs.deleteProject.disabled = true;
+      this.$refs.cancel.disabled = true;
       axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.destroy-force', this.project.id)).then(function (response) {
+        _this.$refs.cancel.disabled = false;
+
         _this.$refs.cancel.click();
 
         _this.$emit('deleted');
+
+        _this.$refs.deleteProject.disabled = false;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2752,14 +2770,20 @@ __webpack_require__.r(__webpack_exports__);
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
+        this.$refs.updateProject.disabled = true;
+        this.$refs.cancel.disabled = true;
         axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.update', this.project.id), {
           'name': this.name,
           'favorite': this.favorite,
           'color': this.color
         }).then(function (response) {
+          _this.$refs.cancel.disabled = false;
+
           _this.$refs.cancel.click();
 
           _this.$emit('updated', response.data.id);
+
+          _this.$refs.updateProject.disabled = false;
         })["catch"](function (error) {
           console.log(error);
         });
@@ -2821,10 +2845,16 @@ __webpack_require__.r(__webpack_exports__);
     restoreProject: function restoreProject() {
       var _this = this;
 
+      this.$refs.restoreProject.disabled = true;
+      this.$refs.cancel.disabled = true;
       axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.restore', this.project.id)).then(function (response) {
+        _this.$refs.cancel.disabled = false;
+
         _this.$refs.cancel.click();
 
         _this.$emit('updated');
+
+        _this.$refs.restoreProject.disabled = false;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2848,6 +2878,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../route */ "./resources/js/route.js");
 /* harmony import */ var _mixins_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/constants */ "./resources/js/components/mixins/constants.js");
+//
+//
 //
 //
 //
@@ -2909,10 +2941,13 @@ __webpack_require__.r(__webpack_exports__);
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
+        this.$refs.shareProject.disabled = true;
         axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.share', this.project.id), {
           'email': this.email
         }).then(function (response) {
           _this.$emit('updated', response.data.id);
+
+          _this.$refs.shareProject.disabled = false;
         })["catch"](function (error) {
           console.log(error);
 
@@ -2924,17 +2959,19 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    unshare: function unshare(email) {
+    unshare: function unshare(email, index) {
       var _this2 = this;
 
       if (confirm('Are you sure do not want share this project with user ' + email + '? All not trashed tasks of this user will be moved to yours.')) {
+        this.$refs.shUserDel[index].hidden = true;
         axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.unshare', this.project.id), {
           params: {
             'email': email
           }
         }).then(function (response) {
-          // this.comments = this.comments.filter(comment => comment.id !== id);
           _this2.$emit('updated');
+
+          _this2.$refs.shUserDel[index].hidden = false;
         })["catch"](function (error) {
           console.log(error);
         });
@@ -3058,6 +3095,8 @@ __webpack_require__.r(__webpack_exports__);
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
+        this.$refs.addTask.disabled = true;
+        this.$refs.cancel.disabled = true;
         axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.store'), {
           'project_id': this.project.id,
           'user_id': this.performerId,
@@ -3066,9 +3105,13 @@ __webpack_require__.r(__webpack_exports__);
           'schedule': this.schedule,
           'importance': this.importance
         }).then(function (response) {
+          _this.$refs.cancel.disabled = false;
+
           _this.$refs.cancel.click();
 
           _this.$emit('stored');
+
+          _this.$refs.addTask.disabled = false;
         })["catch"](function (error) {
           console.log(error);
         });
@@ -3123,6 +3166,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['task'],
@@ -3130,10 +3174,20 @@ __webpack_require__.r(__webpack_exports__);
     deleteTask: function deleteTask(e) {
       var _this = this;
 
+      this.$refs.deleteTask.disabled = true;
+      this.$refs.cancel.disabled = true;
       axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.destroy-force', this.task.id)).then(function (response) {
+        _this.$refs.cancel.disabled = false;
+
         _this.$emit('deleted');
+
+        _this.$refs.deleteTask.disabled = false;
+
+        _this.$refs.dismiss.click();
       })["catch"](function (error) {
         console.log(error);
+
+        _this.$refs.dismiss.click();
       });
     }
   }
@@ -3282,6 +3336,8 @@ __webpack_require__.r(__webpack_exports__);
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
+        this.$refs.updateTask.disabled = true;
+        this.$refs.cancel.disabled = true;
         axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.update', this.task.id), {
           'name': this.name,
           'details': this.details,
@@ -3290,9 +3346,13 @@ __webpack_require__.r(__webpack_exports__);
           'project_id': this.projectId,
           'user_id': this.performerId
         }).then(function (response) {
+          _this2.$refs.cancel.disabled = false;
+
           _this2.$refs.cancel.click();
 
           _this2.$emit('updated', response.data);
+
+          _this2.$refs.updateTask.disabled = false;
         })["catch"](function (error) {
           console.log(error);
         });
@@ -3480,10 +3540,13 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.task.status = newStatus;
+      this.$refs.taskAction.disabled = true;
       axios.post((0,_route__WEBPACK_IMPORTED_MODULE_1__.default)('tasks.update', this.task.id), {
         'status': newStatus
       }).then(function (response) {
         _this.$emit('taskUpdated', _this.task.id);
+
+        _this.$refs.taskAction.disabled = false;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3491,8 +3554,11 @@ __webpack_require__.r(__webpack_exports__);
     archive: function archive() {
       var _this2 = this;
 
+      this.$refs.taskAction.disabled = true;
       axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_1__.default)('tasks.destroy', this.task.id)).then(function (response) {
         _this2.$emit('archived', _this2.task.id);
+
+        _this2.$refs.taskAction.disabled = false;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3500,8 +3566,11 @@ __webpack_require__.r(__webpack_exports__);
     restore: function restore() {
       var _this3 = this;
 
+      this.$refs.taskAction.disabled = true;
       axios.post((0,_route__WEBPACK_IMPORTED_MODULE_1__.default)('tasks.restore', this.task.id)).then(function (response) {
         _this3.$emit('taskUpdated', _this3.task.id);
+
+        _this3.$refs.taskAction.disabled = false;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3704,13 +3773,18 @@ __webpack_require__.r(__webpack_exports__);
   name: "NewSharedProject",
   props: ['newShared'],
   methods: {
-    changeAccepted: function changeAccepted(id, accepted) {
+    changeAccepted: function changeAccepted(id, accepted, index) {
       var _this = this;
 
+      this.$refs.accept[index].disabled = true;
+      this.$refs.decline[index].disabled = true;
       axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.accepted', id), {
         'accepted': accepted
       }).then(function (response) {
         _this.$emit('updated');
+
+        _this.$refs.accept[index].disabled = false;
+        _this.$refs.decline[index].disabled = false;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -4052,6 +4126,7 @@ __webpack_require__.r(__webpack_exports__);
     archiveAllForProject: function archiveAllForProject() {
       var _this4 = this;
 
+      this.$refs.archiveFinished.disabled = true;
       axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.archive'), {
         params: {
           'project_id': this.id
@@ -4070,6 +4145,8 @@ __webpack_require__.r(__webpack_exports__);
         _this4.getProject();
 
         _this4.$emit('taskArchived');
+
+        _this4.$refs.archiveFinished.disabled = false;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -4366,6 +4443,7 @@ __webpack_require__.r(__webpack_exports__);
     archiveAllTasks: function archiveAllTasks() {
       var _this4 = this;
 
+      this.$refs.archiveFinished.disabled = true;
       axios["delete"]((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.archive'), {
         params: {
           'type': this.type
@@ -4382,6 +4460,8 @@ __webpack_require__.r(__webpack_exports__);
         $('.toast').toast('show');
 
         _this4.taskArchived();
+
+        _this4.$refs.archiveFinished.disabled = false;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -4564,6 +4644,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
+        this.$refs.updateUser.disabled = true;
         axios.post((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('users.update', this.user.id), {
           'name': this.name,
           'surname': this.surname
@@ -9469,7 +9550,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.text-sm[data-v-fe5c7a9e] {\n    font-size: 12px;\n}\n.fa-times[data-v-fe5c7a9e] {\n    cursor: pointer;\n    color: #eaeaea;\n}\n.fa-times[data-v-fe5c7a9e]:hover {\n    color: #d7d7d7;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.text-sm[data-v-fe5c7a9e] {\n    font-size: 12px;\n}\n.fa-times[data-v-fe5c7a9e] {\n    cursor: pointer;\n    color: #eaeaea;\n}\n.fa-times[data-v-fe5c7a9e]:hover {\n    color: #d7d7d7;\n}\n.mv-10px[data-v-fe5c7a9e] {\n    min-width: 10px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -68411,22 +68492,11 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _c("div", { staticClass: "row justify-content-between" }, [
-            _c(
-              "div",
-              [
-                _c("transition", { attrs: { name: "fade", appear: "" } }, [
-                  _vm.commentLoading
-                    ? _c("i", { staticClass: "fas fa-spinner fa-spin h3" })
-                    : _vm._e()
-                ])
-              ],
-              1
-            ),
-            _vm._v(" "),
+          _c("div", { staticClass: "row justify-content-end" }, [
             _c(
               "button",
               {
+                ref: "sendComment",
                 staticClass: "btn btn-primary",
                 on: { click: _vm.sendComment }
               },
@@ -68593,6 +68663,8 @@ var render = function() {
                             _c(
                               "button",
                               {
+                                ref: "commentCancel" + index,
+                                refInFor: true,
                                 staticClass: "btn btn-outline-secondary btn-sm",
                                 attrs: { type: "button" },
                                 on: {
@@ -68607,6 +68679,8 @@ var render = function() {
                             _c(
                               "button",
                               {
+                                ref: "commentUpdate" + index,
+                                refInFor: true,
                                 staticClass: "btn btn-primary btn-sm",
                                 attrs: { type: "submit" }
                               },
@@ -68728,7 +68802,11 @@ var render = function() {
             _vm._v(" "),
             _c(
               "button",
-              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              {
+                ref: "archiveProject",
+                staticClass: "btn btn-primary",
+                attrs: { type: "submit" }
+              },
               [_vm._v("Archive")]
             )
           ])
@@ -68859,7 +68937,7 @@ var render = function() {
                   class: { "text-danger": this.$v.fav.$error },
                   attrs: { for: "fav" }
                 },
-                [_vm._v("Add To favs")]
+                [_vm._v("Add To Favorites")]
               )
             ]),
             _vm._v(" "),
@@ -68912,7 +68990,11 @@ var render = function() {
             _vm._v(" "),
             _c(
               "button",
-              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              {
+                ref: "addProject",
+                staticClass: "btn btn-primary",
+                attrs: { type: "submit" }
+              },
               [_vm._v("Add")]
             )
           ])
@@ -68991,7 +69073,11 @@ var render = function() {
             _vm._v(" "),
             _c(
               "button",
-              { staticClass: "btn btn-danger", attrs: { type: "submit" } },
+              {
+                ref: "deleteProject",
+                staticClass: "btn btn-danger",
+                attrs: { type: "submit" }
+              },
               [_vm._v("Delete")]
             )
           ])
@@ -69175,7 +69261,11 @@ var render = function() {
             _vm._v(" "),
             _c(
               "button",
-              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              {
+                ref: "updateProject",
+                staticClass: "btn btn-primary",
+                attrs: { type: "submit" }
+              },
               [_vm._v("Update")]
             )
           ])
@@ -69258,7 +69348,11 @@ var render = function() {
             _vm._v(" "),
             _c(
               "button",
-              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              {
+                ref: "restoreProject",
+                staticClass: "btn btn-primary",
+                attrs: { type: "submit" }
+              },
               [_vm._v("Restore")]
             )
           ])
@@ -69348,13 +69442,17 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "button",
-                { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+                {
+                  ref: "shareProject",
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "submit" }
+                },
                 [_vm._v("Share")]
               )
             ]
           ),
           _vm._v(" "),
-          _vm._l(this.project.shared_users, function(sharedUser) {
+          _vm._l(this.project.shared_users, function(sharedUser, index) {
             return _c(
               "div",
               { staticClass: "justify-content-between d-flex" },
@@ -69371,16 +69469,20 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                !_vm.project.deleted_at
-                  ? _c("i", {
-                      staticClass: "fas fa-times text-secondary text-sm",
-                      on: {
-                        click: function($event) {
-                          return _vm.unshare(sharedUser.email)
+                _c("div", { staticClass: "mv-10px" }, [
+                  !_vm.project.deleted_at
+                    ? _c("i", {
+                        ref: "shUserDel",
+                        refInFor: true,
+                        staticClass: "fas fa-times text-secondary text-sm",
+                        on: {
+                          click: function($event) {
+                            return _vm.unshare(sharedUser.email, index)
+                          }
                         }
-                      }
-                    })
-                  : _vm._e()
+                      })
+                    : _vm._e()
+                ])
               ]
             )
           })
@@ -69667,7 +69769,11 @@ var render = function() {
             _vm._v(" "),
             _c(
               "button",
-              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              {
+                ref: "addTask",
+                staticClass: "btn btn-primary",
+                attrs: { type: "submit" }
+              },
               [_vm._v("Add")]
             )
           ])
@@ -69739,12 +69845,18 @@ var render = function() {
         _c(
           "button",
           {
+            ref: "deleteTask",
             staticClass: "btn btn-danger",
-            attrs: { type: "submit", "data-dismiss": "modal" },
+            attrs: { type: "submit" },
             on: { click: _vm.deleteTask }
           },
           [_vm._v("Delete")]
-        )
+        ),
+        _vm._v(" "),
+        _c("button", {
+          ref: "dismiss",
+          attrs: { "data-dismiss": "modal", hidden: "" }
+        })
       ])
     ])
   ])
@@ -70070,7 +70182,11 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "button",
-                  { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+                  {
+                    ref: "updateTask",
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "submit" }
+                  },
                   [_vm._v("Update")]
                 )
               ])
@@ -70378,6 +70494,7 @@ var render = function() {
                         ? _c(
                             "button",
                             {
+                              ref: "taskAction",
                               staticClass: "btn btn-primary",
                               attrs: { type: "button" }
                             },
@@ -70421,6 +70538,7 @@ var render = function() {
                         ? _c(
                             "button",
                             {
+                              ref: "taskAction",
                               staticClass: "btn btn-primary",
                               attrs: { type: "button" }
                             },
@@ -70443,6 +70561,7 @@ var render = function() {
                         ? _c(
                             "button",
                             {
+                              ref: "taskAction",
                               staticClass: "btn btn-primary",
                               attrs: { type: "button" }
                             },
@@ -70745,7 +70864,7 @@ var render = function() {
         ? _c("div", { staticClass: "h3 text-center pt-5" }, [
             _vm._v("No invitations")
           ])
-        : _vm._l(_vm.newShared, function(newS) {
+        : _vm._l(_vm.newShared, function(newS, index) {
             return _c("div", { staticClass: "row h5 pt-3" }, [
               _c("div", { staticClass: "col-md-6 col-7" }, [
                 _vm._v(_vm._s(newS.name))
@@ -70758,10 +70877,12 @@ var render = function() {
                   _c(
                     "button",
                     {
+                      ref: "accept",
+                      refInFor: true,
                       staticClass: "btn btn-success btn-sm",
                       on: {
                         click: function($event) {
-                          return _vm.changeAccepted(newS.id, true)
+                          return _vm.changeAccepted(newS.id, true, index)
                         }
                       }
                     },
@@ -70771,10 +70892,12 @@ var render = function() {
                   _c(
                     "button",
                     {
+                      ref: "decline",
+                      refInFor: true,
                       staticClass: "btn btn-danger btn-sm",
                       on: {
                         click: function($event) {
-                          return _vm.changeAccepted(newS.id, false)
+                          return _vm.changeAccepted(newS.id, false, index)
                         }
                       }
                     },
@@ -70871,6 +70994,7 @@ var render = function() {
                             ? _c(
                                 "button",
                                 {
+                                  ref: "archiveFinished",
                                   staticClass:
                                     "btn btn-sm btn-outline-secondary",
                                   on: { click: _vm.archiveAllForProject }
@@ -71542,6 +71666,7 @@ var render = function() {
             ? _c(
                 "button",
                 {
+                  ref: "archiveFinished",
                   staticClass: "h5 btn btn-sm btn-outline-secondary",
                   on: { click: _vm.archiveAllTasks }
                 },
@@ -72031,29 +72156,26 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(0)
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "row justify-content-center" }, [
+            _c("div", { staticClass: "col-md-6 form-group" }, [
+              _c(
+                "button",
+                {
+                  ref: "updateUser",
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "submit" }
+                },
+                [_vm._v("Save")]
+              )
+            ])
+          ])
+        ])
       ]
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-6 form-group" }, [
-          _c(
-            "button",
-            { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-            [_vm._v("Save")]
-          )
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

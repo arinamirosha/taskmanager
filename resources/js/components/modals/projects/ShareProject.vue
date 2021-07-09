@@ -11,13 +11,15 @@
                         <label for="email">Email</label>
                         <input class="form-control" id="email" v-model="email" :class="{'is-invalid': this.$v.email.$error}">
                     </div>
-                    <button type="submit" class="btn btn-primary">Share</button>
+                    <button type="submit" class="btn btn-primary" ref="shareProject">Share</button>
                 </form>
 
-                <div v-for="sharedUser in this.project.shared_users" class="justify-content-between d-flex">
+                <div v-for="(sharedUser, index) in this.project.shared_users" class="justify-content-between d-flex">
                     <div>{{sharedUser.email}}</div>
                     <div :class="statusSharedCss(sharedUser.pivot.accepted)">{{statusSharedText(sharedUser.pivot.accepted)}}</div>
-                    <i v-if="!project.deleted_at" class="fas fa-times text-secondary text-sm" @click="unshare(sharedUser.email)"></i>
+                    <div class="mv-10px">
+                        <i v-if="!project.deleted_at" ref="shUserDel" class="fas fa-times text-secondary text-sm" @click="unshare(sharedUser.email, index)"></i>
+                    </div>
                 </div>
 
             </div>
@@ -60,12 +62,14 @@ export default {
         shareProject(e) {
             this.$v.$touch();
             if (!this.$v.$invalid) {
+                this.$refs.shareProject.disabled = true;
                 axios
                     .post(route('projects.share', this.project.id), {
                         'email': this.email,
                     })
                     .then(response => {
                         this.$emit('updated', response.data.id);
+                        this.$refs.shareProject.disabled = false;
                     })
                     .catch(error => {
                         console.log(error)
@@ -77,8 +81,9 @@ export default {
                     });
             }
         },
-        unshare(email) {
+        unshare(email, index) {
             if (confirm('Are you sure do not want share this project with user ' + email +'? All not trashed tasks of this user will be moved to yours.')) {
+                this.$refs.shUserDel[index].hidden = true;
                 axios
                     .delete(route('projects.unshare', this.project.id), {
                         params: {
@@ -86,8 +91,8 @@ export default {
                         },
                     })
                     .then(response => {
-                        // this.comments = this.comments.filter(comment => comment.id !== id);
                         this.$emit('updated');
+                        this.$refs.shUserDel[index].hidden = false;
                     })
                     .catch(error => {
                         console.log(error);
@@ -112,5 +117,8 @@ export default {
 }
 .fa-times:hover {
     color: #d7d7d7;
+}
+.mv-10px {
+    min-width: 10px;
 }
 </style>

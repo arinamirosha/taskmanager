@@ -21,7 +21,7 @@
             <div class="col-md-12">
                 <div class="row justify-content-center">
                     <div class="col-md-6 form-group">
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary" ref="updateUser">Save</button>
                     </div>
                 </div>
             </div>
@@ -54,6 +54,7 @@ export default {
         updateUser(e) {
             this.$v.$touch();
             if (!this.$v.$invalid) {
+                this.$refs.updateUser.disabled = true;
                 axios
                     .post(route('users.update', this.user.id), {
                         'name': this.name,

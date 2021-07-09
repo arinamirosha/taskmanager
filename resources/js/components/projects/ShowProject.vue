@@ -17,7 +17,7 @@
 
                             <button v-if="!project.deleted_at" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createTaskModal">Add New Task</button>
 
-                            <button v-if="!project.deleted_at" class="btn btn-sm btn-outline-secondary" @click="archiveAllForProject">Archive Finished</button>
+                            <button v-if="!project.deleted_at" ref="archiveFinished" class="btn btn-sm btn-outline-secondary" @click="archiveAllForProject">Archive Finished</button>
 
                             <span v-if="!project.deleted_at" class="cursor-pointer">
                                 <i class="fa fa-star fav-star-full" v-if="project.favorite" id="fav" @click="changeFav(project.id, false)"></i>
@@ -297,6 +297,7 @@ export default {
                 });
         },
         archiveAllForProject() {
+            this.$refs.archiveFinished.disabled = true;
             axios
                 .delete(route('tasks.archive'), {
                     params: {
@@ -315,6 +316,7 @@ export default {
                     $('.toast').toast('show');
                     this.getProject();
                     this.$emit('taskArchived');
+                    this.$refs.archiveFinished.disabled = false;
                 })
                 .catch(error => {
                     console.log(error);

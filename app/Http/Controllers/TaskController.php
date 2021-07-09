@@ -59,7 +59,7 @@ class TaskController extends Controller
 
         $task->update($data);
 
-        return $task->load(['project', 'owner', 'user'])->loadCount('comments');
+        return $task->load(['project', 'project.shared_users', 'project.user', 'owner', 'user'])->loadCount('comments');
     }
 
     public function restore($id)
@@ -169,7 +169,7 @@ class TaskController extends Controller
             });
         }
 
-        $data['tasks'] = $tasks->with(['project','owner', 'user', 'project.shared_users', 'project.user'])->withCount('comments')->paginate(25);
+        $data['tasks'] = $tasks->with(['project', 'owner', 'user', 'project.shared_users', 'project.user'])->withCount('comments')->paginate(25);
         $data['currentUserId'] = Auth::id();
 
         return $data;

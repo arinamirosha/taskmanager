@@ -17,7 +17,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="cancel">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Restore</button>
+                    <button type="submit" class="btn btn-primary" ref="restoreProject">Restore</button>
                 </div>
             </form>
         </div>
@@ -31,11 +31,15 @@ export default {
     props: ['project'],
     methods: {
         restoreProject() {
+            this.$refs.restoreProject.disabled = true;
+            this.$refs.cancel.disabled = true;
             axios
                 .post(route('projects.restore', this.project.id))
                 .then(response => {
+                    this.$refs.cancel.disabled = false;
                     this.$refs.cancel.click();
                     this.$emit('updated');
+                    this.$refs.restoreProject.disabled = false;
                 })
                 .catch(error => {
                     console.log(error);

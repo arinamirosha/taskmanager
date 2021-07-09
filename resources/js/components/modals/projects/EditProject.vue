@@ -22,7 +22,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="reset" ref="cancel">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-primary" ref="updateProject">Update</button>
                 </div>
             </form>
         </div>
@@ -63,6 +63,8 @@ export default {
         updateProject(e) {
             this.$v.$touch();
             if (!this.$v.$invalid) {
+                this.$refs.updateProject.disabled = true;
+                this.$refs.cancel.disabled = true;
                 axios
                     .post(route('projects.update', this.project.id), {
                         'name': this.name,
@@ -70,8 +72,10 @@ export default {
                         'color': this.color,
                     })
                     .then(response => {
+                        this.$refs.cancel.disabled = false;
                         this.$refs.cancel.click();
                         this.$emit('updated', response.data.id);
+                        this.$refs.updateProject.disabled = false;
                     })
                     .catch(error => {
                         console.log(error)

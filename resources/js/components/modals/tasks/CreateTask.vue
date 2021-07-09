@@ -40,7 +40,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="reset" ref="cancel">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary" ref="addTask">Add</button>
                 </div>
             </form>
         </div>
@@ -88,6 +88,8 @@ export default {
         storeTask(e) {
             this.$v.$touch();
             if (!this.$v.$invalid) {
+                this.$refs.addTask.disabled = true;
+                this.$refs.cancel.disabled = true;
                 axios
                     .post(route('tasks.store'), {
                         'project_id': this.project.id,
@@ -98,8 +100,10 @@ export default {
                         'importance': this.importance,
                     })
                     .then(response => {
+                        this.$refs.cancel.disabled = false;
                         this.$refs.cancel.click();
                         this.$emit('stored');
+                        this.$refs.addTask.disabled = false;
                     })
                     .catch(error => {
                         console.log(error)
