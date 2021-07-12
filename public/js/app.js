@@ -3663,6 +3663,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mixins: [_mixins_constants_js__WEBPACK_IMPORTED_MODULE_2__.default, _mixins_custom_width_js__WEBPACK_IMPORTED_MODULE_3__.default, _mixins_pagination__WEBPACK_IMPORTED_MODULE_4__.default],
+  props: ['currentUserId'],
   data: function data() {
     return {
       projects: [],
@@ -4183,6 +4184,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/constants.js */ "./resources/js/components/mixins/constants.js");
 /* harmony import */ var _mixins_custom_width_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../mixins/custom-width.js */ "./resources/js/components/mixins/custom-width.js");
 /* harmony import */ var _mixins_pagination__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../mixins/pagination */ "./resources/js/components/mixins/pagination.js");
+//
 //
 //
 //
@@ -70786,9 +70788,17 @@ var render = function() {
                       }
                     },
                     [
-                      _c("div", { staticClass: "col-md-8" }, [
-                        _vm._v(_vm._s(project.name))
-                      ]),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "col-md-8",
+                          class: {
+                            "text-secondary":
+                              project.user_id !== _vm.currentUserId
+                          }
+                        },
+                        [_vm._v(_vm._s(project.name))]
+                      ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-2 col-6" }, [
                         _vm._v(_vm._s(project.tasks_count))
@@ -71773,8 +71783,18 @@ var render = function() {
                             },
                             [_vm._v("•")]
                           ),
-                          _vm._v(
-                            " " + _vm._s(task.name) + "\n                    "
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              class: {
+                                "text-custom-secondary": !(
+                                  task.owner_id === _vm.currentUserId ||
+                                  task.user_id === _vm.currentUserId
+                                )
+                              }
+                            },
+                            [_vm._v(_vm._s(task.name))]
                           )
                         ]),
                         _vm._v(" "),
@@ -71872,7 +71892,10 @@ var render = function() {
       _vm.type === _vm.c.ARCHIVE ? _c("hr") : _vm._e(),
       _vm._v(" "),
       _vm.type === _vm.c.ARCHIVE
-        ? _c("archived-projects", { on: { showProject: _vm.showProject } })
+        ? _c("archived-projects", {
+            attrs: { currentUserId: _vm.currentUserId },
+            on: { showProject: _vm.showProject }
+          })
         : _vm._e(),
       _vm._v(" "),
       _c("toast", { attrs: { body: _vm.infoBody } }),

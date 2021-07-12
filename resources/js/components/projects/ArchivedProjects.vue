@@ -30,7 +30,7 @@
                          @click="showProject(project.id)"
                          :class="{'bg-light': compactStyle && index % 2 === 0}"
                     >
-                        <div class="col-md-8">{{project.name}}</div>
+                        <div class="col-md-8" :class="{'text-secondary': project.user_id !== currentUserId}">{{project.name}}</div>
                         <div class="col-md-2 col-6">{{project.tasks_count}}</div>
                         <div class="col-md-2 col-6 text-right text-md-left">{{formatDate(project.deleted_at)}}</div>
                     </div>
@@ -57,6 +57,7 @@ export default {
         customWidthMixin,
         paginationMixin,
     ],
+    props: ['currentUserId'],
     data() {
         return {
             projects: [],

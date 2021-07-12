@@ -38,7 +38,8 @@
                         <div class="col-md-1 col-1"><i :class="statusIconClass(task.status)"></i></div>
 
                         <div :class="colTask">
-                            <span :class="isNeedStyleFinished(task) ? 'task-finished' : importanceCss(task.importance)">&bull;</span> {{task.name}}
+                            <span :class="isNeedStyleFinished(task) ? 'task-finished' : importanceCss(task.importance)">&bull;</span>
+                            <span :class="{'text-custom-secondary': !(task.owner_id === currentUserId || task.user_id === currentUserId)}">{{task.name}}</span>
                         </div>
 
                         <div :class="colProjectFunc(task.project.deleted_at ? 'text-custom-secondary' : '')">
@@ -61,7 +62,7 @@
 
         <hr v-if="type === c.ARCHIVE">
 
-        <archived-projects v-if="type === c.ARCHIVE" @showProject="showProject"></archived-projects>
+        <archived-projects v-if="type === c.ARCHIVE" :currentUserId="currentUserId" @showProject="showProject"></archived-projects>
 
         <!-- Toast -->
         <toast :body="infoBody" />
