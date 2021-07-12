@@ -6,6 +6,14 @@ use App\Libraries\TaskManager\Facade\TaskManager;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
+use App\Notifications\ProjectArchived;
+use App\Notifications\ProjectDeleted;
+use App\Notifications\ProjectRestored;
+use App\Notifications\ProjectShared;
+use App\Notifications\ProjectShareDecision;
+use App\Notifications\ProjectStored;
+use App\Notifications\ProjectUnshared;
+use App\Notifications\ProjectUpdated;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +23,11 @@ class ProjectsController extends Controller
 {
     public function store(Request $request)
     {
-        return Auth::user()->projects()->create($request->all());
+        $user = Auth::user();
+        $project = $user->projects()->create($request->all());
+        $user->notify(new ProjectStored($project));
+
+        return $project;
     }
 
     public function index(Request $request)
@@ -105,7 +117,16 @@ class ProjectsController extends Controller
 
     public function update(Project $project, Request $request)
     {
+        $oldName = $project->name;
         $project->update($request->all());
+        $newName = $project->name;
+
+        if ($oldName != $newName) {
+            $users = $project->all_users();
+            foreach ($users as $user) {
+                $user->notify(new ProjectUpdated('name', $oldName, $newName));
+            }
+        }
 
         return $project;
     }
@@ -136,14 +157,22 @@ class ProjectsController extends Controller
 
         $project->shared_users()->attach($userId);
 
+        Auth::user()->notify(new ProjectShared($project, $user));
+        $user->notify(new ProjectShared($project, $user));
+
         return $project;
     }
 
     public function unshare(Project $project, Request $request)
     {
-        $user = User::where('email', $request->get('email'))->firstOrFail();
-        $project->shared_users()->wherePivot('user_id', $user->id)->detach();
-        $project->tasks()->where('user_id', $user->id)->update(['user_id' => Auth::id()]);
+        $userUnshared = User::where('email', $request->get('email'))->firstOrFail();
+        $users = $project->all_users();
+        $project->shared_users()->wherePivot('user_id', $userUnshared->id)->detach();
+        $project->tasks()->where('user_id', $userUnshared->id)->update(['user_id' => Auth::id()]);
+
+        foreach ($users as $user) {
+            $user->notify(new ProjectUnshared($project, $userUnshared));
+        }
 
         return $project;
     }
@@ -156,7 +185,13 @@ class ProjectsController extends Controller
             return response('No new shared projects', 400);
         }
 
-        $shared_users->pivot->update(['accepted' => $request->get('accepted')]);
+        $accepted = $request->get('accepted');
+        $shared_users->pivot->update(['accepted' => $accepted]);
+
+        $users = $project->all_users();
+        foreach ($users as $user) {
+            $user->notify(new ProjectShareDecision($project, $accepted));
+        }
 
         return $project;
     }
@@ -164,6 +199,11 @@ class ProjectsController extends Controller
     public function archive(Project $project)
     {
         $project->delete();
+
+        $users = $project->all_users();
+        foreach ($users as $user) {
+            $user->notify(new ProjectArchived($project));
+        }
 
         return true;
     }
@@ -175,6 +215,11 @@ class ProjectsController extends Controller
         $project->tasks()->withTrashed()->whereIn('status', [Task::STATUS_NEW, Task::STATUS_PROGRESS])->restore();
         $project->restore();
 
+        $users = $project->all_users();
+        foreach ($users as $user) {
+            $user->notify(new ProjectRestored($project));
+        }
+
         return true;
     }
 
@@ -182,7 +227,12 @@ class ProjectsController extends Controller
     {
         $project = Project::withTrashed()->findOrFail($id);
         $this->authorize('forceDelete', $project);
+        $users = $project->all_users();
         $project->forceDelete();
+
+        foreach ($users as $user) {
+            $user->notify(new ProjectDeleted($project));
+        }
 
         return true;
     }

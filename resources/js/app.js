@@ -46,6 +46,10 @@ Vue.component('comments', require('./components/comments/Comments.vue').default)
 Vue.component('user-profile', require('./components/users/UserProfile.vue').default);
 
 
+// HISTORY
+Vue.component('history', require('./components/notifications/History.vue').default);
+
+
 const app = new Vue({
     el: '#app',
 });

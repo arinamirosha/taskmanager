@@ -48,6 +48,11 @@ class Project extends Model
                     ->withPivot('favorite');
     }
 
+    public function all_users()
+    {
+        return $this->shared_users()->where('accepted', true)->get()->merge([$this->user]);
+    }
+
     /**
      * On force delete cascade force delete tasks
      */

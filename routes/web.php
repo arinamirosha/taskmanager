@@ -60,4 +60,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/comments/{task}', [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
     Route::put('/comments/{comment}', [App\Http\Controllers\CommentController::class, 'update'])->name('comments.update')->middleware('can:update,comment');
     Route::delete('/comments/{comment}', [App\Http\Controllers\CommentController::class, 'destroy'])->name('comments.destroy')->middleware('can:delete,comment');
+
+
+    // HISTORY
+    Route::get('/history', [App\Http\Controllers\HistoryController::class, 'index'])->name('history.index');
 });

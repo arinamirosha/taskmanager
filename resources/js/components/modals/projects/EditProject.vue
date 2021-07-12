@@ -72,6 +72,7 @@ export default {
                         'color': this.color,
                     })
                     .then(response => {
+                        this.project = response.data;
                         this.$refs.cancel.disabled = false;
                         this.$refs.cancel.click();
                         this.$emit('updated', response.data.id);

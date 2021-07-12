@@ -12,10 +12,9 @@ export const STATUS_FINISHED_TEXT = 'finished';
 
 export const TOTAL = 'total';
 
-export const ARCHIVE       = 'archive';
+export const NEW_SHARED    = 'new_shared';
 export const TODAY         = 'today';
-export const NOT_SCHEDULED = 'notScheduled';
 export const UPCOMING      = 'upcoming';
-
-export const INCOMING   = 'incoming';
-export const NEW_SHARED = 'new_shared';
+export const NOT_SCHEDULED = 'notScheduled';
+export const ARCHIVE       = 'archive';
+export const HISTORY       = 'history';

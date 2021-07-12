@@ -34,5 +34,6 @@
     "comments.index": "comments\/{all_task}",
     "comments.store": "comments\/{task}",
     "comments.update": "comments\/{comment}",
-    "comments.destroy": "comments\/{comment}"
+    "comments.destroy": "comments\/{comment}",
+    "history.index": "history"
 }

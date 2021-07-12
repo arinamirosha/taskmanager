@@ -8,7 +8,6 @@
                 </button>
 
                 <div :class="{'dropdown-menu bg-light': !largeStyle}">
-<!--                    <a class="nav-link text-dark" :class="{'active': type===c.INCOMING}" @click="setType(c.INCOMING)">Incoming</a>-->
                     <a class="nav-link text-dark name-count-space"  :class="{'active': type===c.NEW_SHARED}" @click="setType(c.NEW_SHARED)">
                         New shared
                         <span class="text-custom-secondary">{{newShared.length}}</span>
@@ -52,6 +51,7 @@
                     <a class="nav-link text-dark name-count-space" :class="{'active': type===c.ARCHIVE}" @click="setType(c.ARCHIVE)">
                         Archive
                     </a>
+                    <a class="nav-link text-dark" :class="{'active': type===c.HISTORY}" @click="setType(c.HISTORY)">History</a>
 
                     <h6 v-if="favorites.length" @click="isOpenFav = !isOpenFav"
                         class="cursor-pointer font-weight-bold sidebar-heading name-count-space align-items-center px-3 mt-4 mb-1 text-muted">
@@ -241,6 +241,8 @@ export default {
             this.type = type;
             if (type === this.c.NEW_SHARED) {
                 this.setComponent('new-shared-projects');
+            } else if (type === this.c.HISTORY) {
+                this.setComponent('history');
             } else {
                 this.setComponent('common-index-task');
             }

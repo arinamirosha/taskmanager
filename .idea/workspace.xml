@@ -5,10 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/HistoryController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Notifications/ProjectArchived.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Notifications/ProjectDeleted.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Notifications/ProjectRestored.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Notifications/ProjectShareDecision.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Notifications/ProjectShared.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Notifications/ProjectStored.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Notifications/ProjectUnshared.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Notifications/ProjectUpdated.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2021_07_12_121722_create_jobs_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2021_07_12_123147_create_notifications_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/notifications/History.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/4e3fac6d-6c29-44b0-8f0f-7bf2c4a1e81c.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/4e3fac6d-6c29-44b0-8f0f-7bf2c4a1e81c.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Project.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Project.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tasks/ListItemTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tasks/ListItemTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/projects/EditProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/projects/EditProject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/routes.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,14 +270,7 @@
       <workItem from="1625816466026" duration="98000" />
       <workItem from="1625818832051" duration="12988000" />
       <workItem from="1626077362911" duration="619000" />
-      <workItem from="1626084280088" duration="5208000" />
-    </task>
-    <task id="LOCAL-00052" summary="correct">
-      <created>1624630238288</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1624630238289</updated>
+      <workItem from="1626084280088" duration="19013000" />
     </task>
     <task id="LOCAL-00053" summary="user profile">
       <created>1624862755943</created>
@@ -596,7 +608,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626088886002</updated>
     </task>
-    <option name="localTasksCounter" value="101" />
+    <task id="LOCAL-00101" summary="correct show task">
+      <created>1626090220042</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1626090220042</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -619,7 +638,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="show only accepted shared users" />
     <MESSAGE value="correct" />
     <MESSAGE value="in archive all trashed tasks from own projects and shared" />
     <MESSAGE value="index tasks show only accepted" />
@@ -644,6 +662,7 @@
     <MESSAGE value="load more disable" />
     <MESSAGE value="mute not editable tasks/projects" />
     <MESSAGE value="correct min schedule edit task" />
-    <option name="LAST_COMMIT_MESSAGE" value="correct min schedule edit task" />
+    <MESSAGE value="correct show task" />
+    <option name="LAST_COMMIT_MESSAGE" value="correct show task" />
   </component>
 </project>
