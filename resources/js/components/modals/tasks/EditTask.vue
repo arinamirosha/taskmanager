@@ -87,7 +87,7 @@ export default {
             return this.project ? this.project.shared_users.filter(a => a.pivot.accepted) : [];
         },
         minSchedule: function () {
-            return this.task.schedule > this.today ? this.today : this.task.schedule;
+            return (!this.task.schedule) || (this.task.schedule > this.today) ? this.today : this.task.schedule;
         },
     },
     validations: {

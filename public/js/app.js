@@ -3300,7 +3300,7 @@ __webpack_require__.r(__webpack_exports__);
       }) : [];
     },
     minSchedule: function minSchedule() {
-      return this.task.schedule > this.today ? this.today : this.task.schedule;
+      return !this.task.schedule || this.task.schedule > this.today ? this.today : this.task.schedule;
     }
   },
   validations: {
