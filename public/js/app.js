@@ -4089,7 +4089,9 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     showTask: function showTask(task) {
+      console.log(task);
       this.currentTask = task;
+      this.$refs.showTaskModalButton.click();
     },
     taskArchived: function taskArchived(id) {
       this.tasksFinished = this.tasksFinished.filter(function (task) {
@@ -72025,12 +72027,8 @@ var render = function() {
       "a",
       {
         staticClass: "stretch-a cursor-pointer p-2",
-        attrs: { "data-toggle": "modal", "data-target": "#showTaskModal" },
         on: {
           click: function($event) {
-            if ($event.target !== $event.currentTarget) {
-              return null
-            }
             return _vm.$emit("showTask", _vm.task)
           }
         }

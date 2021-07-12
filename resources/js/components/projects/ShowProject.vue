@@ -258,7 +258,9 @@ export default {
             }
         },
         showTask(task) {
+            console.log(task);
             this.currentTask = task;
+            this.$refs.showTaskModalButton.click();
         },
         taskArchived(id) {
             this.tasksFinished = this.tasksFinished.filter(function (task) {

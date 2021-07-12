@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/tasks/EditTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/tasks/EditTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/tasks/ListItemTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tasks/ListItemTask.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,14 +251,7 @@
       <workItem from="1625816466026" duration="98000" />
       <workItem from="1625818832051" duration="12988000" />
       <workItem from="1626077362911" duration="619000" />
-      <workItem from="1626084280088" duration="3847000" />
-    </task>
-    <task id="LOCAL-00051" summary="unique ids">
-      <created>1624628685358</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1624628685358</updated>
+      <workItem from="1626084280088" duration="5208000" />
     </task>
     <task id="LOCAL-00052" summary="correct">
       <created>1624630238288</created>
@@ -594,7 +589,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626087491104</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="correct min schedule edit task">
+      <created>1626088886002</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1626088886002</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -617,7 +619,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="unshare project only owner and move not trashed tasks" />
     <MESSAGE value="show only accepted shared users" />
     <MESSAGE value="correct" />
     <MESSAGE value="in archive all trashed tasks from own projects and shared" />
@@ -642,6 +643,7 @@
     <MESSAGE value="disable buttons when loading" />
     <MESSAGE value="load more disable" />
     <MESSAGE value="mute not editable tasks/projects" />
-    <option name="LAST_COMMIT_MESSAGE" value="mute not editable tasks/projects" />
+    <MESSAGE value="correct min schedule edit task" />
+    <option name="LAST_COMMIT_MESSAGE" value="correct min schedule edit task" />
   </component>
 </project>
