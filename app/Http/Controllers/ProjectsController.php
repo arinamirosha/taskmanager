@@ -6,15 +6,11 @@ use App\Libraries\TaskManager\Facade\TaskManager;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
-use App\Notifications\ProjectArchived;
-use App\Notifications\ProjectDeleted;
-use App\Notifications\ProjectRestored;
+use App\Notifications\ProjectAction;
 use App\Notifications\ProjectShared;
 use App\Notifications\ProjectShareDecision;
-use App\Notifications\ProjectStored;
 use App\Notifications\ProjectUnshared;
 use App\Notifications\ProjectUpdated;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +21,7 @@ class ProjectsController extends Controller
     {
         $user = Auth::user();
         $project = $user->projects()->create($request->all());
-        $user->notify(new ProjectStored($project));
+        $user->notify(new ProjectAction($project, 'stored'));
 
         return $project;
     }
@@ -202,7 +198,7 @@ class ProjectsController extends Controller
 
         $users = $project->all_users();
         foreach ($users as $user) {
-            $user->notify(new ProjectArchived($project));
+            $user->notify(new ProjectAction($project, 'archived'));
         }
 
         return true;
@@ -217,7 +213,7 @@ class ProjectsController extends Controller
 
         $users = $project->all_users();
         foreach ($users as $user) {
-            $user->notify(new ProjectRestored($project));
+            $user->notify(new ProjectAction($project, 'restored'));
         }
 
         return true;
@@ -231,7 +227,7 @@ class ProjectsController extends Controller
         $project->forceDelete();
 
         foreach ($users as $user) {
-            $user->notify(new ProjectDeleted($project));
+            $user->notify(new ProjectAction($project, 'deleted'));
         }
 
         return true;

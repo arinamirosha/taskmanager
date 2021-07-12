@@ -9,22 +9,25 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 
-class ProjectArchived extends Notification
+class ProjectAction extends Notification
 {
     use Queueable;
 
     private $project;
     private $user;
+    private $action;
 
     /**
      * Create a new notification instance.
      *
      * @param Project $project
+     * @param string $action
      */
-    public function __construct(Project $project)
+    public function __construct(Project $project, string $action)
     {
         $this->project = $project;
-        $this->user  = Auth::user();
+        $this->user    = Auth::user();
+        $this->action  = $action;
     }
 
     /**
@@ -49,6 +52,7 @@ class ProjectArchived extends Notification
         return [
             'user'    => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
             'project' => $this->project->name,
+            'action'  => $this->action,
         ];
     }
 }

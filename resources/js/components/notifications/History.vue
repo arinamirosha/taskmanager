@@ -35,16 +35,10 @@ export default {
         getNotificationText(n) {
             let data = n.data;
             switch (n.type) {
-                case 'App\\Notifications\\ProjectStored':
-                    return data.user + ' created project "' + data.project + '"';
+                case 'App\\Notifications\\ProjectAction':
+                    return data.user + ' ' + data.action + ' project "' + data.project + '"';
                 case 'App\\Notifications\\ProjectUpdated':
                     return data.user + ' updated ' + data.field + ' project from "' + data.old + '" to "' + data.new + '"';
-                case 'App\\Notifications\\ProjectArchived':
-                    return data.user + ' archived project "' + data.project + '"';
-                case 'App\\Notifications\\ProjectRestored':
-                    return data.user + ' restored project "' + data.project + '"';
-                case 'App\\Notifications\\ProjectDeleted':
-                    return data.user + ' deleted project "' + data.project + '"';
                 case 'App\\Notifications\\ProjectShared':
                     return data.user + ' sent share request to ' + data.userShared + ' for project "' + data.project + '"';
                 case 'App\\Notifications\\ProjectUnshared':
