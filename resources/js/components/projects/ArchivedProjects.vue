@@ -36,7 +36,7 @@
                     </div>
                     <div class="m-0 pr-2 row justify-content-between pb-1" v-if="isDataLoaded && !isLastPage">
                         <span>Page {{page}} of {{lastPage}}</span>
-                        <button class="btn btn-outline-secondary btn-sm" @click="loadMore">Load More...</button>
+                        <button class="btn btn-outline-secondary btn-sm" @click="loadMore" ref="loadMore">Load More...</button>
                     </div>
                 </div>
             </div>
@@ -101,6 +101,7 @@ export default {
         },
         loadMore() {
             this.dataLoading = true;
+            this.$refs.loadMore.disabled = true;
             axios
                 .get(route('projects.index'), {
                     params: {
@@ -114,6 +115,7 @@ export default {
                     this.loadedMore(response.data.projects);
                     this.projects = this.projects.concat(response.data.projects.data);
                     this.dataLoading = false;
+                    this.$refs.loadMore.disabled = false;
                 })
                 .catch(error => {
                     console.log(error);

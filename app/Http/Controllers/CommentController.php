@@ -12,7 +12,7 @@ class CommentController extends Controller
     public function index(Task $task)
     {
         $this->authorize('view', $task->project);
-        $data['comments'] = $task->comments()->orderBy('created_at', 'desc')->with('user')->paginate(30);
+        $data['comments'] = $task->comments()->orderBy('created_at', 'desc')->with('user')->paginate(25);
         $data['currentUserId'] = Auth::id();
 
         return $data;

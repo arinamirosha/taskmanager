@@ -50,8 +50,8 @@
                 </div>
                 <div class="m-0 pr-2 row justify-content-between pb-1" v-if="!isLastPage">
                     <span>Page {{page}} of {{lastPage}}</span>
-                    <transition name="fade" appear><i v-if="dataLoading" class="fas fa-spinner fa-spin h3"></i></transition>
-                    <button class="btn btn-outline-secondary btn-sm" @click="loadMore">Load More...</button>
+                    <transition name="fade" appear><i v-if="dataLoading" class="fas fa-spinner fa-spin h3 m-0"></i></transition>
+                    <button class="btn btn-outline-secondary btn-sm" @click="loadMore" ref="loadMore">Load More...</button>
                 </div>
             </div>
         </div>
@@ -132,6 +132,7 @@ export default {
         },
         loadMore() {
             this.dataLoading = true;
+            this.$refs.loadMore.disabled = true;
             axios
                 .get(route('comments.index', this.taskId), {
                     params: {
@@ -142,6 +143,7 @@ export default {
                     this.loadedMore(response.data.comments);
                     this.comments = this.comments.concat(response.data.comments.data);
                     this.dataLoading = false;
+                    this.$refs.loadMore.disabled = false;
                 })
                 .catch(error => {
                     console.log(error);

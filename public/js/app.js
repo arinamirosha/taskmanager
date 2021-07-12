@@ -2369,6 +2369,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       this.dataLoading = true;
+      this.$refs.loadMore.disabled = true;
       axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('comments.index', this.taskId), {
         params: {
           'page': ++this.page
@@ -2378,6 +2379,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this3.comments = _this3.comments.concat(response.data.comments.data);
         _this3.dataLoading = false;
+        _this3.$refs.loadMore.disabled = false;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3707,6 +3709,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.dataLoading = true;
+      this.$refs.loadMore.disabled = true;
       axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('projects.index'), {
         params: {
           'type': this.c.ARCHIVE,
@@ -3719,6 +3722,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.projects = _this2.projects.concat(response.data.projects.data);
         _this2.dataLoading = false;
+        _this2.$refs.loadMore.disabled = false;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -4413,6 +4417,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.dataLoading = true;
+      this.$refs.loadMore.disabled = true;
       axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('tasks.index'), {
         params: {
           'type': this.type,
@@ -4425,6 +4430,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.tasks = _this2.tasks.concat(response.data.tasks.data);
         _this2.dataLoading = false;
+        _this2.$refs.loadMore.disabled = false;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -68717,7 +68723,7 @@ var render = function() {
                             [
                               _vm.dataLoading
                                 ? _c("i", {
-                                    staticClass: "fas fa-spinner fa-spin h3"
+                                    staticClass: "fas fa-spinner fa-spin h3 m-0"
                                   })
                                 : _vm._e()
                             ]
@@ -68726,6 +68732,7 @@ var render = function() {
                           _c(
                             "button",
                             {
+                              ref: "loadMore",
                               staticClass: "btn btn-outline-secondary btn-sm",
                               on: { click: _vm.loadMore }
                             },
@@ -70816,6 +70823,7 @@ var render = function() {
                     _c(
                       "button",
                       {
+                        ref: "loadMore",
                         staticClass: "btn btn-outline-secondary btn-sm",
                         on: { click: _vm.loadMore }
                       },
@@ -71846,6 +71854,7 @@ var render = function() {
                       _c(
                         "button",
                         {
+                          ref: "loadMore",
                           staticClass: "btn btn-outline-secondary btn-sm",
                           on: { click: _vm.loadMore }
                         },
