@@ -4,8 +4,8 @@
             <div class="col-12 font-weight-bold h3">History</div>
         </div>
         <div v-if="isDataLoaded" v-for="(notification, index) in notifications" class="row p-1" :class="{'bg-light': index % 2 === 0}">
-            <div class="col-8" style="white-space: pre-line">{{getNotificationText(notification)}}</div>
-            <div class="col-4">{{notification.created_at}}</div>
+            <div class="col-10" style="white-space: pre-line">{{getNotificationText(notification)}}</div>
+            <div class="col-2">{{formatDate(notification.created_at)}}</div>
         </div>
     </div>
 </template>
@@ -13,6 +13,7 @@
 <script>
 import route from "../../route";
 import constantsMixin from "../mixins/constants";
+import moment from "moment";
 
 export default {
     mixins: [
@@ -25,6 +26,9 @@ export default {
         }
     },
     methods: {
+        formatDate(date) {
+            return moment(new Date(date)).format('DD.MM.YYYY HH:mm');
+        },
         getHistory() {
             axios
                 .get(route('history.index'))
@@ -36,6 +40,21 @@ export default {
                     console.log(error);
                 });
         },
+        // getDifference(a, b) {
+        //     let i = 0,
+        //         j = 0,
+        //         result = "";
+        //
+        //     while (j < b.length)
+        //     {
+        //         if (a[i] !== b[j] || i === a.length)
+        //             result += b[j];
+        //         else
+        //             i++;
+        //         j++;
+        //     }
+        //     return result;
+        // },
         getNotificationText(n) {
             let data = n.data;
             switch (n.type) {
@@ -59,8 +78,18 @@ export default {
                         result += "\n" + 'name - "' + data.old.name + '" -> "' + data.new.name + '"';
                     }
                     if (data.old.details !== data.new.details) {
-                        // todo show only difference
-                        result += "\n" + 'details - "' + data.old.details + '" -> "' + data.new.details + '"';
+                        let oldD = data.old.details,
+                            newD = data.new.details;
+                        result += "\n" + 'details - ';
+                        if (!oldD || !newD) {
+                            result += '"' + oldD + '" -> "' + newD + '"';
+                        } else {
+                            let i = 0;
+                            while (oldD[i] === newD[i]) {
+                                i++;
+                            }
+                            result += '"' + oldD.slice(i, i + 25) + '" -> "' + newD.slice(i, i + 25) + '"';
+                        }
                     }
                     if (data.old.schedule !== data.new.schedule) {
                         result += "\n" + 'schedule - "' + data.old.schedule + '" -> "' + data.new.schedule + '"';
@@ -87,7 +116,6 @@ export default {
                     }
 
                     // todo small length text
-                    // project_id
 
                     return result;
             }
