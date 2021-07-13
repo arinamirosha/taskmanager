@@ -251,14 +251,7 @@
       <workItem from="1625818832051" duration="12988000" />
       <workItem from="1626077362911" duration="619000" />
       <workItem from="1626084280088" duration="19598000" />
-      <workItem from="1626153341349" duration="15834000" />
-    </task>
-    <task id="LOCAL-00056" summary="load more comments">
-      <created>1624872447332</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1624872447332</updated>
+      <workItem from="1626153341349" duration="17413000" />
     </task>
     <task id="LOCAL-00057" summary="comments mobile">
       <created>1624873207663</created>
@@ -596,7 +589,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626175291395</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="cut details and view prettier">
+      <created>1626177807611</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1626177807611</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -619,7 +619,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="archive own tasks" />
     <MESSAGE value="see and store comment" />
     <MESSAGE value="delete own comments" />
     <MESSAGE value="space no new line, mute not own tasks" />
@@ -644,6 +643,7 @@
     <MESSAGE value="project notifications" />
     <MESSAGE value="combine action project notifications" />
     <MESSAGE value="task notifications" />
-    <option name="LAST_COMMIT_MESSAGE" value="task notifications" />
+    <MESSAGE value="cut details and view prettier" />
+    <option name="LAST_COMMIT_MESSAGE" value="cut details and view prettier" />
   </component>
 </project>

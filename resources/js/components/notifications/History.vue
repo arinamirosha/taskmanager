@@ -1,11 +1,13 @@
 <template>
-    <div class="container-xl mb-3">
+    <div class="container-xl">
         <div class="row">
             <div class="col-12 font-weight-bold h3">History</div>
         </div>
-        <div v-if="isDataLoaded" v-for="(notification, index) in notifications" class="row p-1" :class="{'bg-light': index % 2 === 0}">
-            <div class="col-10" style="white-space: pre-line">{{getNotificationText(notification)}}</div>
-            <div class="col-2">{{formatDate(notification.created_at)}}</div>
+        <div :class="largeStyle ? 'full' : 'mb-3'">
+            <div v-if="isDataLoaded" v-for="(notification, index) in notifications" class="row p-1" :class="{'bg-light': index % 2 === 0}">
+                <div class="col-10" style="white-space: pre-line">{{getNotificationText(notification)}}</div>
+                <div class="col-2">{{formatDate(notification.created_at)}}</div>
+            </div>
         </div>
     </div>
 </template>
@@ -13,11 +15,13 @@
 <script>
 import route from "../../route";
 import constantsMixin from "../mixins/constants";
+import customWidthMixin from "../mixins/custom-width.js";
 import moment from "moment";
 
 export default {
     mixins: [
         constantsMixin,
+        customWidthMixin,
     ],
     data() {
         return {
@@ -40,21 +44,6 @@ export default {
                     console.log(error);
                 });
         },
-        // getDifference(a, b) {
-        //     let i = 0,
-        //         j = 0,
-        //         result = "";
-        //
-        //     while (j < b.length)
-        //     {
-        //         if (a[i] !== b[j] || i === a.length)
-        //             result += b[j];
-        //         else
-        //             i++;
-        //         j++;
-        //     }
-        //     return result;
-        // },
         getNotificationText(n) {
             let data = n.data;
             switch (n.type) {
@@ -88,7 +77,7 @@ export default {
                             while (oldD[i] === newD[i]) {
                                 i++;
                             }
-                            result += '"' + oldD.slice(i, i + 25) + '" -> "' + newD.slice(i, i + 25) + '"';
+                            result += 'near "' + oldD.slice(i, i + 25) + '" -> "' + newD.slice(i, i + 25) + '"';
                         }
                     }
                     if (data.old.schedule !== data.new.schedule) {
@@ -128,5 +117,10 @@ export default {
 </script>
 
 <style scoped>
-
+.full {
+    height: calc(100vh - 160px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-right: -12px;
+}
 </style>
