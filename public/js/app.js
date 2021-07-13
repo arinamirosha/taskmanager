@@ -3612,6 +3612,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_custom_width_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/custom-width.js */ "./resources/js/components/mixins/custom-width.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _mixins_pagination__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../mixins/pagination */ "./resources/js/components/mixins/pagination.js");
 //
 //
 //
@@ -3626,16 +3627,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mixins: [_mixins_constants__WEBPACK_IMPORTED_MODULE_1__.default, _mixins_custom_width_js__WEBPACK_IMPORTED_MODULE_2__.default],
+  mixins: [_mixins_constants__WEBPACK_IMPORTED_MODULE_1__.default, _mixins_custom_width_js__WEBPACK_IMPORTED_MODULE_2__.default, _mixins_pagination__WEBPACK_IMPORTED_MODULE_4__.default],
   data: function data() {
     return {
       notifications: [],
-      isDataLoaded: false
+      isDataLoaded: false,
+      dataLoading: false
     };
   },
   methods: {
@@ -3646,8 +3656,30 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('history.index')).then(function (response) {
-        _this.notifications = response.data;
+        _this.firstLoad(response.data);
+
+        _this.notifications = response.data.data;
         _this.isDataLoaded = true;
+        _this.dataLoading = false;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    loadMore: function loadMore() {
+      var _this2 = this;
+
+      this.dataLoading = true;
+      this.$refs.loadMore.disabled = true;
+      axios.get((0,_route__WEBPACK_IMPORTED_MODULE_0__.default)('history.index'), {
+        params: {
+          'page': ++this.page
+        }
+      }).then(function (response) {
+        _this2.loadedMore(response.data);
+
+        _this2.notifications = _this2.notifications.concat(response.data.data);
+        _this2.dataLoading = false;
+        _this2.$refs.loadMore.disabled = false;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -4551,9 +4583,9 @@ __webpack_require__.r(__webpack_exports__);
         _this.firstLoad(response.data.tasks);
 
         _this.tasks = response.data.tasks.data;
+        _this.currentUserId = response.data.currentUserId;
         _this.isDataLoaded = true;
         _this.dataLoading = false;
-        _this.currentUserId = response.data.currentUserId;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -70956,52 +70988,77 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-xl" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-12 font-weight-bold h3" },
+        [
+          _vm._v("\n            History\n            "),
+          _c("transition", { attrs: { name: "fade", appear: "" } }, [
+            !_vm.isDataLoaded || _vm.dataLoading
+              ? _c("i", { staticClass: "fas fa-spinner fa-spin h3" })
+              : _vm._e()
+          ])
+        ],
+        1
+      )
+    ]),
     _vm._v(" "),
     _c(
       "div",
-      { class: _vm.largeStyle ? "full" : "mb-3" },
-      _vm._l(_vm.notifications, function(notification, index) {
-        return _vm.isDataLoaded
-          ? _c(
-              "div",
-              {
-                staticClass: "row p-1",
-                class: { "bg-light": index % 2 === 0 }
-              },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass: "col-10",
-                    staticStyle: { "white-space": "pre-line" }
-                  },
-                  [_vm._v(_vm._s(_vm.getNotificationText(notification)))]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-2" }, [
-                  _vm._v(_vm._s(_vm.formatDate(notification.created_at)))
-                ])
-              ]
-            )
+      { class: _vm.largeStyle ? "full pr-2" : "mb-3" },
+      [
+        _vm._l(_vm.notifications, function(notification, index) {
+          return _vm.isDataLoaded
+            ? _c(
+                "div",
+                {
+                  staticClass: "row p-1",
+                  class: { "bg-light": index % 2 === 0 }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "col-10",
+                      staticStyle: { "white-space": "pre-line" }
+                    },
+                    [_vm._v(_vm._s(_vm.getNotificationText(notification)))]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-2" }, [
+                    _vm._v(_vm._s(_vm.formatDate(notification.created_at)))
+                  ])
+                ]
+              )
+            : _vm._e()
+        }),
+        _vm._v(" "),
+        _vm.isDataLoaded && !_vm.isLastPage
+          ? _c("div", { staticClass: "m-0 row justify-content-between pt-2" }, [
+              _c("span", [
+                _vm._v(
+                  "Page " + _vm._s(_vm.page) + " of " + _vm._s(_vm.lastPage)
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  ref: "loadMore",
+                  staticClass: "btn btn-outline-secondary btn-sm",
+                  on: { click: _vm.loadMore }
+                },
+                [_vm._v("Load More...")]
+              )
+            ])
           : _vm._e()
-      }),
-      0
+      ],
+      2
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12 font-weight-bold h3" }, [
-        _vm._v("History")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

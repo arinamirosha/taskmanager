@@ -196,9 +196,9 @@ export default {
                 .then(response => {
                     this.firstLoad(response.data.tasks);
                     this.tasks = response.data.tasks.data;
+                    this.currentUserId = response.data.currentUserId;
                     this.isDataLoaded = true;
                     this.dataLoading = false;
-                    this.currentUserId = response.data.currentUserId;
                 })
                 .catch(error => {
                     console.log(error);

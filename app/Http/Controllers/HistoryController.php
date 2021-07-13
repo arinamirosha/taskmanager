@@ -8,6 +8,6 @@ use Illuminate\Support\Facades\Auth;
 class HistoryController extends Controller
 {
     public function index() {
-        return Auth::user()->notifications;
+        return Auth::user()->notifications()->paginate(50);
     }
 }

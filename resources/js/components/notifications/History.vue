@@ -1,12 +1,19 @@
 <template>
     <div class="container-xl">
         <div class="row">
-            <div class="col-12 font-weight-bold h3">History</div>
+            <div class="col-12 font-weight-bold h3">
+                History
+                <transition name="fade" appear><i v-if="!isDataLoaded || dataLoading" class="fas fa-spinner fa-spin h3"></i></transition>
+            </div>
         </div>
-        <div :class="largeStyle ? 'full' : 'mb-3'">
+        <div :class="largeStyle ? 'full pr-2' : 'mb-3'">
             <div v-if="isDataLoaded" v-for="(notification, index) in notifications" class="row p-1" :class="{'bg-light': index % 2 === 0}">
                 <div class="col-10" style="white-space: pre-line">{{getNotificationText(notification)}}</div>
                 <div class="col-2">{{formatDate(notification.created_at)}}</div>
+            </div>
+            <div class="m-0 row justify-content-between pt-2" v-if="isDataLoaded && !isLastPage">
+                <span>Page {{page}} of {{lastPage}}</span>
+                <button class="btn btn-outline-secondary btn-sm" @click="loadMore" ref="loadMore">Load More...</button>
             </div>
         </div>
     </div>
@@ -17,16 +24,19 @@ import route from "../../route";
 import constantsMixin from "../mixins/constants";
 import customWidthMixin from "../mixins/custom-width.js";
 import moment from "moment";
+import paginationMixin from "../mixins/pagination";
 
 export default {
     mixins: [
         constantsMixin,
         customWidthMixin,
+        paginationMixin,
     ],
     data() {
         return {
             notifications: [],
             isDataLoaded: false,
+            dataLoading: false,
         }
     },
     methods: {
@@ -37,8 +47,29 @@ export default {
             axios
                 .get(route('history.index'))
                 .then(response => {
-                    this.notifications = response.data;
+                    this.firstLoad(response.data);
+                    this.notifications = response.data.data;
                     this.isDataLoaded = true;
+                    this.dataLoading = false;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        loadMore() {
+            this.dataLoading = true;
+            this.$refs.loadMore.disabled = true;
+            axios
+                .get(route('history.index'), {
+                    params: {
+                        'page': ++this.page,
+                    }
+                })
+                .then(response => {
+                    this.loadedMore(response.data);
+                    this.notifications = this.notifications.concat(response.data.data);
+                    this.dataLoading = false;
+                    this.$refs.loadMore.disabled = false;
                 })
                 .catch(error => {
                     console.log(error);
