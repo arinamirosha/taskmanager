@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Notifications/CommentStored.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Notifications/TaskAction.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Notifications/TaskUpdated.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/ProjectArchived.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/ProjectAction.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/ProjectDeleted.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/ProjectRestored.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/ProjectStored.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CommentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CommentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/notifications/History.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/notifications/History.vue" afterDir="false" />
     </list>
@@ -255,14 +255,8 @@
       <workItem from="1625816466026" duration="98000" />
       <workItem from="1625818832051" duration="12988000" />
       <workItem from="1626077362911" duration="619000" />
-      <workItem from="1626084280088" duration="19487000" />
-    </task>
-    <task id="LOCAL-00054" summary="load count comments">
-      <created>1624863186634</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1624863186635</updated>
+      <workItem from="1626084280088" duration="19598000" />
+      <workItem from="1626153341349" duration="13228000" />
     </task>
     <task id="LOCAL-00055" summary="read comment more/less">
       <created>1624868390892</created>
@@ -600,7 +594,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626106369580</updated>
     </task>
-    <option name="localTasksCounter" value="103" />
+    <task id="LOCAL-00103" summary="combine action project notifications">
+      <created>1626106848084</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1626106848084</updated>
+    </task>
+    <option name="localTasksCounter" value="104" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -623,7 +624,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="in archive all trashed tasks from own projects and shared" />
     <MESSAGE value="index tasks show only accepted" />
     <MESSAGE value="archive own tasks" />
     <MESSAGE value="see and store comment" />
@@ -648,6 +648,7 @@
     <MESSAGE value="correct min schedule edit task" />
     <MESSAGE value="correct show task" />
     <MESSAGE value="project notifications" />
-    <option name="LAST_COMMIT_MESSAGE" value="project notifications" />
+    <MESSAGE value="combine action project notifications" />
+    <option name="LAST_COMMIT_MESSAGE" value="combine action project notifications" />
   </component>
 </project>

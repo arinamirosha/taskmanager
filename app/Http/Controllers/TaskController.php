@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Libraries\TaskManager\Facade\TaskManager;
 use App\Models\Project;
 use App\Models\Task;
+use App\Notifications\TaskAction;
+use App\Notifications\TaskUpdated;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +30,14 @@ class TaskController extends Controller
 
         $data['owner_id'] = $id;
 
-        return $project->tasks()->create($data);
+        $task = $project->tasks()->create($data);
+
+        $users = $task->project->all_users();
+        foreach ($users as $user) {
+            $user->notify(new TaskAction($task, 'stored'));
+        }
+
+        return $task;
     }
 
     public function update(Task $task, Request $request)
@@ -57,7 +66,14 @@ class TaskController extends Controller
                           ->firstOrFail()->id;
         }
 
+        $users = $task->project->all_users();
+        $old = $task->load(['user', 'project'])->toArray();
         $task->update($data);
+        $new = $task->load(['user', 'project'])->toArray();
+
+        foreach ($users as $user) {
+            $user->notify(new TaskUpdated($old, $new));
+        }
 
         return $task->load(['project', 'project.shared_users', 'project.user', 'owner', 'user'])->loadCount('comments');
     }
@@ -67,6 +83,11 @@ class TaskController extends Controller
         $task = Task::withTrashed()->findOrFail($id);
         $this->authorize('restore', $task);
         $task->restore();
+
+        $users = $task->project->all_users();
+        foreach ($users as $user) {
+            $user->notify(new TaskAction($task, 'restored'));
+        }
 
         return true;
     }
@@ -79,6 +100,11 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         $task->delete();
+
+        $users = $task->project->all_users();
+        foreach ($users as $user) {
+            $user->notify(new TaskAction($task, 'archived'));
+        }
 
         return true;
     }
@@ -112,9 +138,17 @@ class TaskController extends Controller
         }
 
         $tasks->where('status', Task::STATUS_FINISHED);
+        $tasksWillDel = $tasks->get();
 
         $count = $tasks->count();
         $tasks->delete();
+
+        foreach ($tasksWillDel as $task) {
+            $users = $task->project->all_users();
+            foreach ($users as $user) {
+                $user->notify(new TaskAction($task, 'archived'));
+            }
+        }
 
         return $count;
     }
@@ -123,7 +157,12 @@ class TaskController extends Controller
     {
         $task = Task::withTrashed()->findOrFail($id);
         $this->authorize('forceDelete', $task);
+        $users = $task->project->all_users();
         $task->forceDelete();
+
+        foreach ($users as $user) {
+            $user->notify(new TaskAction($task, 'deleted'));
+        }
 
         return true;
     }

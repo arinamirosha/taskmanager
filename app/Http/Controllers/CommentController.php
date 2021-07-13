@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Task;
+use App\Notifications\CommentStored;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,6 +26,11 @@ class CommentController extends Controller
             'user_id' => Auth::id(),
             'text'    => $request->get('text')
         ]);
+
+        $users = $comment->task->project->all_users();
+        foreach ($users as $user) {
+            $user->notify(new CommentStored($comment));
+        }
 
         return $comment->load('user');
     }

@@ -3608,6 +3608,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../route */ "./resources/js/route.js");
+/* harmony import */ var _mixins_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../mixins/constants */ "./resources/js/components/mixins/constants.js");
 //
 //
 //
@@ -3621,7 +3622,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mixins: [_mixins_constants__WEBPACK_IMPORTED_MODULE_1__.default],
   data: function data() {
     return {
       notifications: [],
@@ -3657,6 +3660,48 @@ __webpack_require__.r(__webpack_exports__);
 
         case 'App\\Notifications\\ProjectShareDecision':
           return data.user + ' ' + data.decision + ' shared project "' + data.project + '"';
+
+        case 'App\\Notifications\\CommentStored':
+          return data.user + ' left a comment "' + data.comment + '" in project "' + data.project + '"';
+
+        case 'App\\Notifications\\TaskAction':
+          return data.user + ' ' + data.action + ' task "' + data.task + '" in project "' + data.project + '"';
+
+        case 'App\\Notifications\\TaskUpdated':
+          var result = data.user + ' updated task "' + data.old.name + '": ';
+
+          if (data.old.name !== data["new"].name) {
+            result += "\n" + 'name - "' + data.old.name + '" -> "' + data["new"].name + '"';
+          }
+
+          if (data.old.details !== data["new"].details) {
+            // todo show only difference
+            result += "\n" + 'details - "' + data.old.details + '" -> "' + data["new"].details + '"';
+          }
+
+          if (data.old.schedule !== data["new"].schedule) {
+            result += "\n" + 'schedule - "' + data.old.schedule + '" -> "' + data["new"].schedule + '"';
+          }
+
+          if (data.old.importance !== data["new"].importance) {
+            result += "\n" + 'importance - "' + this.importanceText(data.old.importance) + '" -> "' + this.importanceText(data["new"].importance) + '"';
+          }
+
+          if (data.old.status !== data["new"].status) {
+            result += "\n" + 'status - "' + this.statusText(data.old.status) + '" -> "' + this.statusText(data["new"].status) + '"';
+          }
+
+          if (data.old.user_id !== data["new"].user_id) {
+            result += "\n" + 'performer - "' + data.old.user.name + (data.old.user.surname ? ' ' + data.old.user.surname : '') + '" -> "' + data["new"].user.name + (data["new"].user.surname ? ' ' + data["new"].user.surname : '') + '"';
+          }
+
+          if (data.old.project_id !== data["new"].project_id) {
+            result += "\n" + 'project - "' + data.old.project.name + '" -> "' + data["new"].project.name + '"';
+          } // todo small length text
+          // project_id
+
+
+          return result;
       }
     }
   },
@@ -70821,21 +70866,33 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container-xl" },
+    { staticClass: "container-xl mb-3" },
     [
       _vm._m(0),
       _vm._v(" "),
-      _vm._l(_vm.notifications, function(notification) {
+      _vm._l(_vm.notifications, function(notification, index) {
         return _vm.isDataLoaded
-          ? _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-8" }, [
-                _vm._v(_vm._s(_vm.getNotificationText(notification)))
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-4" }, [
-                _vm._v(_vm._s(notification.created_at))
-              ])
-            ])
+          ? _c(
+              "div",
+              {
+                staticClass: "row p-1",
+                class: { "bg-light": index % 2 === 0 }
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-8",
+                    staticStyle: { "white-space": "pre-line" }
+                  },
+                  [_vm._v(_vm._s(_vm.getNotificationText(notification)))]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-4" }, [
+                  _vm._v(_vm._s(notification.created_at))
+                ])
+              ]
+            )
           : _vm._e()
       })
     ],
