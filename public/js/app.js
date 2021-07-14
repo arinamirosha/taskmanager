@@ -3707,7 +3707,7 @@ __webpack_require__.r(__webpack_exports__);
           return data.user + ' ' + data.decision + ' shared project "' + data.project + '"';
 
         case 'App\\Notifications\\CommentStored':
-          return data.user + ' left a comment "' + data.comment + '" in project "' + data.project + '"';
+          return data.user + ' left a comment "' + data.comment.slice(0, 50) + '" in task "' + data.task + '"';
 
         case 'App\\Notifications\\TaskAction':
           return data.user + ' ' + data.action + ' task "' + data.task + '" in project "' + data.project + '"';

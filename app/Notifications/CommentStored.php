@@ -50,7 +50,7 @@ class CommentStored extends Notification
         return [
             'user'    => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
             'comment' => $this->comment->text,
-            'project' => $this->comment->task->project->name,
+            'task'    => $this->comment->task->name,
         ];
     }
 }
