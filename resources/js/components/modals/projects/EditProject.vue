@@ -90,5 +90,8 @@ export default {
             this.$v.$reset();
         },
     },
+    mounted() {
+        this.reset();
+    }
 }
 </script>

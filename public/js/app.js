@@ -2800,6 +2800,9 @@ __webpack_require__.r(__webpack_exports__);
       this.color = this.project.color;
       this.$v.$reset();
     }
+  },
+  mounted: function mounted() {
+    this.reset();
   }
 });
 
