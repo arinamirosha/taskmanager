@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class TaskManager
 {
+    /**
+     * Get today tasks and overdue
+     *
+     * @return mixed
+     */
     public function getToday()
     {
         return $this->getTasks()
@@ -17,6 +22,11 @@ class TaskManager
                     ->orderBy('importance', 'desc');
     }
 
+    /**
+     * Get upcoming tasks and overdue
+     *
+     * @return mixed
+     */
     public function getUpcoming()
     {
         return $this->getTasks()
@@ -25,12 +35,22 @@ class TaskManager
                     ->orderBy('importance', 'desc');
     }
 
+    /**
+     * Get tasks without schedule
+     *
+     * @return mixed
+     */
     public function getNotScheduled() {
         return $this->getTasks()
                     ->whereNull('schedule')
                     ->orderBy('importance', 'desc');
     }
 
+    /**
+     * Get current user tasks including with shared projects
+     *
+     * @return mixed
+     */
     private function getTasks()
     {
         $user = Auth::user();
@@ -41,6 +61,11 @@ class TaskManager
         return $user->tasks()->whereIn('project_id', array_merge($ids1->toArray(), $ids2->toArray()));
     }
 
+    /**
+     * Get archived tasks
+     *
+     * @return mixed
+     */
     public function getArchived()
     {
         $user = Auth::user();
@@ -53,6 +78,11 @@ class TaskManager
                    ->orderBy('deleted_at', 'desc');
     }
 
+    /**
+     * Get counts of today/upcoming/notScheduled tasks
+     *
+     * @return array
+     */
     public function getCountsByStatuses()
     {
         $selectRow = "count(*) as total, "

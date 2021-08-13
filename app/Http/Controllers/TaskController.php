@@ -7,12 +7,19 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Notifications\TaskAction;
 use App\Notifications\TaskUpdated;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+    /**
+     * Store task
+     *
+     * @param Request $request
+     *
+     * @return mixed
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function store(Request $request)
     {
         $project = Project::findOrFail($request->get('project_id', 0));
@@ -40,6 +47,14 @@ class TaskController extends Controller
         return $task;
     }
 
+    /**
+     * Update task
+     *
+     * @param Task $task
+     * @param Request $request
+     *
+     * @return Task
+     */
     public function update(Task $task, Request $request)
     {
         $data      = $request->all();
@@ -78,6 +93,14 @@ class TaskController extends Controller
         return $task->load(['project', 'project.shared_users', 'project.user', 'owner', 'user'])->loadCount('comments');
     }
 
+    /**
+     * Restore task
+     *
+     * @param $id
+     *
+     * @return bool
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function restore($id)
     {
         $task = Task::withTrashed()->findOrFail($id);
@@ -92,11 +115,14 @@ class TaskController extends Controller
         return true;
     }
 
-//    public function show(Task $task)
-//    {
-//        return $task;
-//    }
-
+    /**
+     * Archive task
+     *
+     * @param Task $task
+     *
+     * @return bool
+     * @throws \Exception
+     */
     public function destroy(Task $task)
     {
         $task->delete();
@@ -109,6 +135,14 @@ class TaskController extends Controller
         return true;
     }
 
+    /**
+     * Archive all tasks that finished
+     *
+     * @param Request $request
+     *
+     * @return int
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function archive(Request $request)
     {
         $type      = $request->get('type', false);
@@ -153,6 +187,14 @@ class TaskController extends Controller
         return $count;
     }
 
+    /**
+     * Delete task forever
+     *
+     * @param $id
+     *
+     * @return bool
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function destroyForce($id)
     {
         $task = Task::withTrashed()->findOrFail($id);
@@ -167,6 +209,13 @@ class TaskController extends Controller
         return true;
     }
 
+    /**
+     * Get tasks by type
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
     public function index(Request $request)
     {
         $type       = $request->get('type', false);

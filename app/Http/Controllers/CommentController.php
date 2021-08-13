@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
+    /**
+     * Get comments of task
+     *
+     * @param Task $task
+     *
+     * @return array
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function index(Task $task)
     {
         $this->authorize('view', $task->project);
@@ -19,6 +27,15 @@ class CommentController extends Controller
         return $data;
     }
 
+    /**
+     * Store comment to task
+     *
+     * @param Task $task
+     * @param Request $request
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function store(Task $task, Request $request)
     {
         $this->authorize('view', $task->project);
@@ -35,6 +52,14 @@ class CommentController extends Controller
         return $comment->load('user');
     }
 
+    /**
+     * Delete comment
+     *
+     * @param Comment $comment
+     *
+     * @return bool
+     * @throws \Exception
+     */
     public function destroy(Comment $comment)
     {
         $comment->delete();
@@ -42,6 +67,14 @@ class CommentController extends Controller
         return true;
     }
 
+    /**
+     * Update comment
+     *
+     * @param Comment $comment
+     * @param Request $request
+     *
+     * @return Comment
+     */
     public function update(Comment $comment, Request $request)
     {
         $comment->update($request->all());

@@ -17,6 +17,13 @@ use Illuminate\Support\Facades\DB;
 
 class ProjectsController extends Controller
 {
+    /**
+     * Store project
+     *
+     * @param Request $request
+     *
+     * @return mixed
+     */
     public function store(Request $request)
     {
         $user = Auth::user();
@@ -26,6 +33,13 @@ class ProjectsController extends Controller
         return $project;
     }
 
+    /**
+     * Get user projects
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
     public function index(Request $request)
     {
         $type      = $request->get('type', false);
@@ -83,6 +97,14 @@ class ProjectsController extends Controller
         return $data;
     }
 
+    /**
+     * Show project
+     *
+     * @param $id
+     *
+     * @return array
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function show($id)
     {
         $project = Project::withTrashed()->findOrFail($id);
@@ -111,6 +133,14 @@ class ProjectsController extends Controller
         return $data;
     }
 
+    /**
+     * Update project
+     *
+     * @param Project $project
+     * @param Request $request
+     *
+     * @return Project
+     */
     public function update(Project $project, Request $request)
     {
         $oldName = $project->name;
@@ -127,6 +157,14 @@ class ProjectsController extends Controller
         return $project;
     }
 
+    /**
+     * Mark project as favorite
+     *
+     * @param Project $project
+     * @param Request $request
+     *
+     * @return Project
+     */
     public function favorite(Project $project, Request $request)
     {
         if ($project->user_id === Auth::id()) {
@@ -138,6 +176,14 @@ class ProjectsController extends Controller
         return $project;
     }
 
+    /**
+     * Share project: send application to user
+     *
+     * @param Project $project
+     * @param Request $request
+     *
+     * @return Project|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function share(Project $project, Request $request)
     {
         $user   = User::where('email', $request->get('email'))->firstOrFail();
@@ -159,6 +205,14 @@ class ProjectsController extends Controller
         return $project;
     }
 
+    /**
+     * Unshare project with user
+     *
+     * @param Project $project
+     * @param Request $request
+     *
+     * @return Project
+     */
     public function unshare(Project $project, Request $request)
     {
         $userUnshared = User::where('email', $request->get('email'))->firstOrFail();
@@ -173,6 +227,14 @@ class ProjectsController extends Controller
         return $project;
     }
 
+    /**
+     * User answer to shared project: accepted or not
+     *
+     * @param Project $project
+     * @param Request $request
+     *
+     * @return Project|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function accepted(Project $project, Request $request)
     {
         $shared_users = $project->shared_users()->wherePivot('user_id', Auth::id())->whereNull('accepted')->first();
@@ -192,6 +254,14 @@ class ProjectsController extends Controller
         return $project;
     }
 
+    /**
+     * Archive project
+     *
+     * @param Project $project
+     *
+     * @return bool
+     * @throws \Exception
+     */
     public function archive(Project $project)
     {
         $project->delete();
@@ -204,6 +274,14 @@ class ProjectsController extends Controller
         return true;
     }
 
+    /**
+     * Restore project
+     *
+     * @param $id
+     *
+     * @return bool
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function restore($id)
     {
         $project = Project::withTrashed()->findOrFail($id);
@@ -219,6 +297,14 @@ class ProjectsController extends Controller
         return true;
     }
 
+    /**
+     * Delete project forever
+     *
+     * @param $id
+     *
+     * @return bool
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function destroyForce($id)
     {
         $project = Project::withTrashed()->findOrFail($id);
