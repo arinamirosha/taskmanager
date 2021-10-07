@@ -14,7 +14,8 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         $user = Auth::user();
         $user->update($request->all());
 
@@ -26,7 +27,8 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
-    public function show() {
+    public function show()
+    {
         return Auth::user();
     }
 
@@ -35,7 +37,8 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function profile() {
+    public function profile()
+    {
         return view('users.profile', ['user' => Auth::user()]);
     }
 }

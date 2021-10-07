@@ -12,7 +12,8 @@ class HistoryController extends Controller
      *
      * @return mixed
      */
-    public function index() {
+    public function index()
+    {
         return Auth::user()->notifications()->paginate(50);
     }
 }

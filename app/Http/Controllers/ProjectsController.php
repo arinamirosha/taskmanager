@@ -26,8 +26,9 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user();
+        $user    = Auth::user();
         $project = $user->projects()->create($request->all());
+
         $user->notify(new ProjectAction($project, 'stored'));
 
         return $project;
@@ -56,7 +57,7 @@ class ProjectsController extends Controller
             }
 
             $projects->withCount([
-                'tasks'=> function ($query) {
+                'tasks' => function ($query) {
                     $query->whereIn('status', [Task::STATUS_NEW, Task::STATUS_PROGRESS])->withTrashed();
                 },
             ]);
@@ -114,7 +115,7 @@ class ProjectsController extends Controller
 
         if ($project->trashed()) {
             $project->load([
-                'tasks'=> function ($query) {
+                'tasks' => function ($query) {
                     $query->whereIn('status', [Task::STATUS_NEW, Task::STATUS_PROGRESS])->withTrashed()->with('user');
                 },
             ]);
@@ -123,11 +124,12 @@ class ProjectsController extends Controller
         }
 
         $project->shared = $project->user_id != Auth::id();
+
         if ($project->shared) {
             $project->favorite = $project->shared_users()->wherePivot('user_id', Auth::id())->pluck('favorite')[0];
         }
 
-        $data['project'] = $project;
+        $data['project']       = $project;
         $data['currentUserId'] = Auth::id();
 
         return $data;
@@ -216,7 +218,8 @@ class ProjectsController extends Controller
     public function unshare(Project $project, Request $request)
     {
         $userUnshared = User::where('email', $request->get('email'))->firstOrFail();
-        $users = $project->all_users();
+        $users        = $project->all_users();
+
         $project->shared_users()->wherePivot('user_id', $userUnshared->id)->detach();
         $project->tasks()->where('user_id', $userUnshared->id)->update(['user_id' => Auth::id()]);
 
@@ -239,7 +242,7 @@ class ProjectsController extends Controller
     {
         $shared_users = $project->shared_users()->wherePivot('user_id', Auth::id())->whereNull('accepted')->first();
 
-        if (!$shared_users) {
+        if ( ! $shared_users) {
             return response('No new shared projects', 400);
         }
 
@@ -247,6 +250,7 @@ class ProjectsController extends Controller
         $shared_users->pivot->update(['accepted' => $accepted]);
 
         $users = $project->all_users();
+
         foreach ($users as $user) {
             $user->notify(new ProjectShareDecision($project, $accepted));
         }
@@ -267,6 +271,7 @@ class ProjectsController extends Controller
         $project->delete();
 
         $users = $project->all_users();
+
         foreach ($users as $user) {
             $user->notify(new ProjectAction($project, 'archived'));
         }
@@ -286,10 +291,12 @@ class ProjectsController extends Controller
     {
         $project = Project::withTrashed()->findOrFail($id);
         $this->authorize('restore', $project);
+
         $project->tasks()->withTrashed()->whereIn('status', [Task::STATUS_NEW, Task::STATUS_PROGRESS])->restore();
         $project->restore();
 
         $users = $project->all_users();
+
         foreach ($users as $user) {
             $user->notify(new ProjectAction($project, 'restored'));
         }
@@ -309,7 +316,9 @@ class ProjectsController extends Controller
     {
         $project = Project::withTrashed()->findOrFail($id);
         $this->authorize('forceDelete', $project);
+
         $users = $project->all_users();
+
         $project->forceDelete();
 
         foreach ($users as $user) {

@@ -28,7 +28,7 @@ class TaskController extends Controller
         $data = $request->all();
         $id   = Auth::id();
 
-        $data['user_id']  = in_array($data['user_id'], [$id, $project->user_id])
+        $data['user_id'] = in_array($data['user_id'], [$id, $project->user_id])
             ? $data['user_id']
             : $project->shared_users()
                       ->wherePivot('user_id', $data['user_id'])
@@ -37,9 +37,9 @@ class TaskController extends Controller
 
         $data['owner_id'] = $id;
 
-        $task = $project->tasks()->create($data);
-
+        $task  = $project->tasks()->create($data);
         $users = $task->project->all_users();
+
         foreach ($users as $user) {
             $user->notify(new TaskAction($task, 'stored'));
         }
@@ -57,8 +57,8 @@ class TaskController extends Controller
      */
     public function update(Task $task, Request $request)
     {
-        $data      = $request->all();
-        $project   = $task->project;
+        $data    = $request->all();
+        $project = $task->project;
 
         if (isset($data['project_id'])) {
             if (Auth::id() == $task->owner_id) {
@@ -82,6 +82,7 @@ class TaskController extends Controller
         }
 
         $users = $task->project->all_users();
+
         $old = $task->load(['user', 'project'])->toArray();
         $task->update($data);
         $new = $task->load(['user', 'project'])->toArray();
@@ -159,7 +160,8 @@ class TaskController extends Controller
                 case Task::UPCOMING:
                     $tasks = TaskManager::getUpcoming();
                     break;
-                default: return 0;
+                default:
+                    return 0;
             }
         } elseif ($projectId) {
             $project = Project::findOrFail($projectId);
@@ -172,9 +174,10 @@ class TaskController extends Controller
         }
 
         $tasks->where('status', Task::STATUS_FINISHED);
-        $tasksWillDel = $tasks->get();
 
-        $count = $tasks->count();
+        $tasksWillDel = $tasks->get();
+        $count        = $tasks->count();
+
         $tasks->delete();
 
         foreach ($tasksWillDel as $task) {
@@ -199,7 +202,9 @@ class TaskController extends Controller
     {
         $task = Task::withTrashed()->findOrFail($id);
         $this->authorize('forceDelete', $task);
+
         $users = $task->project->all_users();
+
         $task->forceDelete();
 
         foreach ($users as $user) {
@@ -244,20 +249,27 @@ class TaskController extends Controller
         }
 
         if ($notTrashed) {
-            $tasks->whereHas('project', function($q) use ($s) {
+            $tasks->whereHas('project', function ($q) use ($s) {
                 $q->whereNull('deleted_at');
             });
         }
 
         if ($s) {
-            $tasks->where(function($q) use ($s) {
-                $q->where('name', 'like', "%$s%")->orWhereHas('project', function($q) use ($s) {
+            $tasks->where(function ($q) use ($s) {
+                $q->where('name', 'like', "%$s%")->orWhereHas('project', function ($q) use ($s) {
                     $q->where('name', 'like', "%$s%");
                 });
             });
         }
 
-        $data['tasks'] = $tasks->with(['project', 'owner', 'user', 'project.shared_users', 'project.user'])->withCount('comments')->paginate(25);
+        $data['tasks'] = $tasks->with([
+            'project',
+            'owner',
+            'user',
+            'project.shared_users',
+            'project.user',
+        ])->withCount('comments')->paginate(25);
+
         $data['currentUserId'] = Auth::id();
 
         return $data;

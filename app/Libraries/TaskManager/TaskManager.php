@@ -40,7 +40,8 @@ class TaskManager
      *
      * @return mixed
      */
-    public function getNotScheduled() {
+    public function getNotScheduled()
+    {
         return $this->getTasks()
                     ->whereNull('schedule')
                     ->orderBy('importance', 'desc');
@@ -55,10 +56,11 @@ class TaskManager
     {
         $user = Auth::user();
 
-        $ids1 = $user->projects()->pluck('id');
-        $ids2 = $user->shared_projects()->wherePivot('accepted', true)->pluck('id');
+        $project_ids_own    = $user->projects()->pluck('id');
+        $project_ids_shared = $user->shared_projects()->wherePivot('accepted', true)->pluck('id');
+        $project_ids        = array_merge($project_ids_own->toArray(), $project_ids_shared->toArray());
 
-        return $user->tasks()->whereIn('project_id', array_merge($ids1->toArray(), $ids2->toArray()));
+        return $user->tasks()->whereIn('project_id', $project_ids);
     }
 
     /**
@@ -70,10 +72,11 @@ class TaskManager
     {
         $user = Auth::user();
 
-        $ids1 = $user->projects()->withTrashed()->pluck('id');
-        $ids2 = $user->shared_projects()->withTrashed()->wherePivot('accepted', true)->pluck('id');
+        $project_ids_own    = $user->projects()->withTrashed()->pluck('id');
+        $project_ids_shared = $user->shared_projects()->withTrashed()->wherePivot('accepted', true)->pluck('id');
+        $project_ids        = array_merge($project_ids_own->toArray(), $project_ids_shared->toArray());
 
-        return Task::whereIn('project_id', array_merge($ids1->toArray(), $ids2->toArray()))
+        return Task::whereIn('project_id', $project_ids)
                    ->onlyTrashed()
                    ->orderBy('deleted_at', 'desc');
     }

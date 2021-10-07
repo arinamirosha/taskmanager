@@ -10,6 +10,8 @@ Create projects, tasks, share project with others, view history, comment tasks, 
 
 `npm run dev`
 
+`php artisan migrate`
+
 `php artisan route:json`
 
 ---

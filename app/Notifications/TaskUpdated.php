@@ -24,15 +24,16 @@ class TaskUpdated extends Notification
      */
     public function __construct($old, $new)
     {
-        $this->old   = $old;
-        $this->new   = $new;
-        $this->user  = Auth::user();
+        $this->old  = $old;
+        $this->new  = $new;
+        $this->user = Auth::user();
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return array
      */
     public function via($notifiable)
@@ -43,15 +44,16 @@ class TaskUpdated extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return array
      */
     public function toArray($notifiable)
     {
         return [
-            'user'  => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
-            'old'   => $this->old,
-            'new'   => $this->new,
+            'user' => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
+            'old'  => $this->old,
+            'new'  => $this->new,
         ];
     }
 }
