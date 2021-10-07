@@ -6,22 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CommentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CommentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HistoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HistoryController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/WelcomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/WelcomeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Libraries/TaskManager/TaskManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Libraries/TaskManager/TaskManager.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/CommentStored.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/CommentStored.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/ProjectAction.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/ProjectAction.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/ProjectShareDecision.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/ProjectShareDecision.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/ProjectShared.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/ProjectShared.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/ProjectUnshared.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/ProjectUnshared.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/ProjectUpdated.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/ProjectUpdated.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/TaskAction.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/TaskAction.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/TaskUpdated.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/TaskUpdated.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -274,14 +261,7 @@
       <workItem from="1629292684444" duration="41000" />
       <workItem from="1633344933590" duration="2585000" />
       <workItem from="1633422727167" duration="3308000" />
-      <workItem from="1633593060602" duration="5870000" />
-    </task>
-    <task id="LOCAL-00063" summary="unshare">
-      <created>1624966598858</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1624966598858</updated>
+      <workItem from="1633593060602" duration="13042000" />
     </task>
     <task id="LOCAL-00064" summary="on del/force del project clear shared">
       <created>1624969671734</created>
@@ -619,7 +599,14 @@
       <option name="project" value="LOCAL" />
       <updated>1633595565166</updated>
     </task>
-    <option name="localTasksCounter" value="112" />
+    <task id="LOCAL-00112" summary="reformat code">
+      <created>1633599512620</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1633599512620</updated>
+    </task>
+    <option name="localTasksCounter" value="113" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -642,7 +629,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="archive project tasks id owner or performer" />
     <MESSAGE value="dont show change status in cases" />
     <MESSAGE value="no drug others tasks" />
     <MESSAGE value="hide update task and correct store task" />
@@ -667,6 +653,7 @@
     <MESSAGE value="short comment" />
     <MESSAGE value="add php docs" />
     <MESSAGE value="readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="readme" />
+    <MESSAGE value="reformat code" />
+    <option name="LAST_COMMIT_MESSAGE" value="reformat code" />
   </component>
 </project>

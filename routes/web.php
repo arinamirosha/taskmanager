@@ -45,7 +45,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/tasks', [App\Http\Controllers\TaskController::class, 'index'])->name('tasks.index');
     Route::post('/tasks', [App\Http\Controllers\TaskController::class, 'store'])->name('tasks.store');
-//    Route::get('/tasks/{task}', [App\Http\Controllers\TaskController::class, 'show'])->name('tasks.show');
     Route::post('/tasks/{task}/restore', [App\Http\Controllers\TaskController::class, 'restore'])->name('tasks.restore');
     Route::post('/tasks/{task}', [App\Http\Controllers\TaskController::class, 'update'])->name('tasks.update')->middleware('can:update,task');
     Route::delete('/tasks/{task}', [App\Http\Controllers\TaskController::class, 'destroy'])->name('tasks.destroy')->middleware('can:delete,task');
