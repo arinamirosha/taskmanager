@@ -3,10 +3,8 @@ require('./bootstrap');
 window.Vue = require('vue').default;
 
 import Vue from 'vue';
-import VueRouter from 'vue-router';
 import Vuelidate from 'vuelidate';
 
-Vue.use(VueRouter);
 Vue.use(Vuelidate);
 
 // import route from "../route";

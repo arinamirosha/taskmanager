@@ -7,7 +7,6 @@ use App\Models\Task;
 use App\Notifications\TaskAction;
 use App\Notifications\TaskUpdated;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
