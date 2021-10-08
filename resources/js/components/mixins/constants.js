@@ -1,6 +1,4 @@
 import * as constants from "../../constants";
-import moment from "moment";
-import route from "../../route";
 
 export default {
     computed: {
@@ -56,5 +54,14 @@ export default {
             }
             return '';
         },
+        tasksPageTitle(type) {
+            switch (type) {
+                case this.c.TODAY: return 'Today tasks';
+                case this.c.UPCOMING: return 'Upcoming tasks';
+                case this.c.NOT_SCHEDULED: return 'Not Scheduled tasks';
+                case this.c.ARCHIVE: return 'Archived Tasks';
+            }
+            return '';
+        }
     },
 }

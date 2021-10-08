@@ -122,15 +122,7 @@ export default {
     },
     computed: {
         pageTitle: function () {
-            let title = '';
-            switch (this.type) {
-                case this.c.INCOMING: title = 'Incoming tasks'; break;
-                case this.c.TODAY: title = 'Today tasks'; break;
-                case this.c.UPCOMING: title = 'Upcoming tasks'; break;
-                case this.c.NOT_SCHEDULED: title = 'Not Scheduled tasks'; break;
-                case this.c.ARCHIVE: title = 'Archived Tasks'; break;
-            }
-            return title;
+            return this.tasksPageTitle(this.type);
         },
         colTask: function () {
             switch (this.type) {

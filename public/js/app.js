@@ -4480,31 +4480,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     pageTitle: function pageTitle() {
-      var title = '';
-
-      switch (this.type) {
-        case this.c.INCOMING:
-          title = 'Incoming tasks';
-          break;
-
-        case this.c.TODAY:
-          title = 'Today tasks';
-          break;
-
-        case this.c.UPCOMING:
-          title = 'Upcoming tasks';
-          break;
-
-        case this.c.NOT_SCHEDULED:
-          title = 'Not Scheduled tasks';
-          break;
-
-        case this.c.ARCHIVE:
-          title = 'Archived Tasks';
-          break;
-      }
-
-      return 'Page title'; // return title;
+      return this.tasksPageTitle(this.type);
     },
     colTask: function colTask() {
       switch (this.type) {
@@ -5044,6 +5020,23 @@ __webpack_require__.r(__webpack_exports__);
 
         case 0:
           return 'Declined';
+      }
+
+      return '';
+    },
+    tasksPageTitle: function tasksPageTitle(type) {
+      switch (type) {
+        case this.c.TODAY:
+          return 'Today tasks';
+
+        case this.c.UPCOMING:
+          return 'Upcoming tasks';
+
+        case this.c.NOT_SCHEDULED:
+          return 'Not Scheduled tasks';
+
+        case this.c.ARCHIVE:
+          return 'Archived Tasks';
       }
 
       return '';
