@@ -258,7 +258,6 @@ export default {
             }
         },
         showTask(task) {
-            console.log(task);
             this.currentTask = task;
             this.$refs.showTaskModalButton.click();
         },

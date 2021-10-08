@@ -4265,7 +4265,6 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     showTask: function showTask(task) {
-      console.log(task);
       this.currentTask = task;
       this.$refs.showTaskModalButton.click();
     },
