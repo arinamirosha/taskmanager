@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81330b5d-3180-4b31-b279-437f56104dd9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/projects/ShowProject.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Libraries/ProjectManager/Facade/ProjectManager.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Libraries/ProjectManager/ProjectManager.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Providers/ProjectManagerProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Libraries/TaskManager/Facade/TaskManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Libraries/TaskManager/Facade/TaskManager.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -259,14 +265,7 @@
       <workItem from="1633344933590" duration="2585000" />
       <workItem from="1633422727167" duration="3308000" />
       <workItem from="1633593060602" duration="15070000" />
-      <workItem from="1633676431495" duration="3367000" />
-    </task>
-    <task id="LOCAL-00068" summary="allow see shared project">
-      <created>1624982113627</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1624982113627</updated>
+      <workItem from="1633676431495" duration="7434000" />
     </task>
     <task id="LOCAL-00069" summary="show right favorite">
       <created>1625040262681</created>
@@ -604,7 +603,14 @@
       <option name="project" value="LOCAL" />
       <updated>1633687689011</updated>
     </task>
-    <option name="localTasksCounter" value="117" />
+    <task id="LOCAL-00117" summary="no need console log">
+      <created>1633687870905</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1633687870905</updated>
+    </task>
+    <option name="localTasksCounter" value="118" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -627,7 +633,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="change performer of task" />
     <MESSAGE value="correct change project/task performer" />
     <MESSAGE value="edit comments" />
     <MESSAGE value="correct update task" />
@@ -652,6 +657,7 @@
     <MESSAGE value="no usage vue router" />
     <MESSAGE value="tasks page title to constants mixin" />
     <MESSAGE value="correct order in tasks archive" />
-    <option name="LAST_COMMIT_MESSAGE" value="correct order in tasks archive" />
+    <MESSAGE value="no need console log" />
+    <option name="LAST_COMMIT_MESSAGE" value="no need console log" />
   </component>
 </project>

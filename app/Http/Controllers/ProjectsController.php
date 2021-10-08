@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Libraries\ProjectManager\Facade\ProjectManager;
 use App\Libraries\TaskManager\Facade\TaskManager;
 use App\Models\Project;
 use App\Models\Task;
@@ -14,6 +15,7 @@ use App\Notifications\ProjectUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ProjectsController extends Controller
 {
@@ -43,53 +45,16 @@ class ProjectsController extends Controller
      */
     public function index(Request $request)
     {
-        $type      = $request->get('type', false);
-        $getCounts = $request->get('get_counts', false);
-        $projects  = Auth::user()->projects();
+        $type           = $request->get('type', false);
+        $s              = $request->get('s', false);
+        $hasNotFinished = $request->get('hasNotFinished', false);
+        $getCounts      = $request->get('get_counts', false);
 
-        if ($type === Task::ARCHIVE) {
-            $s              = $request->get('s', false);
-            $hasNotFinished = $request->get('hasNotFinished', false);
-            $projects       = $projects->onlyTrashed();
-
-            if ($s) {
-                $projects->where('name', 'like', "%$s%");
-            }
-
-            $projects->withCount([
-                'tasks' => function ($query) {
-                    $query->whereIn('status', [Task::STATUS_NEW, Task::STATUS_PROGRESS])->withTrashed();
-                },
-            ]);
-
-            if ($hasNotFinished) {
-                $projects->havingRaw('tasks_count > 0');
-            }
-
-            $ids = Auth::user()->shared_projects()->where('accepted', true)->onlyTrashed()->pluck('id');
-
-            $data['projects'] = $projects->orWhereIn('id', $ids)->orderBy('deleted_at', 'desc')->paginate(25);
-        } else {
+        if ($type !== Task::ARCHIVE) {
             $data['newShared'] = Auth::user()->shared_projects()->whereNull('accepted')->get();
-
-            $projects = $projects->select(DB::raw('projects.*, 0 as shared'))
-                                 ->withCount('tasks')
-                                 ->withCount('shared_users');
-
-            $sharedProjects = Auth::user()->shared_projects()
-                                  ->where('accepted', true)
-                                  ->select(DB::raw('projects.*, 1 as shared'))
-                                  ->withCount('tasks')
-                                  ->withCount('shared_users');
-
-            $data['projects'] = $projects->union($sharedProjects)->orderBy('name')->get();
         }
 
-        foreach ($data['projects'] as $project) {
-            if ($project->shared) {
-                $project->favorite = $project->shared_users()->wherePivot('user_id', Auth::id())->pluck('favorite')[0];
-            }
-        }
+        $data['projects'] = ProjectManager::getIndexProjects($type, $s, $hasNotFinished);
 
         if ($getCounts) {
             $data['counts'] = TaskManager::getCountsByStatuses();
@@ -111,25 +76,7 @@ class ProjectsController extends Controller
         $project = Project::withTrashed()->findOrFail($id);
         $this->authorize('view', $project);
 
-        $project->load('shared_users')->load('user');
-
-        if ($project->trashed()) {
-            $project->load([
-                'tasks' => function ($query) {
-                    $query->whereIn('status', [Task::STATUS_NEW, Task::STATUS_PROGRESS])->withTrashed()->with('user');
-                },
-            ]);
-        } else {
-            $project->load('tasks')->load(['tasks.owner', 'tasks.user']);
-        }
-
-        $project->shared = $project->user_id != Auth::id();
-
-        if ($project->shared) {
-            $project->favorite = $project->shared_users()->wherePivot('user_id', Auth::id())->pluck('favorite')[0];
-        }
-
-        $data['project']       = $project;
+        $data['project']       = ProjectManager::addDataToProject($project);
         $data['currentUserId'] = Auth::id();
 
         return $data;

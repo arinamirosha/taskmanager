@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Libraries\TaskManager\Facade;
+namespace App\Libraries\ProjectManager\Facade;
 
 use Illuminate\Support\Facades\Facade;
 
-class TaskManager extends Facade
+class ProjectManager extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -13,6 +13,6 @@ class TaskManager extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return \App\Libraries\TaskManager\TaskManager::class;
+        return \App\Libraries\ProjectManager\ProjectManager::class;
     }
 }
