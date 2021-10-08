@@ -104,7 +104,8 @@ class TaskManager
 
         return Task::whereIn('project_id', $projectIds)
                    ->onlyTrashed()
-                   ->orderBy('deleted_at', 'desc');
+                   ->orderBy('deleted_at', 'desc')
+                   ->orderBy('name', 'asc');
     }
 
     /**

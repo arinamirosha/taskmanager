@@ -142,7 +142,7 @@ class TaskController extends Controller
         $s          = $request->get('s', false);
         $notTrashed = $request->get('notTrashed', false);
 
-        $data['tasks']         = TaskManager::getIndexTasks($type, $s, $notTrashed); //todo check order, changed if notTrashed changed
+        $data['tasks']         = TaskManager::getIndexTasks($type, $s, $notTrashed);
         $data['currentUserId'] = Auth::id();
 
         return $data;
