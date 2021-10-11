@@ -17,7 +17,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="cancel">Cancel</button>
-                    <button type="submit" class="btn btn-primary" ref="archiveProject">Archive</button>
+                    <button type="submit" class="btn btn-primary" :disabled="isArchiveBtnDisabled">Archive</button>
                 </div>
             </form>
         </div>
@@ -29,9 +29,14 @@ import route from "../../../route";
 
 export default {
     props: ['project'],
+    data() {
+        return {
+            isArchiveBtnDisabled: false,
+        }
+    },
     methods: {
         archiveProject(e) {
-            this.$refs.archiveProject.disabled = true;
+            this.isArchiveBtnDisabled = true;
             this.$refs.cancel.disabled = true;
             axios
                 .delete(route('projects.archive', this.project.id))
@@ -39,7 +44,7 @@ export default {
                     this.$refs.cancel.disabled = false;
                     this.$refs.cancel.click();
                     this.$emit('deleted');
-                    this.$refs.archiveProject.disabled = false;
+                    this.isArchiveBtnDisabled = false;
                 })
                 .catch(error => {
                     console.log(error)

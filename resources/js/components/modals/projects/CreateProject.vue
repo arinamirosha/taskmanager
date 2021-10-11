@@ -22,7 +22,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="reset" ref="cancel">Cancel</button>
-                    <button type="submit" class="btn btn-primary" ref="addProject">Add</button>
+                    <button type="submit" class="btn btn-primary" :disabled="isAddBtnDisabled">Add</button>
                 </div>
             </form>
         </div>
@@ -39,6 +39,7 @@ export default {
             name: '',
             fav: false,
             color: '#bababa',
+            isAddBtnDisabled: false,
         }
     },
     validations: {
@@ -57,7 +58,7 @@ export default {
         storeProject(e) {
             this.$v.$touch();
             if (!this.$v.$invalid) {
-                this.$refs.addProject.disabled = true;
+                this.isAddBtnDisabled = true;
                 this.$refs.cancel.disabled = true;
                 axios
                     .post(route('projects.store'), {
@@ -69,7 +70,7 @@ export default {
                         this.$refs.cancel.disabled = false;
                         this.$refs.cancel.click();
                         this.$emit('stored', response.data.id);
-                        this.$refs.addProject.disabled = false;
+                        this.isAddBtnDisabled = false;
                     })
                     .catch(error => {
                         console.log(error)

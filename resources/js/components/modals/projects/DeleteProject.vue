@@ -14,7 +14,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="cancel">Cancel</button>
-                    <button type="submit" class="btn btn-danger" ref="deleteProject">Delete</button>
+                    <button type="submit" class="btn btn-danger" :disabled="isDeleteBtnDisabled">Delete</button>
                 </div>
             </form>
         </div>
@@ -26,9 +26,14 @@ import route from "../../../route";
 
 export default {
     props: ['project'],
+    data() {
+        return {
+            isDeleteBtnDisabled: false,
+        }
+    },
     methods: {
         deleteProject(e) {
-            this.$refs.deleteProject.disabled = true;
+            this.isDeleteBtnDisabled = true;
             this.$refs.cancel.disabled = true;
             axios
                 .delete(route('projects.destroy-force', this.project.id))
@@ -36,7 +41,7 @@ export default {
                     this.$refs.cancel.disabled = false;
                     this.$refs.cancel.click();
                     this.$emit('deleted');
-                    this.$refs.deleteProject.disabled = false;
+                    this.isDeleteBtnDisabled = false;
                 })
                 .catch(error => {
                     console.log(error)

@@ -11,7 +11,7 @@
                         <label for="email">Email</label>
                         <input class="form-control" id="email" v-model="email" :class="{'is-invalid': this.$v.email.$error}">
                     </div>
-                    <button type="submit" class="btn btn-primary" ref="shareProject">Share</button>
+                    <button type="submit" class="btn btn-primary" :disabled="isShareBtnDisabled">Share</button>
                 </form>
 
                 <div v-for="(sharedUser, index) in this.project.shared_users" class="justify-content-between d-flex">
@@ -44,6 +44,7 @@ export default {
     data() {
         return {
             email: '',
+            isShareBtnDisabled: false,
         }
     },
     watch: {
@@ -62,14 +63,14 @@ export default {
         shareProject(e) {
             this.$v.$touch();
             if (!this.$v.$invalid) {
-                this.$refs.shareProject.disabled = true;
+                this.isShareBtnDisabled = true;
                 axios
                     .post(route('projects.share', this.project.id), {
                         'email': this.email,
                     })
                     .then(response => {
                         this.$emit('updated', response.data.id);
-                        this.$refs.shareProject.disabled = false;
+                        this.isShareBtnDisabled = false;
                     })
                     .catch(error => {
                         console.log(error)

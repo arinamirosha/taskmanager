@@ -13,7 +13,7 @@
             </div>
             <div class="m-0 row justify-content-between pt-2" v-if="isDataLoaded && !isLastPage">
                 <span>Page {{page}} of {{lastPage}}</span>
-                <button class="btn btn-outline-secondary btn-sm" @click="loadMore" ref="loadMore">Load More...</button>
+                <button class="btn btn-outline-secondary btn-sm" @click="loadMore" :disabled="isLoadBtnDisabled">Load More...</button>
             </div>
         </div>
     </div>
@@ -37,6 +37,7 @@ export default {
             notifications: [],
             isDataLoaded: false,
             dataLoading: false,
+            isLoadBtnDisabled: false,
         }
     },
     methods: {
@@ -58,7 +59,7 @@ export default {
         },
         loadMore() {
             this.dataLoading = true;
-            this.$refs.loadMore.disabled = true;
+            this.isLoadBtnDisabled = true;
             axios
                 .get(route('history.index'), {
                     params: {
@@ -69,7 +70,7 @@ export default {
                     this.loadedMore(response.data);
                     this.notifications = this.notifications.concat(response.data.data);
                     this.dataLoading = false;
-                    this.$refs.loadMore.disabled = false;
+                    this.isLoadBtnDisabled = false;
                 })
                 .catch(error => {
                     console.log(error);

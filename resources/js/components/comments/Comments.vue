@@ -11,7 +11,7 @@
             </div>
             <div v-if="this.$v.text.$error" class="row text-danger">1-1500 symbols</div>
             <div class="row justify-content-end">
-                <button class="btn btn-primary" @click="sendComment" ref="sendComment">Send</button>
+                <button class="btn btn-primary" @click="sendComment" :disabled="isSendBtnDisabled">Send</button>
             </div>
         </div>
 
@@ -51,7 +51,7 @@
                 <div class="m-0 pr-2 row justify-content-between pb-1" v-if="!isLastPage">
                     <span>Page {{page}} of {{lastPage}}</span>
                     <transition name="fade" appear><i v-if="dataLoading" class="fas fa-spinner fa-spin h3 m-0"></i></transition>
-                    <button class="btn btn-outline-secondary btn-sm" @click="loadMore" ref="loadMore">Load More...</button>
+                    <button class="btn btn-outline-secondary btn-sm" @click="loadMore" :disabled="isLoadBtnDisabled">Load More...</button>
                 </div>
             </div>
         </div>
@@ -78,6 +78,8 @@ export default {
             isDataLoaded: false,
             dataLoading: false,
             currentUserId: 0,
+            isSendBtnDisabled: false,
+            isLoadBtnDisabled: false,
         }
     },
     watch: {
@@ -101,7 +103,7 @@ export default {
         sendComment() {
             this.$v.$touch();
             if (!this.$v.$invalid) {
-                this.$refs.sendComment.disabled = true;
+                this.isSendBtnDisabled = true;
                 axios
                     .post(route('comments.store', this.taskId), {
                         'text': this.text,
@@ -110,7 +112,7 @@ export default {
                         this.reset();
                         this.comments.unshift(response.data);
                         this.$emit('newComment');
-                        this.$refs.sendComment.disabled = false;
+                        this.isSendBtnDisabled = false;
                     })
                     .catch(error => {
                         console.log(error)
@@ -132,7 +134,7 @@ export default {
         },
         loadMore() {
             this.dataLoading = true;
-            this.$refs.loadMore.disabled = true;
+            this.isLoadBtnDisabled = true;
             axios
                 .get(route('comments.index', this.taskId), {
                     params: {
@@ -143,7 +145,7 @@ export default {
                     this.loadedMore(response.data.comments);
                     this.comments = this.comments.concat(response.data.comments.data);
                     this.dataLoading = false;
-                    this.$refs.loadMore.disabled = false;
+                    this.isLoadBtnDisabled = false;
                 })
                 .catch(error => {
                     console.log(error);

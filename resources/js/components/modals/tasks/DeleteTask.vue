@@ -12,7 +12,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="cancel" @click="$emit('cancel')">Cancel</button>
-                <button type="submit" class="btn btn-danger" @click="deleteTask" ref="deleteTask">Delete</button>
+                <button type="submit" class="btn btn-danger" @click="deleteTask" :disabled="isDeleteBtnDisabled">Delete</button>
                 <button data-dismiss="modal" ref="dismiss" hidden></button>
             </div>
         </div>
@@ -24,16 +24,21 @@ import route from "../../../route";
 
 export default {
     props: ['task'],
+    data() {
+        return {
+            isDeleteBtnDisabled: false,
+        }
+    },
     methods: {
         deleteTask(e) {
-            this.$refs.deleteTask.disabled = true;
+            this.isDeleteBtnDisabled = true;
             this.$refs.cancel.disabled = true;
             axios
                 .delete(route('tasks.destroy-force', this.task.id))
                 .then(response => {
                     this.$refs.cancel.disabled = false;
                     this.$emit('deleted');
-                    this.$refs.deleteTask.disabled = false;
+                    this.isDeleteBtnDisabled = false;
                     this.$refs.dismiss.click();
                 })
                 .catch(error => {
