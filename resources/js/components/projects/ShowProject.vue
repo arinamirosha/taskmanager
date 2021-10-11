@@ -329,6 +329,17 @@ export default {
     },
     components: {
         draggable,
+        'toast': () => import('../Toast.vue'),
+        'create-task-modal': () => import('../modals/tasks/CreateTask.vue'),
+        'show-task-modal': () => import('../modals/tasks/ShowTask.vue'),
+        'delete-task-modal': () => import('../modals/tasks/DeleteTask.vue'),
+        'edit-task-modal': () => import('../modals/tasks/EditTask.vue'),
+        'list-item-task': () => import('../tasks/ListItemTask.vue'),
+        'edit-project-modal': () => import('../modals/projects/EditProject.vue'),
+        'share-project-modal': () => import('../modals/projects/ShareProject.vue'),
+        'delete-project-modal': () => import('../modals/projects/DeleteProject.vue'),
+        'archive-project-modal': () => import('../modals/projects/ArchiveProject.vue'),
+        'restore-project-modal': () => import('../modals/projects/RestoreProject.vue'),
     },
 }
 </script>

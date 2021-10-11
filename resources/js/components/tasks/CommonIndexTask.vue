@@ -309,7 +309,14 @@ export default {
             this.getTasks();
         }
         this.getHideFinished();
-    }
+    },
+    components: {
+        'toast': () => import('../Toast.vue'),
+        'show-task-modal': () => import('../modals/tasks/ShowTask.vue'),
+        'delete-task-modal': () => import('../modals/tasks/DeleteTask.vue'),
+        'edit-task-modal': () => import('../modals/tasks/EditTask.vue'),
+        'archived-projects': () => import('../projects/ArchivedProjects.vue')
+    },
 }
 </script>
 

@@ -281,6 +281,11 @@ export default {
     },
     components: {
         CollapseTransition,
+        'history': () => import('./notifications/History.vue'),
+        'common-index-task': () => import('./tasks/CommonIndexTask.vue'),
+        'show-project': () => import('./projects/ShowProject.vue'),
+        'new-shared-projects': () => import('./projects/NewSharedProject.vue'),
+        'create-project-modal': () => import('./modals/projects/CreateProject.vue'),
     },
 }
 </script>

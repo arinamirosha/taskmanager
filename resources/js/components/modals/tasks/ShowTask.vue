@@ -181,6 +181,9 @@ export default {
             return moment(this.task.schedule).isBefore(new Date, 'day');
         },
     },
+    components: {
+        'comments': () => import('../../comments/Comments.vue')
+    }
 }
 </script>
 
