@@ -31,21 +31,26 @@
                         </div>
                         <div class="text-sm">
                             <span class="text-secondary">{{formatDate(comment.created_at)}}</span>
-                            <i v-if="!isArchive && comment.user_id === currentUserId" class="fas fa-edit p-1" @click="editComment(index, comment.text)"></i>
+                            <i v-if="!isArchive && comment.user_id === currentUserId" class="fas fa-edit p-1" @click="editComment(comment.text, comment.id)"></i>
                             <i v-if="!isArchive && comment.user_id === currentUserId" class="fas fa-times p-1" @click="deleteComment(comment.id)"></i>
                         </div>
                     </div>
-                    <div v-if="comment.text.length <= 200" class="text-wrap" :ref="'cText'+index">{{comment.text}}</div>
-                    <div v-else class="text-wrap" :ref="'cText'+index">{{comment.text.slice(0,200)}}<span :ref="'dots'+index">...</span><span :ref="'moreText'+index" class="d-none">{{comment.text.slice(200)}}</span>
-                        <a @click.prevent="triggerMore(index)" class="text-secondary text-sm link" :ref="'moreTrigger'+index">Read&nbsp;more</a>
-                    </div>
-                    <form @submit.prevent="updateComment(index, comment.id)" :ref="'cEdit'+index" hidden>
-                        <textarea class="form-control mb-2" :ref="'editedText'+index"></textarea>
+                    <form v-if="editCommentId === comment.id" @submit.prevent="updateComment(index, comment.id)">
+                        <textarea class="form-control mb-2" v-model="textToEdit"></textarea>
                         <div class="text-right">
-                            <button type="button" class="btn btn-outline-secondary btn-sm" @click="cancelEdit(index)" :ref="'commentCancel'+index">Cancel</button>
-                            <button type="submit" class="btn btn-primary btn-sm" :ref="'commentUpdate'+index">Update</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" @click="cancelEdit()" :disabled="isCancelBtnDisabled">Cancel</button>
+                            <button type="submit" class="btn btn-primary btn-sm" :disabled="isUpdateBtnDisabled">Update</button>
                         </div>
                     </form>
+                    <div v-else>
+                        <div v-if="comment.text.length <= 200" class="text-wrap">{{comment.text}}</div>
+                        <div v-else-if="showMoreCommentIds.includes(comment.id)" class="text-wrap">
+                            {{comment.text}} <a @click.prevent="triggerMore(comment.id)" class="text-secondary text-sm link">Read less</a>
+                        </div>
+                        <div v-else class="text-wrap">
+                            {{comment.text.slice(0,200)}}... <a @click.prevent="triggerMore(comment.id)" class="text-secondary text-sm link">Read more</a>
+                        </div>
+                    </div>
                     <hr>
                 </div>
                 <div class="m-0 pr-2 row justify-content-between pb-1" v-if="!isLastPage">
@@ -80,6 +85,11 @@ export default {
             currentUserId: 0,
             isSendBtnDisabled: false,
             isLoadBtnDisabled: false,
+            editCommentId: null,
+            textToEdit: '',
+            isCancelBtnDisabled: false,
+            isUpdateBtnDisabled: false,
+            showMoreCommentIds: [],
         }
     },
     watch: {
@@ -170,36 +180,27 @@ export default {
             this.dataLoading = false;
             this.$v.$reset();
         },
-        triggerMore(index) {
-            let dots = this.$refs['dots'+index][0];
-            let moreText = this.$refs['moreText'+index][0];
-            let moreTrigger = this.$refs['moreTrigger'+index][0];
-
-            if (dots.style.display === "none") {
-                dots.style.display = "inline";
-                moreTrigger.innerHTML = "Read more";
-                moreText.classList.add('d-none');
+        triggerMore(commentId) {
+            if (this.showMoreCommentIds.includes(commentId)) {
+                this.showMoreCommentIds = this.showMoreCommentIds.filter(cId => cId !== commentId);
             } else {
-                dots.style.display = "none";
-                moreTrigger.innerHTML = "Read&nbsp;less";
-                moreText.classList.remove('d-none');
+                this.showMoreCommentIds.push(commentId);
             }
         },
-        editComment(index, text) {
-            this.$refs['editedText'+index][0].value = text;
-            this.$refs['cText'+index][0].hidden = true;
-            this.$refs['cEdit'+index][0].hidden = false;
+        editComment(text, commentId) {
+            this.textToEdit = text;
+            this.editCommentId = commentId;
         },
-        cancelEdit(index) {
-            this.$refs['cText'+index][0].hidden = false;
-            this.$refs['cEdit'+index][0].hidden = true;
+        cancelEdit() {
+            this.textToEdit = '';
+            this.editCommentId = null;
         },
         updateComment(index, commentId) {
-            let editedText = this.$refs['editedText'+index][0].value;
+            let editedText = this.textToEdit;
 
             if (editedText && editedText.length <= 1500) {
-                this.$refs['commentUpdate'+index][0].disabled = true;
-                this.$refs['commentCancel'+index][0].disabled = true;
+                this.isUpdateBtnDisabled = true;
+                this.isCancelBtnDisabled = true;
                 axios
                     .put(route('comments.update', commentId), {
                         text: editedText
@@ -207,10 +208,10 @@ export default {
                     .then(response => {
                         this.comments[index].text = response.data.text;
                         this.comments[index].updated_at = response.data.updated_at;
-                        this.$refs['cText'+index][0].hidden = false;
-                        this.$refs['cEdit'+index][0].hidden = true;
-                        this.$refs['commentUpdate'+index][0].disabled = false;
-                        this.$refs['commentCancel'+index][0].disabled = false;
+                        this.isUpdateBtnDisabled = false;
+                        this.isCancelBtnDisabled = false;
+                        this.textToEdit = '';
+                        this.editCommentId = null;
                     })
                     .catch(error => {
                         console.log(error);
