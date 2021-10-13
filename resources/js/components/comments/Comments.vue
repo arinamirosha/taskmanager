@@ -23,7 +23,7 @@
         <div v-else>
             <div v-if="comments.length === 0" class="h-500 text-center">No comments</div>
             <div v-else :class="{'comments h-500 pr-1': mediumStyle}">
-                <div v-for="(comment, index) in comments" class="comment">
+                <div v-for="(comment) in comments" class="comment">
                     <div class="justify-content-between d-flex">
                         <div>
                             <span class="font-weight-bold">{{comment.user.name}} {{comment.user.surname}}</span>
@@ -35,7 +35,7 @@
                             <i v-if="!isArchive && comment.user_id === currentUserId" class="fas fa-times p-1" @click="deleteComment(comment.id)"></i>
                         </div>
                     </div>
-                    <form v-if="editCommentId === comment.id" @submit.prevent="updateComment(index, comment.id)">
+                    <form v-if="editCommentId === comment.id" @submit.prevent="updateComment(comment.id)">
                         <textarea class="form-control mb-2" v-model="textToEdit"></textarea>
                         <div class="text-right">
                             <button type="button" class="btn btn-outline-secondary btn-sm" @click="cancelEdit()" :disabled="isCancelBtnDisabled">Cancel</button>
@@ -195,7 +195,7 @@ export default {
             this.textToEdit = '';
             this.editCommentId = null;
         },
-        updateComment(index, commentId) {
+        updateComment(commentId) {
             let editedText = this.textToEdit;
 
             if (editedText && editedText.length <= 1500) {
@@ -206,8 +206,9 @@ export default {
                         text: editedText
                     })
                     .then(response => {
-                        this.comments[index].text = response.data.text;
-                        this.comments[index].updated_at = response.data.updated_at;
+                        let foundIndex = this.comments.findIndex(c => c.id === commentId);
+                        this.comments[foundIndex].text = response.data.text;
+                        this.comments[foundIndex].updated_at = response.data.updated_at;
                         this.isUpdateBtnDisabled = false;
                         this.isCancelBtnDisabled = false;
                         this.textToEdit = '';

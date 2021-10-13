@@ -6,11 +6,11 @@
         </div>
 
         <div v-if="newShared.length === 0" class="h3 text-center pt-5">No invitations</div>
-        <div v-else v-for="(newS, index) in newShared" class="row h5 pt-3">
+        <div v-else v-for="(newS) in newShared" class="row h5 pt-3">
             <div class="col-md-6 col-7">{{newS.name}}</div>
             <div class="col-md-4 col-5 text-right text-md-center">
-                <button class="btn btn-success btn-sm" @click="changeAccepted(newS.id, true, index)" ref="accept">Accept</button>
-                <button class="btn btn-danger btn-sm" @click="changeAccepted(newS.id, false, index)" ref="decline">Decline</button>
+                <button class="btn btn-success btn-sm" @click="changeAccepted(newS.id, true)" :disabled="invitationIds.includes(newS.id)">Accept</button>
+                <button class="btn btn-danger btn-sm" @click="changeAccepted(newS.id, false)" :disabled="invitationIds.includes(newS.id)">Decline</button>
             </div>
         </div>
 
@@ -23,18 +23,20 @@ import route from "../../route";
 export default {
     name: "NewSharedProject",
     props: ['newShared'],
+    data() {
+      return {
+          invitationIds: [],
+      }
+    },
     methods: {
-        changeAccepted(id, accepted, index) {
-            this.$refs.accept[index].disabled = true;
-            this.$refs.decline[index].disabled = true;
+        changeAccepted(id, accepted) {
+            this.invitationIds.push(id);
             axios
                 .post(route('projects.accepted', id), {
                     'accepted': accepted,
                 })
                 .then(response => {
                     this.$emit('updated');
-                    this.$refs.accept[index].disabled = false;
-                    this.$refs.decline[index].disabled = false;
                 })
                 .catch(error => {
                     console.log(error);
