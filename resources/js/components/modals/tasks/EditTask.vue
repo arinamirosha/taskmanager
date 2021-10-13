@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="modal-footer" v-if="projects.length > 0">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="cancel" @click="reset">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="cancel" :disabled="isCancelBtnDisabled" @click="reset">Cancel</button>
                     <button type="submit" class="btn btn-primary" :disabled="isUpdateBtnDisabled">Update</button>
                 </div>
             </form>
@@ -56,6 +56,7 @@ import { required, maxLength, minValue } from 'vuelidate/lib/validators';
 import route from "../../../route";
 import constantsMixin from "../../mixins/constants.js";
 import moment from "moment";
+import Vue from "vue";
 
 export default {
     mixins: [
@@ -75,6 +76,7 @@ export default {
             projects: [],
             isDisabled: false,
             isUpdateBtnDisabled: false,
+            isCancelBtnDisabled: false,
         }
     },
     watch: {
@@ -125,7 +127,7 @@ export default {
             this.$v.$touch();
             if (!this.$v.$invalid) {
                 this.isUpdateBtnDisabled = true;
-                this.$refs.cancel.disabled = true;
+                this.isCancelBtnDisabled = true;
                 axios
                     .post(route('tasks.update', this.task.id), {
                         'name': this.name,
@@ -136,8 +138,8 @@ export default {
                         'user_id': this.performerId,
                     })
                     .then(response => {
-                        this.$refs.cancel.disabled = false;
-                        this.$refs.cancel.click();
+                        this.isCancelBtnDisabled = false;
+                        Vue.nextTick(() => this.$refs.cancel.click());
                         this.$emit('updated', response.data);
                         this.isUpdateBtnDisabled = false;
                     })

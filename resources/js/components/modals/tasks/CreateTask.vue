@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="reset" ref="cancel">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="reset" ref="cancel" :disabled="isCancelBtnDisabled">Cancel</button>
                     <button type="submit" class="btn btn-primary" :disabled="isAddBtnDisabled">Add</button>
                 </div>
             </form>
@@ -52,6 +52,7 @@ import { required, maxLength, minValue, numeric } from 'vuelidate/lib/validators
 import route from "../../../route";
 import moment from "moment";
 import constantsMixin from "../../mixins/constants";
+import Vue from 'vue';
 
 export default {
     mixins: [
@@ -68,6 +69,7 @@ export default {
             statuses: [],
             performerId: this.currentUserId,
             isAddBtnDisabled: false,
+            isCancelBtnDisabled: false,
         }
     },
     validations: {
@@ -90,7 +92,7 @@ export default {
             this.$v.$touch();
             if (!this.$v.$invalid) {
                 this.isAddBtnDisabled = true;
-                this.$refs.cancel.disabled = true;
+                this.isCancelBtnDisabled = true;
                 axios
                     .post(route('tasks.store'), {
                         'project_id': this.project.id,
@@ -101,8 +103,8 @@ export default {
                         'importance': this.importance,
                     })
                     .then(response => {
-                        this.$refs.cancel.disabled = false;
-                        this.$refs.cancel.click();
+                        this.isCancelBtnDisabled = false;
+                        Vue.nextTick(() => this.$refs.cancel.click());
                         this.$emit('stored');
                         this.isAddBtnDisabled = false;
                     })

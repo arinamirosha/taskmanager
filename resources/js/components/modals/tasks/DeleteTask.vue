@@ -11,7 +11,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="cancel" @click="$emit('cancel')">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" :disabled="isCancelBtnDisabled" @click="$emit('cancel')">Cancel</button>
                 <button type="submit" class="btn btn-danger" @click="deleteTask" :disabled="isDeleteBtnDisabled">Delete</button>
                 <button data-dismiss="modal" ref="dismiss" hidden></button>
             </div>
@@ -21,29 +21,30 @@
 
 <script>
 import route from "../../../route";
+import Vue from "vue";
 
 export default {
     props: ['task'],
     data() {
         return {
             isDeleteBtnDisabled: false,
+            isCancelBtnDisabled: false,
         }
     },
     methods: {
         deleteTask(e) {
             this.isDeleteBtnDisabled = true;
-            this.$refs.cancel.disabled = true;
+            this.isCancelBtnDisabled = true;
             axios
                 .delete(route('tasks.destroy-force', this.task.id))
                 .then(response => {
-                    this.$refs.cancel.disabled = false;
+                    this.isCancelBtnDisabled = false;
+                    Vue.nextTick(() => this.$refs.dismiss.click());
                     this.$emit('deleted');
                     this.isDeleteBtnDisabled = false;
-                    this.$refs.dismiss.click();
                 })
                 .catch(error => {
                     console.log(error);
-                    this.$refs.dismiss.click();
                 });
         },
     },
