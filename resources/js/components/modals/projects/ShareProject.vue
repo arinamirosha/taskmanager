@@ -14,18 +14,23 @@
                     <button type="submit" class="btn btn-primary" :disabled="isShareBtnDisabled">Share</button>
                 </form>
 
-                <div v-for="(sharedUser, index) in this.project.shared_users" class="justify-content-between d-flex">
+                <div v-for="sharedUser in this.project.shared_users" class="justify-content-between d-flex">
                     <div>{{sharedUser.email}}</div>
                     <div :class="statusSharedCss(sharedUser.pivot.accepted)">{{statusSharedText(sharedUser.pivot.accepted)}}</div>
                     <div class="mv-10px">
-                        <i v-if="!project.deleted_at" ref="shUserDel" class="fas fa-times text-secondary text-sm" @click="unshare(sharedUser.email, index)"></i>
+                        <i
+                            v-if="!project.deleted_at"
+                            class="fas fa-times text-secondary text-sm"
+                            @click="unshare(sharedUser.email)"
+                            v-show="!sharedEmailsToDel.includes(sharedUser.email)"
+                        ></i>
                     </div>
                 </div>
 
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="reset" ref="cancel">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="reset">Close</button>
             </div>
         </div>
     </div>
@@ -35,6 +40,7 @@
 import { required, maxLength, email } from 'vuelidate/lib/validators';
 import route from "../../../route";
 import constantsMixin from "../../mixins/constants";
+import Vue from 'vue';
 
 export default {
     mixins: [
@@ -45,6 +51,7 @@ export default {
         return {
             email: '',
             isShareBtnDisabled: false,
+            sharedEmailsToDel: [],
         }
     },
     watch: {
@@ -82,9 +89,9 @@ export default {
                     });
             }
         },
-        unshare(email, index) {
+        unshare(email) {
             if (confirm('Are you sure do not want share this project with user ' + email +'? All not trashed tasks of this user will be moved to yours.')) {
-                this.$refs.shUserDel[index].hidden = true;
+                this.sharedEmailsToDel.push(email);
                 axios
                     .delete(route('projects.unshare', this.project.id), {
                         params: {
@@ -93,7 +100,7 @@ export default {
                     })
                     .then(response => {
                         this.$emit('updated');
-                        this.$refs.shUserDel[index].hidden = false;
+                        setTimeout(() => this.sharedEmailsToDel = this.sharedEmailsToDel.filter(em => em !== email), 1000)
                     })
                     .catch(error => {
                         console.log(error);

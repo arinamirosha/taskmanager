@@ -23,7 +23,7 @@
         <div v-else>
             <div v-if="comments.length === 0" class="h-500 text-center">No comments</div>
             <div v-else :class="{'comments h-500 pr-1': mediumStyle}">
-                <div v-for="(comment) in comments" class="comment">
+                <div v-for="comment in comments" class="comment">
                     <div class="justify-content-between d-flex">
                         <div>
                             <span class="font-weight-bold">{{comment.user.name}} {{comment.user.surname}}</span>
