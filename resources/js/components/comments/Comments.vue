@@ -6,10 +6,10 @@
                     class="form-control mb-2"
                     v-model="text"
                     placeholder="Comment..."
-                    :class="{'is-invalid': this.$v.text.$error}"
+                    :class="{'is-invalid': $v.text.$error}"
                 />
             </div>
-            <div v-if="this.$v.text.$error" class="row text-danger">1-1500 symbols</div>
+            <div v-if="$v.text.$error" class="row text-danger">1-1500 symbols</div>
             <div class="row justify-content-end">
                 <button class="btn btn-primary" @click="sendComment" :disabled="isSendBtnDisabled">Send</button>
             </div>
@@ -36,7 +36,12 @@
                         </div>
                     </div>
                     <form v-if="editCommentId === comment.id" @submit.prevent="updateComment(comment.id)">
-                        <textarea class="form-control mb-2" v-model="textToEdit"></textarea>
+                        <textarea
+                            class="form-control mb-2"
+                            :class="{'is-invalid': $v.textToEdit.$error}"
+                            v-model="textToEdit"
+                        ></textarea>
+                        <div v-if="$v.textToEdit.$error" class="row text-danger">1-1500 symbols</div>
                         <div class="text-right">
                             <button type="button" class="btn btn-outline-secondary btn-sm" @click="cancelEdit()" :disabled="isCancelBtnDisabled">Cancel</button>
                             <button type="submit" class="btn btn-primary btn-sm" :disabled="isUpdateBtnDisabled">Update</button>
@@ -105,14 +110,18 @@ export default {
             required,
             maxLength: maxLength(1500),
         },
+        textToEdit: {
+            required,
+            maxLength: maxLength(1500),
+        },
     },
     methods: {
         formatDate(date) {
             return moment(new Date(date)).format('DD.MM.YY HH:mm');
         },
         sendComment() {
-            this.$v.$touch();
-            if (!this.$v.$invalid) {
+            this.$v.text.$touch();
+            if (!this.$v.text.$invalid) {
                 this.isSendBtnDisabled = true;
                 axios
                     .post(route('comments.store', this.taskId), {
@@ -196,14 +205,13 @@ export default {
             this.editCommentId = null;
         },
         updateComment(commentId) {
-            let editedText = this.textToEdit;
-
-            if (editedText && editedText.length <= 1500) {
+            this.$v.textToEdit.$touch();
+            if (!this.$v.textToEdit.$invalid) {
                 this.isUpdateBtnDisabled = true;
                 this.isCancelBtnDisabled = true;
                 axios
                     .put(route('comments.update', commentId), {
-                        text: editedText
+                        text: this.textToEdit
                     })
                     .then(response => {
                         let foundIndex = this.comments.findIndex(c => c.id === commentId);
@@ -213,12 +221,11 @@ export default {
                         this.isCancelBtnDisabled = false;
                         this.textToEdit = '';
                         this.editCommentId = null;
+                        this.$v.$reset();
                     })
                     .catch(error => {
                         console.log(error);
                     });
-            } else {
-                alert('1-1500 symbols');
             }
         }
     },
