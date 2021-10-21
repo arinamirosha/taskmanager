@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Task;
 use App\Notifications\CommentStored;
+use App\Notifications\CommentUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,6 +46,7 @@ class CommentController extends Controller
         ]);
 
         $users = $comment->task->project->all_users();
+
         foreach ($users as $user) {
             $user->notify(new CommentStored($comment));
         }
@@ -77,7 +79,17 @@ class CommentController extends Controller
      */
     public function update(Comment $comment, Request $request)
     {
+        $oldText = $comment->text;
         $comment->update($request->all());
+        $newText = $comment->text;
+
+        $users = $comment->task->project->all_users();
+
+        if ($oldText != $newText) {
+            foreach ($users as $user) {
+                $user->notify(new CommentUpdated($comment, $oldText));
+            }
+        }
 
         return $comment;
     }
