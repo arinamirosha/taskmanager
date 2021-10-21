@@ -52,9 +52,8 @@ class ProjectAction extends Notification
     public function toArray($notifiable)
     {
         return [
-            'user'    => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
-            'project' => $this->project->name,
-            'action'  => $this->action,
+            'user' => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
+            'text' => $this->action . ' project "' . $this->project->name . '"',
         ];
     }
 }

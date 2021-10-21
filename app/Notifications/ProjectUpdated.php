@@ -55,10 +55,8 @@ class ProjectUpdated extends Notification
     public function toArray($notifiable)
     {
         return [
-            'user'  => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
-            'field' => $this->field,
-            'old'   => $this->old,
-            'new'   => $this->new,
+            'user' => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
+            'text' => 'updated ' . $this->field . ' project from "' . $this->old . '" to "' . $this->new . '"',
         ];
     }
 }

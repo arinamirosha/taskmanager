@@ -13,20 +13,20 @@ class TaskUpdated extends Notification
     use Queueable;
 
     private $old;
-    private $new;
     private $user;
+    private $updates;
 
     /**
      * Create a new notification instance.
      *
      * @param $old
-     * @param $new
+     * @param $updates
      */
-    public function __construct($old, $new)
+    public function __construct($old, $updates)
     {
-        $this->old  = $old;
-        $this->new  = $new;
-        $this->user = Auth::user();
+        $this->old     = $old;
+        $this->user    = Auth::user();
+        $this->updates = $updates;
     }
 
     /**
@@ -52,8 +52,7 @@ class TaskUpdated extends Notification
     {
         return [
             'user' => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
-            'old'  => $this->old,
-            'new'  => $this->new,
+            'text' => 'updated task "' . $this->old['name'] . "\": \n" . implode("\n", $this->updates),
         ];
     }
 }

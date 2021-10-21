@@ -197,8 +197,12 @@ class TaskManager
         $task->update($data);
         $new = $task->load(['user', 'project'])->toArray();
 
-        foreach ($users as $user) {
-            $user->notify(new TaskUpdated($old, $new));
+        $updates = $this->getTextUpdates($old, $new);
+
+        if (! empty($updates)) {
+            foreach ($users as $user) {
+                $user->notify(new TaskUpdated($old, $updates));
+            }
         }
 
         return $task->load(['project', 'project.shared_users', 'project.user', 'owner', 'user'])->loadCount('comments');
@@ -286,5 +290,106 @@ class TaskManager
             'project.shared_users',
             'project.user',
         ])->withCount('comments')->paginate(25);
+    }
+
+    /**
+     * Get array of strings - text updates
+     *
+     * @param $old
+     * @param $new
+     *
+     * @return array
+     */
+    protected function getTextUpdates($old, $new)
+    {
+        $updates = [];
+
+        if ($old['name'] != $new['name']) {
+            array_push($updates, 'name - "' . $old['name'] . '" -> "' . $new['name'] . '"');
+        }
+
+        if ($old['details'] != $new['details']) {
+            $oldD = $old['details'];
+            $newD = $new['details'];
+            $str  = 'details - ';
+
+            if ( ! $oldD || ! $newD) {
+                $str .= '"' . $oldD . '" -> "' . $newD . '"';
+            } else {
+                $i = 0;
+                while ($oldD[$i] == $newD[$i]) {
+                    $i++;
+                }
+                $str .= 'near "' . substr($oldD, $i, 25) . '" -> "' . substr($newD, $i, 25) . '"';
+            }
+
+            array_push($updates, $str);
+        }
+
+        if ($old['schedule'] != $new['schedule']) {
+            array_push($updates, 'schedule - "' . $old['schedule'] . '" -> "' . $new['schedule'] . '"');
+        }
+
+        if ($old['importance'] != $new['importance']) {
+            array_push($updates, 'importance - "' . $this->importanceText($old['importance']) . '" -> "' . $this->importanceText($new['importance']) . '"');
+        }
+
+        if ($old['status'] != $new['status']) {
+            array_push($updates, 'status - "' . $this->statusText($old['status']) . '" -> "' . $this->statusText($new['status']) . '"');
+        }
+
+        if ($old['user_id'] != $new['user_id']) {
+            array_push($updates, 'performer - "'
+                                 . $old['user']['name'] . ($old['user']['surname'] ? ' ' . $old['user']['surname'] : '') . '" -> "'
+                                 . $new['user']['name'] . ($new['user']['surname'] ? ' ' . $new['user']['surname'] : '') . '"');
+        }
+
+        if ($old['project_id'] != $new['project_id']) {
+            array_push($updates, 'project - "' . $old['project']['name'] . '" -> "' . $new['project']['name'] . '"');
+        }
+
+        return $updates;
+    }
+
+    /**
+     * Get text from importance
+     *
+     * @param $importance
+     *
+     * @return string
+     */
+    protected function importanceText($importance)
+    {
+        switch ($importance) {
+            case Task::STATUS_NORMAL:
+                return 'Normal';
+            case Task::STATUS_MEDIUM:
+                return 'Medium';
+            case Task::STATUS_STRONG:
+                return 'Strong';
+        }
+
+        return '';
+    }
+
+    /**
+     * Get text from status
+     *
+     * @param $status
+     *
+     * @return string
+     */
+    protected function statusText($status)
+    {
+        switch ($status) {
+            case Task::STATUS_NEW:
+                return 'New';
+            case Task::STATUS_PROGRESS:
+                return 'Progress';
+            case Task::STATUS_FINISHED:
+                return 'Finished';
+        }
+
+        return '';
     }
 }

@@ -86,6 +86,7 @@ export default {
                             alert(error.response.data);
                         } else if (error.request) {
                             alert(error.request.statusText);
+                            this.isShareBtnDisabled = false;
                         }
                     });
             }

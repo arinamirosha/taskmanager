@@ -21,6 +21,7 @@ export default {
                 case this.c.STATUS_MEDIUM: return 'Medium';
                 case this.c.STATUS_STRONG: return 'Strong';
             }
+            return '';
         },
         statusText(status) {
             switch (status) {

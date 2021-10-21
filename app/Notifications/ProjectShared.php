@@ -54,9 +54,9 @@ class ProjectShared extends Notification
     public function toArray($notifiable)
     {
         return [
-            'user'       => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
-            'userShared' => $this->userShared->name . ($this->userShared->surname ? ' ' . $this->userShared->surname : ''),
-            'project'    => $this->project->name,
+            'user' => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
+            'text' => 'sent share request to ' . $this->userShared->name . ($this->userShared->surname ? ' ' . $this->userShared->surname : '')
+                      . ' for project "' . $this->project->name . '"',
         ];
     }
 }

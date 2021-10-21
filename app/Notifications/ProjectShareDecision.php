@@ -52,9 +52,8 @@ class ProjectShareDecision extends Notification
     public function toArray($notifiable)
     {
         return [
-            'user'     => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
-            'decision' => $this->accepted ? 'accepted' : 'declined',
-            'project'  => $this->project->name,
+            'user' => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
+            'text' => ($this->accepted ? 'accepted' : 'declined') . ' shared project "' . $this->project->name . '"',
         ];
     }
 }

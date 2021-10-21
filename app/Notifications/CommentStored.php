@@ -50,9 +50,8 @@ class CommentStored extends Notification
     public function toArray($notifiable)
     {
         return [
-            'user'    => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
-            'comment' => $this->comment->text,
-            'task'    => $this->comment->task->name,
+            'user' => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
+            'text' => 'left a comment "' . substr($this->comment->text, 0, 50) . '" in task "' . $this->comment->task->name . '"',
         ];
     }
 }

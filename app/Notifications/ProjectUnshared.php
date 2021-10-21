@@ -54,9 +54,9 @@ class ProjectUnshared extends Notification
     public function toArray($notifiable)
     {
         return [
-            'user'         => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
-            'userUnshared' => $this->userUnshared->name . ($this->userUnshared->surname ? ' ' . $this->userUnshared->surname : ''),
-            'project'      => $this->project->name,
+            'user' => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
+            'text' => 'unshared with ' . $this->userUnshared->name . ($this->userUnshared->surname ? ' ' . $this->userUnshared->surname : '')
+                      . ' for project "' . $this->project->name . '"',
         ];
     }
 }

@@ -52,10 +52,8 @@ class TaskAction extends Notification
     public function toArray($notifiable)
     {
         return [
-            'user'    => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
-            'task'    => $this->task->name,
-            'project' => $this->task->project->name,
-            'action'  => $this->action,
+            'user' => $this->user->name . ($this->user->surname ? ' ' . $this->user->surname : ''),
+            'text' => $this->action . ' task "' . $this->task->name . '" in project "' . $this->task->project->name . '"',
         ];
     }
 }
