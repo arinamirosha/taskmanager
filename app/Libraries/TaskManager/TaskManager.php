@@ -199,7 +199,7 @@ class TaskManager
 
         $updates = $this->getTextUpdates($old, $new);
 
-        if (! empty($updates)) {
+        if ( ! empty($updates)) {
             foreach ($users as $user) {
                 $user->notify(new TaskUpdated($old, $updates));
             }
@@ -305,50 +305,60 @@ class TaskManager
         $updates = [];
 
         if ($old['name'] != $new['name']) {
-            array_push($updates, 'name - "' . $old['name'] . '" -> "' . $new['name'] . '"');
+            array_push($updates, $this->genStrUpd('name', $old['name'], $new['name']));
         }
 
         if ($old['details'] != $new['details']) {
             $oldD = $old['details'];
             $newD = $new['details'];
-            $str  = 'details - ';
-
-            if ( ! $oldD || ! $newD) {
-                $str .= '"' . $oldD . '" -> "' . $newD . '"';
-            } else {
+            if ($oldD && $newD) {
                 $i = 0;
                 while ($oldD[$i] == $newD[$i]) {
                     $i++;
                 }
-                $str .= 'near "' . substr($oldD, $i, 25) . '" -> "' . substr($newD, $i, 25) . '"';
+                $oldD = substr($oldD, $i, 25);
+                $newD = substr($newD, $i, 25);
             }
-
-            array_push($updates, $str);
+            array_push($updates, $this->genStrUpd('details', $oldD, $newD));
         }
 
         if ($old['schedule'] != $new['schedule']) {
-            array_push($updates, 'schedule - "' . $old['schedule'] . '" -> "' . $new['schedule'] . '"');
+            array_push($updates, $this->genStrUpd('schedule', $old['schedule'], $new['schedule']));
         }
 
         if ($old['importance'] != $new['importance']) {
-            array_push($updates, 'importance - "' . $this->importanceText($old['importance']) . '" -> "' . $this->importanceText($new['importance']) . '"');
+            array_push($updates, $this->genStrUpd('importance', $this->importanceText($old['importance']), $this->importanceText($new['importance'])));
         }
 
         if ($old['status'] != $new['status']) {
-            array_push($updates, 'status - "' . $this->statusText($old['status']) . '" -> "' . $this->statusText($new['status']) . '"');
+            array_push($updates, $this->genStrUpd('status', $this->statusText($old['status']), $this->statusText($new['status'])));
         }
 
         if ($old['user_id'] != $new['user_id']) {
-            array_push($updates, 'performer - "'
-                                 . $old['user']['name'] . ($old['user']['surname'] ? ' ' . $old['user']['surname'] : '') . '" -> "'
-                                 . $new['user']['name'] . ($new['user']['surname'] ? ' ' . $new['user']['surname'] : '') . '"');
+            $oldUser = $old['user']['name'] . ($old['user']['surname'] ? ' ' . $old['user']['surname'] : '');
+            $newUser = $new['user']['name'] . ($new['user']['surname'] ? ' ' . $new['user']['surname'] : '');
+            array_push($updates, $this->genStrUpd('performer', $oldUser, $newUser));
         }
 
         if ($old['project_id'] != $new['project_id']) {
-            array_push($updates, 'project - "' . $old['project']['name'] . '" -> "' . $new['project']['name'] . '"');
+            array_push($updates, $this->genStrUpd('project', $old['project']['name'], $new['project']['name']));
         }
 
         return $updates;
+    }
+
+    /**
+     * Generate string for updates
+     *
+     * @param $before
+     * @param $from
+     * @param $to
+     *
+     * @return string
+     */
+    protected function genStrUpd($before, $from, $to)
+    {
+        return $before . ' - "' . $from . '" -> "' . $to . '"';
     }
 
     /**
