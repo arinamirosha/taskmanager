@@ -9,10 +9,12 @@
                     <div class="form-group">
                         <label for="name-task">Name</label> <span class="text-danger">*</span>
                         <input class="form-control" id="name-task" v-model="name" :class="{'is-invalid': this.$v.name.$error}">
+                        <div v-if="this.$v.name.$error" class="ml-1 row text-danger">1-50 symbols, you have {{name.length}}</div>
                     </div>
                     <div class="form-group">
                         <label for="details">Details</label>
                         <textarea class="form-control" id="details" v-model="details" :class="{'is-invalid': this.$v.details.$error}"></textarea>
+                        <div v-if="this.$v.details.$error" class="ml-1 row text-danger">0-1500 symbols, you have {{details.length}}</div>
                     </div>
                     <div class="form-group">
                         <label for="schedule">Schedule</label>

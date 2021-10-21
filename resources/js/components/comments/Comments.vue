@@ -9,7 +9,7 @@
                     :class="{'is-invalid': $v.text.$error}"
                 />
             </div>
-            <div v-if="$v.text.$error" class="row text-danger">1-1500 symbols</div>
+            <div v-if="$v.text.$error" class="row text-danger">1-1500 symbols, you have {{text.length}}</div>
             <div class="row justify-content-end">
                 <button class="btn btn-primary" @click="sendComment" :disabled="isSendBtnDisabled">Send</button>
             </div>
@@ -41,7 +41,7 @@
                             :class="{'is-invalid': $v.textToEdit.$error}"
                             v-model="textToEdit"
                         ></textarea>
-                        <div v-if="$v.textToEdit.$error" class="row text-danger">1-1500 symbols</div>
+                        <div v-if="$v.textToEdit.$error" class="row text-danger">1-1500 symbols, you have {{textToEdit.length}}</div>
                         <div class="text-right">
                             <button type="button" class="btn btn-outline-secondary btn-sm" @click="cancelEdit()" :disabled="isCancelBtnDisabled">Cancel</button>
                             <button type="submit" class="btn btn-primary btn-sm" :disabled="isUpdateBtnDisabled">Update</button>

@@ -10,6 +10,7 @@
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input class="form-control" id="email" v-model="email" :class="{'is-invalid': this.$v.email.$error}">
+                        <div v-if="this.$v.email.$error" class="ml-1 row text-danger">1-100 symbols, you have {{email.length}}</div>
                     </div>
                     <button type="submit" class="btn btn-primary" :disabled="isShareBtnDisabled">Share</button>
                 </form>

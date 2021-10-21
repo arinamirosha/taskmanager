@@ -6,6 +6,7 @@
                     <div class="col-md-6 form-group">
                         <label for="user-name">Name</label>
                         <input class="form-control" id="user-name" v-model="name" :class="{'is-invalid': this.$v.name.$error}">
+                        <div v-if="this.$v.name.$error" class="ml-1 row text-danger">1-70 symbols, you have {{name.length}}</div>
                     </div>
                 </div>
             </div>
@@ -14,6 +15,7 @@
                     <div class="col-md-6 form-group">
                         <label for="user-surname">Surname</label>
                         <input class="form-control" id="user-surname" v-model="surname" :class="{'is-invalid': this.$v.surname.$error}">
+                        <div v-if="this.$v.surname.$error" class="ml-1 row text-danger">0-70 symbols, you have {{surname.length}}</div>
                     </div>
                 </div>
             </div>

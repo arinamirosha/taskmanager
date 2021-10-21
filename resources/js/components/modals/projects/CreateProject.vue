@@ -9,6 +9,7 @@
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input class="form-control" id="name" v-model="name" :class="{'is-invalid': this.$v.name.$error}">
+                        <div v-if="this.$v.name.$error" class="ml-1 row text-danger">1-100 symbols, you have {{name.length}}</div>
                     </div>
                     <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="fav" v-model="fav">
