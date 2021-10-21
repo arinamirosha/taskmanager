@@ -7,7 +7,7 @@
             </div>
         </div>
         <div :class="largeStyle ? 'full pr-2' : 'mb-3'">
-            <div v-if="isDataLoaded" v-for="(notification, index) in notifications" class="row p-1" :class="{'bg-light': index % 2 === 0}">
+            <div v-if="isDataLoaded" v-for="(notification, index) in notifications" class="row p-1" :class="{'bg-even': index % 2 === 0}">
                 <div class="col-10" style="white-space: pre-line">{{notification.data.user + ' ' + notification.data.text}}</div>
                 <div class="col-2">{{formatDate(notification.created_at)}}</div>
             </div>
@@ -89,5 +89,8 @@ export default {
     overflow-y: scroll;
     overflow-x: hidden;
     margin-right: -12px;
+}
+.bg-even {
+    background-color: #4f645812;
 }
 </style>
