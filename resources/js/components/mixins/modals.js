@@ -24,14 +24,28 @@ export default {
                 case this.c.EDIT_PROJECT:
                     this.modalTitle = this.c.EDIT_PROJECT;
                     this.modalButton = 'Update';
-                    this.modalBodyComponent = 'projects-edit';
+                    this.modalBodyComponent = 'project-edit';
                     break;
+                case this.c.ARCHIVE_PROJECT:
+                    this.modalTitle = this.c.ARCHIVE_PROJECT;
+                    this.modalButton = 'Archive';
+                    this.modalBodyComponent = 'project-archive';
+                    break;
+                case this.c.DELETE_PROJECT:
+                    this.modalTitle = this.c.DELETE_PROJECT;
+                    this.modalButton = 'Delete';
+                    this.modalBodyComponent = 'project-delete';
+                    break;
+                    // restore
             }
             this.$bvModal.show(modalId);
+            console.log(type)
         }
     },
     components: {
         'project-create': () => import('../modals/projects/Create.vue'),
-        'projects-edit': () => import('../modals/projects/Edit.vue'),
+        'project-edit': () => import('../modals/projects/Edit.vue'),
+        'project-archive': () => import('../modals/projects/Archive.vue'),
+        'project-delete': () => import('../modals/projects/Delete.vue'),
     },
 }

@@ -122,6 +122,8 @@
                 @showProject="selectProject"
 
                 @projectEditModal="projectEditModal"
+                @projectArchiveModal="setModal(c.ARCHIVE_PROJECT, 'common-modal')"
+                @projectDeleteModal="setModal(c.DELETE_PROJECT, 'common-modal')"
             ></component>
         </div>
 
@@ -132,10 +134,12 @@
                 <component
                     :is="modalBodyComponent"
                     :project="projectToEdit"
+                    :projectId="selectedProjectId"
                     ref="modalBody"
                     @projectStored="projectStored"
                     @wait="wait=true"
                     @projectUpdated="projectUpdated"
+                    @projectDeleted="projectDeleted"
                 ></component>
             </template>
             <template #modal-footer="{ cancel }">
@@ -299,6 +303,11 @@ export default {
         projectUpdated(projectId) {
             this.getProjects();
             this.$refs.mainComponent.getProject(projectId);
+            this.wait = false;
+        },
+        projectDeleted(projectId) {
+            this.getProjects();
+            this.selectedProjectId = 0;
             this.wait = false;
         },
         selectProject(id) {

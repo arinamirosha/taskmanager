@@ -33,7 +33,7 @@
                             </a>
 
                             <span v-if="!project.shared">
-                                <a v-if="!project.deleted_at" class="cursor-pointer" data-toggle="modal" data-target="#archiveProjectModal">
+                                <a v-if="!project.deleted_at" class="cursor-pointer" @click="$emit('projectArchiveModal')">
                                     <i class="fas fa-archive text-secondary"></i>
                                 </a>
                                 <a v-else class="cursor-pointer" data-toggle="modal" data-target="#restoreProjectModal">
@@ -41,7 +41,7 @@
                                 </a>
                             </span>
 
-                            <a v-if="!project.shared" class="cursor-pointer text-danger" data-toggle="modal" data-target="#deleteProjectModal">
+                            <a v-if="!project.shared" class="cursor-pointer text-danger" @click="$emit('projectDeleteModal')">
                                 <i class="far fa-trash-alt"></i>
                             </a>
 
@@ -93,12 +93,6 @@
                 <!-- Modals-->
                 <div class="modal fade show mt-5 pb-5" id="shareProjectModal" tabindex="-1">
                     <share-project-modal :project="project" @updated="projectUpdated"></share-project-modal>
-                </div>
-                <div class="modal fade show mt-5 pb-5" id="deleteProjectModal" tabindex="-1">
-                    <delete-project-modal :project="project" @deleted="projectDeleted"></delete-project-modal>
-                </div>
-                <div class="modal fade show mt-5 pb-5" id="archiveProjectModal" tabindex="-1">
-                    <archive-project-modal :project="project" @deleted="projectDeleted"></archive-project-modal>
                 </div>
                 <div class="modal fade show mt-5 pb-5" id="restoreProjectModal" tabindex="-1">
                     <restore-project-modal :project="project" @updated="projectUpdated"></restore-project-modal>
@@ -193,6 +187,10 @@ export default {
     methods: {
         getProject(projectId) {
             let id = projectId ? projectId : this.id;
+            if (!id) {
+                this.project = null;
+                return;
+            }
             axios
                 .get(route('projects.show', id))
                 .then(response => {
@@ -219,10 +217,6 @@ export default {
         projectUpdated(projectId) {
             this.getProject(projectId);
             this.$emit('updated');
-        },
-        projectDeleted() {
-            this.project = null;
-            this.$emit('deleted');
         },
         showProject(id) {
             this.$emit('showProject', id);
