@@ -83,7 +83,7 @@
                         <span v-if="isOpenProjects">&#8595;</span>
                         <span v-else>&#8593;</span>
                         <span class="ml-2">Projects ({{projects.length}})</span>
-                        <a class="text-muted h4 pl-2 pr-2 pt-1 pb-1" data-toggle="modal" data-target="#createProjectModal">+</a>
+                        <a class="text-muted h4 pl-2 pr-2 pt-1 pb-1" @click="setModal(c.CREATE_PROJECT, 'common-modal')">+</a>
                     </h6>
                     <collapse-transition>
                         <div v-show="isOpenProjects">
@@ -108,7 +108,8 @@
 
         <div :class="{'main-content': largeStyle}" class="pt-3">
             <component
-                v-bind:is="currentComponent"
+                ref="mainComponent"
+                :is="currentComponent"
                 :id="this.selectedProjectId"
                 :type="type"
                 :newShared="newShared"
@@ -119,13 +120,29 @@
                 @taskStored="getProjects"
                 @taskDeleted="getProjects"
                 @showProject="selectProject"
+
+                @projectEditModal="projectEditModal"
             ></component>
         </div>
 
         <!-- Modal-->
-        <div class="modal fade show mt-5 pb-5" id="createProjectModal" tabindex="-1">
-            <create-project-modal @stored="storedProject"></create-project-modal>
-        </div>
+        <b-modal id="common-modal" @hide="(e) => {wait && e.preventDefault()}">
+            <template #modal-header>{{modalTitle}}</template>
+            <template #default>
+                <component
+                    :is="modalBodyComponent"
+                    :project="projectToEdit"
+                    ref="modalBody"
+                    @projectStored="projectStored"
+                    @wait="wait=true"
+                    @projectUpdated="projectUpdated"
+                ></component>
+            </template>
+            <template #modal-footer="{ cancel }">
+                <b-button size="sm" @click="cancel()" :disabled="wait">Cancel</b-button>
+                <b-button size="sm" variant="primary" @click="$refs.modalBody.handleSubmit()" :disabled="wait">{{modalButton}}</b-button>
+            </template>
+        </b-modal>
 
     </div>
 </template>
@@ -198,11 +215,13 @@ import { CollapseTransition } from "@ivanv/vue-collapse-transition";
 import route from "../route";
 import constantsMixin from "./mixins/constants.js";
 import customWidthMixin from "./mixins/custom-width.js";
+import modalsMixin from "./mixins/modals.js";
 
 export default {
     mixins: [
         constantsMixin,
         customWidthMixin,
+        modalsMixin,
     ],
     data() {
         return {
@@ -216,6 +235,8 @@ export default {
             isOpenFav: true,
             isOpenProjects: true,
             type: '',
+            wait: false,
+            projectToEdit: {}
         }
     },
     computed: {
@@ -266,9 +287,19 @@ export default {
                     console.log(error);
                 });
         },
-        storedProject(projectId) {
+        projectEditModal(project) {
+            this.projectToEdit = project;
+            this.setModal(this.c.EDIT_PROJECT, 'common-modal');
+        },
+        projectStored(projectId) {
             this.getProjects();
             this.selectProject(projectId);
+            this.wait = false;
+        },
+        projectUpdated(projectId) {
+            this.getProjects();
+            this.$refs.mainComponent.getProject(projectId);
+            this.wait = false;
         },
         selectProject(id) {
             this.selectedProjectId = id;
@@ -285,7 +316,6 @@ export default {
         'common-index-task': () => import('./tasks/CommonIndexTask.vue'),
         'show-project': () => import('./projects/ShowProject.vue'),
         'new-shared-projects': () => import('./projects/NewSharedProject.vue'),
-        'create-project-modal': () => import('./modals/projects/CreateProject.vue'),
     },
 }
 </script>

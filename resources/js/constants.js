@@ -18,3 +18,7 @@ export const UPCOMING      = 'upcoming';
 export const NOT_SCHEDULED = 'notScheduled';
 export const ARCHIVE       = 'archive';
 export const HISTORY       = 'history';
+
+// only front
+export const CREATE_PROJECT = 'Create New Project';
+export const EDIT_PROJECT = 'Edit Project';

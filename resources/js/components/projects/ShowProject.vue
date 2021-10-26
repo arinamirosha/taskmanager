@@ -24,7 +24,7 @@
                                 <i class="far fa-star text-custom-secondary" v-else id="not-fav" @click="changeFav(project.id, true)"></i>
                             </span>
 
-                            <a v-if="!project.deleted_at && !project.shared" class="cursor-pointer text-muted" data-toggle="modal" data-target="#editProjectModal">
+                            <a v-if="!project.deleted_at && !project.shared" class="text-muted cursor-pointer" @click="$emit('projectEditModal', project)">
                                 <i class="far fa-edit"></i>
                             </a>
 
@@ -91,10 +91,6 @@
                 </div>
 
                 <!-- Modals-->
-                <div class="modal fade show mt-5 pb-5" id="editProjectModal" tabindex="-1">
-                    <edit-project-modal :project="project" @updated="projectUpdated"></edit-project-modal>
-                </div>
-
                 <div class="modal fade show mt-5 pb-5" id="shareProjectModal" tabindex="-1">
                     <share-project-modal :project="project" @updated="projectUpdated"></share-project-modal>
                 </div>
@@ -336,7 +332,6 @@ export default {
         'delete-task-modal': () => import('../modals/tasks/DeleteTask.vue'),
         'edit-task-modal': () => import('../modals/tasks/EditTask.vue'),
         'list-item-task': () => import('../tasks/ListItemTask.vue'),
-        'edit-project-modal': () => import('../modals/projects/EditProject.vue'),
         'share-project-modal': () => import('../modals/projects/ShareProject.vue'),
         'delete-project-modal': () => import('../modals/projects/DeleteProject.vue'),
         'archive-project-modal': () => import('../modals/projects/ArchiveProject.vue'),

@@ -26,6 +26,7 @@
     },
     "dependencies": {
         "@ivanv/vue-collapse-transition": "^1.0.2",
+        "bootstrap-vue": "^2.21.2",
         "moment": "^2.29.1",
         "vuedraggable": "^2.24.3",
         "vuelidate": "^0.7.6"

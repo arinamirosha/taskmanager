@@ -318,6 +318,10 @@ class TaskManager
                 }
                 $oldD = substr($oldD, $i, 25);
                 $newD = substr($newD, $i, 25);
+            } elseif (strlen($oldD) > 50) {
+                $oldD = substr($oldD, 0, 50) . '...';
+            } elseif (strlen($newD) > 50) {
+                $newD = substr($newD, 0, 50) . '...';
             }
             array_push($updates, $this->genStrUpd('details', $oldD, $newD));
         }
