@@ -1,20 +1,24 @@
 <template>
     <div>
         <form @submit.prevent="shareProject" class="mb-2">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input class="form-control" id="email" v-model="email" :class="{'is-invalid': this.$v.email.$error}">
-                <div v-if="this.$v.email.$error" class="ml-1 row text-danger">1-100 symbols, you have
-                    {{ email.length }}
-                </div>
-            </div>
+            <b-form-group
+                label="Email"
+                label-for="email-input"
+                :state="$v.$dirty && $v.email.$error ? false : null"
+                :invalid-feedback="'Email must be like \'aaa@aaa.aaa\' with 1-100 symbols, you have ' + email.length"
+            >
+                <b-form-input
+                    id="email-input"
+                    v-model="email"
+                    :state="$v.$dirty && $v.email.$error ? false : null"
+                ></b-form-input>
+            </b-form-group>
             <button type="submit" class="btn btn-primary" :disabled="isShareBtnDisabled">Share</button>
         </form>
 
         <div v-for="sharedUser in project.shared_users" class="justify-content-between d-flex">
             <div>{{ sharedUser.email }}</div>
-            <div :class="statusSharedCss(sharedUser.pivot.accepted)">{{ statusSharedText(sharedUser.pivot.accepted) }}
-            </div>
+            <div :class="statusSharedCss(sharedUser.pivot.accepted)">{{ statusSharedText(sharedUser.pivot.accepted) }}</div>
             <div class="mv-10px">
                 <i
                     v-if="!project.deleted_at"
