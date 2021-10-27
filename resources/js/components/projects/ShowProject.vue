@@ -106,10 +106,8 @@
                     ></show-task-modal>
                 </div>
 
-                <button v-show="false" data-toggle="modal" data-target="#deleteTaskModal" ref="deleteTaskModalButton"></button>
-                <div class="modal fade show mt-5 pb-5" id="deleteTaskModal" tabindex="-1">
-                    <delete-task-modal :task="currentTask" @deleted="taskDeleted" @cancel="$refs.showTaskModalButton.click();"></delete-task-modal>
-                </div>
+                <button v-show="false" @click="$emit('openTaskModal', c.DELETE_TASK, currentTask)" ref="deleteTaskModalButton"></button>
+<!--                <delete-task-modal @cancel="$refs.showTaskModalButton.click();"></delete-task-modal>-->
 
                 <button v-show="false" data-toggle="modal" data-target="#editTaskModal" ref="editTaskModalButton"></button>
                 <div class="modal fade show mt-5 pb-5" id="editTaskModal" tabindex="-1">
@@ -239,11 +237,6 @@ export default {
             });
             this.$emit('taskArchived');
         },
-        taskDeleted() {
-            this.getProject();
-            this.currentTask = {};
-            this.$emit('taskDeleted');
-        },
         taskUpdated(task) {
             this.getProject();
             this.$emit('taskUpdated');
@@ -299,7 +292,6 @@ export default {
         draggable,
         'toast': () => import('../Toast.vue'),
         'show-task-modal': () => import('../modals/tasks/ShowTask.vue'),
-        'delete-task-modal': () => import('../modals/tasks/DeleteTask.vue'),
         'edit-task-modal': () => import('../modals/tasks/EditTask.vue'),
         'list-item-task': () => import('../tasks/ListItemTask.vue'),
     },

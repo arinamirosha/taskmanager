@@ -140,6 +140,7 @@
                     @projectStored="projectStored"
                     @projectUpdated="projectUpdated"
                     @projectDeleted="projectDeleted"
+                    @taskDeleted="taskDeleted"
                 ></component>
             </template>
             <template #modal-footer="{ cancel }">
@@ -321,9 +322,18 @@ export default {
             this.$refs.mainComponent.getProject(projectId);
             this.wait = false;
         },
-        projectDeleted(projectId) {
+        projectDeleted() {
             this.getProjects();
             this.selectedProjectId = 0;
+            this.wait = false;
+        },
+        taskDeleted() {
+            this.getProjects();
+            if (this.currentComponent === 'show-project') {
+                this.$refs.mainComponent.getProject();
+            } else {
+                this.$refs.mainComponent.getTasks();
+            }
             this.wait = false;
         },
         selectProject(id) {

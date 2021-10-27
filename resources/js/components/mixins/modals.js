@@ -51,6 +51,11 @@ export default {
                     this.modalButton = 'Add';
                     this.modalBodyComponent = 'task-create';
                     break;
+                case this.c.DELETE_TASK:
+                    this.modalTitle = this.c.DELETE_TASK;
+                    this.modalButton = 'Delete';
+                    this.modalBodyComponent = 'task-delete';
+                    break;
             }
             this.$bvModal.show(modalId);
         }
@@ -63,5 +68,6 @@ export default {
         'project-restore': () => import('../modals/projects/Restore.vue'),
         'project-share': () => import('../modals/projects/Share.vue'),
         'task-create': () => import('../modals/tasks/Create.vue'),
+        'task-delete': () => import('../modals/tasks/Delete.vue'),
     },
 }

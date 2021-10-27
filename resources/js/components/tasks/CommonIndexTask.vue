@@ -81,10 +81,8 @@
             ></show-task-modal>
         </div>
 
-        <button v-show="false" data-toggle="modal" data-target="#deleteTaskModal" ref="deleteTaskModalButton"></button>
-        <div class="modal fade show mt-5 pb-5" id="deleteTaskModal" tabindex="-1">
-            <delete-task-modal :task="currentTask" @deleted="taskDeleted" @cancel="$refs.showTaskModalButton.click()"></delete-task-modal>
-        </div>
+        <button v-show="false" @click="$emit('openTaskModal', c.DELETE_TASK, currentTask)" ref="deleteTaskModalButton"></button>
+        <!--                <delete-task-modal @cancel="$refs.showTaskModalButton.click();"></delete-task-modal>-->
 
         <button v-show="false" data-toggle="modal" data-target="#editTaskModal" ref="editTaskModalButton"></button>
         <div class="modal fade show mt-5 pb-5" id="editTaskModal" tabindex="-1">
@@ -287,11 +285,6 @@ export default {
             this.currentTask = task;
             this.$refs.showTaskModalButton.click();
         },
-        taskDeleted() {
-            this.currentTask = {};
-            this.getTasks();
-            this.$emit('taskDeleted');
-        },
         isOverdue(schedule) {
             return moment(schedule).isBefore(new Date, 'day');
         },
@@ -313,7 +306,6 @@ export default {
     components: {
         'toast': () => import('../Toast.vue'),
         'show-task-modal': () => import('../modals/tasks/ShowTask.vue'),
-        'delete-task-modal': () => import('../modals/tasks/DeleteTask.vue'),
         'edit-task-modal': () => import('../modals/tasks/EditTask.vue'),
         'archived-projects': () => import('../projects/ArchivedProjects.vue')
     },
