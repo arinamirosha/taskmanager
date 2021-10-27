@@ -25,3 +25,4 @@ export const EDIT_PROJECT    = 'Edit Project';
 export const ARCHIVE_PROJECT = 'Archive Project';
 export const DELETE_PROJECT  = 'Delete Project';
 export const RESTORE_PROJECT = 'Restore Project';
+export const SHARE_PROJECT   = 'Share Project';

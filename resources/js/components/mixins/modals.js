@@ -9,7 +9,7 @@ export default {
     data() {
         return {
             modalTitle: '',
-            modalButton: '',
+            modalButton: null,
             modalBodyComponent: '',
         }
     },
@@ -41,6 +41,11 @@ export default {
                     this.modalButton = 'Restore';
                     this.modalBodyComponent = 'project-restore';
                     break;
+                case this.c.SHARE_PROJECT:
+                    this.modalTitle = this.c.SHARE_PROJECT;
+                    this.modalButton = null;
+                    this.modalBodyComponent = 'project-share';
+                    break;
             }
             this.$bvModal.show(modalId);
         }
@@ -51,5 +56,6 @@ export default {
         'project-archive': () => import('../modals/projects/Archive.vue'),
         'project-delete': () => import('../modals/projects/Delete.vue'),
         'project-restore': () => import('../modals/projects/Restore.vue'),
+        'project-share': () => import('../modals/projects/Share.vue'),
     },
 }

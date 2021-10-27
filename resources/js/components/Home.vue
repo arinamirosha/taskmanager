@@ -120,12 +120,8 @@
                 @taskDeleted="getProjects"
                 @showProject="selectProject"
 
-                @projectEditModal="projectEditModal"
-                @projectArchiveModal="setModal(c.ARCHIVE_PROJECT, 'common-modal')"
-                @projectDeleteModal="setModal(c.DELETE_PROJECT, 'common-modal')"
-                @projectRestoreModal="setModal(c.RESTORE_PROJECT, 'common-modal')"
+                @openProjectModal="openProjectModal"
             ></component>
-<!--            удалить лишнее, сделать restore и shared-->
         </div>
 
         <!-- Modal-->
@@ -137,15 +133,21 @@
                     :project="projectToEdit"
                     :projectId="selectedProjectId"
                     ref="modalBody"
-                    @projectStored="projectStored"
                     @wait="wait=true"
+                    @projectStored="projectStored"
                     @projectUpdated="projectUpdated"
                     @projectDeleted="projectDeleted"
                 ></component>
             </template>
             <template #modal-footer="{ cancel }">
                 <b-button size="sm" @click="cancel()" :disabled="wait">Cancel</b-button>
-                <b-button size="sm" variant="primary" @click="$refs.modalBody.handleSubmit()" :disabled="wait">{{modalButton}}</b-button>
+                <b-button
+                    size="sm"
+                    variant="primary"
+                    v-if="modalButton"
+                    @click="$refs.modalBody.handleSubmit()"
+                    :disabled="wait"
+                >{{modalButton}}</b-button>
             </template>
         </b-modal>
 
@@ -292,9 +294,11 @@ export default {
                     console.log(error);
                 });
         },
-        projectEditModal(project) {
-            this.projectToEdit = project;
-            this.setModal(this.c.EDIT_PROJECT, 'common-modal');
+        openProjectModal(type, project = null) {
+            if (project) {
+                this.projectToEdit = project;
+            }
+            this.setModal(type, 'common-modal');
         },
         projectStored(projectId) {
             this.getProjects();

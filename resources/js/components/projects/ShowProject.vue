@@ -24,24 +24,24 @@
                                 <i class="far fa-star text-custom-secondary" v-else id="not-fav" @click="changeFav(project.id, true)"></i>
                             </span>
 
-                            <a v-if="!project.deleted_at && !project.shared" class="text-muted cursor-pointer" @click="$emit('projectEditModal', project)">
+                            <a v-if="!project.deleted_at && !project.shared" class="text-muted cursor-pointer" @click="$emit('openProjectModal', c.EDIT_PROJECT, project)">
                                 <i class="far fa-edit"></i>
                             </a>
 
-                            <a v-if="!project.deleted_at && !project.shared" class="cursor-pointer text-muted" data-toggle="modal" data-target="#shareProjectModal">
+                            <a v-if="!project.deleted_at && !project.shared" class="cursor-pointer text-muted" @click="$emit('openProjectModal', c.SHARE_PROJECT, project)">
                                 <i class="far fa-share-square"></i>
                             </a>
 
                             <span v-if="!project.shared">
-                                <a v-if="!project.deleted_at" class="cursor-pointer" @click="$emit('projectArchiveModal')">
+                                <a v-if="!project.deleted_at" class="cursor-pointer" @click="$emit('openProjectModal', c.ARCHIVE_PROJECT)">
                                     <i class="fas fa-archive text-secondary"></i>
                                 </a>
-                                <a v-else class="cursor-pointer" @click="$emit('projectRestoreModal')">
+                                <a v-else class="cursor-pointer" @click="$emit('openProjectModal', c.RESTORE_PROJECT)">
                                     <i class="fas fa-trash-restore"></i>
                                 </a>
                             </span>
 
-                            <a v-if="!project.shared" class="cursor-pointer text-danger" @click="$emit('projectDeleteModal')">
+                            <a v-if="!project.shared" class="cursor-pointer text-danger" @click="$emit('openProjectModal', c.DELETE_PROJECT)">
                                 <i class="far fa-trash-alt"></i>
                             </a>
 
@@ -91,9 +91,6 @@
                 </div>
 
                 <!-- Modals-->
-                <div class="modal fade show mt-5 pb-5" id="shareProjectModal" tabindex="-1">
-                    <share-project-modal :project="project" @updated="projectUpdated"></share-project-modal>
-                </div>
 
                 <div class="modal fade show mt-5 pb-5" id="createTaskModal" tabindex="-1">
                     <create-task-modal :project="project" :acceptedUsers="acceptedUsers" :currentUserId="currentUserId" @stored="taskStored"></create-task-modal>
@@ -211,10 +208,6 @@ export default {
                     this.project = null;
                 });
         },
-        projectUpdated(projectId) {
-            this.getProject(projectId);
-            this.$emit('updated');
-        },
         showProject(id) {
             this.$emit('showProject', id);
         },
@@ -323,7 +316,6 @@ export default {
         'delete-task-modal': () => import('../modals/tasks/DeleteTask.vue'),
         'edit-task-modal': () => import('../modals/tasks/EditTask.vue'),
         'list-item-task': () => import('../tasks/ListItemTask.vue'),
-        'share-project-modal': () => import('../modals/projects/ShareProject.vue'),
     },
 }
 </script>
