@@ -36,10 +36,13 @@ export default {
                     this.modalButton = 'Delete';
                     this.modalBodyComponent = 'project-delete';
                     break;
-                    // restore
+                case this.c.RESTORE_PROJECT:
+                    this.modalTitle = this.c.RESTORE_PROJECT;
+                    this.modalButton = 'Restore';
+                    this.modalBodyComponent = 'project-restore';
+                    break;
             }
             this.$bvModal.show(modalId);
-            console.log(type)
         }
     },
     components: {
@@ -47,5 +50,6 @@ export default {
         'project-edit': () => import('../modals/projects/Edit.vue'),
         'project-archive': () => import('../modals/projects/Archive.vue'),
         'project-delete': () => import('../modals/projects/Delete.vue'),
+        'project-restore': () => import('../modals/projects/Restore.vue'),
     },
 }

@@ -36,7 +36,7 @@
                                 <a v-if="!project.deleted_at" class="cursor-pointer" @click="$emit('projectArchiveModal')">
                                     <i class="fas fa-archive text-secondary"></i>
                                 </a>
-                                <a v-else class="cursor-pointer" data-toggle="modal" data-target="#restoreProjectModal">
+                                <a v-else class="cursor-pointer" @click="$emit('projectRestoreModal')">
                                     <i class="fas fa-trash-restore"></i>
                                 </a>
                             </span>
@@ -93,9 +93,6 @@
                 <!-- Modals-->
                 <div class="modal fade show mt-5 pb-5" id="shareProjectModal" tabindex="-1">
                     <share-project-modal :project="project" @updated="projectUpdated"></share-project-modal>
-                </div>
-                <div class="modal fade show mt-5 pb-5" id="restoreProjectModal" tabindex="-1">
-                    <restore-project-modal :project="project" @updated="projectUpdated"></restore-project-modal>
                 </div>
 
                 <div class="modal fade show mt-5 pb-5" id="createTaskModal" tabindex="-1">
@@ -327,9 +324,6 @@ export default {
         'edit-task-modal': () => import('../modals/tasks/EditTask.vue'),
         'list-item-task': () => import('../tasks/ListItemTask.vue'),
         'share-project-modal': () => import('../modals/projects/ShareProject.vue'),
-        'delete-project-modal': () => import('../modals/projects/DeleteProject.vue'),
-        'archive-project-modal': () => import('../modals/projects/ArchiveProject.vue'),
-        'restore-project-modal': () => import('../modals/projects/RestoreProject.vue'),
     },
 }
 </script>

@@ -24,3 +24,4 @@ export const CREATE_PROJECT  = 'Create New Project';
 export const EDIT_PROJECT    = 'Edit Project';
 export const ARCHIVE_PROJECT = 'Archive Project';
 export const DELETE_PROJECT  = 'Delete Project';
+export const RESTORE_PROJECT = 'Restore Project';

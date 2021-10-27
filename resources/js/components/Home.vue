@@ -114,7 +114,6 @@
                 :type="type"
                 :newShared="newShared"
                 @updated="getProjects"
-                @deleted="getProjects"
                 @taskArchived="getProjects"
                 @taskUpdated="getProjects"
                 @taskStored="getProjects"
@@ -124,7 +123,9 @@
                 @projectEditModal="projectEditModal"
                 @projectArchiveModal="setModal(c.ARCHIVE_PROJECT, 'common-modal')"
                 @projectDeleteModal="setModal(c.DELETE_PROJECT, 'common-modal')"
+                @projectRestoreModal="setModal(c.RESTORE_PROJECT, 'common-modal')"
             ></component>
+<!--            удалить лишнее, сделать restore и shared-->
         </div>
 
         <!-- Modal-->
