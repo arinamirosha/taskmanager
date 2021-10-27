@@ -113,14 +113,15 @@
                 :id="this.selectedProjectId"
                 :type="type"
                 :newShared="newShared"
+                :currentUserId="currentUserId"
                 @updated="getProjects"
                 @taskArchived="getProjects"
                 @taskUpdated="getProjects"
-                @taskStored="getProjects"
                 @taskDeleted="getProjects"
                 @showProject="selectProject"
 
                 @openProjectModal="openProjectModal"
+                @openTaskModal="openTaskModal"
             ></component>
         </div>
 
@@ -131,7 +132,9 @@
                 <component
                     :is="modalBodyComponent"
                     :project="projectToEdit"
+                    :task="taskToEdit"
                     :projectId="selectedProjectId"
+                    :currentUserId="currentUserId"
                     ref="modalBody"
                     @wait="wait=true"
                     @projectStored="projectStored"
@@ -243,7 +246,9 @@ export default {
             isOpenProjects: true,
             type: '',
             wait: false,
-            projectToEdit: {}
+            projectToEdit: {},
+            taskToEdit: {},
+            currentUserId: 0,
         }
     },
     computed: {
@@ -294,9 +299,15 @@ export default {
                     console.log(error);
                 });
         },
-        openProjectModal(type, project = null) {
+        openProjectModal(type, project = null){
             if (project) {
                 this.projectToEdit = project;
+            }
+            this.setModal(type, 'common-modal');
+        },
+        openTaskModal(type, task = null) {
+            if (task) {
+                this.taskToEdit = task;
             }
             this.setModal(type, 'common-modal');
         },
@@ -320,9 +331,20 @@ export default {
             this.type = '';
             this.setComponent('show-project');
         },
+        loadCurrentUser() {
+            axios
+                .get(route('users.show'))
+                .then(response => {
+                    this.currentUserId = response.data.id;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
     },
     mounted() {
         this.type = this.c.TODAY;
+        this.loadCurrentUser();
     },
     components: {
         CollapseTransition,

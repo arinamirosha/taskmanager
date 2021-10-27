@@ -142,9 +142,6 @@ class TaskController extends Controller
         $s          = $request->get('s', false);
         $notTrashed = $request->get('notTrashed', false);
 
-        $data['tasks']         = TaskManager::getIndexTasks($type, $s, $notTrashed);
-        $data['currentUserId'] = Auth::id();
-
-        return $data;
+        return TaskManager::getIndexTasks($type, $s, $notTrashed);
     }
 }

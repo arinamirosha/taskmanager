@@ -15,7 +15,7 @@
 
                         <div class="row h5 justify-content-between px-2 pt-2 pt-md-0">
 
-                            <button v-if="!project.deleted_at" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createTaskModal">Add New Task</button>
+                            <button v-if="!project.deleted_at" class="btn btn-primary btn-sm" @click="$emit('openProjectModal', c.CREATE_TASK, project)">Add New Task</button>
 
                             <button v-if="!project.deleted_at" :disabled="isArchFinBtnDisabled" class="btn btn-sm btn-outline-secondary" @click="archiveAllForProject">Archive Finished</button>
 
@@ -92,10 +92,6 @@
 
                 <!-- Modals-->
 
-                <div class="modal fade show mt-5 pb-5" id="createTaskModal" tabindex="-1">
-                    <create-task-modal :project="project" :acceptedUsers="acceptedUsers" :currentUserId="currentUserId" @stored="taskStored"></create-task-modal>
-                </div>
-
                 <button v-show="false" data-toggle="modal" data-target="#showTaskModal" ref="showTaskModalButton"></button>
                 <div class="modal fade show mt-5 pb-5 pb-5" id="showTaskModal" tabindex="-1" ref="showTaskModal">
                     <show-task-modal
@@ -142,7 +138,7 @@ export default {
         constantsMixin,
         customWidthMixin,
     ],
-    props: ['id'],
+    props: ['id', 'currentUserId'],
     data() {
         return {
             project: {},
@@ -156,7 +152,6 @@ export default {
             isProjectLoaded: false,
             currentTask: {},
             infoBody: '',
-            currentUserId: 0,
             isArchFinBtnDisabled: false,
         }
     },
@@ -167,11 +162,9 @@ export default {
         }
     },
     computed: {
-        acceptedUsers() {
-            return this.project.shared_users.filter(a => a.pivot.accepted);
-        },
         sharedNames: function () {
-            let names = this.acceptedUsers.map(a => a.name + (a.surname ? ' ' + a.surname : ''));
+            let acceptedUsers = this.project.shared_users.filter(a => a.pivot.accepted);
+            let names = acceptedUsers.map(a => a.name + (a.surname ? ' ' + a.surname : ''));
             return names.length ? ', ' + names.join(', ') : '';
         },
         pDate: function () {
@@ -188,10 +181,8 @@ export default {
             axios
                 .get(route('projects.show', id))
                 .then(response => {
-                    this.project = response.data.project;
-                    this.tasks = response.data.project.tasks;
-                    this.currentUserId = response.data.currentUserId;
-                    this.projectName = this.project.name;
+                    this.project = response.data;
+                    this.tasks = this.project.tasks;
 
                     this.tasksNew = this.tasks.filter(task => { return task.status === this.c.STATUS_NEW; }).sort((a, b) => b.importance - a.importance);
                     this.tasksProgress = this.tasks.filter(task => { return task.status === this.c.STATUS_PROGRESS; }).sort((a, b) => b.importance - a.importance);
@@ -261,10 +252,6 @@ export default {
                 this.$refs.showTaskModalButton.click();
             }
         },
-        taskStored() {
-            this.getProject();
-            this.$emit('taskStored');
-        },
         changeFav(projectId, favorite) {
             axios
                 .post(route('projects.favorite', projectId), {
@@ -311,7 +298,6 @@ export default {
     components: {
         draggable,
         'toast': () => import('../Toast.vue'),
-        'create-task-modal': () => import('../modals/tasks/CreateTask.vue'),
         'show-task-modal': () => import('../modals/tasks/ShowTask.vue'),
         'delete-task-modal': () => import('../modals/tasks/DeleteTask.vue'),
         'edit-task-modal': () => import('../modals/tasks/EditTask.vue'),

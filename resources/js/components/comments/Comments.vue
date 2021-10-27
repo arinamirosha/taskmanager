@@ -80,14 +80,13 @@ export default {
         customWidthMixin,
         paginationMixin,
     ],
-    props: ['taskId', 'isArchive'],
+    props: ['taskId', 'isArchive', 'currentUserId'],
     data() {
         return {
             comments: [],
             text: '',
             isDataLoaded: false,
             dataLoading: false,
-            currentUserId: 0,
             isSendBtnDisabled: false,
             isLoadBtnDisabled: false,
             editCommentId: null,
@@ -142,9 +141,8 @@ export default {
             axios
                 .get(route('comments.index', this.taskId))
                 .then(response => {
-                    this.firstLoad(response.data.comments);
-                    this.comments = response.data.comments.data;
-                    this.currentUserId = response.data.currentUserId;
+                    this.firstLoad(response.data);
+                    this.comments = response.data.data;
                     this.isDataLoaded = true;
                 })
                 .catch(error => {
@@ -161,8 +159,8 @@ export default {
                     }
                 })
                 .then(response => {
-                    this.loadedMore(response.data.comments);
-                    this.comments = this.comments.concat(response.data.comments.data);
+                    this.loadedMore(response.data);
+                    this.comments = this.comments.concat(response.data.data);
                     this.dataLoading = false;
                     this.isLoadBtnDisabled = false;
                 })

@@ -46,6 +46,11 @@ export default {
                     this.modalButton = null;
                     this.modalBodyComponent = 'project-share';
                     break;
+                case this.c.CREATE_TASK:
+                    this.modalTitle = this.c.CREATE_TASK;
+                    this.modalButton = 'Add';
+                    this.modalBodyComponent = 'task-create';
+                    break;
             }
             this.$bvModal.show(modalId);
         }
@@ -57,5 +62,6 @@ export default {
         'project-delete': () => import('../modals/projects/Delete.vue'),
         'project-restore': () => import('../modals/projects/Restore.vue'),
         'project-share': () => import('../modals/projects/Share.vue'),
+        'task-create': () => import('../modals/tasks/Create.vue'),
     },
 }

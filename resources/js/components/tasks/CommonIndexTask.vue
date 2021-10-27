@@ -106,7 +106,7 @@ export default {
         customWidthMixin,
         paginationMixin,
     ],
-    props: ['type'],
+    props: ['type', 'currentUserId'],
     data() {
         return {
             tasks: [],
@@ -117,7 +117,6 @@ export default {
             currentTask: {},
             s: '',
             notTrashed: false,
-            currentUserId: 0,
             isLoadBtnDisabled: false,
             isArchFinBtnDisabled: false,
         }
@@ -188,9 +187,8 @@ export default {
                     }
                 })
                 .then(response => {
-                    this.firstLoad(response.data.tasks);
-                    this.tasks = response.data.tasks.data;
-                    this.currentUserId = response.data.currentUserId;
+                    this.firstLoad(response.data);
+                    this.tasks = response.data.data;
                     this.isDataLoaded = true;
                     this.dataLoading = false;
                 })
@@ -211,8 +209,8 @@ export default {
                     }
                 })
                 .then(response => {
-                    this.loadedMore(response.data.tasks);
-                    this.tasks = this.tasks.concat(response.data.tasks.data);
+                    this.loadedMore(response.data);
+                    this.tasks = this.tasks.concat(response.data.data);
                     this.dataLoading = false;
                     this.isLoadBtnDisabled = false;
                 })

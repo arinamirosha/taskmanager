@@ -63,6 +63,7 @@
                         <comments
                             :taskId="task.id"
                             :isArchive="task.deleted_at !== null"
+                            :currentUserId="currentUserId"
                             @newComment="++task.comments_count"
                             @commentDeleted="--task.comments_count"
                         ></comments>

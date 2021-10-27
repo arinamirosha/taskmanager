@@ -1,17 +1,7 @@
 <template>
-    <form ref="form">
-        <b-form-group
-            label="Name"
-            label-for="name-input"
-            :state="$v.$dirty && $v.name.$error ? false : null"
-            :invalid-feedback="'1-100 symbols, you have ' + name.length"
-        >
-            <b-form-input
-                id="name-input"
-                v-model="name"
-                :state="$v.$dirty && $v.name.$error ? false : null"
-                required
-            ></b-form-input>
+    <form>
+        <b-form-group label="Name" label-for="name-input" :invalid-feedback="'1-100 symbols, you have ' + name.length">
+            <b-form-input id="name-input" v-model="name" :state="$v.$dirty && $v.name.$error ? false : null" required></b-form-input>
         </b-form-group>
 
         <b-form-checkbox v-model="fav" switch>Add To Favorites</b-form-checkbox>

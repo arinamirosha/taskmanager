@@ -76,10 +76,7 @@ class ProjectsController extends Controller
         $project = Project::withTrashed()->findOrFail($id);
         $this->authorize('view', $project);
 
-        $data['project']       = ProjectManager::addDataToProject($project);
-        $data['currentUserId'] = Auth::id();
-
-        return $data;
+        return ProjectManager::addDataToProject($project);
     }
 
     /**

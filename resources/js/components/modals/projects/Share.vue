@@ -1,17 +1,8 @@
 <template>
     <div>
         <form @submit.prevent="shareProject" class="mb-2">
-            <b-form-group
-                label="Email"
-                label-for="email-input"
-                :state="$v.$dirty && $v.email.$error ? false : null"
-                :invalid-feedback="'Email must be like \'aaa@aaa.aaa\' with 1-100 symbols, you have ' + email.length"
-            >
-                <b-form-input
-                    id="email-input"
-                    v-model="email"
-                    :state="$v.$dirty && $v.email.$error ? false : null"
-                ></b-form-input>
+            <b-form-group label="Email" label-for="email-input" :invalid-feedback="'Pattern: \'aaa@aaa.aaa\', 1-100 symbols, you have ' + email.length">
+                <b-form-input id="email-input" v-model="email" :state="$v.$dirty && $v.email.$error ? false : null"></b-form-input>
             </b-form-group>
             <button type="submit" class="btn btn-primary" :disabled="isShareBtnDisabled">Share</button>
         </form>
@@ -20,12 +11,7 @@
             <div>{{ sharedUser.email }}</div>
             <div :class="statusSharedCss(sharedUser.pivot.accepted)">{{ statusSharedText(sharedUser.pivot.accepted) }}</div>
             <div class="mv-10px">
-                <i
-                    v-if="!project.deleted_at"
-                    class="fas fa-times text-secondary text-sm"
-                    @click="unshare(sharedUser.email)"
-                    v-show="!sharedEmailsToDel.includes(sharedUser.email)"
-                ></i>
+                <i v-if="!project.deleted_at" class="fas fa-times text-secondary text-sm" @click="unshare(sharedUser.email)" v-show="!sharedEmailsToDel.includes(sharedUser.email)"></i>
             </div>
         </div>
     </div>
