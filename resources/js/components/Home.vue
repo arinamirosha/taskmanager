@@ -131,8 +131,8 @@
             <template #default>
                 <component
                     :is="modalBodyComponent"
-                    :project="projectToEdit"
-                    :task="taskToEdit"
+                    :project="projectForModal"
+                    :task="taskForModal"
                     :projectId="selectedProjectId"
                     :currentUserId="currentUserId"
                     ref="modalBody"
@@ -141,6 +141,7 @@
                     @projectUpdated="projectUpdated"
                     @projectDeleted="projectDeleted"
                     @taskDeleted="taskDeleted"
+                    @taskUpdated="taskUpdated"
                 ></component>
             </template>
             <template #modal-footer="{ cancel }">
@@ -247,8 +248,6 @@ export default {
             isOpenProjects: true,
             type: '',
             wait: false,
-            projectToEdit: {},
-            taskToEdit: {},
             currentUserId: 0,
         }
     },
@@ -300,26 +299,14 @@ export default {
                     console.log(error);
                 });
         },
-        openProjectModal(type, project = null){
-            if (project) {
-                this.projectToEdit = project;
-            }
-            this.setModal(type, 'common-modal');
-        },
-        openTaskModal(type, task = null) {
-            if (task) {
-                this.taskToEdit = task;
-            }
-            this.setModal(type, 'common-modal');
+        projectUpdated(projectId) {
+            this.getProjects();
+            this.$refs.mainComponent.getProject(projectId);
+            this.wait = false;
         },
         projectStored(projectId) {
             this.getProjects();
             this.selectProject(projectId);
-            this.wait = false;
-        },
-        projectUpdated(projectId) {
-            this.getProjects();
-            this.$refs.mainComponent.getProject(projectId);
             this.wait = false;
         },
         projectDeleted() {
@@ -335,6 +322,9 @@ export default {
                 this.$refs.mainComponent.getTasks();
             }
             this.wait = false;
+        },
+        taskUpdated() {
+            this.taskDeleted();
         },
         selectProject(id) {
             this.selectedProjectId = id;

@@ -11,6 +11,8 @@ export default {
             modalTitle: '',
             modalButton: null,
             modalBodyComponent: '',
+            projectForModal: {},
+            taskForModal: {},
         }
     },
     methods: {
@@ -56,9 +58,34 @@ export default {
                     this.modalButton = 'Delete';
                     this.modalBodyComponent = 'task-delete';
                     break;
+                case this.c.SHOW_TASK:
+                    this.modalTitle = this.c.SHOW_TASK;
+                    this.modalButton = null;
+                    this.modalBodyComponent = 'task-show';
+                    break;
+                case this.c.EDIT_TASK:
+                    this.modalTitle = this.c.EDIT_TASK;
+                    this.modalButton = 'Update';
+                    this.modalBodyComponent = 'task-edit';
+                    break;
             }
             this.$bvModal.show(modalId);
-        }
+        },
+        openProjectModal(type, project = null){
+            if (project) {
+                this.projectForModal = project;
+            }
+            this.setModal(type, 'common-modal');
+        },
+        openTaskModal(type, task = null, project = null) {
+            if (task) {
+                this.taskForModal = task;
+            }
+            if (project) {
+                this.projectForModal = project;
+            }
+            this.setModal(type, 'common-modal');
+        },
     },
     components: {
         'project-create': () => import('../modals/projects/Create.vue'),
@@ -69,5 +96,7 @@ export default {
         'project-share': () => import('../modals/projects/Share.vue'),
         'task-create': () => import('../modals/tasks/Create.vue'),
         'task-delete': () => import('../modals/tasks/Delete.vue'),
+        'task-show': () => import('../modals/tasks/Show.vue'),
+        'task-edit': () => import('../modals/tasks/Edit.vue'),
     },
 }

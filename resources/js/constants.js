@@ -26,5 +26,8 @@ export const ARCHIVE_PROJECT = 'Archive Project';
 export const DELETE_PROJECT  = 'Delete Project';
 export const RESTORE_PROJECT = 'Restore Project';
 export const SHARE_PROJECT   = 'Share Project';
-export const CREATE_TASK     = 'Create New Task';
-export const DELETE_TASK     = 'Delete Task';
+
+export const CREATE_TASK = 'Create New Task';
+export const DELETE_TASK = 'Delete Task';
+export const SHOW_TASK   = 'Show Task';
+export const EDIT_TASK   = 'Edit Task';

@@ -1,4 +1,5 @@
 <template>
+<!--    todo change to show task modal body-->
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header justify-content-between border-bottom-0">

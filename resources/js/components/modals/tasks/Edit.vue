@@ -9,7 +9,7 @@
         </b-form-group>
 
         <b-form-group label="Schedule" label-for="schedule-input">
-            <b-form-datepicker id="schedule-input" v-model="schedule" :min="today" locale="en" :state="$v.$dirty && $v.schedule.$error ? false : null"></b-form-datepicker>
+            <b-form-datepicker id="schedule-input" v-model="schedule" :min="minSchedule" locale="en" :state="$v.$dirty && $v.schedule.$error ? false : null"></b-form-datepicker>
         </b-form-group>
 
         <b-form-group label="Importance" label-for="importance-input">
@@ -17,28 +17,27 @@
         </b-form-group>
 
         <b-form-group label="Performer" label-for="performer-input" v-if="acceptedUsers.length">
-            <b-form-select id="performer-input" v-model="performerId" :options="performers"></b-form-select>
+            <b-form-select id="performer-input" v-model="performerId" :options="performers" :disabled="isDisabled"></b-form-select>
+        </b-form-group>
+
+        <b-form-group label="Project" label-for="project-input" v-if="task.owner_id === currentUserId">
+            <b-form-select id="project-input" v-model="projectId" :options="projects" @change="changePerformer"></b-form-select>
         </b-form-group>
     </form>
 </template>
 
 <script>
-import { required, maxLength, minValue, numeric } from 'vuelidate/lib/validators';
+import { required, maxLength, minValue } from 'vuelidate/lib/validators';
 import route from "../../../route";
+import constantsMixin from "../../mixins/constants.js";
 import moment from "moment";
-import constantsMixin from "../../mixins/constants";
-import Vue from 'vue';
+import Vue from "vue";
 
 export default {
     mixins: [
         constantsMixin,
     ],
-    props: ['project', 'currentUserId'],
-    computed: {
-        acceptedUsers() {
-            return this.project.shared_users.filter(a => a.pivot.accepted);
-        },
-    },
+    props: ['task', 'project', 'currentUserId'],
     data() {
         return {
             name: '',
@@ -47,9 +46,20 @@ export default {
             today: moment().format("YYYY-MM-DD"),
             importance: 0,
             statuses: [],
-            performerId: this.currentUserId,
+            projectId: 0,
+            performerId: 0,
+            projects: [],
             performers: [],
+            isDisabled: false,
         }
+    },
+    computed: {
+        acceptedUsers() {
+            return this.project ? this.project.shared_users.filter(a => a.pivot.accepted) : [];
+        },
+        minSchedule: function () {
+            return (!this.task.schedule) || (this.task.schedule > this.today) ? this.today : this.task.schedule;
+        },
     },
     validations: {
         name: {
@@ -60,29 +70,44 @@ export default {
             maxLength: maxLength(1500),
         },
         schedule: {
-            minValue(value) {
-                return (value === null) || (value >= this.today) || (value === '')
+            minValue (value) {
+                return (value === null)
+                    || (value >= this.minSchedule)
+                    || (value === '')
             },
         },
     },
     methods: {
+        getProjects() {
+            axios
+                .get(route('projects.index'))
+                .then(response => {
+                    let projects = response.data.projects;
+                    this.projects = projects.map((p) => {
+                        return {value: p.id, text: p.name}
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
         handleSubmit(e) {
             this.$v.$touch();
             if (this.$v.$invalid) {
-                return;
+                return
             }
             this.$emit('wait');
             axios
-                .post(route('tasks.store'), {
-                    'project_id': this.project.id,
-                    'user_id': this.performerId,
+                .post(route('tasks.update', this.task.id), {
                     'name': this.name,
                     'details': this.details,
                     'schedule': this.schedule,
                     'importance': this.importance,
+                    'project_id': this.projectId,
+                    'user_id': this.performerId,
                 })
                 .then(response => {
-                    this.$emit('projectUpdated', this.project.id);
+                    this.$emit('taskUpdated');
                     this.$nextTick(() => {
                         this.$bvModal.hide('common-modal')
                     })
@@ -91,9 +116,28 @@ export default {
                     console.log(error)
                 });
         },
+        setOriginValues() {
+            this.name = this.task.name;
+            this.details = this.task.details ?? '';
+            this.schedule = this.task.schedule;
+            this.importance = this.task.importance;
+            this.projectId = this.task.project_id;
+            this.performerId = this.task.user_id;
+            this.isDisabled = false;
+        },
+        changePerformer() {
+            if (this.projectId !== this.task.project_id) {
+                this.performerId = this.currentUserId;
+                this.isDisabled = true;
+            } else {
+                this.performerId = this.task.user_id;
+                this.isDisabled = false;
+            }
+        },
     },
     mounted() {
-        this.importance = this.c.STATUS_NORMAL;
+        this.setOriginValues();
+        this.getProjects();
 
         let statuses = [this.c.STATUS_NORMAL, this.c.STATUS_MEDIUM, this.c.STATUS_STRONG];
         this.statuses = statuses.map((s) => {

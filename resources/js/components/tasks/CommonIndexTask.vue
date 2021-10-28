@@ -84,10 +84,9 @@
         <button v-show="false" @click="$emit('openTaskModal', c.DELETE_TASK, currentTask)" ref="deleteTaskModalButton"></button>
         <!--                <delete-task-modal @cancel="$refs.showTaskModalButton.click();"></delete-task-modal>-->
 
-        <button v-show="false" data-toggle="modal" data-target="#editTaskModal" ref="editTaskModalButton"></button>
-        <div class="modal fade show mt-5 pb-5" id="editTaskModal" tabindex="-1">
-            <edit-task-modal :task="currentTask" :project="currentTask.project" :currentUserId="currentUserId" @updated="taskUpdated" @cancel="$refs.showTaskModalButton.click()"></edit-task-modal>
-        </div>
+        <button v-show="false" @click="$emit('openTaskModal', c.EDIT_TASK, currentTask, currentTask.project)" ref="editTaskModalButton"></button>
+        <!--                <edit-task-modal @updated="taskUpdated" @cancel="$refs.showTaskModalButton.click()"></edit-task-modal>-->
+
     </div>
 </template>
 
@@ -306,7 +305,6 @@ export default {
     components: {
         'toast': () => import('../Toast.vue'),
         'show-task-modal': () => import('../modals/tasks/ShowTask.vue'),
-        'edit-task-modal': () => import('../modals/tasks/EditTask.vue'),
         'archived-projects': () => import('../projects/ArchivedProjects.vue')
     },
 }
