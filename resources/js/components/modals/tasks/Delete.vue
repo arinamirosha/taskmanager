@@ -15,7 +15,7 @@ export default {
             axios
                 .delete(route('tasks.destroy-force', this.task.id))
                 .then(response => {
-                    this.$emit('taskDeleted');
+                    this.$emit('taskUpdated');
                     this.$nextTick(() => {
                         this.$bvModal.hide('common-modal')
                     })

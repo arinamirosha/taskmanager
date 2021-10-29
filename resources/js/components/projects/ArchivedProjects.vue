@@ -27,7 +27,7 @@
                     <div v-if="isDataLoaded && projects.length !== 0" v-for="(project, index) in projects"
                          :key="project.id"
                          class="row cursor-pointer task pt-1 pb-1"
-                         @click="showProject(project.id)"
+                         @click="$emit('showProject', project.id)"
                          :class="{'bg-light': compactStyle && index % 2 === 0}"
                     >
                         <div class="col-md-8" :class="{'text-secondary': project.user_id !== currentUserId}">{{project.name}}</div>
@@ -125,9 +125,6 @@ export default {
         },
         formatDate(date) {
             return date ? moment(date).format('MMMM DD, YYYY') : '';
-        },
-        showProject(id) {
-            this.$emit('showProject', id);
         },
     },
     mounted() {

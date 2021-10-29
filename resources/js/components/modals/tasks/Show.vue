@@ -144,12 +144,7 @@ export default {
 .cursor-pointer {
     cursor: pointer;
 }
-
 .project-name:hover {
     color: #bcbcbc;
-}
-
-.fa-edit:hover {
-    color: #212529;
 }
 </style>

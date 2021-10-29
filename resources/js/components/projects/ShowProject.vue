@@ -172,9 +172,6 @@ export default {
                     this.project = null;
                 });
         },
-        showProject(id) {
-            this.$emit('showProject', id);
-        },
         isMove(e) {
             let task =  e.draggedContext.element;
             return (e.from !== e.to) && (task.owner_id === this.currentUserId || task.user_id === this.currentUserId);
@@ -218,7 +215,7 @@ export default {
                 })
                 .then(response => {
                     this.getProject();
-                    this.$emit('updated');
+                    this.$emit('projectUpdated');
                 })
                 .catch(error => {
                     console.log(error)

@@ -114,12 +114,10 @@
                 :type="type"
                 :newShared="newShared"
                 :currentUserId="currentUserId"
-                @updated="getProjects"
+                @projectUpdated="getProjects"
                 @taskArchived="getProjects"
                 @taskUpdated="getProjects"
-                @taskDeleted="getProjects"
                 @showProject="selectProject"
-
                 @openProjectModal="openProjectModal"
                 @openTaskModal="openTaskModal"
             ></component>
@@ -148,7 +146,6 @@
                     @projectStored="projectStored"
                     @projectUpdated="projectUpdated"
                     @projectDeleted="projectDeleted"
-                    @taskDeleted="taskDeleted"
                     @taskUpdated="taskUpdated"
                     @showProject="selectProject"
                 ></component>
@@ -178,69 +175,6 @@
 
     </div>
 </template>
-
-<style scoped>
-nav a:hover,
-.active {
-    background-color: #e0eeee;
-    border-radius: 5px;
-    cursor: pointer;
-}
-nav a:hover {
-    text-decoration: none;
-}
-.cursor-pointer{
-    cursor: pointer;
-}
-.text-custom-secondary {
-    color: #c8c8c8;
-}
-.left-menu {
-    width: 300px;
-    height: calc(100vh - 55px);
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    overflow-y: scroll;
-}
-.main-content {
-    margin-left: 300px;
-}
-.name-count-space {
-    display: flex;
-    justify-content: space-between;
-}
-.btn-menu {
-    background-color: #e0eeee;
-    border-radius: 5px 5px 0 0;
-}
-.dropdown {
-    height: 0;
-}
-#dropdownMenuButton {
-    margin-top: -62px;
-    width: 80px;
-    margin-left: calc(50% - 40px);
-}
-.dropdown-menu {
-    width: 100vw;
-    margin-left: 5px;
-    top: 49px !important;
-    border: none;
-    border-radius: 0;
-    border-bottom: 1px solid #e0eeee;
-}
-.fa-share {
-    font-size: 10px;
-}
-.counts {
-    min-width: 40px;
-    text-align: right;
-}
-.nav-link {
-    padding: 3px 5px;
-}
-</style>
 
 <script>
 import { CollapseTransition } from "@ivanv/vue-collapse-transition";
@@ -340,7 +274,7 @@ export default {
             this.selectedProjectId = 0;
             this.wait = false;
         },
-        taskDeleted() {
+        taskUpdated() {
             this.getProjects();
             if (this.currentComponent === 'show-project') {
                 this.$refs.mainComponent.getProject();
@@ -348,9 +282,6 @@ export default {
                 this.$refs.mainComponent.getTasks();
             }
             this.wait = false;
-        },
-        taskUpdated() {
-            this.taskDeleted();
             this.waitTaskAction = false;
         },
         selectProject(id) {
@@ -382,3 +313,69 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+nav a:hover,
+.active {
+    background-color: #e0eeee;
+    border-radius: 5px;
+    cursor: pointer;
+}
+nav a:hover {
+    text-decoration: none;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+.text-custom-secondary {
+    color: #c8c8c8;
+}
+.left-menu {
+    width: 300px;
+    height: calc(100vh - 55px);
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    overflow-y: scroll;
+}
+.main-content {
+    margin-left: 300px;
+}
+.name-count-space {
+    display: flex;
+    justify-content: space-between;
+}
+.btn-menu {
+    background-color: #e0eeee;
+    border-radius: 5px 5px 0 0;
+}
+.dropdown {
+    height: 0;
+}
+#dropdownMenuButton {
+    margin-top: -62px;
+    width: 80px;
+    margin-left: calc(50% - 40px);
+}
+.dropdown-menu {
+    width: 100vw;
+    margin-left: 5px;
+    top: 49px !important;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid #e0eeee;
+}
+.fa-share {
+    font-size: 10px;
+}
+.counts {
+    min-width: 40px;
+    text-align: right;
+}
+.nav-link {
+    padding: 3px 5px;
+}
+.fa-edit:hover {
+    color: #212529;
+}
+</style>
