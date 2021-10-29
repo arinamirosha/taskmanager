@@ -23,7 +23,7 @@
                     </div>
                     <div v-if="task.details" class="mb-2">
                         <div class="font-weight-bold">Details</div>
-                        <div>{{ task.details }}</div>
+                        <div class="text-break">{{ task.details }}</div>
                     </div>
                     <div class="mb-2">
                         <div class="font-weight-bold">Project</div>
