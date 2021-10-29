@@ -64,9 +64,6 @@
 
         <archived-projects v-if="type === c.ARCHIVE" :currentUserId="currentUserId" @showProject="showProject"></archived-projects>
 
-        <!-- Toast -->
-        <toast :body="infoBody" />
-
     </div>
 </template>
 
@@ -89,7 +86,6 @@ export default {
             tasks: [],
             isDataLoaded: false,
             dataLoading: false,
-            infoBody: '',
             hideFinished: false,
             s: '',
             notTrashed: false,
@@ -216,14 +212,8 @@ export default {
                 })
                 .then(response => {
                     let countArchived = response.data;
-
-                    if (countArchived) {
-                        this.infoBody = 'Archived: ' + countArchived;
-                    } else {
-                        this.infoBody = 'Nothing to Archive';
-                    }
-
-                    $('.toast').toast('show');
+                    let infoBody = countArchived ? 'Archived: ' + countArchived : 'Nothing to Archive';
+                    this.$emit('showToast', infoBody)
                     this.taskArchived();
                     this.isArchFinBtnDisabled = false;
                 })
@@ -270,7 +260,6 @@ export default {
         this.getHideFinished();
     },
     components: {
-        'toast': () => import('../Toast.vue'),
         'archived-projects': () => import('../projects/ArchivedProjects.vue')
     },
 }

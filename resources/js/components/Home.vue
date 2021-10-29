@@ -120,6 +120,7 @@
                 @showProject="selectProject"
                 @openProjectModal="openProjectModal"
                 @openTaskModal="openTaskModal"
+                @showToast="showToast"
             ></component>
         </div>
 
@@ -176,6 +177,8 @@
             </template>
         </b-modal>
 
+        <!-- Toast -->
+        <toast :body="infoBody" />
     </div>
 </template>
 
@@ -207,6 +210,7 @@ export default {
             wait: false,
             waitTaskAction: false,
             currentUserId: 0,
+            infoBody: '',
         }
     },
     computed: {
@@ -296,6 +300,10 @@ export default {
             this.type = '';
             this.setComponent('show-project');
         },
+        showToast(infoBody) {
+            this.infoBody = infoBody;
+            $('.toast').toast('show');
+        },
         loadCurrentUser() {
             axios
                 .get(route('users.show'))
@@ -313,6 +321,7 @@ export default {
     },
     components: {
         CollapseTransition,
+        'toast': () => import('./Toast.vue'),
         'history': () => import('./notifications/History.vue'),
         'common-index-task': () => import('./tasks/CommonIndexTask.vue'),
         'show-project': () => import('./projects/ShowProject.vue'),

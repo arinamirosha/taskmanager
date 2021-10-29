@@ -90,9 +90,6 @@
                     </div>
                 </div>
 
-                <!-- Toast -->
-                <toast :body="infoBody" />
-
             </div>
         </div>
         <div v-else class="h4">Select project</div>
@@ -124,7 +121,6 @@ export default {
             tasksProgressLength: 0,
             tasksFinishedLength: 0,
             isProjectLoaded: false,
-            infoBody: '',
             isArchFinBtnDisabled: false,
         }
     },
@@ -231,14 +227,8 @@ export default {
                 })
                 .then(response => {
                     let countArchived = response.data;
-
-                    if (countArchived) {
-                        this.infoBody = 'Archived: ' + countArchived;
-                    } else {
-                        this.infoBody = 'Nothing to Archive';
-                    }
-
-                    $('.toast').toast('show');
+                    let infoBody = countArchived ? 'Archived: ' + countArchived : 'Nothing to Archive';
+                    this.$emit('showToast', infoBody)
                     this.getProject();
                     this.$emit('taskArchived');
                     this.isArchFinBtnDisabled = false;
@@ -253,7 +243,6 @@ export default {
     },
     components: {
         draggable,
-        'toast': () => import('../Toast.vue'),
         'list-item-task': () => import('../tasks/ListItemTask.vue'),
     },
 }
