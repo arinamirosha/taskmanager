@@ -168,8 +168,11 @@
                     </b-button>
                 </div>
 
-                <b-button @click="cancel()" :disabled="wait">Cancel</b-button>
-                <b-button variant="primary" v-if="modalButton" @click="$refs.modalBody.handleSubmit()" :disabled="wait">{{modalButton}}</b-button>
+                <b-button
+                    @click="modalBodyComponent === 'task-delete' || modalBodyComponent === 'task-edit' ? openTaskModal(c.SHOW_TASK, taskForModal, projectForModal) : cancel()"
+                    :disabled="wait"
+                >Cancel</b-button>
+                <b-button variant="primary" v-if="modalButton" @click="$refs.modalBody.handleSubmit()" :disabled="wait">{{ modalButton }}</b-button>
             </template>
         </b-modal>
 
@@ -274,12 +277,16 @@ export default {
             this.selectedProjectId = 0;
             this.wait = false;
         },
-        taskUpdated() {
+        taskUpdated(task) {
             this.getProjects();
             if (this.currentComponent === 'show-project') {
                 this.$refs.mainComponent.getProject();
             } else {
                 this.$refs.mainComponent.getTasks();
+            }
+            if (task && this.modalBodyComponent === 'task-edit') {
+                this.taskForModal = task;
+                this.openTaskModal(this.c.SHOW_TASK, this.taskForModal, this.projectForModal);
             }
             this.wait = false;
             this.waitTaskAction = false;

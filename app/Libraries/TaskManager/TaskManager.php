@@ -311,17 +311,25 @@ class TaskManager
         if ($old['details'] != $new['details']) {
             $oldD = $old['details'];
             $newD = $new['details'];
-            if ($oldD && $newD) {
-                $i = 0;
-                while ($oldD[$i] == $newD[$i]) {
-                    $i++;
+            if (strlen($oldD) > 25 || strlen($newD) > 25) {
+                if ($oldD && $newD) {
+                    $i = 0;
+                    while ($oldD[$i] == $newD[$i]) {
+                        if (!(isset($oldD[$i+1]) && isset($newD[$i+1]))) {
+                            break;
+                        }
+                        $i++;
+                    }
+                    if ($i > 5) {
+                        $i -= 5;
+                    }
+                    $oldD = substr($oldD, $i, 25);
+                    $newD = substr($newD, $i, 25);
+                } elseif (strlen($oldD) > 50) {
+                    $oldD = substr($oldD, 0, 50) . '...';
+                } elseif (strlen($newD) > 50) {
+                    $newD = substr($newD, 0, 50) . '...';
                 }
-                $oldD = substr($oldD, $i, 25);
-                $newD = substr($newD, $i, 25);
-            } elseif (strlen($oldD) > 50) {
-                $oldD = substr($oldD, 0, 50) . '...';
-            } elseif (strlen($newD) > 50) {
-                $newD = substr($newD, 0, 50) . '...';
             }
             array_push($updates, $this->genStrUpd('details', $oldD, $newD));
         }

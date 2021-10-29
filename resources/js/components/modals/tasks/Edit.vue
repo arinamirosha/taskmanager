@@ -107,10 +107,7 @@ export default {
                     'user_id': this.performerId,
                 })
                 .then(response => {
-                    this.$emit('taskUpdated');
-                    this.$nextTick(() => {
-                        this.$bvModal.hide('common-modal')
-                    })
+                    this.$emit('taskUpdated', response.data);
                 })
                 .catch(error => {
                     console.log(error)
