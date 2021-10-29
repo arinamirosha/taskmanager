@@ -90,28 +90,6 @@
                     </div>
                 </div>
 
-                <!-- Modals-->
-
-                <button v-show="false" data-toggle="modal" data-target="#showTaskModal" ref="showTaskModalButton"></button>
-                <div class="modal fade show mt-5 pb-5 pb-5" id="showTaskModal" tabindex="-1" ref="showTaskModal">
-                    <show-task-modal
-                        :task="currentTask"
-                        :project="project"
-                        :currentUserId="currentUserId"
-                        @deleteTaskModal="$refs.deleteTaskModalButton.click()"
-                        @editTaskModal="$refs.editTaskModalButton.click()"
-                        @archived="taskArchived"
-                        @taskUpdated="taskUpdated"
-                        @showProject="showProject"
-                    ></show-task-modal>
-                </div>
-
-                <button v-show="false" @click="$emit('openTaskModal', c.DELETE_TASK, currentTask)" ref="deleteTaskModalButton"></button>
-<!--                <delete-task-modal @cancel="$refs.showTaskModalButton.click();"></delete-task-modal>-->
-
-                <button v-show="false" @click="$emit('openTaskModal', c.EDIT_TASK, currentTask, project)" ref="editTaskModalButton"></button>
-<!--                <edit-task-modal @updated="taskUpdated" @cancel="$refs.showTaskModalButton.click()"></edit-task-modal>-->
-
                 <!-- Toast -->
                 <toast :body="infoBody" />
 
@@ -146,7 +124,6 @@ export default {
             tasksProgressLength: 0,
             tasksFinishedLength: 0,
             isProjectLoaded: false,
-            currentTask: {},
             infoBody: '',
             isArchFinBtnDisabled: false,
         }
@@ -226,22 +203,13 @@ export default {
             }
         },
         showTask(task) {
-            this.currentTask = task;
-            this.$refs.showTaskModalButton.click();
+            this.$emit('openTaskModal', this.c.SHOW_TASK, task, this.project);
         },
         taskArchived(id) {
             this.tasksFinished = this.tasksFinished.filter(function (task) {
                 return task.id !== id;
             });
             this.$emit('taskArchived');
-        },
-        taskUpdated(task) {
-            this.getProject();
-            this.$emit('taskUpdated');
-            if (typeof task !== 'number') {
-                this.currentTask = task;
-                this.$refs.showTaskModalButton.click();
-            }
         },
         changeFav(projectId, favorite) {
             axios
@@ -289,7 +257,6 @@ export default {
     components: {
         draggable,
         'toast': () => import('../Toast.vue'),
-        'show-task-modal': () => import('../modals/tasks/ShowTask.vue'),
         'list-item-task': () => import('../tasks/ListItemTask.vue'),
     },
 }

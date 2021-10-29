@@ -127,7 +127,14 @@
 
         <!-- Modal-->
         <b-modal id="common-modal" @hide="(e) => {wait && e.preventDefault()}">
-            <template #modal-header>{{modalTitle}}</template>
+            <template #modal-header>
+                {{modalTitle}}
+                <a
+                    v-if="modalBodyComponent === 'task-show' && !taskForModal.deleted_at && isInteractWithTask"
+                    class="cursor-pointer text-muted"
+                    @click="openTaskModal(c.EDIT_TASK, taskForModal, projectForModal)"
+                ><i class="far fa-edit"></i></a>
+            </template>
             <template #default>
                 <component
                     :is="modalBodyComponent"
@@ -137,22 +144,35 @@
                     :currentUserId="currentUserId"
                     ref="modalBody"
                     @wait="wait=true"
+                    @waitTaskAction="waitTaskAction=true"
                     @projectStored="projectStored"
                     @projectUpdated="projectUpdated"
                     @projectDeleted="projectDeleted"
                     @taskDeleted="taskDeleted"
                     @taskUpdated="taskUpdated"
+                    @showProject="selectProject"
                 ></component>
             </template>
             <template #modal-footer="{ cancel }">
-                <b-button size="sm" @click="cancel()" :disabled="wait">Cancel</b-button>
-                <b-button
-                    size="sm"
-                    variant="primary"
-                    v-if="modalButton"
-                    @click="$refs.modalBody.handleSubmit()"
-                    :disabled="wait"
-                >{{modalButton}}</b-button>
+                <b-button variant="danger" v-if="modalBodyComponent === 'task-show' && taskForModal.owner_id === currentUserId" @click="openTaskModal(c.DELETE_TASK, taskForModal)">Delete</b-button>
+
+                <div v-if="modalBodyComponent === 'task-show' && isInteractWithTask">
+                    <b-button variant="primary" v-if="!taskForModal.deleted_at && taskForModal.status !== c.STATUS_FINISHED" :disabled="waitTaskAction">
+                        <span v-if="taskForModal.status === c.STATUS_NEW" @click="$refs.modalBody.changeStatus(c.STATUS_PROGRESS)">Start</span>
+                        <span v-else-if="taskForModal.status === c.STATUS_PROGRESS" @click="$refs.modalBody.changeStatus(c.STATUS_FINISHED)">Finish</span>
+                    </b-button>
+
+                    <b-button variant="primary" v-if="!taskForModal.deleted_at && (taskForModal.status === c.STATUS_FINISHED || (projectForModal && projectForModal.deleted_at) )" :disabled="waitTaskAction">
+                        <span @click="$refs.modalBody.archive()">Archive</span>
+                    </b-button>
+
+                    <b-button variant="primary" v-if="taskForModal.deleted_at && (projectForModal && !projectForModal.deleted_at)" :disabled="waitTaskAction">
+                        <span @click="$refs.modalBody.restore()">Restore</span>
+                    </b-button>
+                </div>
+
+                <b-button @click="cancel()" :disabled="wait">Cancel</b-button>
+                <b-button variant="primary" v-if="modalButton" @click="$refs.modalBody.handleSubmit()" :disabled="wait">{{modalButton}}</b-button>
             </template>
         </b-modal>
 
@@ -248,6 +268,7 @@ export default {
             isOpenProjects: true,
             type: '',
             wait: false,
+            waitTaskAction: false,
             currentUserId: 0,
         }
     },
@@ -256,6 +277,11 @@ export default {
             return this.projects.filter(project => {
                 return project.favorite;
             });
+        },
+        isInteractWithTask() {
+            return this.taskForModal
+                ? this.taskForModal.owner_id === this.currentUserId || this.taskForModal.user_id === this.currentUserId
+                : false;
         },
     },
     watch: {
@@ -325,6 +351,7 @@ export default {
         },
         taskUpdated() {
             this.taskDeleted();
+            this.waitTaskAction = false;
         },
         selectProject(id) {
             this.selectedProjectId = id;

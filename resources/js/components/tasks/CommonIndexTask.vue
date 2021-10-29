@@ -32,7 +32,7 @@
                     <div v-if="isDataLoaded && tasks.length !== 0" v-for="(task, index) in tasks"
                          :key="task.id"
                          class="row cursor-pointer task pt-1 pb-1"
-                         @click="showTask(task)"
+                         @click="$emit('openTaskModal', c.SHOW_TASK, task, task.project)"
                          :class="{'task-finished': isNeedStyleFinished(task), 'bg-light': compactStyle && index % 2 === 0}"
                     >
                         <div class="col-md-1 col-1"><i :class="statusIconClass(task.status)"></i></div>
@@ -67,26 +67,6 @@
         <!-- Toast -->
         <toast :body="infoBody" />
 
-        <!-- Modals -->
-        <button v-show="false" data-toggle="modal" data-target="#showTaskModal" ref="showTaskModalButton"></button>
-        <div class="modal fade show mt-5 pb-5" id="showTaskModal" tabindex="-1" ref="showTaskModal">
-            <show-task-modal
-                :task="currentTask"
-                :currentUserId="currentUserId"
-                @archived="taskArchived"
-                @taskUpdated="taskUpdated"
-                @deleteTaskModal="$refs.deleteTaskModalButton.click()"
-                @editTaskModal="$refs.editTaskModalButton.click()"
-                @showProject="showProject"
-            ></show-task-modal>
-        </div>
-
-        <button v-show="false" @click="$emit('openTaskModal', c.DELETE_TASK, currentTask)" ref="deleteTaskModalButton"></button>
-        <!--                <delete-task-modal @cancel="$refs.showTaskModalButton.click();"></delete-task-modal>-->
-
-        <button v-show="false" @click="$emit('openTaskModal', c.EDIT_TASK, currentTask, currentTask.project)" ref="editTaskModalButton"></button>
-        <!--                <edit-task-modal @updated="taskUpdated" @cancel="$refs.showTaskModalButton.click()"></edit-task-modal>-->
-
     </div>
 </template>
 
@@ -111,7 +91,6 @@ export default {
             dataLoading: false,
             infoBody: '',
             hideFinished: false,
-            currentTask: {},
             s: '',
             notTrashed: false,
             isLoadBtnDisabled: false,
@@ -259,14 +238,6 @@ export default {
             this.getTasks();
             this.$emit('taskArchived');
         },
-        taskUpdated(task) {
-            this.getTasks();
-            this.$emit('taskUpdated');
-            if (typeof task !== 'number') {
-                this.currentTask = task;
-                this.$refs.showTaskModalButton.click();
-            }
-        },
         getHideFinished() {
             axios
                 .get(route('users.show'))
@@ -279,10 +250,6 @@ export default {
         },
         formatDate(date) {
             return date ? moment(date).format('MMMM DD, YYYY') : '';
-        },
-        showTask(task) {
-            this.currentTask = task;
-            this.$refs.showTaskModalButton.click();
         },
         isOverdue(schedule) {
             return moment(schedule).isBefore(new Date, 'day');
@@ -304,7 +271,6 @@ export default {
     },
     components: {
         'toast': () => import('../Toast.vue'),
-        'show-task-modal': () => import('../modals/tasks/ShowTask.vue'),
         'archived-projects': () => import('../projects/ArchivedProjects.vue')
     },
 }

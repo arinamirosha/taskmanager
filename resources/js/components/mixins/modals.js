@@ -16,7 +16,7 @@ export default {
         }
     },
     methods: {
-        setModal(type, modalId) {
+        setModal(type, modalId, task = null) {
             switch (type) {
                 case this.c.CREATE_PROJECT:
                     this.modalTitle = this.c.CREATE_PROJECT;
@@ -59,7 +59,7 @@ export default {
                     this.modalBodyComponent = 'task-delete';
                     break;
                 case this.c.SHOW_TASK:
-                    this.modalTitle = this.c.SHOW_TASK;
+                    this.modalTitle = task.name;
                     this.modalButton = null;
                     this.modalBodyComponent = 'task-show';
                     break;
@@ -84,7 +84,7 @@ export default {
             if (project) {
                 this.projectForModal = project;
             }
-            this.setModal(type, 'common-modal');
+            this.setModal(type, 'common-modal', task);
         },
     },
     components: {

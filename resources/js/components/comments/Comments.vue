@@ -96,14 +96,6 @@ export default {
             showMoreCommentIds: [],
         }
     },
-    watch: {
-        taskId: function() {
-            this.reset();
-            if (this.taskId) {
-                this.getComments();
-            }
-        }
-    },
     validations: {
         text: {
             required,
@@ -227,6 +219,9 @@ export default {
             }
         }
     },
+    mounted() {
+        this.getComments();
+    }
 }
 </script>
 
